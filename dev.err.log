@@ -1,0 +1,394 @@
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  [90m3 |[0m [36mimport[0m { [33mJourneyTimeline[0m } [36mfrom[0m [32m"@/components/JourneyTimeline"[0m;
+  [90m4 |[0m [36mimport[0m { [33mProjectGrid[0m } [36mfrom[0m [32m"@/components/ProjectGrid"[0m;
+[31m[1m>[0m [90m5 |[0m [36mimport[0m { [33mResumeButton[0m } [36mfrom[0m [32m"@/components/ResumeButton"[0m;
+  [90m  |[0m                                                        [31m[1m^[0m
+[31m[1m>[0m [90m6 |[0m [36mimport[0m { [33mScrollExperience[0m } [36mfrom[0m [32m"@/components/ScrollExperience"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m7 |[0m [36mimport[0m { [33mSideNav[0m } [36mfrom[0m [32m"@/components/SideNav"[0m;
+  [90m8 |[0m [36mimport[0m { [33mTechStack[0m } [36mfrom[0m [32m"@/components/TechStack"[0m;
+  [90m9 |[0m
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./src/app/page.tsx:5:56)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./src/app/page.tsx:5:56)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./src/app/page.tsx:5:56
+Module not found: Can't resolve '@/components/ScrollExperience'
+  3 | import { JourneyTimeline } from "@/components/JourneyTimeline";
+  4 | import { ProjectGrid } from "@/components/ProjectGrid";
+> 5 | import { ResumeButton } from "@/components/ResumeButton";
+    |                                                        ^
+> 6 | import { ScrollExperience } from "@/components/ScrollExperience";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { SideNav } from "@/components/SideNav";
+  8 | import { TechStack } from "@/components/TechStack";
+  9 |
+
+Import map: aliased to relative './src/components/ScrollExperience' inside of [project]/
+
+https://nextjs.org/docs/messages/module-not-found 

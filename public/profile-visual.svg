@@ -1,0 +1,14 @@
+﻿<svg width="900" height="1100" viewBox="0 0 900 1100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="1100" fill="#050505"/>
+  <g opacity="0.28">
+    <path d="M0 120H900M0 240H900M0 360H900M0 480H900M0 600H900M0 720H900M0 840H900M0 960H900" stroke="white" stroke-width="1"/>
+    <path d="M100 0V1100M220 0V1100M340 0V1100M460 0V1100M580 0V1100M700 0V1100M820 0V1100" stroke="white" stroke-width="1"/>
+  </g>
+  <circle cx="450" cy="420" r="178" fill="white" fill-opacity="0.08" stroke="white" stroke-opacity="0.38" stroke-width="2"/>
+  <circle cx="450" cy="344" r="92" fill="#F6F6F6"/>
+  <path d="M254 780C275 647 350 575 450 575C550 575 625 647 646 780H254Z" fill="#F6F6F6"/>
+  <rect x="198" y="126" width="504" height="824" rx="252" stroke="white" stroke-opacity="0.2" stroke-width="2"/>
+  <rect x="254" y="182" width="392" height="712" rx="196" stroke="white" stroke-opacity="0.14" stroke-width="2"/>
+  <text x="450" y="1010" text-anchor="middle" fill="white" fill-opacity="0.7" font-family="Arial, sans-serif" font-size="62" font-weight="700" letter-spacing="10">MBN</text>
+</svg>
+
