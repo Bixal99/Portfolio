@@ -25,7 +25,7 @@ export default function FlipWordsHero() {
   ];
 
   return (
-    <section className="flex w-full items-center justify-start bg-black py-10 text-left sm:py-12 lg:py-14">
+    <section className="flex w-full items-center justify-start bg-black py-10 pl-3 text-left sm:py-12 sm:pl-4 lg:py-14">
       <h1 className="inline-flex items-baseline justify-start whitespace-nowrap text-[clamp(2.1rem,5vw,4.8rem)] font-bold leading-tight tracking-tight text-white">
         <span>Building the future with&nbsp;</span>
         <span className="inline-flex w-[9ch] justify-start text-left">

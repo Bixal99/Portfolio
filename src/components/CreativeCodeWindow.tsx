@@ -105,35 +105,6 @@ const files = [
     ],
   },
   {
-    name: "friend.py",
-    accent: "text-[#ff6b4a]",
-    label: "Friend",
-    lines: [
-      "class AIEngineer:",
-      "    def __init__(self):",
-      "        self.name = \"Bilal\"",
-      "        self.location = \"Lahore, Pakistan\"",
-      "        self.status = \"Open to Opportunities\"",
-      "",
-      "    def greet(self):",
-      "        return \"Ready to build.\"",
-    ],
-  },
-  {
-    name: "learn.py",
-    accent: "text-[#a78bfa]",
-    label: "Learn",
-    lines: [
-      "lesson_done = True",
-      "notes_saved = True",
-      "",
-      "if lesson_done and notes_saved:",
-      "    print(\"Level up unlocked.\")",
-      "else:",
-      "    print(\"Review it once more.\")",
-    ],
-  },
-  {
     name: "solve_error.py",
     accent: "text-[#f472b6]",
     label: "Debug",
@@ -149,8 +120,8 @@ const files = [
   },
 ];
 
-const TYPE_DELAY_MS = 76;
-const LOOP_DELAY_MS = 2000;
+const TYPE_DELAY_MS = 50;
+const LOOP_DELAY_MS = 3000;
 const codeFontFamily =
   '"JetBrains Mono", "SFMono-Regular", "Cascadia Code", "Cascadia Mono", "Fira Code", Consolas, monospace';
 
@@ -321,7 +292,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
           <span className="size-3 rounded-full bg-[#ffbd2e]" />
           <span className="size-3 rounded-full bg-[#28c840]" />
         </div>
-        <div className="flex min-w-0 gap-2 overflow-x-auto" role="tablist" aria-label="Code files">
+        <div className="flex min-w-0 flex-1 items-center justify-between gap-3 overflow-hidden" role="tablist" aria-label="Code files">
           {files.map((file, index) => {
             const selected = index === activeFile;
 
@@ -366,7 +337,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
             <div key={`${currentFile.name}-${index}-${line}`}>
               {highlight(line || " ")}
               {index === lastLineIndex ? (
-                <span className="inline-block h-5 w-px translate-y-1 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.7)]" />
+                <span className="theme-typewriter-cursor inline-block h-5 w-px translate-y-1 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.7)]" />
               ) : null}
             </div>
           ))}
@@ -389,4 +360,3 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
     </section>
   );
 }
-
