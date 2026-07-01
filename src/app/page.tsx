@@ -1,3 +1,4 @@
+import { BackToTopButton } from "@/components/BackToTopButton";
 import { Education } from "@/components/Education";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
@@ -18,6 +19,7 @@ export default function Home() {
       <InteractiveGridBackground />
       <Navbar />
       <ScrollProgress />
+      <BackToTopButton />
 
       <main className="relative isolate">
         <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">

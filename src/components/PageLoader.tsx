@@ -1,47 +1,102 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { motion } from "motion/react";
 
-const bootSteps = ["Booting interface", "Mapping skills", "Loading projects", "Preparing scroll" ];
+const LOAD_DURATION_SECONDS = 5;
+
+const bootSignals = ["Interface", "Motion", "Systems", "Ready"];
 
 export function PageLoader() {
   const [hidden, setHidden] = useState(false);
   const [percent, setPercent] = useState(0);
   const loaderRef = useRef<HTMLDivElement>(null);
-  const barRef = useRef<HTMLDivElement>(null);
-  const orbitRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<SVGCircleElement>(null);
+  const sweepRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const loader = loaderRef.current;
-    const bar = barRef.current;
-    const orbit = orbitRef.current;
+    const progressBar = progressRef.current;
+    const ring = ringRef.current;
+    const sweep = sweepRef.current;
 
-    if (!loader || !bar || !orbit) {
+    if (!loader || !progressBar || !ring || !sweep) {
       return;
     }
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const progress = { value: 0 };
+    const ringLength = ring.getTotalLength();
+
+    gsap.set(ring, {
+      strokeDasharray: ringLength,
+      strokeDashoffset: ringLength,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(progressBar, { scaleX: 0, transformOrigin: "left center" });
+
     const timeline = gsap.timeline({
       defaults: { ease: "power3.out" },
       onComplete: () => setHidden(true),
     });
 
+    if (prefersReducedMotion) {
+      timeline
+        .fromTo(loader, { autoAlpha: 1 }, { autoAlpha: 1, duration: 0.1 })
+        .to(progress, {
+          value: 100,
+          duration: LOAD_DURATION_SECONDS,
+          ease: "none",
+          onUpdate: () => setPercent(Math.round(progress.value)),
+        })
+        .to(progressBar, { scaleX: 1, duration: LOAD_DURATION_SECONDS, ease: "none" }, "<")
+        .to(ring, { strokeDashoffset: 0, duration: LOAD_DURATION_SECONDS, ease: "none" }, "<")
+        .to(loader, { autoAlpha: 0, duration: 0.45, ease: "power2.out" });
+
+      return () => {
+        timeline.kill();
+      };
+    }
+
     timeline
-      .set(loader, { yPercent: 0 })
-      .fromTo("[data-loader-grid]", { autoAlpha: 0, scale: 0.94 }, { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.015 })
-      .fromTo("[data-loader-title]", { y: 40, autoAlpha: 0, filter: "blur(12px)" }, { y: 0, autoAlpha: 1, filter: "blur(0px)", duration: 0.75, stagger: 0.08 }, "-=0.2")
-      .fromTo("[data-loader-step]", { x: -20, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45, stagger: 0.1 }, "-=0.35")
-      .to(progress, {
-        value: 100,
-        duration: 1.25,
-        ease: "power2.inOut",
-        onUpdate: () => setPercent(Math.round(progress.value)),
-      }, "-=0.2")
-      .fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 1.25, ease: "power2.inOut" }, "<")
-      .to(orbit, { rotate: 360, duration: 1.25, ease: "power2.inOut" }, "<")
-      .to("[data-loader-step], [data-loader-title]", { y: -22, autoAlpha: 0, duration: 0.42, stagger: 0.035 }, "+=0.12")
-      .to(loader, { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, "-=0.1");
+      .set(loader, { autoAlpha: 1, yPercent: 0 })
+      .fromTo(
+        "[data-loader-panel]",
+        { autoAlpha: 0, y: 34, scale: 0.96, filter: "blur(16px)" },
+        { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.72, stagger: 0.08 },
+      )
+      .fromTo(
+        "[data-loader-word]",
+        { yPercent: 105, rotate: 2, autoAlpha: 0 },
+        { yPercent: 0, rotate: 0, autoAlpha: 1, duration: 0.82, stagger: 0.08, ease: "power4.out" },
+        "-=0.38",
+      )
+      .fromTo(
+        "[data-loader-signal]",
+        { autoAlpha: 0, y: 16, scale: 0.94 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.48, stagger: 0.08 },
+        "-=0.42",
+      )
+      .to(
+        progress,
+        {
+          value: 100,
+          duration: LOAD_DURATION_SECONDS,
+          ease: "power2.inOut",
+          onUpdate: () => setPercent(Math.round(progress.value)),
+        },
+        "-=0.18",
+      )
+      .to(progressBar, { scaleX: 1, duration: LOAD_DURATION_SECONDS, ease: "power2.inOut" }, "<")
+      .to(ring, { strokeDashoffset: 0, duration: LOAD_DURATION_SECONDS, ease: "power2.inOut" }, "<")
+      .to("[data-loader-core]", { rotate: 360, duration: LOAD_DURATION_SECONDS, ease: "none" }, "<")
+      .to(sweep, { xPercent: 175, duration: LOAD_DURATION_SECONDS, ease: "power1.inOut" }, "<")
+      .to("[data-loader-pulse]", { scale: 1.16, autoAlpha: 0.28, duration: 1.25, repeat: 3, yoyo: true, ease: "sine.inOut" }, "<")
+      .to("[data-loader-signal]", { borderColor: "rgba(var(--accent-rgb),0.5)", color: "rgba(255,255,255,0.86)", duration: 0.36, stagger: 0.055 }, ">-0.42")
+      .to("[data-loader-panel], [data-loader-word]", { y: -28, autoAlpha: 0, filter: "blur(10px)", duration: 0.55, stagger: 0.04, ease: "power3.in" }, "+=0.2")
+      .to(loader, { yPercent: -100, duration: 0.92, ease: "expo.inOut" }, "-=0.12");
 
     return () => {
       timeline.kill();
@@ -53,54 +108,107 @@ export function PageLoader() {
   }
 
   return (
-    <div ref={loaderRef} className="fixed inset-0 z-[100] overflow-hidden bg-black text-white">
-      <div className="absolute inset-0 grid grid-cols-8 grid-rows-6 opacity-60" aria-hidden="true">
-        {Array.from({ length: 48 }).map((_, index) => (
-          <span key={index} data-loader-grid className="border-b border-r border-white/[0.045]" />
-        ))}
-      </div>
+    <motion.div
+      ref={loaderRef}
+      className="fixed inset-0 z-[100] overflow-hidden bg-black text-white"
+      initial={false}
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.22] [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:56px_56px]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(var(--accent-rgb),0.2),transparent_30%),linear-gradient(120deg,transparent,rgba(var(--accent-rgb),0.08)_38%,rgba(255,255,255,0.055)_52%,transparent_68%)]"
+      />
+      <div
+        ref={sweepRef}
+        aria-hidden="true"
+        className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-18deg] bg-gradient-to-r from-transparent via-white/[0.09] to-transparent"
+      />
 
-      <div className="relative flex min-h-dvh items-center justify-center px-6">
-        <div className="w-full max-w-3xl">
-          <div className="mb-8 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.35em] text-white/42">
-            <span data-loader-title>Portfolio System</span>
-            <span data-loader-title className="text-[var(--accent)]">{percent}%</span>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-[1fr_180px] md:items-center">
-            <div>
-              <div className="overflow-hidden">
-                <h2 data-loader-title className="text-5xl font-semibold leading-none tracking-[-0.055em] sm:text-7xl">
-                  Mohammad
-                  <span className="block text-white/42">Bilal Nadeem</span>
-                </h2>
-              </div>
-
-              <div className="mt-8 grid gap-3">
-                {bootSteps.map((step, index) => (
-                  <div key={step} data-loader-step className="flex items-center gap-3 border border-white/10 bg-white/[0.025] px-4 py-3 text-sm text-white/62">
-                    <span className="grid size-7 place-items-center border border-[var(--accent)]/40 text-[10px] font-bold text-[var(--accent)]">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    {step}
-                  </div>
-                ))}
-              </div>
+      <div className="relative flex min-h-dvh items-center justify-center px-5 py-10 sm:px-8">
+        <div className="grid w-full max-w-5xl gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-center">
+          <div data-loader-panel className="min-w-0">
+            <div className="mb-8 flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white/44">
+              <span>Portfolio System</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-white/12 via-[var(--accent)]/35 to-transparent" aria-hidden="true" />
+              <span className="text-white/30">Loading</span>
             </div>
 
-            <div data-loader-title className="relative mx-auto grid size-40 place-items-center">
-              <div ref={orbitRef} className="absolute inset-0 rounded-full border border-dashed border-[var(--accent)]/55" />
-              <div className="absolute inset-5 rounded-full border border-white/10" />
-              <span className="text-3xl font-semibold text-[var(--accent)]">MBN</span>
+            <div className="overflow-hidden">
+              <p data-loader-word className="text-sm font-semibold uppercase tracking-[0.34em] text-[var(--accent)]">
+                Initializing
+              </p>
+            </div>
+            <div className="mt-4 overflow-hidden">
+              <h2 data-loader-word className="max-w-3xl text-5xl font-semibold leading-[0.92] text-white sm:text-7xl lg:text-8xl">
+                Mohammad
+                <span className="block text-white/38">Bilal Nadeem</span>
+              </h2>
+            </div>
+
+            <div className="mt-9 h-px w-full overflow-hidden bg-white/10">
+              <div ref={progressRef} className="h-full bg-[var(--accent)] shadow-[0_0_30px_rgba(var(--accent-rgb),0.75)]" />
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {bootSignals.map((signal, index) => (
+                <div
+                  key={signal}
+                  data-loader-signal
+                  className="border border-white/10 bg-white/[0.035] px-3 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white/48 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                >
+                  <span className="mb-2 block text-[10px] text-[var(--accent)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {signal}
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-10 h-px w-full bg-white/10">
-            <div ref={barRef} className="h-full origin-left bg-[var(--accent)] shadow-[0_0_26px_rgba(var(--accent-rgb),0.65)]" />
+          <div data-loader-panel className="relative mx-auto grid size-64 place-items-center sm:size-72">
+            <div
+              data-loader-pulse
+              aria-hidden="true"
+              className="absolute inset-7 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/[0.035] shadow-[0_0_70px_rgba(var(--accent-rgb),0.18)]"
+            />
+            <div data-loader-core className="absolute inset-0 rounded-full border border-white/10">
+              <span className="absolute left-1/2 top-0 size-2 -translate-x-1/2 rounded-full bg-[var(--accent)] shadow-[0_0_24px_rgba(var(--accent-rgb),0.9)]" />
+              <span className="absolute bottom-6 left-7 size-1.5 rounded-full bg-white/70" />
+              <span className="absolute right-8 top-9 size-1 rounded-full bg-white/50" />
+            </div>
+
+            <svg className="absolute inset-0 size-full -rotate-90" viewBox="0 0 240 240" aria-hidden="true">
+              <circle cx="120" cy="120" r="90" fill="none" stroke="rgba(255,255,255,0.09)" strokeWidth="1" />
+              <circle
+                ref={ringRef}
+                cx="120"
+                cy="120"
+                r="90"
+                fill="none"
+                stroke="var(--accent)"
+                strokeLinecap="round"
+                strokeWidth="3"
+              />
+            </svg>
+
+            <div className="relative grid size-40 place-items-center rounded-full border border-white/12 bg-black/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_24px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:size-44">
+              <div className="text-center">
+                <span className="block text-[clamp(2.75rem,6vw,4.6rem)] font-semibold leading-none tracking-[-0.06em] text-[var(--accent)] drop-shadow-[0_0_24px_rgba(var(--accent-rgb),0.35)]">
+                  {percent}%
+                </span>
+                <span className="mt-3 block text-[10px] font-bold uppercase tracking-[0.28em] text-white/42">
+                  MBN Loading
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
-

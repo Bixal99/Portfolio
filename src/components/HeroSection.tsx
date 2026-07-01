@@ -9,16 +9,8 @@ export function HeroSection() {
       id="home"
       className="relative flex min-h-dvh scroll-mt-0 items-center py-28 sm:py-32 lg:py-36"
     >
-      <div className="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(300px,0.72fr)] xl:gap-14">
+      <div className="grid w-full -translate-y items-center gap-12 sm:-translate-y-2 lg:-translate-y-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(300px,0.72fr)] xl:gap-14">
         <div className="relative z-10 max-w-3xl">
-          <div
-            data-hero-animate
-            className="mb-8 flex max-w-2xl items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-white/50"
-          >
-            <span className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_22px_rgba(var(--accent-rgb),0.6)]" aria-hidden="true" />
-            Backend systems, AI workflows, RAG products
-          </div>
-
           <p
             data-hero-animate
             className="mb-4 text-sm font-semibold uppercase tracking-[0.42em] text-[var(--accent)]"
