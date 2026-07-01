@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FileCode2, Sparkles } from "lucide-react";
+import { FileCode2 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -141,15 +141,15 @@ export function CreativeCodeWindow() {
     <section ref={sectionRef} id="code-lab" className="relative py-20 sm:py-24 lg:py-28">
       <div className="grid items-center gap-10 lg:grid-cols-[0.82fr_1.18fr]">
         <div data-animate>
-          <div className="mb-5 inline-flex items-center gap-3 border border-white/15 bg-white/[0.025] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70">
-            <Sparkles className="size-4 text-[var(--accent)]" aria-hidden="true" />
-            Creative Lab
+          <div className="mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-white/50">
+            <span className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]" aria-hidden="true" />
+            Build process
           </div>
           <h2 className="max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.045em] text-white sm:text-5xl lg:text-7xl">
-            Click a file. Watch the portfolio write itself.
+            From API design to AI workflows, the work stays practical.
           </h2>
           <p className="mt-5 max-w-xl leading-8 text-white/58">
-            The editor now behaves like the reference: every tab is clickable, and each file types its own backend, AI, or debugging story.
+            Switch between files to see how backend logic, retrieval systems, and debugging habits shape the way I build.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {["RAG pipelines", "Backend APIs", "AI products"].map((item) => (
@@ -219,5 +219,3 @@ export function CreativeCodeWindow() {
     </section>
   );
 }
-
-

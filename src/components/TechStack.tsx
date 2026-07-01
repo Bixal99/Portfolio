@@ -184,7 +184,7 @@ export function TechStack() {
               <article key={group.title} data-skill-card className="group min-h-[280px] border border-white/12 bg-black/35 p-5 transition duration-300 hover:-translate-y-1 hover:border-[var(--accent)] hover:bg-white/[0.055]">
                 <div className="mb-7 flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/36">Stack lane</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/36">Core group</p>
                     <h3 className="mt-3 text-2xl font-semibold text-white">{group.title}</h3>
                   </div>
                   <div className="grid size-12 shrink-0 place-items-center border border-white/12 bg-white/[0.035] text-[var(--accent)] transition group-hover:bg-[var(--accent)] group-hover:text-black">
@@ -221,7 +221,7 @@ export function TechStack() {
             <Layers3 className="size-7" aria-hidden="true" />
           </div>
           <p className="max-w-4xl text-sm leading-7 text-white/58">
-            Simple, readable, and animated: the stack now uses GSAP-style stagger and continuous motion instead of the heavy node map.
+            A compact view of the tools I reach for when building APIs, AI workflows, and interfaces.
           </p>
         </div>
       </div>

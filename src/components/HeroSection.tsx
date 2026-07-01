@@ -1,7 +1,6 @@
-﻿import { ArrowDown, Sparkles } from "lucide-react";
+﻿import { ArrowDown } from "lucide-react";
 import { profile } from "@/data/portfolio";
 import { ProfileVisual } from "./ProfileVisual";
-import { TypewriterLine } from "./TypewriterLine";
 
 export function HeroSection() {
   return (
@@ -13,17 +12,17 @@ export function HeroSection() {
         <div className="relative z-10 max-w-3xl">
           <div
             data-hero-animate
-            className="mb-7 inline-flex items-center gap-3 border border-white/15 bg-white/[0.025] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70"
+            className="mb-8 flex max-w-2xl items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-white/50"
           >
-            <Sparkles className="size-4 text-[var(--accent)]" aria-hidden="true" />
-            Backend / AI / RAG
+            <span className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_22px_rgba(var(--accent-rgb),0.6)]" aria-hidden="true" />
+            Backend systems, AI workflows, RAG products
           </div>
 
           <p
             data-hero-animate
             className="mb-4 text-sm font-semibold uppercase tracking-[0.42em] text-[var(--accent)]"
           >
-            Hi I am
+            Hi, I am
           </p>
 
           <h1
@@ -33,15 +32,18 @@ export function HeroSection() {
             {profile.name}
           </h1>
 
-          <div data-hero-animate>
-            <TypewriterLine />
-          </div>
+          <p
+            data-hero-animate
+            className="mt-6 max-w-2xl text-2xl font-medium leading-9 text-white/72 sm:text-3xl sm:leading-10"
+          >
+            Backend and AI developer building reliable APIs, RAG pipelines, and product-ready web tools.
+          </p>
 
           <p
             data-hero-animate
-            className="mt-8 max-w-2xl text-lg leading-8 text-white/72 sm:text-xl"
+            className="mt-6 max-w-2xl text-base leading-8 text-white/58 sm:text-lg"
           >
-            {profile.intro}
+            {profile.summary}
           </p>
 
           <a

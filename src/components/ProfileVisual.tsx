@@ -11,13 +11,9 @@ export function ProfileVisual() {
           width={896}
           height={1195}
           priority
-          className="aspect-[4/5] w-full object-cover object-[50%_28%] opacity-95 grayscale-[18%]"
+          className="aspect-[4/5] w-full object-cover object-[50%_28%] opacity-95 grayscale-[12%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
-        <div className="absolute inset-x-5 bottom-5 border border-white/14 bg-black/45 p-4 backdrop-blur-md">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[var(--accent)]">Backend / AI</p>
-          <p className="mt-2 text-lg font-semibold text-white">Mohammad Bilal Nadeem</p>
-        </div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/28 via-transparent to-transparent" aria-hidden="true" />
       </div>
     </div>
   );

@@ -51,6 +51,28 @@ export function ScrollAnimator() {
         );
       });
 
+      gsap.utils.toArray<HTMLElement>("[data-heading-text]").forEach((heading) => {
+        const words = heading.querySelectorAll("[data-heading-word]");
+        if (!words.length) return;
+
+        gsap.fromTo(
+          words,
+          { autoAlpha: 0, yPercent: 70, rotate: 1.5 },
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            rotate: 0,
+            duration: 0.82,
+            stagger: 0.025,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: heading,
+              start: "top 84%",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      });
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {
         const children = group.querySelectorAll("[data-stagger-item]");
         gsap.fromTo(
@@ -92,5 +114,3 @@ export function ScrollAnimator() {
 
   return null;
 }
-
-

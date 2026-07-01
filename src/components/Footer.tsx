@@ -1,6 +1,7 @@
-﻿import { ArrowUpRight, Mail, MapPin, Phone, Sparkles } from "lucide-react";
+﻿import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { navItems, profile, socialLinks } from "@/data/portfolio";
 import { ContactForm } from "./ContactForm";
+import FlipWordsHero from "./flip-words-demo";
 
 export function Footer() {
   return (
@@ -9,8 +10,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div data-animate className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr]">
           <div className="border border-white/10 bg-white/[0.02] p-6 sm:p-8 lg:p-10">
-            <div className="mb-6 inline-flex items-center gap-3 border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-[var(--accent)]">
-              <Sparkles className="size-4" aria-hidden="true" />
+            <div className="mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-[var(--accent)]">
+              <span className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]" aria-hidden="true" />
               Contact
             </div>
             <h2 className="text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl">
@@ -43,8 +44,11 @@ export function Footer() {
               ))}
             </div>
           </div>
+
           <ContactForm />
         </div>
+
+        <FlipWordsHero />
 
         <div data-stagger className="mt-10 grid gap-6 border-t border-white/10 pt-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <nav data-stagger-item className="flex flex-wrap gap-x-5 gap-y-3" aria-label="Footer navigation">
@@ -63,5 +67,3 @@ export function Footer() {
     </footer>
   );
 }
-
-

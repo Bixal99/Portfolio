@@ -330,26 +330,23 @@ export const projects: Project[] = [
 
 export const sectionMeta = {
   journey: {
-    kicker: "My Journey",
-    title: "Backend, AI, research, and campus leadership in one path.",
+    kicker: "Experience",
+    title: "The path behind the systems I build.",
     icon: BookOpen,
   },
   stack: {
-    kicker: "Tech Stack",
-    title:
-      "A practical stack for APIs, AI systems, RAG, OCR, and modern web apps.",
+    kicker: "Skills",
+    title: "Tools I use when the work needs to ship.",
     icon: TerminalSquare,
   },
   education: {
     kicker: "Education",
-    title:
-      "Computer science foundations with hands-on technical community work.",
+    title: "Computer science, community work, and creative discipline.",
     icon: GraduationCap,
   },
   projects: {
-    kicker: "Projects",
-    title:
-      "AI products, backend systems, and algorithm-heavy builds from the CV.",
+    kicker: "Selected Work",
+    title: "Builds with product thinking and real system logic.",
     icon: BriefcaseBusiness,
   },
 };
