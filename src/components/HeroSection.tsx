@@ -1,6 +1,7 @@
-﻿import { ArrowDown } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { profile } from "@/data/portfolio";
 import { ProfileVisual } from "./ProfileVisual";
+import { TypewriterLine } from "./TypewriterLine";
 
 export function HeroSection() {
   return (
@@ -32,19 +33,9 @@ export function HeroSection() {
             {profile.name}
           </h1>
 
-          <p
-            data-hero-animate
-            className="mt-6 max-w-2xl text-2xl font-medium leading-9 text-white/72 sm:text-3xl sm:leading-10"
-          >
-            Backend and AI developer building reliable APIs, RAG pipelines, and product-ready web tools.
-          </p>
-
-          <p
-            data-hero-animate
-            className="mt-6 max-w-2xl text-base leading-8 text-white/58 sm:text-lg"
-          >
-            {profile.summary}
-          </p>
+          <div data-hero-animate>
+            <TypewriterLine />
+          </div>
 
           <a
             data-hero-animate

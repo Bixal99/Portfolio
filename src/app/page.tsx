@@ -14,7 +14,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Home() {
   return (
-    <div className="min-h-dvh overflow-x-hidden bg-black text-white">
+    <div className="relative isolate min-h-dvh overflow-x-hidden bg-black text-white">
       <PageLoader />
       <ScrollAnimator />
       <InteractiveGridBackground />
@@ -23,9 +23,6 @@ export default function Home() {
       <ThemeToggle />
 
       <main className="relative isolate">
-        <div aria-hidden="true" className="grid-backdrop" />
-        <div aria-hidden="true" className="subtle-vignette" />
-
         <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
           <HeroSection />
           <CreativeCodeWindow />
