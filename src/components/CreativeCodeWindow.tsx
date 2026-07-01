@@ -11,53 +11,205 @@ const files = [
     accent: "text-[var(--accent)]",
     label: "Intro",
     lines: [
-      "def codegen(coffee):",
-      "    energy = coffee * 150",
-      "    while energy > 0:",
-      "        build_backend_apis()",
-      "        ship_ai_features()",
-      "        energy -= 20",
-      "    return \"Refueling required...\"",
+      "name = \"Bilal\"",
+      "energy = 100",
+      "",
+      "if energy > 70:",
+      "    print(f\"{name} is ready to build.\")",
+      "else:",
+      "    print(\"Coffee first, code second.\")",
     ],
   },
   {
-    name: "rag_stack.py",
+    name: "coffee.py",
     accent: "text-[#c084fc]",
-    label: "AI",
+    label: "Coffee",
     lines: [
-      "class RagPipeline:",
-      "    def __init__(self):",
-      "        self.sources = [\"docs\", \"web\", \"pdfs\"]",
-      "        self.vector_db = \"Pinecone\"",
+      "cups = 2",
+      "deadline = \"tonight\"",
       "",
-      "    def answer(self, question):",
-      "        context = retrieve_relevant_chunks(question)",
-      "        return generate_grounded_response(context)",
+      "if cups >= 2:",
+      "    print(\"Ship the feature.\")",
+      "else:",
+      "    print(\"Brew one more cup.\")",
+    ],
+  },
+  {
+    name: "focus.py",
+    accent: "text-[#8ab4ff]",
+    label: "Focus",
+    lines: [
+      "notifications = False",
+      "playlist = \"lofi\"",
+      "",
+      "if not notifications:",
+      "    print(\"Deep work mode is on.\")",
+      "else:",
+      "    print(\"Mute the noise and restart.\")",
+    ],
+  },
+  {
+    name: "weekend.py",
+    accent: "text-[#fb923c]",
+    label: "Fun",
+    lines: [
+      "bugs = 0",
+      "pizza = True",
+      "",
+      "if bugs == 0 and pizza:",
+      "    print(\"Weekend unlocked.\")",
+      "else:",
+      "    print(\"One last commit.\")",
+    ],
+  },
+  {
+    name: "deploy.py",
+    accent: "text-[#34d399]",
+    label: "Deploy",
+    lines: [
+      "build_passed = True",
+      "server_awake = True",
+      "",
+      "if build_passed and server_awake:",
+      "    print(\"Launch it clean.\")",
+      "else:",
+      "    print(\"Fix, test, deploy again.\")",
+    ],
+  },
+  {
+    name: "idea.py",
+    accent: "text-[#facc15]",
+    label: "Idea",
+    lines: [
+      "idea = \"tiny app\"",
+      "time = \"midnight\"",
+      "",
+      "if idea and time:",
+      "    print(\"Prototype before sleep.\")",
+      "else:",
+      "    print(\"Save it for morning.\")",
+    ],
+  },
+  {
+    name: "client.py",
+    accent: "text-[#38bdf8]",
+    label: "Client",
+    lines: [
+      "message_sent = True",
+      "reply_fast = True",
+      "",
+      "if message_sent and reply_fast:",
+      "    print(\"Project momentum is high.\")",
+      "else:",
+      "    print(\"Follow up with clarity.\")",
+    ],
+  },
+  {
+    name: "friend.py",
+    accent: "text-[#ff6b4a]",
+    label: "Friend",
+    lines: [
+      "class AIEngineer:",
+      "    def __init__(self):",
+      "        self.name = \"Bilal\"",
+      "        self.location = \"Lahore, Pakistan\"",
+      "        self.status = \"Open to Opportunities\"",
+      "",
+      "    def greet(self):",
+      "        return \"Ready to build.\"",
+    ],
+  },
+  {
+    name: "learn.py",
+    accent: "text-[#a78bfa]",
+    label: "Learn",
+    lines: [
+      "lesson_done = True",
+      "notes_saved = True",
+      "",
+      "if lesson_done and notes_saved:",
+      "    print(\"Level up unlocked.\")",
+      "else:",
+      "    print(\"Review it once more.\")",
     ],
   },
   {
     name: "solve_error.py",
-    accent: "text-[#fb923c]",
+    accent: "text-[#f472b6]",
     label: "Debug",
     lines: [
-      "try:",
-      "    deploy_next_feature()",
-      "except ProductionBug as issue:",
-      "    logs = inspect_runtime(issue)",
-      "    patch = write_small_fix(logs)",
-      "    run_tests(patch)",
-      "finally:",
-      "    document_what_changed()",
+      "error_fixed = True",
+      "tests_green = True",
+      "",
+      "if error_fixed and tests_green:",
+      "    print(\"Push with confidence.\")",
+      "else:",
+      "    print(\"Read logs, then try again.\")",
     ],
   },
 ];
 
+const TYPE_DELAY_MS = 76;
+const LOOP_DELAY_MS = 2000;
+const codeFontFamily =
+  '"JetBrains Mono", "SFMono-Regular", "Cascadia Code", "Cascadia Mono", "Fira Code", Consolas, monospace';
+
 function highlight(line: string) {
-  return line
-    .replace(/(class|def|return|while|try|except|finally|as|self)/g, '<span class="text-[var(--accent)]">$1</span>')
-    .replace(/(RagPipeline|ProductionBug|__init__|answer)/g, '<span class="text-[var(--accent-secondary)]">$1</span>')
-    .replace(/(&quot;.*?&quot;|".*?")/g, '<span class="text-white/72">$1</span>')
-    .replace(/(build_backend_apis|ship_ai_features|retrieve_relevant_chunks|generate_grounded_response|deploy_next_feature|inspect_runtime|write_small_fix|run_tests|document_what_changed)/g, '<span class="text-[#8ab4ff]">$1</span>');
+  const parts = line.split(
+    /(f".*?"|".*?"|\bclass\b|\bdef\b|\bif\b|\belse\b|\breturn\b|\bprint\b|\bTrue\b|\bFalse\b|\band\b|\bnot\b|\bself\b)/g,
+  );
+
+  return parts.map((part, index) => {
+    if (/^(class|def|return|and|not)$/.test(part)) {
+      return (
+        <span key={index} className="text-[#635bff]">
+          {part}
+        </span>
+      );
+    }
+
+    if (/^(if|else)$/.test(part)) {
+      return (
+        <span key={index} className="text-[var(--accent)]">
+          {part}
+        </span>
+      );
+    }
+
+    if (part === "print") {
+      return (
+        <span key={index} className="text-[#8ab4ff]">
+          {part}
+        </span>
+      );
+    }
+
+    if (/^(True|False)$/.test(part)) {
+      return (
+        <span key={index} className="text-[#c084fc]">
+          {part}
+        </span>
+      );
+    }
+
+    if (part === "self") {
+      return (
+        <span key={index} className="text-[#7c3aed]">
+          {part}
+        </span>
+      );
+    }
+
+    if (/^f?".*"$/.test(part)) {
+      return (
+        <span key={index} className="text-[#00d69d]">
+          {part}
+        </span>
+      );
+    }
+
+    return part;
+  });
 }
 
 type CreativeCodeWindowProps = {
@@ -70,6 +222,17 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
   const [typedChars, setTypedChars] = useState(0);
   const currentFile = files[activeFile] ?? files[0];
   const fullText = useMemo(() => currentFile.lines.join("\n"), [currentFile]);
+  const codeFontStyle = useMemo(
+    () => ({
+      fontFamily: codeFontFamily,
+      fontWeight: 700,
+    }),
+    [],
+  );
+  const generatedPercent = Math.min(
+    100,
+    Math.round((typedChars / fullText.length) * 100),
+  );
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -107,25 +270,51 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
       return;
     }
 
-    let frame = 0;
-    const interval = window.setInterval(() => {
-      frame += 1;
-      setTypedChars((count) => {
-        if (count >= fullText.length) {
-          window.clearInterval(interval);
-          return count;
-        }
-        return Math.min(fullText.length, count + (frame % 5 === 0 ? 2 : 1));
-      });
-    }, 24);
+    let nextChar = 0;
+    let timeoutId: number | undefined;
+    let cancelled = false;
 
-    return () => window.clearInterval(interval);
+    const resetFrame = window.requestAnimationFrame(() => setTypedChars(0));
+
+    const typeNextChar = () => {
+      if (cancelled) return;
+
+      nextChar += 1;
+      setTypedChars(Math.min(nextChar, fullText.length));
+
+      if (nextChar >= fullText.length) {
+        timeoutId = window.setTimeout(() => {
+          if (cancelled) return;
+          nextChar = 0;
+          setTypedChars(0);
+          timeoutId = window.setTimeout(typeNextChar, TYPE_DELAY_MS);
+        }, LOOP_DELAY_MS);
+        return;
+      }
+
+      timeoutId = window.setTimeout(typeNextChar, TYPE_DELAY_MS);
+    };
+
+    timeoutId = window.setTimeout(typeNextChar, TYPE_DELAY_MS);
+
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(resetFrame);
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+    };
   }, [fullText]);
 
   const typedText = fullText.slice(0, typedChars);
   const renderedLines = typedText.split("\n");
+  const lastLineIndex = renderedLines.length - 1;
   const codeCard = (
-    <div data-code-card className="w-full overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.045] shadow-[0_40px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl">
+    <div
+      data-code-card
+      className="w-full overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.045] shadow-[0_40px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+      style={codeFontStyle}
+    >
       <div className="flex flex-col gap-4 border-b border-white/10 bg-white/[0.035] px-4 py-4 sm:flex-row sm:items-center">
         <div className="flex shrink-0 gap-2">
           <span className="size-3 rounded-full bg-[#ff5f57]" />
@@ -162,7 +351,11 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
         </div>
       </div>
 
-      <div id="code-window-panel" role="tabpanel" className="grid grid-cols-[48px_1fr] px-0 py-6 font-mono text-xs leading-7 sm:grid-cols-[56px_1fr] sm:text-sm">
+      <div
+        id="code-window-panel"
+        role="tabpanel"
+        className="grid grid-cols-[48px_1fr] px-0 py-6 text-xs leading-7 sm:grid-cols-[56px_1fr] sm:text-sm"
+      >
         <div className="select-none border-r border-white/10 text-right text-white/24">
           {Array.from({ length: currentFile.lines.length }).map((_, index) => (
             <div key={index} className="pr-3 sm:pr-4">{index + 1}</div>
@@ -170,14 +363,18 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
         </div>
         <pre className="min-h-[224px] overflow-hidden px-4 text-white/82 sm:px-5">
           {renderedLines.map((line, index) => (
-            <div key={`${currentFile.name}-${index}-${line}`} dangerouslySetInnerHTML={{ __html: highlight(line || " ") }} />
+            <div key={`${currentFile.name}-${index}-${line}`}>
+              {highlight(line || " ")}
+              {index === lastLineIndex ? (
+                <span className="inline-block h-5 w-px translate-y-1 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.7)]" />
+              ) : null}
+            </div>
           ))}
-          <span className="inline-block h-5 w-px translate-y-1 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.7)]" />
         </pre>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/38">
         <span>{currentFile.label} Mode</span>
-        <span>{Math.round((typedChars / fullText.length) * 100)}% generated</span>
+        <span>{generatedPercent}% generated</span>
       </div>
     </div>
   );
@@ -192,3 +389,4 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
     </section>
   );
 }
+
