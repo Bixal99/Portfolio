@@ -1,8 +1,9 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
-import { Download, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { resume } from "@/data/portfolio";
+import { ResumeDownloadButton } from "./ResumeDownloadButton";
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
@@ -49,12 +50,7 @@ export function ContactForm() {
           </p>
         ) : null}
       </div>
-      <a href={resume.href} download className="mt-4 inline-flex w-full items-center justify-center gap-3 border border-white/14 px-5 py-4 text-sm font-bold uppercase tracking-[0.18em] text-white/70 transition hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-black">
-        <Download className="size-4" aria-hidden="true" />
-        Download CV
-      </a>    </form>
+      <ResumeDownloadButton href={resume.href} label={resume.label} placement="inline" />
+    </form>
   );
 }
-
-
-

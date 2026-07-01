@@ -1,4 +1,4 @@
-﻿import { CreativeCodeWindow } from "@/components/CreativeCodeWindow";
+import { CreativeCodeWindow } from "@/components/CreativeCodeWindow";
 import { Education } from "@/components/Education";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
@@ -19,7 +19,8 @@ export default function Home() {
       <ScrollAnimator />
       <InteractiveGridBackground />
       <Navbar />
-      <ScrollProgress />      <ThemeToggle />
+      <ScrollProgress />
+      <ThemeToggle />
 
       <main className="relative isolate">
         <div aria-hidden="true" className="grid-backdrop" />
@@ -39,7 +40,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-
-
