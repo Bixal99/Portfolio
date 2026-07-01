@@ -25,10 +25,10 @@ export default function FlipWordsHero() {
   ];
 
   return (
-    <section className="flex items-center justify-center bg-black px-4 py-24 text-center sm:py-28 lg:translate-x-12 lg:py-32 xl:translate-x-20">
-      <h1 className="inline-flex items-baseline justify-center whitespace-nowrap text-[clamp(1.25rem,5vw,4.8rem)] font-bold leading-tight tracking-tight text-white">
-        <span>Build the future with&nbsp;</span>
-        <span className="inline-flex w-[10ch] justify-start text-left">
+    <section className="flex w-full items-center justify-start bg-black py-10 text-left sm:py-12 lg:py-14">
+      <h1 className="inline-flex items-baseline justify-start whitespace-nowrap text-[clamp(2.1rem,5vw,4.8rem)] font-bold leading-tight tracking-tight text-white">
+        <span>Building the future with&nbsp;</span>
+        <span className="inline-flex w-[9ch] justify-start text-left">
           <FlipWords
             words={words}
             className="theme-flip-word inline-block px-1"

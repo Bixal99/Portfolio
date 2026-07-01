@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
@@ -31,7 +31,7 @@ export function ThemeToggle() {
       suppressHydrationWarning
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
       onClick={toggleTheme}
-      className="fixed bottom-24 right-5 z-50 grid size-12 place-items-center rounded-full border border-white/20 bg-black/70 text-white shadow-[0_20px_70px_rgba(0,0,0,0.35)] backdrop-blur-xl transition hover:scale-105 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+      className="grid size-11 place-items-center rounded-full border border-white/20 bg-black/70 text-white shadow-[0_20px_70px_rgba(0,0,0,0.25)] backdrop-blur-xl transition hover:scale-105 hover:border-[var(--accent)] hover:text-[var(--accent)]"
     >
       {theme === "dark" ? <Sun className="size-5" /> : <Moon className="size-5" />}
     </button>

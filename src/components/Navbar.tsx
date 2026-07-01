@@ -1,8 +1,9 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navItems, profile } from "@/data/portfolio";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -84,15 +85,18 @@ export function Navbar() {
           })}
         </nav>
 
-        <button
-          type="button"
-          suppressHydrationWarning
-          aria-label="Toggle navigation"
-          onClick={() => setOpen((value) => !value)}
-          className="ml-auto grid size-11 place-items-center border border-white/15 text-white lg:hidden"
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+        <div className="ml-auto flex items-center gap-3">
+          <ThemeToggle />
+          <button
+            type="button"
+            suppressHydrationWarning
+            aria-label="Toggle navigation"
+            onClick={() => setOpen((value) => !value)}
+            className="grid size-11 place-items-center border border-white/15 text-white lg:hidden"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
       </div>
 
       {open ? (
