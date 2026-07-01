@@ -69,6 +69,7 @@ export function ResumeDownloadButton({
   return (
     <button
       type="button"
+      suppressHydrationWarning
       aria-label={
         downloadState === "done"
           ? "CV downloaded"

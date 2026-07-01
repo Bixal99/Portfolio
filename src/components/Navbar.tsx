@@ -86,6 +86,7 @@ export function Navbar() {
 
         <button
           type="button"
+          suppressHydrationWarning
           aria-label="Toggle navigation"
           onClick={() => setOpen((value) => !value)}
           className="ml-auto grid size-11 place-items-center border border-white/15 text-white lg:hidden"

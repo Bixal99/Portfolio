@@ -21,26 +21,26 @@ export function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-sm font-medium text-white/72">
           Name
-          <input name="name" type="text" required placeholder="Your name" className="min-h-12 border border-white/10 bg-black/45 px-4 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
+          <input suppressHydrationWarning name="name" type="text" required placeholder="Your name" className="min-h-12 border border-white/10 bg-black/45 px-4 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
         </label>
         <label className="grid gap-2 text-sm font-medium text-white/72">
           Email
-          <input name="email" type="email" required placeholder="you@example.com" className="min-h-12 border border-white/10 bg-black/45 px-4 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
+          <input suppressHydrationWarning name="email" type="email" required placeholder="you@example.com" className="min-h-12 border border-white/10 bg-black/45 px-4 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
         </label>
       </div>
 
       <label className="mt-4 grid gap-2 text-sm font-medium text-white/72">
         Subject
-        <input name="subject" type="text" required placeholder="What should we build?" className="min-h-12 border border-white/10 bg-black/45 px-4 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
+        <input suppressHydrationWarning name="subject" type="text" required placeholder="What should we build?" className="min-h-12 border border-white/10 bg-black/45 px-4 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
       </label>
 
       <label className="mt-4 grid gap-2 text-sm font-medium text-white/72">
         Message
-        <textarea name="message" required rows={6} placeholder="Share the goal, timeline, or problem you want to solve." className="resize-none border border-white/10 bg-black/45 px-4 py-3 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
+        <textarea suppressHydrationWarning name="message" required rows={6} placeholder="Share the goal, timeline, or problem you want to solve." className="resize-none border border-white/10 bg-black/45 px-4 py-3 text-white outline-none transition placeholder:text-white/28 focus:border-[var(--accent)]" />
       </label>
 
       <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <button type="submit" className="inline-flex w-full items-center justify-center gap-3 bg-[var(--accent)] px-5 py-4 text-sm font-bold uppercase tracking-[0.18em] text-black transition hover:bg-white sm:w-auto">
+        <button type="submit" suppressHydrationWarning className="inline-flex w-full items-center justify-center gap-3 bg-[var(--accent)] px-5 py-4 text-sm font-bold uppercase tracking-[0.18em] text-black transition hover:bg-white sm:w-auto">
           <Send className="size-4" aria-hidden="true" />
           Send Message
         </button>

@@ -62,8 +62,7 @@ export const profile = {
   name: "Mohammad Bilal Nadeem",
   role: "Computer Science Student | Backend & AI Developer",
   location: "Doha, Qatar",
-  intro:
-    "I build backend systems, AI applications, RAG pipelines, and practical full-stack tools with a focus on clean APIs, reliable data flow, and useful product experiences.",
+  intro: "Code with purpose. Build with impact. Learn without limits.",
   summary:
     "BS Computer Science candidate at FAST NUCES with hands-on experience across Node.js, Express, MongoDB, LangChain, vector databases, DeepFace, FastAPI, Next.js, and applied generative AI systems.",
   email: "bilalnadeema302003@gmail.com",
@@ -138,17 +137,40 @@ export const techGroups: TechGroup[] = [
   {
     title: "Backend & Data",
     icon: Database,
-    items: ["Node.js", "Express", "FastAPI", "Flask", "REST APIs", "MongoDB", "PostgreSQL"],
+    items: [
+      "Node.js",
+      "Express",
+      "FastAPI",
+      "Flask",
+      "REST APIs",
+      "MongoDB",
+      "PostgreSQL",
+    ],
   },
   {
     title: "AI Systems",
     icon: BrainCircuit,
-    items: ["LangChain", "RAG", "Gemini", "Groq", "Ollama", "Hugging Face", "Pinecone"],
+    items: [
+      "LangChain",
+      "RAG",
+      "Gemini",
+      "Groq",
+      "Ollama",
+      "Hugging Face",
+      "Pinecone",
+    ],
   },
   {
     title: "ML & Vision",
     icon: Binary,
-    items: ["TensorFlow", "PyTorch", "DeepFace", "Tesseract OCR", "PaddleOCR", "Neural Networks"],
+    items: [
+      "TensorFlow",
+      "PyTorch",
+      "DeepFace",
+      "Tesseract OCR",
+      "PaddleOCR",
+      "Neural Networks",
+    ],
   },
   {
     title: "Frontend",
@@ -158,10 +180,15 @@ export const techGroups: TechGroup[] = [
   {
     title: "Platforms",
     icon: Boxes,
-    items: ["Clerk Auth", "Prisma", "tRPC", "Jupyter Notebook", "Microsoft Office"],
+    items: [
+      "Clerk Auth",
+      "Prisma",
+      "tRPC",
+      "Jupyter Notebook",
+      "Microsoft Office",
+    ],
   },
 ];
-
 
 export type TechSkill = {
   name: string;
@@ -229,7 +256,14 @@ export const projects: Project[] = [
     category: "AI Search",
     description:
       "A multi-source, agent-based search engine for querying web, Wikipedia, ArXiv, and custom documents with conversational memory and semantic retrieval.",
-    technologies: ["LangChain", "Gemini", "Llama3", "Groq", "Pinecone", "Streamlit"],
+    technologies: [
+      "LangChain",
+      "Gemini",
+      "Llama3",
+      "Groq",
+      "Pinecone",
+      "Streamlit",
+    ],
     links: {
       demo: "https://example.com/rag-search",
       source: "https://github.com/",
@@ -302,21 +336,20 @@ export const sectionMeta = {
   },
   stack: {
     kicker: "Tech Stack",
-    title: "A practical stack for APIs, AI systems, RAG, OCR, and modern web apps.",
+    title:
+      "A practical stack for APIs, AI systems, RAG, OCR, and modern web apps.",
     icon: TerminalSquare,
   },
   education: {
     kicker: "Education",
-    title: "Computer science foundations with hands-on technical community work.",
+    title:
+      "Computer science foundations with hands-on technical community work.",
     icon: GraduationCap,
   },
   projects: {
     kicker: "Projects",
-    title: "AI products, backend systems, and algorithm-heavy builds from the CV.",
+    title:
+      "AI products, backend systems, and algorithm-heavy builds from the CV.",
     icon: BriefcaseBusiness,
   },
 };
-
-
-
-

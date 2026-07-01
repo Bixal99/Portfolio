@@ -175,6 +175,7 @@ export function CreativeCodeWindow() {
                   <button
                     key={file.name}
                     type="button"
+                    suppressHydrationWarning
                     role="tab"
                     aria-selected={selected}
                     aria-controls="code-window-panel"
