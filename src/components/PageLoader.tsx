@@ -4,32 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { motion } from "motion/react";
 
-const MIN_LOAD_DURATION_MS = 2400;
-const FALLBACK_LOAD_DURATION_MS = 9000;
+const LOAD_DURATION_SECONDS = 5;
 
 const bootSignals = ["Interface", "Motion", "Systems", "Ready"];
 
-type PageLoaderProps = {
-  ready?: boolean;
-};
-
-export function PageLoader({ ready = false }: PageLoaderProps) {
+export function PageLoader() {
   const [hidden, setHidden] = useState(false);
   const [percent, setPercent] = useState(0);
   const loaderRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
   const sweepRef = useRef<HTMLDivElement>(null);
-  const readyRef = useRef(ready);
-  const minElapsedRef = useRef(false);
-  const finishRef = useRef<(() => void) | null>(null);
-
-  useEffect(() => {
-    readyRef.current = ready;
-    if (ready && minElapsedRef.current) {
-      finishRef.current?.();
-    }
-  }, [ready]);
 
   useEffect(() => {
     const loader = loaderRef.current;
@@ -41,11 +26,11 @@ export function PageLoader({ ready = false }: PageLoaderProps) {
       return;
     }
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     const progress = { value: 0 };
     const ringLength = ring.getTotalLength();
-    const runningTweens: gsap.core.Tween[] = [];
-    let finished = false;
 
     gsap.set(ring, {
       strokeDasharray: ringLength,
@@ -53,76 +38,155 @@ export function PageLoader({ ready = false }: PageLoaderProps) {
       transformOrigin: "50% 50%",
     });
     gsap.set(progressBar, { scaleX: 0, transformOrigin: "left center" });
-    gsap.set(loader, { autoAlpha: 1, yPercent: 0 });
 
-    const updateProgress = () => setPercent(Math.round(progress.value));
+    const timeline = gsap.timeline({
+      defaults: { ease: "power3.out" },
+      onComplete: () => setHidden(true),
+    });
 
-    finishRef.current = () => {
-      if (finished) return;
-      finished = true;
-      runningTweens.forEach((tween) => tween.kill());
+    if (prefersReducedMotion) {
+      timeline
+        .fromTo(loader, { autoAlpha: 1 }, { autoAlpha: 1, duration: 0.1 })
+        .to(progress, {
+          value: 100,
+          duration: LOAD_DURATION_SECONDS,
+          ease: "none",
+          onUpdate: () => setPercent(Math.round(progress.value)),
+        })
+        .to(
+          progressBar,
+          { scaleX: 1, duration: LOAD_DURATION_SECONDS, ease: "none" },
+          "<",
+        )
+        .to(
+          ring,
+          {
+            strokeDashoffset: 0,
+            duration: LOAD_DURATION_SECONDS,
+            ease: "none",
+          },
+          "<",
+        )
+        .to(loader, { autoAlpha: 0, duration: 0.45, ease: "power2.out" });
 
-      gsap.timeline({
-        defaults: { ease: "power3.out" },
-        onComplete: () => setHidden(true),
-      })
-        .to(progress, { value: 100, duration: 0.42, ease: "power2.out", onUpdate: updateProgress }, 0)
-        .to(progressBar, { scaleX: 1, duration: 0.42, ease: "power2.out" }, 0)
-        .to(ring, { strokeDashoffset: 0, duration: 0.42, ease: "power2.out" }, 0)
-        .to("[data-loader-signal]", { borderColor: "rgba(var(--accent-rgb),0.5)", color: "rgba(255,255,255,0.86)", duration: 0.28, stagger: 0.045 }, 0.1)
-        .to("[data-loader-panel], [data-loader-word]", { y: -28, autoAlpha: 0, filter: "blur(10px)", duration: 0.48, stagger: 0.035, ease: "power3.in" }, 0.62)
-        .to(loader, { yPercent: -100, duration: prefersReducedMotion ? 0.2 : 0.82, ease: "expo.inOut" }, 0.86);
-    };
+      return () => {
+        timeline.kill();
+      };
+    }
 
-    gsap.timeline({ defaults: { ease: "power3.out" } })
+    timeline
+      .set(loader, { autoAlpha: 1, yPercent: 0 })
       .fromTo(
         "[data-loader-panel]",
         { autoAlpha: 0, y: 34, scale: 0.96, filter: "blur(16px)" },
-        { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: prefersReducedMotion ? 0.1 : 0.72, stagger: 0.08 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 0.72,
+          stagger: 0.08,
+        },
       )
       .fromTo(
         "[data-loader-word]",
         { yPercent: 105, rotate: 2, autoAlpha: 0 },
-        { yPercent: 0, rotate: 0, autoAlpha: 1, duration: prefersReducedMotion ? 0.1 : 0.82, stagger: 0.08, ease: "power4.out" },
+        {
+          yPercent: 0,
+          rotate: 0,
+          autoAlpha: 1,
+          duration: 0.82,
+          stagger: 0.08,
+          ease: "power4.out",
+        },
         "-=0.38",
       )
       .fromTo(
         "[data-loader-signal]",
         { autoAlpha: 0, y: 16, scale: 0.94 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: prefersReducedMotion ? 0.1 : 0.48, stagger: 0.08 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.48, stagger: 0.08 },
         "-=0.42",
+      )
+      .to(
+        progress,
+        {
+          value: 100,
+          duration: LOAD_DURATION_SECONDS,
+          ease: "power2.inOut",
+          onUpdate: () => setPercent(Math.round(progress.value)),
+        },
+        "-=0.18",
+      )
+      .to(
+        progressBar,
+        { scaleX: 1, duration: LOAD_DURATION_SECONDS, ease: "power2.inOut" },
+        "<",
+      )
+      .to(
+        ring,
+        {
+          strokeDashoffset: 0,
+          duration: LOAD_DURATION_SECONDS,
+          ease: "power2.inOut",
+        },
+        "<",
+      )
+      .to(
+        "[data-loader-core]",
+        { rotate: 360, duration: LOAD_DURATION_SECONDS, ease: "none" },
+        "<",
+      )
+      .to(
+        sweep,
+        {
+          xPercent: 175,
+          duration: LOAD_DURATION_SECONDS,
+          ease: "power1.inOut",
+        },
+        "<",
+      )
+      .to(
+        "[data-loader-pulse]",
+        {
+          scale: 1.16,
+          autoAlpha: 0.28,
+          duration: 1.25,
+          repeat: 3,
+          yoyo: true,
+          ease: "sine.inOut",
+        },
+        "<",
+      )
+      .to(
+        "[data-loader-signal]",
+        {
+          borderColor: "rgba(var(--accent-rgb),0.5)",
+          color: "rgba(255,255,255,0.86)",
+          duration: 0.36,
+          stagger: 0.055,
+        },
+        ">-0.42",
+      )
+      .to(
+        "[data-loader-panel], [data-loader-word]",
+        {
+          y: -28,
+          autoAlpha: 0,
+          filter: "blur(10px)",
+          duration: 0.55,
+          stagger: 0.04,
+          ease: "power3.in",
+        },
+        "+=0.2",
+      )
+      .to(
+        loader,
+        { yPercent: -100, duration: 0.92, ease: "expo.inOut" },
+        "-=0.12",
       );
 
-    runningTweens.push(
-      gsap.to(progress, {
-        value: 92,
-        duration: MIN_LOAD_DURATION_MS / 1000,
-        ease: "power2.out",
-        onUpdate: updateProgress,
-      }),
-      gsap.to(progressBar, { scaleX: 0.92, duration: MIN_LOAD_DURATION_MS / 1000, ease: "power2.out" }),
-      gsap.to(ring, { strokeDashoffset: ringLength * 0.08, duration: MIN_LOAD_DURATION_MS / 1000, ease: "power2.out" }),
-      gsap.to("[data-loader-core]", { rotate: 360, duration: 2.4, repeat: -1, ease: "none" }),
-      gsap.to(sweep, { xPercent: 175, duration: 3.2, repeat: -1, ease: "power1.inOut" }),
-      gsap.to("[data-loader-pulse]", { scale: 1.16, autoAlpha: 0.28, duration: 1.25, repeat: -1, yoyo: true, ease: "sine.inOut" }),
-    );
-
-    const minTimer = window.setTimeout(() => {
-      minElapsedRef.current = true;
-      if (readyRef.current) {
-        finishRef.current?.();
-      }
-    }, MIN_LOAD_DURATION_MS);
-
-    const fallbackTimer = window.setTimeout(() => {
-      finishRef.current?.();
-    }, FALLBACK_LOAD_DURATION_MS);
-
     return () => {
-      window.clearTimeout(minTimer);
-      window.clearTimeout(fallbackTimer);
-      runningTweens.forEach((tween) => tween.kill());
-      finishRef.current = null;
+      timeline.kill();
     };
   }, []);
 
@@ -157,24 +221,36 @@ export function PageLoader({ ready = false }: PageLoaderProps) {
           <div data-loader-panel className="min-w-0">
             <div className="mb-8 flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.28em] text-white/44">
               <span>Portfolio System</span>
-              <span className="h-px flex-1 bg-gradient-to-r from-white/12 via-[var(--accent)]/35 to-transparent" aria-hidden="true" />
+              <span
+                className="h-px flex-1 bg-gradient-to-r from-white/12 via-[var(--accent)]/35 to-transparent"
+                aria-hidden="true"
+              />
               <span className="text-white/30">Loading</span>
             </div>
 
             <div className="overflow-hidden">
-              <p data-loader-word className="text-sm font-semibold uppercase tracking-[0.34em] text-[var(--accent)]">
+              <p
+                data-loader-word
+                className="text-sm font-semibold uppercase tracking-[0.34em] text-[var(--accent)]"
+              >
                 Initializing
               </p>
             </div>
             <div className="mt-4 overflow-hidden">
-              <h2 data-loader-word className="max-w-3xl text-5xl font-semibold leading-[0.92] text-white sm:text-7xl lg:text-8xl">
+              <h2
+                data-loader-word
+                className="max-w-3xl text-5xl font-semibold leading-[0.92] text-white sm:text-7xl lg:text-8xl"
+              >
                 Mohammad
                 <span className="block text-white/38">Bilal</span>
               </h2>
             </div>
 
             <div className="mt-9 h-px w-full overflow-hidden bg-white/10">
-              <div ref={progressRef} className="h-full bg-[var(--accent)] shadow-[0_0_30px_rgba(var(--accent-rgb),0.75)]" />
+              <div
+                ref={progressRef}
+                className="h-full bg-[var(--accent)] shadow-[0_0_30px_rgba(var(--accent-rgb),0.75)]"
+              />
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -193,20 +269,37 @@ export function PageLoader({ ready = false }: PageLoaderProps) {
             </div>
           </div>
 
-          <div data-loader-panel className="relative mx-auto grid size-64 place-items-center sm:size-72">
+          <div
+            data-loader-panel
+            className="relative mx-auto grid size-64 place-items-center sm:size-72"
+          >
             <div
               data-loader-pulse
               aria-hidden="true"
               className="absolute inset-7 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/[0.035] shadow-[0_0_70px_rgba(var(--accent-rgb),0.18)]"
             />
-            <div data-loader-core className="absolute inset-0 rounded-full border border-white/10">
+            <div
+              data-loader-core
+              className="absolute inset-0 rounded-full border border-white/10"
+            >
               <span className="absolute left-1/2 top-0 size-2 -translate-x-1/2 rounded-full bg-[var(--accent)] shadow-[0_0_24px_rgba(var(--accent-rgb),0.9)]" />
               <span className="absolute bottom-6 left-7 size-1.5 rounded-full bg-white/70" />
               <span className="absolute right-8 top-9 size-1 rounded-full bg-white/50" />
             </div>
 
-            <svg className="absolute inset-0 size-full -rotate-90" viewBox="0 0 240 240" aria-hidden="true">
-              <circle cx="120" cy="120" r="90" fill="none" stroke="rgba(255,255,255,0.09)" strokeWidth="1" />
+            <svg
+              className="absolute inset-0 size-full -rotate-90"
+              viewBox="0 0 240 240"
+              aria-hidden="true"
+            >
+              <circle
+                cx="120"
+                cy="120"
+                r="90"
+                fill="none"
+                stroke="rgba(255,255,255,0.09)"
+                strokeWidth="1"
+              />
               <circle
                 ref={ringRef}
                 cx="120"
