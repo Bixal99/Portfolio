@@ -1,8 +1,9 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useRef } from "react";
 import type { CSSProperties, ElementType } from "react";
 import { animate, stagger } from "animejs";
+import { motion, useReducedMotion } from "motion/react";
 import {
   SiC,
   SiCplusplus,
@@ -52,19 +53,29 @@ import {
   FileCode2,
   FileJson,
   FileText,
+  Lightbulb,
+  MessageCircle,
   Network,
   Sparkles,
+  UsersRound,
   Workflow,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { sectionMeta, techSkills } from "@/data/portfolio";
+import { sectionMeta, techGroups, techSkills } from "@/data/portfolio";
 import { AnimatedSection } from "./AnimatedSection";
 import { SectionHeading } from "./SectionHeading";
 
 type IconColor = {
   dark: string;
   light?: string;
+};
+
+type SkillVisual = {
+  name: string;
+  category: string;
+  icon: string;
+  description: string;
 };
 
 const iconMap: Record<string, ElementType> = {
@@ -114,8 +125,11 @@ const iconMap: Record<string, ElementType> = {
   sql: SiSqlite,
   ai: BrainCircuit,
   ml: Network,
+  prompt: MessageCircle,
   rag: Workflow,
   json: FileJson,
+  problem: Lightbulb,
+  collaboration: UsersRound,
 };
 
 const iconColors: Record<string, IconColor> = {
@@ -165,8 +179,11 @@ const iconColors: Record<string, IconColor> = {
   sql: { dark: "#2F2FE4" },
   ai: { dark: "var(--accent)" },
   ml: { dark: "var(--accent)" },
+  prompt: { dark: "#FFB86B" },
   rag: { dark: "var(--accent)" },
   json: { dark: "#F7DF1E" },
+  problem: { dark: "#FFD166" },
+  collaboration: { dark: "#8E75FF" },
 };
 
 const skillDescriptions: Record<string, string> = {
@@ -184,6 +201,7 @@ const skillDescriptions: Record<string, string> = {
   Flask: "Lightweight Python web apps and services.",
   MongoDB: "Document database for flexible data.",
   PostgreSQL: "Reliable relational database for structured data.",
+  MySQL: "Relational database for app data.",
   Supabase: "Backend platform with Postgres and auth.",
   LangChain: "Connects LLMs with tools and data.",
   LangGraph: "Builds stateful AI agent workflows.",
@@ -192,7 +210,11 @@ const skillDescriptions: Record<string, string> = {
   OpenAI: "Models for generation, agents, and embeddings.",
   Ollama: "Runs local LLMs for private experiments.",
   "Hugging Face": "Model hub for AI workflows.",
+  AI: "Creates intelligent app behavior.",
+  ML: "Learns patterns from data.",
   "Computer Vision": "Helps apps understand images and video.",
+  "Prompt Engineering": "Shapes model outputs with precise instructions.",
+  RAG: "Combines retrieval with generated answers.",
   OpenCV: "Image processing and vision toolkit.",
   XGBoost: "Strong boosted-tree machine learning model.",
   Pandas: "DataFrames for cleaning and analysis.",
@@ -201,6 +223,7 @@ const skillDescriptions: Record<string, string> = {
   Selenium: "Automates browser testing and scraping.",
   "Beautiful Soup": "Parses HTML for web extraction.",
   PyMuPDF: "Reads and processes PDF documents.",
+  JSON: "Lightweight data exchange format.",
   Git: "Version control for code history.",
   GitHub: "Hosts repos, issues, and collaboration.",
   Docker: "Packages apps into portable containers.",
@@ -209,9 +232,21 @@ const skillDescriptions: Record<string, string> = {
   Figma: "Designs and prototypes interfaces.",
   Vercel: "Deploys frontend apps and APIs.",
   Linux: "Operating system for servers and dev.",
+  "Problem Solving": "Breaks complex tasks into clear steps.",
+  "Team Collaboration": "Builds better software with others.",
   "C++": "High-performance systems programming.",
   C: "Low-level programming close to hardware.",
   SQL: "Queries relational databases.",
+};
+
+const groupSkillAliases: Record<string, Pick<SkillVisual, "category" | "icon">> = {
+  ai: { category: "AI", icon: "ai" },
+  ml: { category: "ML", icon: "ml" },
+  promptengineering: { category: "AI", icon: "prompt" },
+  rag: { category: "AI", icon: "rag" },
+  json: { category: "Data", icon: "json" },
+  problemsolving: { category: "Soft Skill", icon: "problem" },
+  teamcollaboration: { category: "Soft Skill", icon: "collaboration" },
 };
 
 const rowShellClasses = [
@@ -243,8 +278,37 @@ function getIconStyle(icon: string) {
   } as CSSProperties;
 }
 
+function normalizeSkillName(name: string) {
+  return name.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
 function getSkillDescription(name: string, category: string) {
   return skillDescriptions[name] ?? `Useful ${category.toLowerCase()} skill for building software.`;
+}
+
+function getSkillVisual(item: string): SkillVisual {
+  const directMatch = techSkills.find((skill) => skill.name.toLowerCase() === item.toLowerCase());
+  const normalized = normalizeSkillName(item);
+  const normalizedMatch = techSkills.find((skill) => normalizeSkillName(skill.name) === normalized);
+  const matchedSkill = directMatch ?? normalizedMatch;
+
+  if (matchedSkill) {
+    return {
+      name: item,
+      category: matchedSkill.category,
+      icon: matchedSkill.icon,
+      description: getSkillDescription(matchedSkill.name, matchedSkill.category),
+    };
+  }
+
+  const alias = groupSkillAliases[normalized] ?? { category: "Skill", icon: "ai" };
+
+  return {
+    name: item,
+    category: alias.category,
+    icon: alias.icon,
+    description: getSkillDescription(item, alias.category),
+  };
 }
 
 function clamp(value: number, min: number, max: number) {
@@ -262,6 +326,7 @@ function getRowTravel(row: HTMLElement, stage: HTMLElement, rowIndex: number) {
 }
 
 export function TechStack() {
+  const surfaceRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const tooltipPanelRef = useRef<HTMLDivElement>(null);
@@ -269,8 +334,10 @@ export function TechStack() {
   const tooltipCategoryRef = useRef<HTMLSpanElement>(null);
   const tooltipDescriptionRef = useRef<HTMLParagraphElement>(null);
   const skillRows = useMemo(() => [chunkSkillsByRow(0), chunkSkillsByRow(1), chunkSkillsByRow(2)], []);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    const surface = surfaceRef.current;
     const section = sectionRef.current;
     const tooltip = tooltipRef.current;
     const tooltipPanel = tooltipPanelRef.current;
@@ -278,10 +345,13 @@ export function TechStack() {
     const tooltipCategory = tooltipCategoryRef.current;
     const tooltipDescription = tooltipDescriptionRef.current;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!section || !tooltip || !tooltipPanel || !tooltipName || !tooltipCategory || !tooltipDescription) return;
+    if (!surface || !section || !tooltip || !tooltipPanel || !tooltipName || !tooltipCategory || !tooltipDescription) return;
 
-    const iconElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-icon]"));
+    const allIconElements = Array.from(surface.querySelectorAll<HTMLElement>("[data-skill-icon]"));
+    const laneIconElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-icon]"));
     const rowElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-row]"));
+    const dropZones = Array.from(surface.querySelectorAll<HTMLElement>("[data-skill-drop-zone]"));
+    const gridLayer = document.querySelector<HTMLElement>(".interactive-grid-bg");
     const moveTooltipX = gsap.quickTo(tooltip, "x", { duration: 0.2, ease: "power3.out" });
     const moveTooltipY = gsap.quickTo(tooltip, "y", { duration: 0.2, ease: "power3.out" });
     let activeDirection = 0;
@@ -290,6 +360,17 @@ export function TechStack() {
 
     gsap.set(tooltip, { autoAlpha: 0, x: -9999, y: -9999 });
     gsap.set(tooltipPanel, { opacity: 0, scale: 0.88, y: 10, rotate: -2, transformOrigin: "50% 100%" });
+
+    const fadeGrid = (visible: boolean) => {
+      if (!gridLayer || prefersReducedMotion) return;
+
+      gsap.to(gridLayer, {
+        autoAlpha: visible ? 1 : 0,
+        duration: 0.42,
+        ease: "power2.out",
+        overwrite: true,
+      });
+    };
 
     const positionTooltip = (icon: HTMLElement, pointerX?: number, pointerY?: number) => {
       const iconRect = icon.getBoundingClientRect();
@@ -363,7 +444,7 @@ export function TechStack() {
 
     const entrance = prefersReducedMotion
       ? null
-      : animate(iconElements, {
+      : animate(laneIconElements, {
           opacity: { from: 0 },
           scale: { from: 0.7 },
           y: { from: 34 },
@@ -378,7 +459,7 @@ export function TechStack() {
       if (prefersReducedMotion || !direction || direction === activeDirection) return;
 
       activeDirection = direction;
-      const accentTargets = iconElements.filter((_, index) => index % 5 === Math.abs(direction));
+      const accentTargets = laneIconElements.filter((_, index) => index % 5 === Math.abs(direction));
 
       animate(accentTargets, {
         scale: 1.1,
@@ -403,7 +484,7 @@ export function TechStack() {
       if (prefersReducedMotion || didSettle) return;
 
       didSettle = true;
-      animate(iconElements.filter((_, index) => index % 3 === 0), {
+      animate(laneIconElements.filter((_, index) => index % 3 === 0), {
         scale: 1,
         y: 0,
         rotate: "0deg",
@@ -413,16 +494,16 @@ export function TechStack() {
       });
     };
 
-    const hoverCleanups = iconElements.map((icon, index) => {
+    const hoverCleanups = allIconElements.map((icon, index) => {
       const enter = (event: PointerEvent) => {
         showTooltip(icon, event);
 
         if (prefersReducedMotion) return;
         animate(icon, {
-          scale: 1.18,
-          y: -12,
-          rotate: index % 2 === 0 ? "6deg" : "-6deg",
-          duration: 420,
+          scale: 1.14,
+          y: -10,
+          rotate: index % 2 === 0 ? "5deg" : "-5deg",
+          duration: 390,
           ease: "out(5)",
         });
       };
@@ -435,7 +516,7 @@ export function TechStack() {
           scale: 1,
           y: 0,
           rotate: "0deg",
-          duration: 420,
+          duration: 390,
           ease: "out(4)",
         });
       };
@@ -448,10 +529,10 @@ export function TechStack() {
           ease: "out(2)",
           onComplete: () => {
             animate(icon, {
-              scale: 1.18,
-              y: -12,
-              rotate: index % 2 === 0 ? "6deg" : "-6deg",
-              duration: 320,
+              scale: 1.14,
+              y: -10,
+              rotate: index % 2 === 0 ? "5deg" : "-5deg",
+              duration: 300,
               ease: "out(5)",
             });
           },
@@ -482,6 +563,16 @@ export function TechStack() {
       gsap.registerPlugin(ScrollTrigger);
 
       context = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: surface,
+          start: "top bottom",
+          end: "bottom top",
+          onEnter: () => fadeGrid(false),
+          onEnterBack: () => fadeGrid(false),
+          onLeave: () => fadeGrid(true),
+          onLeaveBack: () => fadeGrid(true),
+        });
+
         ScrollTrigger.create({
           trigger: section,
           start: "top 78%",
@@ -524,13 +615,53 @@ export function TechStack() {
             0,
           );
         });
-      }, section);
+
+        dropZones.forEach((zone, zoneIndex) => {
+          const dropIcons = Array.from(zone.querySelectorAll<HTMLElement>("[data-skill-drop-icon]"));
+
+          gsap.fromTo(
+            dropIcons,
+            {
+              autoAlpha: 0,
+              y: -96,
+              rotate: zoneIndex % 2 === 0 ? -12 : 12,
+              scale: 0.76,
+            },
+            {
+              autoAlpha: 1,
+              y: 0,
+              rotate: 0,
+              scale: 1,
+              duration: 0.8,
+              stagger: 0.045,
+              ease: "back.out(1.8)",
+              scrollTrigger: {
+                trigger: zone,
+                start: "top 72%",
+                toggleActions: "play none none reverse",
+              },
+              onComplete: () => {
+                animate(dropIcons, {
+                  scale: { from: 0.96, to: 1 },
+                  y: { from: 6, to: 0 },
+                  duration: 420,
+                  delay: stagger(14, { from: "center", jitter: 2, seed: zoneIndex + 1 }),
+                  ease: "out(5)",
+                });
+              },
+            },
+          );
+        });
+      }, surface);
     }
 
     return () => {
       hoverCleanups.forEach((cleanup) => cleanup());
       entrance?.revert();
       context?.revert();
+      if (gridLayer) {
+        gsap.set(gridLayer, { autoAlpha: 1 });
+      }
     };
   }, []);
 
@@ -538,46 +669,107 @@ export function TechStack() {
     <AnimatedSection id="stack" className="relative overflow-hidden">
       <SectionHeading {...sectionMeta.stack} />
 
-      <div ref={sectionRef} className="relative -mx-5 overflow-hidden py-8 sm:-mx-8 sm:py-10 lg:-mx-12">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--background)] via-[var(--background)] to-transparent sm:w-28" aria-hidden="true" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--background)] via-[var(--background)] to-transparent sm:w-28" aria-hidden="true" />
+      <div ref={surfaceRef} data-stack-surface className="relative">
+        <div ref={sectionRef} className="relative -mx-5 overflow-hidden py-8 sm:-mx-8 sm:py-10 lg:-mx-12">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--background)] via-[var(--background)] to-transparent sm:w-28" aria-hidden="true" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--background)] via-[var(--background)] to-transparent sm:w-28" aria-hidden="true" />
 
-        <div className="flex flex-col gap-5 sm:gap-7">
-          {skillRows.map((row, rowIndex) => (
-            <div key={`skill-row-${rowIndex}`} className="overflow-visible py-1">
-              <div
-                data-skill-row
-                className={`flex w-max items-center gap-4 whitespace-nowrap will-change-transform sm:gap-6 ${rowOffsets[rowIndex]}`}
-              >
-                {[...row, ...row, ...row].map((skill, index) => {
-                  const Icon = iconMap[skill.icon] ?? Boxes;
-                  const description = getSkillDescription(skill.name, skill.category);
+          <div className="flex flex-col gap-5 sm:gap-7">
+            {skillRows.map((row, rowIndex) => (
+              <div key={`skill-row-${rowIndex}`} className="overflow-visible py-1">
+                <div
+                  data-skill-row
+                  className={`flex w-max items-center gap-4 whitespace-nowrap will-change-transform sm:gap-6 ${rowOffsets[rowIndex]}`}
+                >
+                  {[...row, ...row, ...row].map((skill, index) => {
+                    const Icon = iconMap[skill.icon] ?? Boxes;
+                    const description = getSkillDescription(skill.name, skill.category);
 
-                  return (
-                    <span
-                      key={`${skill.name}-${rowIndex}-${index}`}
-                      data-skill-icon
-                      data-skill-name={skill.name}
-                      data-skill-category={skill.category}
-                      data-skill-description={description}
-                      className={`group/icon relative grid shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.035] text-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 ${rowShellClasses[rowIndex]}`}
-                      aria-label={`${skill.name}: ${description}`}
-                      role="img"
-                      tabIndex={0}
-                      style={{ marginTop: `${((index + rowIndex) % 5) * 4}px` }}
-                    >
-                      <Icon
-                        className={`skill-brand-icon drop-shadow-[0_0_22px_rgba(var(--accent-rgb),0.2)] transition duration-300 group-hover/icon:drop-shadow-[0_0_28px_rgba(var(--accent-rgb),0.42)] ${rowIconClasses[rowIndex]}`}
-                        style={getIconStyle(skill.icon)}
-                        aria-hidden="true"
-                      />
-                      <span className="sr-only">{skill.name}</span>
-                    </span>
-                  );
-                })}
+                    return (
+                      <span
+                        key={`${skill.name}-${rowIndex}-${index}`}
+                        data-skill-icon
+                        data-skill-name={skill.name}
+                        data-skill-category={skill.category}
+                        data-skill-description={description}
+                        className={`group/icon relative grid shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.035] text-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 ${rowShellClasses[rowIndex]}`}
+                        aria-label={`${skill.name}: ${description}`}
+                        role="img"
+                        tabIndex={0}
+                        style={{ marginTop: `${((index + rowIndex) % 5) * 4}px` }}
+                      >
+                        <Icon
+                          className={`skill-brand-icon drop-shadow-[0_0_22px_rgba(var(--accent-rgb),0.2)] transition duration-300 group-hover/icon:drop-shadow-[0_0_28px_rgba(var(--accent-rgb),0.42)] ${rowIconClasses[rowIndex]}`}
+                          style={getIconStyle(skill.icon)}
+                          aria-hidden="true"
+                        />
+                        <span className="sr-only">{skill.name}</span>
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 space-y-5 sm:mt-14 sm:space-y-6">
+          {techGroups.map((group, groupIndex) => {
+            const GroupIcon = group.icon;
+
+            return (
+              <motion.article
+                key={group.title}
+                data-skill-drop-zone
+                className="relative overflow-hidden border border-white/10 bg-black/55 px-4 py-5 shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-md sm:px-6 sm:py-6"
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 42 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-12% 0px" }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: groupIndex * 0.04 }}
+              >
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-50" aria-hidden="true" />
+                <div className="relative z-10 grid gap-5 lg:grid-cols-[minmax(13rem,0.34fr)_1fr] lg:items-center">
+                  <div className="flex items-center gap-4">
+                    <span className="grid size-12 shrink-0 place-items-center border border-[var(--accent)]/25 bg-[var(--accent)]/10 text-[var(--accent)]">
+                      <GroupIcon className="size-6" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/38">Drop zone</p>
+                      <h3 className="mt-2 text-2xl font-semibold leading-none text-white sm:text-3xl">{group.title}</h3>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3 sm:gap-4">
+                    {group.items.map((item) => {
+                      const skill = getSkillVisual(item);
+                      const Icon = iconMap[skill.icon] ?? Boxes;
+
+                      return (
+                        <motion.span
+                          key={`${group.title}-${item}`}
+                          data-skill-icon
+                          data-skill-drop-icon
+                          data-skill-name={skill.name}
+                          data-skill-category={skill.category}
+                          data-skill-description={skill.description}
+                          className="group/drop inline-flex min-h-14 items-center gap-3 border border-white/10 bg-white/[0.035] px-3 py-2 text-sm text-white/70 shadow-[0_14px_38px_rgba(0,0,0,0.2)] transition-colors duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 sm:min-h-16 sm:px-4"
+                          aria-label={`${skill.name}: ${skill.description}`}
+                          role="img"
+                          tabIndex={0}
+                          layout
+                          whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+                          transition={{ type: "spring", stiffness: 420, damping: 26 }}
+                        >
+                          <Icon className="skill-brand-icon size-6 shrink-0 sm:size-7" style={getIconStyle(skill.icon)} aria-hidden="true" />
+                          <span className="max-w-[9rem] truncate font-medium leading-5">{skill.name}</span>
+                        </motion.span>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
 
@@ -594,3 +786,5 @@ export function TechStack() {
     </AnimatedSection>
   );
 }
+
+
