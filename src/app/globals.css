@@ -42,6 +42,28 @@ body {
 a {
   text-decoration: none;
 }
+a:hover,
+button:hover,
+input:hover,
+textarea:hover,
+select:hover,
+summary:hover,
+label:hover,
+[role="button"]:hover,
+[role="link"]:hover,
+[tabindex]:not([tabindex="-1"]):hover,
+[data-skill-icon]:hover,
+[data-skill-drop-icon]:hover {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
 
 ::selection {
   background: rgba(255, 255, 255, 0.24);

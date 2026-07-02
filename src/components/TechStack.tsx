@@ -250,14 +250,14 @@ const groupSkillAliases: Record<string, Pick<SkillVisual, "category" | "icon">> 
 };
 
 const rowShellClasses = [
-  "size-16 sm:size-20 lg:size-24",
-  "size-14 sm:size-16 lg:size-20",
+  "size-[4.75rem] sm:size-24 lg:size-28",
+  "size-[4.75rem] sm:size-24 lg:size-28",
   "size-[4.75rem] sm:size-24 lg:size-28",
 ];
 
 const rowIconClasses = [
-  "size-8 sm:size-10 lg:size-12",
-  "size-7 sm:size-8 lg:size-10",
+  "size-9 sm:size-12 lg:size-14",
+  "size-9 sm:size-12 lg:size-14",
   "size-9 sm:size-12 lg:size-14",
 ];
 
@@ -347,7 +347,6 @@ export function TechStack() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!surface || !section || !tooltip || !tooltipPanel || !tooltipName || !tooltipCategory || !tooltipDescription) return;
 
-    const allIconElements = Array.from(surface.querySelectorAll<HTMLElement>("[data-skill-icon]"));
     const laneIconElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-icon]"));
     const rowElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-row]"));
     const dropZones = Array.from(surface.querySelectorAll<HTMLElement>("[data-skill-drop-zone]"));
@@ -494,7 +493,7 @@ export function TechStack() {
       });
     };
 
-    const hoverCleanups = allIconElements.map((icon, index) => {
+    const hoverCleanups = laneIconElements.map((icon, index) => {
       const enter = (event: PointerEvent) => {
         showTooltip(icon, event);
 
@@ -624,13 +623,11 @@ export function TechStack() {
             {
               autoAlpha: 0,
               y: -96,
-              rotate: zoneIndex % 2 === 0 ? -12 : 12,
               scale: 0.76,
             },
             {
               autoAlpha: 1,
               y: 0,
-              rotate: 0,
               scale: 1,
               duration: 0.8,
               stagger: 0.045,
@@ -734,8 +731,7 @@ export function TechStack() {
                       <GroupIcon className="size-6" aria-hidden="true" />
                     </span>
                     <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/38">Drop zone</p>
-                      <h3 className="mt-2 text-2xl font-semibold leading-none text-white sm:text-3xl">{group.title}</h3>
+                      <h3 className="text-2xl font-semibold leading-none text-white sm:text-3xl">{group.title}</h3>
                     </div>
                   </div>
 
@@ -745,24 +741,17 @@ export function TechStack() {
                       const Icon = iconMap[skill.icon] ?? Boxes;
 
                       return (
-                        <motion.span
+                        <span
                           key={`${group.title}-${item}`}
-                          data-skill-icon
                           data-skill-drop-icon
-                          data-skill-name={skill.name}
-                          data-skill-category={skill.category}
-                          data-skill-description={skill.description}
-                          className="group/drop inline-flex min-h-14 items-center gap-3 border border-white/10 bg-white/[0.035] px-3 py-2 text-sm text-white/70 shadow-[0_14px_38px_rgba(0,0,0,0.2)] transition-colors duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 sm:min-h-16 sm:px-4"
-                          aria-label={`${skill.name}: ${skill.description}`}
+                          className="group/drop inline-flex min-h-14 min-w-[13.5rem] items-center gap-3 border border-white/10 bg-white/[0.035] px-4 py-2 text-sm text-white/70 shadow-[0_14px_38px_rgba(0,0,0,0.2)] transition-[background-color,border-color,box-shadow,color] duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] hover:text-white hover:shadow-[0_0_28px_rgba(var(--accent-rgb),0.22)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 sm:min-h-16 sm:min-w-[15rem] sm:px-5"
+                          aria-label={skill.name}
                           role="img"
                           tabIndex={0}
-                          layout
-                          whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-                          transition={{ type: "spring", stiffness: 420, damping: 26 }}
                         >
                           <Icon className="skill-brand-icon size-6 shrink-0 sm:size-7" style={getIconStyle(skill.icon)} aria-hidden="true" />
-                          <span className="max-w-[9rem] truncate font-medium leading-5">{skill.name}</span>
-                        </motion.span>
+                          <span className="whitespace-nowrap font-medium leading-5">{skill.name}</span>
+                        </span>
                       );
                     })}
                   </div>
