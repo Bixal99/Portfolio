@@ -12,7 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "public/draco/**",
+    "public/models/encrypt.cjs",
   ]),
 ]);
 
 export default eslintConfig;
+
+

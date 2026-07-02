@@ -4,17 +4,32 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { motion } from "motion/react";
 
-const LOAD_DURATION_SECONDS = 5;
+const MIN_LOAD_DURATION_MS = 2400;
+const FALLBACK_LOAD_DURATION_MS = 9000;
 
 const bootSignals = ["Interface", "Motion", "Systems", "Ready"];
 
-export function PageLoader() {
+type PageLoaderProps = {
+  ready?: boolean;
+};
+
+export function PageLoader({ ready = false }: PageLoaderProps) {
   const [hidden, setHidden] = useState(false);
   const [percent, setPercent] = useState(0);
   const loaderRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
   const sweepRef = useRef<HTMLDivElement>(null);
+  const readyRef = useRef(ready);
+  const minElapsedRef = useRef(false);
+  const finishRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    readyRef.current = ready;
+    if (ready && minElapsedRef.current) {
+      finishRef.current?.();
+    }
+  }, [ready]);
 
   useEffect(() => {
     const loader = loaderRef.current;
@@ -29,6 +44,8 @@ export function PageLoader() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const progress = { value: 0 };
     const ringLength = ring.getTotalLength();
+    const runningTweens: gsap.core.Tween[] = [];
+    let finished = false;
 
     gsap.set(ring, {
       strokeDasharray: ringLength,
@@ -36,70 +53,76 @@ export function PageLoader() {
       transformOrigin: "50% 50%",
     });
     gsap.set(progressBar, { scaleX: 0, transformOrigin: "left center" });
+    gsap.set(loader, { autoAlpha: 1, yPercent: 0 });
 
-    const timeline = gsap.timeline({
-      defaults: { ease: "power3.out" },
-      onComplete: () => setHidden(true),
-    });
+    const updateProgress = () => setPercent(Math.round(progress.value));
 
-    if (prefersReducedMotion) {
-      timeline
-        .fromTo(loader, { autoAlpha: 1 }, { autoAlpha: 1, duration: 0.1 })
-        .to(progress, {
-          value: 100,
-          duration: LOAD_DURATION_SECONDS,
-          ease: "none",
-          onUpdate: () => setPercent(Math.round(progress.value)),
-        })
-        .to(progressBar, { scaleX: 1, duration: LOAD_DURATION_SECONDS, ease: "none" }, "<")
-        .to(ring, { strokeDashoffset: 0, duration: LOAD_DURATION_SECONDS, ease: "none" }, "<")
-        .to(loader, { autoAlpha: 0, duration: 0.45, ease: "power2.out" });
+    finishRef.current = () => {
+      if (finished) return;
+      finished = true;
+      runningTweens.forEach((tween) => tween.kill());
 
-      return () => {
-        timeline.kill();
-      };
-    }
+      gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onComplete: () => setHidden(true),
+      })
+        .to(progress, { value: 100, duration: 0.42, ease: "power2.out", onUpdate: updateProgress }, 0)
+        .to(progressBar, { scaleX: 1, duration: 0.42, ease: "power2.out" }, 0)
+        .to(ring, { strokeDashoffset: 0, duration: 0.42, ease: "power2.out" }, 0)
+        .to("[data-loader-signal]", { borderColor: "rgba(var(--accent-rgb),0.5)", color: "rgba(255,255,255,0.86)", duration: 0.28, stagger: 0.045 }, 0.1)
+        .to("[data-loader-panel], [data-loader-word]", { y: -28, autoAlpha: 0, filter: "blur(10px)", duration: 0.48, stagger: 0.035, ease: "power3.in" }, 0.62)
+        .to(loader, { yPercent: -100, duration: prefersReducedMotion ? 0.2 : 0.82, ease: "expo.inOut" }, 0.86);
+    };
 
-    timeline
-      .set(loader, { autoAlpha: 1, yPercent: 0 })
+    gsap.timeline({ defaults: { ease: "power3.out" } })
       .fromTo(
         "[data-loader-panel]",
         { autoAlpha: 0, y: 34, scale: 0.96, filter: "blur(16px)" },
-        { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.72, stagger: 0.08 },
+        { autoAlpha: 1, y: 0, scale: 1, filter: "blur(0px)", duration: prefersReducedMotion ? 0.1 : 0.72, stagger: 0.08 },
       )
       .fromTo(
         "[data-loader-word]",
         { yPercent: 105, rotate: 2, autoAlpha: 0 },
-        { yPercent: 0, rotate: 0, autoAlpha: 1, duration: 0.82, stagger: 0.08, ease: "power4.out" },
+        { yPercent: 0, rotate: 0, autoAlpha: 1, duration: prefersReducedMotion ? 0.1 : 0.82, stagger: 0.08, ease: "power4.out" },
         "-=0.38",
       )
       .fromTo(
         "[data-loader-signal]",
         { autoAlpha: 0, y: 16, scale: 0.94 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: 0.48, stagger: 0.08 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: prefersReducedMotion ? 0.1 : 0.48, stagger: 0.08 },
         "-=0.42",
-      )
-      .to(
-        progress,
-        {
-          value: 100,
-          duration: LOAD_DURATION_SECONDS,
-          ease: "power2.inOut",
-          onUpdate: () => setPercent(Math.round(progress.value)),
-        },
-        "-=0.18",
-      )
-      .to(progressBar, { scaleX: 1, duration: LOAD_DURATION_SECONDS, ease: "power2.inOut" }, "<")
-      .to(ring, { strokeDashoffset: 0, duration: LOAD_DURATION_SECONDS, ease: "power2.inOut" }, "<")
-      .to("[data-loader-core]", { rotate: 360, duration: LOAD_DURATION_SECONDS, ease: "none" }, "<")
-      .to(sweep, { xPercent: 175, duration: LOAD_DURATION_SECONDS, ease: "power1.inOut" }, "<")
-      .to("[data-loader-pulse]", { scale: 1.16, autoAlpha: 0.28, duration: 1.25, repeat: 3, yoyo: true, ease: "sine.inOut" }, "<")
-      .to("[data-loader-signal]", { borderColor: "rgba(var(--accent-rgb),0.5)", color: "rgba(255,255,255,0.86)", duration: 0.36, stagger: 0.055 }, ">-0.42")
-      .to("[data-loader-panel], [data-loader-word]", { y: -28, autoAlpha: 0, filter: "blur(10px)", duration: 0.55, stagger: 0.04, ease: "power3.in" }, "+=0.2")
-      .to(loader, { yPercent: -100, duration: 0.92, ease: "expo.inOut" }, "-=0.12");
+      );
+
+    runningTweens.push(
+      gsap.to(progress, {
+        value: 92,
+        duration: MIN_LOAD_DURATION_MS / 1000,
+        ease: "power2.out",
+        onUpdate: updateProgress,
+      }),
+      gsap.to(progressBar, { scaleX: 0.92, duration: MIN_LOAD_DURATION_MS / 1000, ease: "power2.out" }),
+      gsap.to(ring, { strokeDashoffset: ringLength * 0.08, duration: MIN_LOAD_DURATION_MS / 1000, ease: "power2.out" }),
+      gsap.to("[data-loader-core]", { rotate: 360, duration: 2.4, repeat: -1, ease: "none" }),
+      gsap.to(sweep, { xPercent: 175, duration: 3.2, repeat: -1, ease: "power1.inOut" }),
+      gsap.to("[data-loader-pulse]", { scale: 1.16, autoAlpha: 0.28, duration: 1.25, repeat: -1, yoyo: true, ease: "sine.inOut" }),
+    );
+
+    const minTimer = window.setTimeout(() => {
+      minElapsedRef.current = true;
+      if (readyRef.current) {
+        finishRef.current?.();
+      }
+    }, MIN_LOAD_DURATION_MS);
+
+    const fallbackTimer = window.setTimeout(() => {
+      finishRef.current?.();
+    }, FALLBACK_LOAD_DURATION_MS);
 
     return () => {
-      timeline.kill();
+      window.clearTimeout(minTimer);
+      window.clearTimeout(fallbackTimer);
+      runningTweens.forEach((tween) => tween.kill());
+      finishRef.current = null;
     };
   }, []);
 

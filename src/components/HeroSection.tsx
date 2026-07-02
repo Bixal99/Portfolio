@@ -1,6 +1,5 @@
 import { ArrowDown } from "lucide-react";
 import { profile } from "@/data/portfolio";
-import { ProfileVisual } from "./ProfileVisual";
 import { TypewriterLine } from "./TypewriterLine";
 
 export function HeroSection() {
@@ -9,8 +8,8 @@ export function HeroSection() {
       id="home"
       className="relative flex min-h-dvh scroll-mt-0 items-center py-28 sm:py-32 lg:py-36"
     >
-      <div className="grid w-full -translate-y items-center gap-12 sm:-translate-y-2 lg:-translate-y-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(300px,0.72fr)] xl:gap-14">
-        <div className="relative z-10 max-w-3xl">
+      <div className="grid w-full -translate-y items-center gap-12 sm:-translate-y-2 lg:-translate-y-4 lg:grid-cols-[minmax(0,0.42fr)_minmax(420px,0.58fr)] xl:gap-14">
+        <div data-hero-copy className="relative z-20 max-w-3xl">
           <p
             data-hero-animate
             className="mb-4 text-sm font-semibold uppercase tracking-[0.42em] text-[var(--accent)]"
@@ -31,7 +30,7 @@ export function HeroSection() {
 
           <a
             data-hero-animate
-            href="#journey"
+            href="#about"
             className="mt-12 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.28em] text-white transition hover:text-[var(--accent)]"
           >
             Scroll to explore
@@ -39,7 +38,7 @@ export function HeroSection() {
           </a>
         </div>
 
-        <ProfileVisual />
+        <div className="hidden min-h-[64dvh] lg:block" aria-hidden="true" />
       </div>
     </section>
   );
