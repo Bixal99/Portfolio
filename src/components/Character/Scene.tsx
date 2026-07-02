@@ -153,6 +153,7 @@ const Scene = ({ onReady, onError }: SceneProps) => {
       containerElement.removeEventListener("touchmove", onTouchMove);
       containerElement.removeEventListener("touchend", onTouchEnd);
       if (resizeHandler) window.removeEventListener("resize", resizeHandler);
+      light.dispose();
       scene.clear();
       timer.dispose();
       renderer.dispose();

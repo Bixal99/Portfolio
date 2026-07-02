@@ -29,6 +29,17 @@ function killCharacterTriggers() {
   });
 }
 
+function getThemeAccentColor() {
+  if (typeof window === "undefined") return "#5dd3b6";
+
+  return (
+    window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue("--accent")
+      .trim() || "#5dd3b6"
+  );
+}
+
 function prepareCodingProps(character: THREE.Object3D) {
   let monitorMaterial: CharacterMaterial | null = null;
   let screenLightMaterial: CharacterMaterial | null = null;
@@ -54,9 +65,14 @@ function prepareCodingProps(character: THREE.Object3D) {
 
       material.transparent = true;
       material.opacity = 0;
-      material.emissive?.set("#c8bfff");
+      material.emissive?.set(getThemeAccentColor());
       screenLightMaterial = material;
-      gsap.timeline({ repeat: -1, repeatRefresh: true }).to(material, {
+      gsap.timeline({
+        repeat: -1,
+        repeatRefresh: true,
+        onStart: () => material.emissive?.set(getThemeAccentColor()),
+        onRepeat: () => material.emissive?.set(getThemeAccentColor()),
+      }).to(material, {
         emissiveIntensity: () => Math.random() * 8,
         duration: () => Math.random() * 0.6,
         delay: () => Math.random() * 0.1,

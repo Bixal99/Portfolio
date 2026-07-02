@@ -8,13 +8,19 @@ const LOAD_DURATION_SECONDS = 5;
 
 const bootSignals = ["Interface", "Motion", "Systems", "Ready"];
 
-export function PageLoader() {
-  const [hidden, setHidden] = useState(false);
+type PageLoaderProps = {
+  ready?: boolean;
+};
+
+export function PageLoader({ ready = true }: PageLoaderProps) {
+  const [complete, setComplete] = useState(false);
   const [percent, setPercent] = useState(0);
   const loaderRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
   const sweepRef = useRef<HTMLDivElement>(null);
+
+  const hidden = complete && ready;
 
   useEffect(() => {
     const loader = loaderRef.current;
@@ -41,7 +47,7 @@ export function PageLoader() {
 
     const timeline = gsap.timeline({
       defaults: { ease: "power3.out" },
-      onComplete: () => setHidden(true),
+      onComplete: () => setComplete(true),
     });
 
     if (prefersReducedMotion) {

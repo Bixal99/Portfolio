@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect } from "react";
 import gsap from "gsap";
@@ -28,6 +28,20 @@ export function ScrollAnimator() {
           stagger: 0.11,
           ease: "power4.out",
           delay: 1.65,
+        },
+      );
+
+      gsap.fromTo(
+        "[data-hero-name-word]",
+        { yPercent: 22, scaleX: 0.96, filter: "blur(8px)" },
+        {
+          yPercent: 0,
+          scaleX: 1,
+          filter: "blur(0px)",
+          duration: 0.9,
+          stagger: 0.08,
+          ease: "power4.out",
+          delay: 1.82,
         },
       );
 
