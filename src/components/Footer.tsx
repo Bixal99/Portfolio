@@ -335,7 +335,7 @@ export function Footer() {
             transition={{ duration: 0.28, ease: "easeOut" }}
             className="text-xs uppercase tracking-[0.2em] text-white/34"
           >
-            2026 Mohammad Bilal Nadeem
+            2026 Mohammad Bilal
           </motion.p>
         </div>
       </div>

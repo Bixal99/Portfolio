@@ -146,7 +146,7 @@ export function PageLoader() {
             <div className="mt-4 overflow-hidden">
               <h2 data-loader-word className="max-w-3xl text-5xl font-semibold leading-[0.92] text-white sm:text-7xl lg:text-8xl">
                 Mohammad
-                <span className="block text-white/38">Bilal Nadeem</span>
+                <span className="block text-white/38">Bilal</span>
               </h2>
             </div>
 

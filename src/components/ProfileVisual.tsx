@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 
 export function ProfileVisual() {
   return (
@@ -7,7 +7,7 @@ export function ProfileVisual() {
       <div className="relative overflow-hidden border border-white/14 bg-[#070707] shadow-[0_30px_120px_rgba(0,0,0,0.6)]">
         <Image
           src="/Me.jpeg"
-          alt="Portrait of Mohammad Bilal Nadeem"
+          alt="Portrait of Mohammad Bilal"
           width={896}
           height={1195}
           priority

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-const phrases = ["AI Engineer", "Backend Developer", "Full-Stack Developer", "Startup Engineer", "Open Source Contributor", "Tech Enthusiast"];
+const phrases = ["Software Engineer", "AI Engineer", "Full-Stack Developer", "Computer Vision Builder", "Machine Learning Developer", "Startup Engineer"];
 
 export function TypewriterLine() {
   const lineRef = useRef<HTMLParagraphElement>(null);

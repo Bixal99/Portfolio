@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -10,18 +10,18 @@ import { SectionHeading } from "./SectionHeading";
 const visuals = [
   {
     label: "FAST NUCES",
-    stat: "BSCS",
-    rows: ["Software Engineering", "Backend Systems", "AI Applications"],
+    stat: "2.85 GPA",
+    rows: ["AI", "Software Engineering", "Machine Learning"],
   },
   {
-    label: "Cyber Security",
-    stat: "Society",
-    rows: ["Technical events", "Security culture", "Peer learning"],
+    label: "Projects",
+    stat: "AI Suite",
+    rows: ["Management systems", "Database apps", "Computer vision"],
   },
   {
-    label: "Media Team",
-    stat: "FPS",
-    rows: ["Event coverage", "Workshops", "Visual communication"],
+    label: "Languages",
+    stat: "Fluent",
+    rows: ["English", "Urdu", "Team collaboration"],
   },
 ];
 

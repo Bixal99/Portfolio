@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -9,9 +9,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Mohammad Bilal Nadeem | Backend & AI Developer",
+  title: "Mohammad Bilal | Software Engineer & AI Engineer",
   description:
-    "Mohammad Bilal Nadeem portfolio: backend systems, AI applications, RAG pipelines, computer vision, and full-stack projects.",
+    "Mohammad Bilal portfolio: AI engineering, computer vision, machine learning, full-stack development, and software systems projects.",
 };
 
 export default function RootLayout({

@@ -9,8 +9,6 @@ import {
   Code2,
   Database,
   GraduationCap,
-  Network,
-  ShieldCheck,
   TerminalSquare,
 } from "lucide-react";
 
@@ -59,19 +57,19 @@ export type Project = {
 };
 
 export const profile = {
-  name: "Mohammad Bilal Nadeem",
-  role: "Computer Science Student | Backend & AI Developer",
+  name: "Mohammad Bilal",
+  role: "Software Engineer | AI Engineer",
   location: "Doha, Qatar",
-  intro: "Code with purpose. Build with impact. Learn without limits.",
+  intro: "Building scalable, user-focused solutions for real-world problems.",
   summary:
-    "BS Computer Science candidate at FAST NUCES with hands-on experience across Node.js, Express, MongoDB, LangChain, vector databases, DeepFace, FastAPI, Next.js, and applied generative AI systems.",
+    "Computer Science student with hands-on experience in AI, computer vision, and full-stack development through academic and personal projects. Skilled in Python, JavaScript, React, Node.js, and machine learning.",
   email: "bilalnadeema302003@gmail.com",
-  phone: "+974 51243268",
+  phone: "+923470405422",
 };
 
 export const resume = {
   label: "Download CV",
-  href: "/resume.pdf",
+  href: "/Mohammad_Bilal_resume.pdf",
 };
 
 export const navItems: NavItem[] = [
@@ -83,47 +81,45 @@ export const navItems: NavItem[] = [
 ];
 
 export const socialLinks: SocialLink[] = [
-  { label: "GitHub", href: "https://github.com/", mark: "GH" },
+  { label: "GitHub", href: "https://github.com/Bixal99", mark: "GH" },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/mohammad-bilal-64489827b/",
     mark: "IN",
   },
-  { label: "X", href: "https://x.com/", mark: "X" },
-  { label: "Instagram", href: "https://www.instagram.com/", mark: "IG" },
 ];
 
 export const journeyItems: JourneyItem[] = [
   {
-    year: "Oct 2022 - Present",
-    title: "Cyber Security Society Member",
-    organization: "FAST Society of Cyber Security",
+    year: "Jun 2025 - Present",
+    title: "AI Engineer",
+    organization: "Zennore, Pakistan",
     description:
-      "Led and contributed to technical society work in cyber security while collaborating on campus learning initiatives and technical activities.",
-    icon: ShieldCheck,
+      "Building AI solutions in a startup environment while adapting to market trends, evolving technologies, and product development from concept to execution.",
+    icon: BriefcaseBusiness,
   },
   {
-    year: "Jul 2024 - Present",
-    title: "AI Research Intern",
-    organization: "Independent Projects & Open Source, FAST NUCES",
+    year: "2025",
+    title: "AI Customer Churn Prediction System",
+    organization: "Personal Project",
     description:
-      "Built AI apps with LangChain, Gemini APIs, Groq-hosted Llama3, vector databases, RAG pipelines, prompt optimization, and analytics dashboards.",
+      "Developed an end-to-end telecom churn prediction application using XGBoost, Streamlit, and Gemini AI for analytics and customer retention insights.",
     icon: BrainCircuit,
   },
   {
-    year: "Oct 2024 - Dec 2024",
-    title: "Backend Developer Intern",
-    organization: "Smart Home Energy Management System, FAST NUCES",
+    year: "2025",
+    title: "Eye Blink Morse Code Detector",
+    organization: "Personal Project",
     description:
-      "Developed Node.js and Express APIs for IoT device control, MongoDB activity logging, energy analytics, cost efficiency, and JWT-secured access.",
-    icon: Network,
+      "Created a hands-free Morse code typing system powered by webcam input, OpenCV, MediaPipe Face Mesh, and NumPy.",
+    icon: Binary,
   },
   {
-    year: "Expected Jun 2026",
-    title: "BS Computer Science Candidate",
+    year: "Aug 2022 - Jun 2026",
+    title: "BS Computer Science",
     organization: "FAST NUCES, Chiniot-Faisalabad Campus",
     description:
-      "Strengthening computer science foundations while shipping backend, AI, OCR, RAG, management-system, and game-logic projects.",
+      "Focused on AI, software engineering, web development, databases, and machine learning while completing multiple academic and AI-based projects.",
     icon: GraduationCap,
   },
 ];
@@ -132,60 +128,81 @@ export const techGroups: TechGroup[] = [
   {
     title: "Languages",
     icon: Code2,
-    items: ["JavaScript", "Python", "C", "C++", "TypeScript", "C#", "SQL"],
+    items: [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "SQL",
+      "C",
+      "C++",
+      "HTML5",
+      "CSS3",
+    ],
   },
   {
-    title: "Backend & Data",
+    title: "Frameworks",
     icon: Database,
     items: [
+      "Next.js",
+      "React.js",
       "Node.js",
-      "Express",
+      "Express.js",
       "FastAPI",
       "Flask",
-      "REST APIs",
-      "MongoDB",
-      "PostgreSQL",
+      "Tailwind CSS",
+      "Streamlit",
     ],
   },
   {
-    title: "AI Systems",
+    title: "AI & ML",
     icon: BrainCircuit,
     items: [
-      "LangChain",
+      "AI",
+      "ML",
+      "Computer Vision",
+      "Prompt Engineering",
       "RAG",
-      "Gemini",
-      "Groq",
-      "Ollama",
-      "Hugging Face",
-      "Pinecone",
+      "XGBoost",
+      "OpenCV",
     ],
   },
   {
-    title: "ML & Vision",
+    title: "AI Frameworks",
     icon: Binary,
     items: [
-      "TensorFlow",
-      "PyTorch",
-      "DeepFace",
-      "Tesseract OCR",
-      "PaddleOCR",
-      "Neural Networks",
+      "LangChain",
+      "LangGraph",
+      "Ollama",
+      "Groq API",
+      "Google Generative AI",
+      "OpenAI",
+      "Hugging Face",
     ],
   },
   {
-    title: "Frontend",
+    title: "Data & Platforms",
     icon: TerminalSquare,
-    items: ["React", "Next.js", "Tailwind CSS", "Bootstrap", "Streamlit"],
+    items: [
+      "PostgreSQL",
+      "MongoDB",
+      "Supabase",
+      "Pandas",
+      "NumPy",
+      "PyMuPDF",
+      "JSON",
+    ],
   },
   {
-    title: "Platforms",
+    title: "Tools & Soft Skills",
     icon: Boxes,
     items: [
-      "Clerk Auth",
-      "Prisma",
-      "tRPC",
-      "Jupyter Notebook",
-      "Microsoft Office",
+      "Git",
+      "GitHub",
+      "Docker",
+      "Postman",
+      "VS Code",
+      "Problem Solving",
+      "Team Collaboration",
     ],
   },
 ];
@@ -198,132 +215,126 @@ export type TechSkill = {
 
 export const techSkills: TechSkill[] = [
   { name: "TypeScript", category: "Frontend", icon: "typescript" },
-  { name: "React", category: "Frontend", icon: "react" },
+  { name: "React.js", category: "Frontend", icon: "react" },
   { name: "Next.js", category: "Frontend", icon: "next" },
-  { name: "Tailwind", category: "Frontend", icon: "tailwind" },
+  { name: "Tailwind CSS", category: "Frontend", icon: "tailwind" },
   { name: "JavaScript", category: "Languages", icon: "javascript" },
+  { name: "HTML5", category: "Frontend", icon: "html" },
+  { name: "CSS3", category: "Frontend", icon: "css" },
   { name: "Node.js", category: "Backend", icon: "node" },
-  { name: "Express", category: "Backend", icon: "express" },
+  { name: "Express.js", category: "Backend", icon: "express" },
   { name: "Python", category: "Languages", icon: "python" },
   { name: "FastAPI", category: "Backend", icon: "fastapi" },
   { name: "Flask", category: "Backend", icon: "flask" },
   { name: "MongoDB", category: "Database", icon: "mongodb" },
   { name: "PostgreSQL", category: "Database", icon: "postgresql" },
-  { name: "MySQL", category: "Database", icon: "mysql" },
+  { name: "Supabase", category: "Database", icon: "supabase" },
   { name: "LangChain", category: "AI", icon: "langchain" },
-  { name: "Gemini", category: "AI", icon: "gemini" },
+  { name: "LangGraph", category: "AI", icon: "langgraph" },
+  { name: "Google Generative AI", category: "AI", icon: "gemini" },
+  { name: "Groq API", category: "AI", icon: "groq" },
+  { name: "OpenAI", category: "AI", icon: "openai" },
   { name: "Ollama", category: "AI", icon: "ollama" },
   { name: "Hugging Face", category: "AI", icon: "huggingface" },
-  { name: "TensorFlow", category: "ML", icon: "tensorflow" },
-  { name: "PyTorch", category: "ML", icon: "pytorch" },
+  { name: "Computer Vision", category: "ML", icon: "vision" },
+  { name: "OpenCV", category: "ML", icon: "opencv" },
+  { name: "XGBoost", category: "ML", icon: "xgboost" },
+  { name: "Pandas", category: "Data", icon: "pandas" },
+  { name: "NumPy", category: "Data", icon: "numpy" },
   { name: "Streamlit", category: "AI UI", icon: "streamlit" },
-  { name: "Jupyter", category: "Tools", icon: "jupyter" },
+  { name: "Selenium", category: "Automation", icon: "selenium" },
+  { name: "Beautiful Soup", category: "Automation", icon: "beautifulsoup" },
+  { name: "PyMuPDF", category: "Documents", icon: "pymupdf" },
   { name: "Git", category: "Tools", icon: "git" },
   { name: "GitHub", category: "Tools", icon: "github" },
-  { name: "Prisma", category: "Backend", icon: "prisma" },
-  { name: "Clerk", category: "Auth", icon: "clerk" },
-  { name: "tRPC", category: "Backend", icon: "trpc" },
+  { name: "Docker", category: "Tools", icon: "docker" },
+  { name: "Postman", category: "Tools", icon: "postman" },
+  { name: "VS Code", category: "Tools", icon: "vscode" },
+  { name: "Figma", category: "Design", icon: "figma" },
+  { name: "Vercel", category: "Platform", icon: "vercel" },
+  { name: "Linux", category: "Platform", icon: "linux" },
   { name: "C++", category: "Languages", icon: "cplusplus" },
+  { name: "C", category: "Languages", icon: "c" },
   { name: "SQL", category: "Database", icon: "sql" },
 ];
+
 export const educationItems: EducationItem[] = [
   {
-    period: "Expected June 2026",
+    period: "Aug 2022 - Jun 2026",
     title: "Bachelor of Science in Computer Science",
     institution: "FAST NUCES, Chiniot-Faisalabad Campus",
     details:
-      "Focused on software engineering, backend systems, AI applications, data structures, databases, and applied machine learning projects.",
+      "BSCS graduate with a focus on AI, software engineering, web development, databases, and machine learning. GPA: 2.85/4.0.",
   },
   {
-    period: "2022 - Present",
-    title: "Cyber Security & Technical Community Work",
-    institution: "FAST Society of Cyber Security",
+    period: "Academic Projects",
+    title: "Software Engineering & AI Project Work",
+    institution: "FAST NUCES",
     details:
-      "Participated in and led technical society work within the cyber security domain, supporting peer learning and campus technical culture.",
+      "Completed multiple academic and AI-based software projects across management systems, database applications, machine learning, and computer vision.",
   },
   {
-    period: "2022 - Present",
-    title: "Photography & Media Collaboration",
-    institution: "FPS NUCES",
+    period: "Languages",
+    title: "Communication",
+    institution: "English and Urdu",
     details:
-      "Collaborated with the media team for event, workshop, and conference coverage, strengthening visual communication and creative discipline.",
+      "Fluent in English and Urdu, with experience collaborating in team-based startup, academic, and project environments.",
   },
 ];
 
 export const projects: Project[] = [
   {
-    title: "Conversational RAG Search Engine",
-    category: "AI Search",
+    title: "Software Systems & AI Project Suite",
+    category: "Software Systems",
     description:
-      "A multi-source, agent-based search engine for querying web, Wikipedia, ArXiv, and custom documents with conversational memory and semantic retrieval.",
+      "Unified collection of management systems, AI-powered games, and database applications built using modern software engineering principles.",
     technologies: [
-      "LangChain",
-      "Gemini",
-      "Llama3",
-      "Groq",
-      "Pinecone",
-      "Streamlit",
+      "Python",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "OOP",
+      "C++",
+      "CRUD",
+      "AI Algorithms",
+      "C",
     ],
     links: {
-      demo: "https://example.com/rag-search",
-      source: "https://github.com/",
+      demo: "https://github.com/Bixal99",
+      source: "https://github.com/Bixal99",
     },
     featured: true,
   },
   {
-    title: "Facial Recognition Web App",
+    title: "AI Customer Churn Prediction System",
+    category: "Machine Learning",
+    description:
+      "End-to-end telecom churn prediction application using XGBoost, Streamlit, and Gemini AI for churn prediction, interactive analytics, and AI-driven retention insights.",
+    technologies: [
+      "Python",
+      "Streamlit",
+      "XGBoost",
+      "Plotly",
+      "Pandas",
+      "NumPy",
+      "Google Gemini AI",
+      "ML",
+    ],
+    links: {
+      demo: "https://github.com/Bixal99/Churn-Prediction",
+      source: "https://github.com/Bixal99/Churn-Prediction",
+    },
+    featured: true,
+  },
+  {
+    title: "Eye Blink Morse Code Detector",
     category: "Computer Vision",
     description:
-      "A Flask and DeepFace application with Gemini API integration for image upload, face comparison, matching confidence, ZIP uploads, previews, and secure downloads.",
-    technologies: ["Flask", "DeepFace", "Gemini API", "Werkzeug", "Python"],
+      "Hands-free Morse code typing system powered by a webcam, OpenCV, MediaPipe Face Mesh, and NumPy.",
+    technologies: ["Python", "OpenCV", "MediaPipe", "NumPy"],
     links: {
-      demo: "https://example.com/face-recognition",
-      source: "https://github.com/",
-    },
-    featured: true,
-  },
-  {
-    title: "AI-Powered Text Summarizer",
-    category: "Full Stack AI",
-    description:
-      "A responsive summarization app with a FastAPI backend, Hugging Face transformers, and a Next.js TypeScript frontend for real-time long-form summaries.",
-    technologies: ["FastAPI", "Hugging Face", "Next.js", "TypeScript", "LLMs"],
-    links: {
-      demo: "https://example.com/text-summarizer",
-      source: "https://github.com/",
-    },
-  },
-  {
-    title: "Smart Home Energy Backend",
-    category: "Backend / IoT",
-    description:
-      "Backend APIs for controlling IoT devices, logging device activity, tracking energy analytics, and protecting access with JWT-based security.",
-    technologies: ["Node.js", "Express", "MongoDB", "JWT", "REST APIs"],
-    links: {
-      demo: "https://example.com/smart-home-energy",
-      source: "https://github.com/",
-    },
-  },
-  {
-    title: "Management Systems Suite",
-    category: "Systems",
-    description:
-      "Academic, hospital, library, and airline management systems with user roles, scheduling, inventory tracking, validation, and database-backed CRUD flows.",
-    technologies: ["C++", "C# Forms", "TypeScript", "Next.js", "Oracle SQL"],
-    links: {
-      demo: "https://example.com/management-suite",
-      source: "https://github.com/",
-    },
-  },
-  {
-    title: "AI & Logic Game Collection",
-    category: "Algorithms",
-    description:
-      "A collection of Tic Tac Toe, Bingo, Checkers AI, and Sudoku Solver projects using OOP, minimax, backtracking, CSP, and heuristic search.",
-    technologies: ["Python", "C++", "Minimax", "Backtracking", "CSP"],
-    links: {
-      demo: "https://example.com/logic-games",
-      source: "https://github.com/",
+      demo: "https://github.com/Bixal99/EyeBlinkMorseDetector",
+      source: "https://github.com/Bixal99/EyeBlinkMorseDetector",
     },
   },
 ];
@@ -331,22 +342,22 @@ export const projects: Project[] = [
 export const sectionMeta = {
   journey: {
     kicker: "Experience",
-    title: "The path behind the systems I build.",
+    title: "The path behind the AI systems I build.",
     icon: BookOpen,
   },
   stack: {
     kicker: "Skills",
-    title: "Tools I use when the work needs to ship.",
+    title: "Technical, framework, AI, and collaboration skills.",
     icon: TerminalSquare,
   },
   education: {
     kicker: "Education",
-    title: "Computer science, community work, and creative discipline.",
+    title: "Computer science, applied projects, and communication.",
     icon: GraduationCap,
   },
   projects: {
     kicker: "Selected Work",
-    title: "Builds with product thinking and real system logic.",
+    title: "Key projects from the updated resume.",
     icon: BriefcaseBusiness,
   },
 };
