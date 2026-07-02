@@ -169,6 +169,51 @@ const iconColors: Record<string, IconColor> = {
   json: { dark: "#F7DF1E" },
 };
 
+const skillDescriptions: Record<string, string> = {
+  TypeScript: "Typed JavaScript for safer app code.",
+  "React.js": "Builds reusable interactive UI components.",
+  "Next.js": "React framework for fast full-stack pages.",
+  "Tailwind CSS": "Utility CSS for quick responsive styling.",
+  JavaScript: "Powers browser and server interactions.",
+  HTML5: "Structures content for the web.",
+  CSS3: "Styles layouts, visuals, and motion.",
+  "Node.js": "Runs JavaScript on the backend.",
+  "Express.js": "Minimal Node framework for APIs.",
+  Python: "General-purpose language for AI and backend.",
+  FastAPI: "Fast Python framework for typed APIs.",
+  Flask: "Lightweight Python web apps and services.",
+  MongoDB: "Document database for flexible data.",
+  PostgreSQL: "Reliable relational database for structured data.",
+  Supabase: "Backend platform with Postgres and auth.",
+  LangChain: "Connects LLMs with tools and data.",
+  LangGraph: "Builds stateful AI agent workflows.",
+  "Google Generative AI": "Gemini models for text and reasoning.",
+  "Groq API": "Fast inference APIs for LLM apps.",
+  OpenAI: "Models for generation, agents, and embeddings.",
+  Ollama: "Runs local LLMs for private experiments.",
+  "Hugging Face": "Model hub for AI workflows.",
+  "Computer Vision": "Helps apps understand images and video.",
+  OpenCV: "Image processing and vision toolkit.",
+  XGBoost: "Strong boosted-tree machine learning model.",
+  Pandas: "DataFrames for cleaning and analysis.",
+  NumPy: "Fast arrays and numerical computing.",
+  Streamlit: "Quick Python dashboards and AI apps.",
+  Selenium: "Automates browser testing and scraping.",
+  "Beautiful Soup": "Parses HTML for web extraction.",
+  PyMuPDF: "Reads and processes PDF documents.",
+  Git: "Version control for code history.",
+  GitHub: "Hosts repos, issues, and collaboration.",
+  Docker: "Packages apps into portable containers.",
+  Postman: "Tests and documents API requests.",
+  "VS Code": "Code editor for daily development.",
+  Figma: "Designs and prototypes interfaces.",
+  Vercel: "Deploys frontend apps and APIs.",
+  Linux: "Operating system for servers and dev.",
+  "C++": "High-performance systems programming.",
+  C: "Low-level programming close to hardware.",
+  SQL: "Queries relational databases.",
+};
+
 const rowShellClasses = [
   "size-16 sm:size-20 lg:size-24",
   "size-14 sm:size-16 lg:size-20",
@@ -182,6 +227,8 @@ const rowIconClasses = [
 ];
 
 const rowOffsets = ["pl-[4vw]", "pl-[18vw]", "pl-[10vw]"];
+const rowTravelFactors = [0.44, 0.54, 0.48];
+const rowEndOffsets = [0.1, 0.18, 0.12];
 
 function chunkSkillsByRow(rowIndex: number) {
   return techSkills.filter((_, index) => index % 3 === rowIndex);
@@ -196,90 +243,294 @@ function getIconStyle(icon: string) {
   } as CSSProperties;
 }
 
+function getSkillDescription(name: string, category: string) {
+  return skillDescriptions[name] ?? `Useful ${category.toLowerCase()} skill for building software.`;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function getRowTravel(row: HTMLElement, stage: HTMLElement, rowIndex: number) {
+  const stageWidth = stage.clientWidth || window.innerWidth;
+  const rowWidth = row.scrollWidth || stageWidth * 2;
+  const availableTravel = Math.max(rowWidth - stageWidth, stageWidth * 1.3);
+  const from = -Math.min(availableTravel * rowTravelFactors[rowIndex], rowWidth * 0.62);
+  const to = stageWidth * rowEndOffsets[rowIndex];
+
+  return { from, to };
+}
+
 export function TechStack() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipPanelRef = useRef<HTMLDivElement>(null);
+  const tooltipNameRef = useRef<HTMLParagraphElement>(null);
+  const tooltipCategoryRef = useRef<HTMLSpanElement>(null);
+  const tooltipDescriptionRef = useRef<HTMLParagraphElement>(null);
   const skillRows = useMemo(() => [chunkSkillsByRow(0), chunkSkillsByRow(1), chunkSkillsByRow(2)], []);
 
   useEffect(() => {
     const section = sectionRef.current;
+    const tooltip = tooltipRef.current;
+    const tooltipPanel = tooltipPanelRef.current;
+    const tooltipName = tooltipNameRef.current;
+    const tooltipCategory = tooltipCategoryRef.current;
+    const tooltipDescription = tooltipDescriptionRef.current;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!section || prefersReducedMotion) return;
-
-    gsap.registerPlugin(ScrollTrigger);
+    if (!section || !tooltip || !tooltipPanel || !tooltipName || !tooltipCategory || !tooltipDescription) return;
 
     const iconElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-icon]"));
     const rowElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-row]"));
+    const moveTooltipX = gsap.quickTo(tooltip, "x", { duration: 0.2, ease: "power3.out" });
+    const moveTooltipY = gsap.quickTo(tooltip, "y", { duration: 0.2, ease: "power3.out" });
+    let activeDirection = 0;
+    let didSettle = false;
+    let tooltipRun = 0;
 
-    const entrance = animate(iconElements, {
-      opacity: { from: 0 },
-      scale: { from: 0.72 },
-      y: { from: 28 },
-      rotate: { from: "-10deg" },
-      duration: 850,
-      delay: stagger(24, { from: "center" }),
-      ease: "out(4)",
-      autoplay: false,
-    });
+    gsap.set(tooltip, { autoAlpha: 0, x: -9999, y: -9999 });
+    gsap.set(tooltipPanel, { opacity: 0, scale: 0.88, y: 10, rotate: -2, transformOrigin: "50% 100%" });
 
-    const hoverCleanups = iconElements.map((icon) => {
-      const enter = () => {
-        animate(icon, {
-          scale: 1.16,
-          y: -10,
-          rotate: "5deg",
-          duration: 420,
+    const positionTooltip = (icon: HTMLElement, pointerX?: number, pointerY?: number) => {
+      const iconRect = icon.getBoundingClientRect();
+      const panelWidth = tooltipPanel.offsetWidth || 260;
+      const panelHeight = tooltipPanel.offsetHeight || 130;
+      const sourceX = pointerX ?? iconRect.left + iconRect.width / 2;
+      const sourceY = pointerY ?? iconRect.top;
+      const x = clamp(sourceX - panelWidth / 2, 12, window.innerWidth - panelWidth - 12);
+      const aboveY = sourceY - panelHeight - 18;
+      const belowY = iconRect.bottom + 18;
+      const y = clamp(aboveY > 12 ? aboveY : belowY, 12, window.innerHeight - panelHeight - 12);
+
+      moveTooltipX(x);
+      moveTooltipY(y);
+    };
+
+    const showTooltip = (icon: HTMLElement, event?: PointerEvent | FocusEvent) => {
+      const run = ++tooltipRun;
+      const name = icon.dataset.skillName ?? "Skill";
+      const category = icon.dataset.skillCategory ?? "Skill";
+      const description = icon.dataset.skillDescription ?? "Useful tool for building software.";
+      const pointerEvent = "clientX" in (event ?? {}) ? (event as PointerEvent) : undefined;
+
+      tooltipName.textContent = name;
+      tooltipCategory.textContent = category;
+      tooltipDescription.textContent = description;
+      positionTooltip(icon, pointerEvent?.clientX, pointerEvent?.clientY);
+      gsap.set(tooltip, { autoAlpha: 1 });
+
+      if (prefersReducedMotion) {
+        gsap.set(tooltipPanel, { opacity: 1, scale: 1, y: 0, rotate: 0 });
+        return;
+      }
+
+      animate(tooltipPanel, {
+        opacity: { from: 0, to: 1 },
+        scale: { from: 0.86, to: 1 },
+        y: { from: 14, to: 0 },
+        rotate: { from: "-3deg", to: "0deg" },
+        duration: 330,
+        ease: "out(4)",
+        onComplete: () => {
+          if (run !== tooltipRun) return;
+          gsap.set(tooltipPanel, { opacity: 1, scale: 1, y: 0, rotate: 0 });
+        },
+      });
+    };
+
+    const hideTooltip = () => {
+      const run = ++tooltipRun;
+
+      if (prefersReducedMotion) {
+        gsap.set(tooltip, { autoAlpha: 0 });
+        gsap.set(tooltipPanel, { opacity: 0, scale: 0.88, y: 10, rotate: -2 });
+        return;
+      }
+
+      animate(tooltipPanel, {
+        opacity: 0,
+        scale: 0.88,
+        y: 10,
+        rotate: "2deg",
+        duration: 190,
+        ease: "out(2)",
+        onComplete: () => {
+          if (run !== tooltipRun) return;
+          gsap.set(tooltip, { autoAlpha: 0 });
+        },
+      });
+    };
+
+    const entrance = prefersReducedMotion
+      ? null
+      : animate(iconElements, {
+          opacity: { from: 0 },
+          scale: { from: 0.7 },
+          y: { from: 34 },
+          rotate: { from: "-14deg" },
+          duration: 980,
+          delay: stagger(18, { from: "center", jitter: 5, seed: true }),
           ease: "out(4)",
+          autoplay: false,
+        });
+
+    const runDirectionAccent = (direction: number) => {
+      if (prefersReducedMotion || !direction || direction === activeDirection) return;
+
+      activeDirection = direction;
+      const accentTargets = iconElements.filter((_, index) => index % 5 === Math.abs(direction));
+
+      animate(accentTargets, {
+        scale: 1.1,
+        y: direction > 0 ? -8 : 8,
+        rotate: direction > 0 ? "8deg" : "-8deg",
+        duration: 260,
+        delay: stagger(10, { from: direction > 0 ? "first" : "last" }),
+        ease: "out(3)",
+        onComplete: () => {
+          animate(accentTargets, {
+            scale: 1,
+            y: 0,
+            rotate: "0deg",
+            duration: 380,
+            ease: "out(4)",
+          });
+        },
+      });
+    };
+
+    const runSettle = () => {
+      if (prefersReducedMotion || didSettle) return;
+
+      didSettle = true;
+      animate(iconElements.filter((_, index) => index % 3 === 0), {
+        scale: 1,
+        y: 0,
+        rotate: "0deg",
+        duration: 620,
+        delay: stagger(16, { from: "center", jitter: 4, seed: 3 }),
+        ease: "out(5)",
+      });
+    };
+
+    const hoverCleanups = iconElements.map((icon, index) => {
+      const enter = (event: PointerEvent) => {
+        showTooltip(icon, event);
+
+        if (prefersReducedMotion) return;
+        animate(icon, {
+          scale: 1.18,
+          y: -12,
+          rotate: index % 2 === 0 ? "6deg" : "-6deg",
+          duration: 420,
+          ease: "out(5)",
         });
       };
+      const move = (event: PointerEvent) => positionTooltip(icon, event.clientX, event.clientY);
       const leave = () => {
+        hideTooltip();
+
+        if (prefersReducedMotion) return;
         animate(icon, {
           scale: 1,
           y: 0,
           rotate: "0deg",
-          duration: 360,
-          ease: "out(3)",
+          duration: 420,
+          ease: "out(4)",
         });
       };
+      const press = () => {
+        if (prefersReducedMotion) return;
+        animate(icon, {
+          scale: 0.92,
+          rotate: "0deg",
+          duration: 120,
+          ease: "out(2)",
+          onComplete: () => {
+            animate(icon, {
+              scale: 1.18,
+              y: -12,
+              rotate: index % 2 === 0 ? "6deg" : "-6deg",
+              duration: 320,
+              ease: "out(5)",
+            });
+          },
+        });
+      };
+      const focus = (event: FocusEvent) => showTooltip(icon, event);
 
-      icon.addEventListener("mouseenter", enter);
-      icon.addEventListener("mouseleave", leave);
+      icon.addEventListener("pointerenter", enter);
+      icon.addEventListener("pointermove", move);
+      icon.addEventListener("pointerleave", leave);
+      icon.addEventListener("pointerdown", press);
+      icon.addEventListener("focus", focus);
+      icon.addEventListener("blur", leave);
 
       return () => {
-        icon.removeEventListener("mouseenter", enter);
-        icon.removeEventListener("mouseleave", leave);
+        icon.removeEventListener("pointerenter", enter);
+        icon.removeEventListener("pointermove", move);
+        icon.removeEventListener("pointerleave", leave);
+        icon.removeEventListener("pointerdown", press);
+        icon.removeEventListener("focus", focus);
+        icon.removeEventListener("blur", leave);
       };
     });
 
-    const context = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top 72%",
-        once: true,
-        onEnter: () => entrance.play(),
-      });
+    let context: ReturnType<typeof gsap.context> | undefined;
 
-      rowElements.forEach((row, index) => {
-        gsap.fromTo(
-          row,
-          { xPercent: index === 1 ? -8 : 0 },
-          {
-            xPercent: [-38, -46, -34][index],
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 0.85,
+    if (!prefersReducedMotion) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      context = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 78%",
+          once: true,
+          onEnter: () => entrance?.play(),
+        });
+
+        const timeline = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: section,
+            start: "center center",
+            end: () => `+=${Math.max(window.innerHeight * 1.35, 760)}`,
+            scrub: 0.9,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => runDirectionAccent(self.direction),
+            onEnter: () => {
+              didSettle = false;
+              runDirectionAccent(1);
             },
+            onEnterBack: () => {
+              didSettle = false;
+              runDirectionAccent(-1);
+            },
+            onLeave: runSettle,
           },
-        );
-      });
-    }, section);
+        });
+
+        rowElements.forEach((row, index) => {
+          timeline.fromTo(
+            row,
+            {
+              x: () => getRowTravel(row, section, index).from,
+            },
+            {
+              x: () => getRowTravel(row, section, index).to,
+            },
+            0,
+          );
+        });
+      }, section);
+    }
 
     return () => {
       hoverCleanups.forEach((cleanup) => cleanup());
-      entrance.revert();
-      context.revert();
+      entrance?.revert();
+      context?.revert();
     };
   }, []);
 
@@ -300,14 +551,19 @@ export function TechStack() {
               >
                 {[...row, ...row, ...row].map((skill, index) => {
                   const Icon = iconMap[skill.icon] ?? Boxes;
+                  const description = getSkillDescription(skill.name, skill.category);
 
                   return (
                     <span
                       key={`${skill.name}-${rowIndex}-${index}`}
                       data-skill-icon
-                      className={`group/icon relative grid shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.035] text-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] ${rowShellClasses[rowIndex]}`}
-                      aria-label={skill.name}
+                      data-skill-name={skill.name}
+                      data-skill-category={skill.category}
+                      data-skill-description={description}
+                      className={`group/icon relative grid shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.035] text-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 ${rowShellClasses[rowIndex]}`}
+                      aria-label={`${skill.name}: ${description}`}
                       role="img"
+                      tabIndex={0}
                       style={{ marginTop: `${((index + rowIndex) % 5) * 4}px` }}
                     >
                       <Icon
@@ -324,8 +580,17 @@ export function TechStack() {
           ))}
         </div>
       </div>
+
+      <div ref={tooltipRef} className="pointer-events-none fixed left-0 top-0 z-50 w-[min(17rem,calc(100vw-1.5rem))]" aria-hidden="true">
+        <div ref={tooltipPanelRef} className="relative overflow-hidden rounded-lg border border-white/12 bg-black/88 px-4 py-3 text-left shadow-[0_22px_80px_rgba(0,0,0,0.42)] backdrop-blur-xl">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-80" aria-hidden="true" />
+          <div className="mb-2 flex items-center justify-between gap-3">
+            <p ref={tooltipNameRef} className="text-sm font-semibold leading-5 text-white" />
+            <span ref={tooltipCategoryRef} className="shrink-0 rounded-full border border-[var(--accent)]/25 bg-[var(--accent)]/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--accent)]" />
+          </div>
+          <p ref={tooltipDescriptionRef} className="text-xs leading-5 text-white/62" />
+        </div>
+      </div>
     </AnimatedSection>
   );
 }
-
-
