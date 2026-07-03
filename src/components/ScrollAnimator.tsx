@@ -65,28 +65,88 @@ export function ScrollAnimator() {
         );
       });
 
-      gsap.utils.toArray<HTMLElement>("[data-heading-text]").forEach((heading) => {
-        const words = heading.querySelectorAll("[data-heading-word]");
-        if (!words.length) return;
+      const setupPixelTitle = (title: HTMLElement) => {
+        const pixels = gsap.utils.toArray<HTMLElement>(
+          title.querySelectorAll("[data-pixel-item]"),
+        );
+
+        if (!pixels.length) return;
 
         gsap.fromTo(
-          words,
-          { autoAlpha: 0, yPercent: 70, rotate: 1.5 },
+          pixels,
+          {
+            autoAlpha: 0,
+            x: (index) => (index < 2 ? -150 : -96 - index * 6),
+            y: (index) => (index % 2 === 0 ? -22 : 22),
+            scale: (index) => (index < 2 ? 0.34 : 0.68),
+            rotationZ: (index) => (index % 2 === 0 ? -12 : 12),
+            transformOrigin: "0% 50%",
+            filter: "blur(16px) contrast(1.7)",
+            clipPath: "inset(0 100% 0 0)",
+          },
           {
             autoAlpha: 1,
-            yPercent: 0,
-            rotate: 0,
-            duration: 0.82,
-            stagger: 0.025,
-            ease: "power4.out",
+            x: 0,
+            y: 0,
+            scale: 1,
+            rotationZ: 0,
+            filter: "blur(0px) contrast(1)",
+            clipPath: "inset(0 0% 0 0)",
+            stagger: { each: 0.07, from: "start" },
+            ease: "power2.out",
+            immediateRender: true,
             scrollTrigger: {
-              trigger: heading,
-              start: "top 84%",
-              toggleActions: "play none none none",
+              trigger: title,
+              start: "top 88%",
+              end: "top 38%",
+              scrub: 1.35,
+              invalidateOnRefresh: true,
+            },
+          },
+        );
+      };
+
+      gsap.utils
+        .toArray<HTMLElement>("[data-pixel-title]")
+        .forEach(setupPixelTitle);
+
+      [
+        { selector: "[data-about-bullet]", trigger: "[data-about-panel]" },
+        { selector: "[data-build-list] > li", trigger: "[data-coding-panel]" },
+      ].forEach(({ selector, trigger }) => {
+        const bullets = gsap.utils.toArray<HTMLElement>(selector);
+        const triggerElement = document.querySelector<HTMLElement>(trigger);
+
+        if (!bullets.length || !triggerElement) return;
+
+        gsap.fromTo(
+          bullets,
+          {
+            autoAlpha: 0,
+            x: -72,
+            y: 18,
+            filter: "blur(14px)",
+            clipPath: "inset(0 100% 0 0)",
+          },
+          {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            filter: "blur(0px)",
+            clipPath: "inset(0 0% 0 0)",
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: triggerElement,
+              start: "top 78%",
+              end: "center 42%",
+              scrub: 1.2,
+              invalidateOnRefresh: true,
             },
           },
         );
       });
+
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {
         const children = group.querySelectorAll("[data-stagger-item]");
         gsap.fromTo(

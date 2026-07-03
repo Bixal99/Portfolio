@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+﻿import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
   Binary,
@@ -357,7 +357,7 @@ export const sectionMeta = {
     icon: GraduationCap,
   },
   projects: {
-    kicker: "Selected Work",
+    kicker: "PROJECTS",
     title: "Key projects from the updated resume.",
     icon: BriefcaseBusiness,
   },
