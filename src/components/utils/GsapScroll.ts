@@ -67,16 +67,18 @@ function prepareCodingProps(character: THREE.Object3D) {
       material.opacity = 0;
       material.emissive?.set(getThemeAccentColor());
       screenLightMaterial = material;
-      gsap.timeline({
-        repeat: -1,
-        repeatRefresh: true,
-        onStart: () => material.emissive?.set(getThemeAccentColor()),
-        onRepeat: () => material.emissive?.set(getThemeAccentColor()),
-      }).to(material, {
-        emissiveIntensity: () => Math.random() * 8,
-        duration: () => Math.random() * 0.6,
-        delay: () => Math.random() * 0.1,
-      });
+      gsap
+        .timeline({
+          repeat: -1,
+          repeatRefresh: true,
+          onStart: () => material.emissive?.set(getThemeAccentColor()),
+          onRepeat: () => material.emissive?.set(getThemeAccentColor()),
+        })
+        .to(material, {
+          emissiveIntensity: () => Math.random() * 8,
+          duration: () => Math.random() * 0.6,
+          delay: () => Math.random() * 0.1,
+        });
     }
   });
 
@@ -85,22 +87,25 @@ function prepareCodingProps(character: THREE.Object3D) {
 
 export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
-  camera: THREE.PerspectiveCamera
+  camera: THREE.PerspectiveCamera,
 ) {
   killCharacterTriggers();
 
   if (!character) return;
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const isDesktop = window.innerWidth > 1024;
-  const { monitorMaterial, screenLightMaterial } = prepareCodingProps(character);
+  const { monitorMaterial, screenLightMaterial } =
+    prepareCodingProps(character);
   const neckBone = character.getObjectByName("spine005");
 
   gsap.set(".character-model", {
     autoAlpha: isDesktop ? 1 : 0,
     x: "0%",
     y: "0%",
-    scale: 1,
+    scale: 0.8,
   });
   gsap.set(character.rotation, { x: 0, y: 0, z: 0 });
   gsap.set(camera.position, { x: 0, y: 13.1, z: 24.7 });
@@ -109,54 +114,68 @@ export function setCharTimeline(
 
   if (!isDesktop || prefersReducedMotion) return;
 
-  gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      id: "character-home",
-      trigger: "#home",
-      start: "top top",
-      end: "bottom top",
-      scrub: 0.8,
-      invalidateOnRefresh: true,
-    },
-  })
+  gsap
+    .timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        id: "character-home",
+        trigger: "#home",
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.8,
+        invalidateOnRefresh: true,
+      },
+    })
     .to(character.rotation, { y: 0.38 }, 0)
     .to(camera.position, { z: 22 }, 0)
     .to(".character-model", { x: "22%" }, 0)
     .to("[data-hero-copy]", { autoAlpha: 0.4, y: -42 }, 0.05);
 
-  gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      id: "character-about",
-      trigger: "#about",
-      start: "top bottom",
-      end: "center center",
-      scrub: 0.9,
-      invalidateOnRefresh: true,
-    },
-  })
-    .to(".character-model", { x: "27%", y: "0%", scale: 1 }, 0)
+  gsap
+    .timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        id: "character-about",
+        trigger: "#about",
+        start: "top bottom",
+        end: "center center",
+        scrub: 0.9,
+        invalidateOnRefresh: true,
+      },
+    })
+    .to(".character-model", { x: "25%", y: "0%", scale: 0.96 }, 0)
     .to(character.rotation, { x: 0.02, y: -0.32 }, 0)
+    .to(".character-rim", { opacity: 0 }, 0)
     .to(camera.position, { y: 13.1, z: 24.7 }, 0)
-    .fromTo("[data-about-panel]", { autoAlpha: 0, y: 90 }, { autoAlpha: 1, y: 0 }, 0.1);
+    .fromTo(
+      "[data-about-panel]",
+      { autoAlpha: 0, y: 90 },
+      { autoAlpha: 1, y: 0 },
+      0.1,
+    );
 
-  const codingTimeline = gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      id: "character-coding",
-      trigger: "#coding",
-      start: "top bottom",
-      end: "center center",
-      scrub: 0.9,
-      invalidateOnRefresh: true,
-    },
-  })
-    .to(".character-model", { x: "-24%", y: "2%", scale: 0.86 }, 0)
+  const codingTimeline = gsap
+    .timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        id: "character-coding",
+        trigger: "#coding",
+        start: "top bottom",
+        end: "center center",
+        scrub: 0.9,
+        invalidateOnRefresh: true,
+      },
+    })
+    .to(".character-model", { x: "-29%", y: "-7%", scale: 0.82 }, 0)
     .to(camera.position, { y: 8.4, z: 74 }, 0)
     .to(character.rotation, { x: 0.12, y: 0.92 }, 0)
-    .fromTo("[data-coding-panel]", { autoAlpha: 0, y: 90 }, { autoAlpha: 1, y: 0 }, 0.1)
-    .fromTo(".character-rim", { opacity: 1, scaleX: 1.4 }, { opacity: 0.28, scale: 1.1, y: "10%" }, 0);
+    .fromTo(
+      "[data-coding-panel]",
+      { autoAlpha: 0, y: 90 },
+      { autoAlpha: 1, y: 0 },
+      0.1,
+    )
+    .to(".character-rim", { opacity: 0 }, 0);
 
   if (neckBone) {
     codingTimeline.to(neckBone.rotation, { x: 0.58 }, 0);
@@ -170,17 +189,19 @@ export function setCharTimeline(
     codingTimeline.to(screenLightMaterial, { opacity: 1 }, 0.42);
   }
 
-  gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      id: "character-journey-exit",
-      trigger: "#journey",
-      start: "top bottom",
-      end: "top center",
-      scrub: 0.8,
-      invalidateOnRefresh: true,
-    },
-  }).to(".character-model", { y: "-115%", autoAlpha: 0 }, 0);
+  gsap
+    .timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        id: "character-journey-exit",
+        trigger: "#journey",
+        start: "top bottom",
+        end: "top center",
+        scrub: 0.8,
+        invalidateOnRefresh: true,
+      },
+    })
+    .to(".character-model", { y: "-115%", autoAlpha: 0 }, 0);
 }
 
 export function setAllTimeline() {

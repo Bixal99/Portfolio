@@ -1,4 +1,4 @@
-﻿import type { ComponentType } from "react";
+import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
   Binary,
@@ -74,6 +74,7 @@ export const resume = {
 
 export const navItems: NavItem[] = [
   { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
   { label: "Journey", href: "#journey" },
   { label: "Skills", href: "#stack" },
   { label: "Education", href: "#education" },

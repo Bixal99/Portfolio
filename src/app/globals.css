@@ -305,12 +305,12 @@ html[data-theme="light"] .theme-typewriter-cursor {
   pointer-events: auto;
   position: absolute;
   left: 50%;
-  top: 42%;
+  top: 50%;
   z-index: 3;
-  width: min(300px, 18vw);
-  height: min(300px, 18vw);
-  min-width: 180px;
-  min-height: 180px;
+  width: min(260px, 16vw);
+  height: min(260px, 16vw);
+  min-width: 160px;
+  min-height: 160px;
   border-radius: 9999px;
   transform: translate(-50%, -50%);
 }

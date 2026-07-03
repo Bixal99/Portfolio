@@ -88,11 +88,15 @@ const Scene = ({ onReady, onError }: SceneProps) => {
     };
 
     const onTouchStart = () => {
-      containerElement.addEventListener("touchmove", onTouchMove, { passive: true });
+      containerElement.addEventListener("touchmove", onTouchMove, {
+        passive: true,
+      });
     };
 
     document.addEventListener("mousemove", onMouseMove);
-    containerElement.addEventListener("touchstart", onTouchStart, { passive: true });
+    containerElement.addEventListener("touchstart", onTouchStart, {
+      passive: true,
+    });
     containerElement.addEventListener("touchend", onTouchEnd);
 
     loadCharacter()
@@ -100,7 +104,9 @@ const Scene = ({ onReady, onError }: SceneProps) => {
         if (!mounted || !gltf) return;
 
         const animations = setAnimations(gltf);
-        hoverCleanup = hoverDivRef.current ? animations.hover(gltf, hoverDivRef.current) : undefined;
+        hoverCleanup = hoverDivRef.current
+          ? animations.hover(gltf, hoverDivRef.current)
+          : undefined;
         mixer = animations.mixer;
         character = gltf.scene;
         scene.add(character);
@@ -133,7 +139,7 @@ const Scene = ({ onReady, onError }: SceneProps) => {
           mouse.y,
           interpolation.x,
           interpolation.y,
-          THREE.MathUtils.lerp
+          THREE.MathUtils.lerp,
         );
         light.setPointLight(screenLight);
       }
@@ -172,5 +178,3 @@ const Scene = ({ onReady, onError }: SceneProps) => {
 };
 
 export default Scene;
-
-

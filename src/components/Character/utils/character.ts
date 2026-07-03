@@ -17,12 +17,18 @@ type CharacterModelMaterial = THREE.Material & {
 };
 
 const skinMeshes = new Set(["Ear001", "Hand", "Neck", "Plane007"]);
-const clothingMeshes = new Set(["BODYSHIRT", "Pant", "Shoe", "Sole"]);
-const deskMeshes = new Set(["Cube002", "Plane", "Plane002", "Plane003"]);
-const monitorMeshes = new Set(["Plane017"]);
+const clothingMeshes = new Set(["BODYSHIRT", "Pant"]);
+const chairMeshes = new Set(["Plane"]);
+const tableMeshes = new Set(["Cube002", "Plane002", "Plane003"]);
+const monitorMeshes = new Set(["Plane004", "Plane017"]);
 const darkMeshes = new Set(["hair", "Eyebrow", "Plane017_1"]);
+const SKIN_COLOR = new THREE.Color("#f1d2c3");
+const DARK_BROWN_SHOE = "#3a2417";
 
-function styleMaterialForMesh(objectName: string, material: CharacterModelMaterial) {
+function styleMaterialForMesh(
+  objectName: string,
+  material: CharacterModelMaterial,
+) {
   if (objectName !== "EYEs001") {
     material.map = null;
   }
@@ -33,8 +39,26 @@ function styleMaterialForMesh(objectName: string, material: CharacterModelMateri
   material.metalness = Math.min(material.metalness ?? 0, 0.08);
   material.roughness = Math.max(material.roughness ?? 0.5, 0.56);
 
+
   if (skinMeshes.has(objectName)) {
-    material.color?.set("#f1d2c3");
+    material.color?.copy(SKIN_COLOR);
+    return;
+  }
+
+  if (objectName === "BODYSHIRT") {
+    material.color?.set("#3407e7");
+    return;
+  }
+
+  if (objectName === "Pant") {
+    material.color?.set("#000000");
+    return;
+  }
+
+  if (objectName === "Shoe" || objectName === "Sole") {
+    material.color?.set(DARK_BROWN_SHOE);
+    material.metalness = 0;
+    material.roughness = 0.74;
     return;
   }
 
@@ -43,15 +67,24 @@ function styleMaterialForMesh(objectName: string, material: CharacterModelMateri
     return;
   }
 
-  if (deskMeshes.has(objectName)) {
-    material.color?.set("#d6e3de");
+  if (chairMeshes.has(objectName)) {
+    material.color?.set("#b98f6a");
+    material.metalness = 0;
+    material.roughness = 0.68;
+    return;
+  }
+
+  if (tableMeshes.has(objectName)) {
+    material.color?.set("#a87b55");
+    material.metalness = 0.04;
+    material.roughness = 0.62;
     return;
   }
 
   if (monitorMeshes.has(objectName)) {
-    material.color?.set("#d7e4df");
-    material.metalness = 0.08;
-    material.roughness = 0.6;
+    material.color?.set("#26292c");
+    material.metalness = 0.06;
+    material.roughness = 0.64;
     return;
   }
 
@@ -62,16 +95,16 @@ function styleMaterialForMesh(objectName: string, material: CharacterModelMateri
   }
 
   if (objectName === "Keyboard") {
-    material.color?.set("#d0ddd8");
-    material.metalness = 0.08;
-    material.roughness = 0.58;
+    material.color?.set("#8f9492");
+    material.metalness = 0.02;
+    material.roughness = 0.7;
     return;
   }
 
   if (objectName.startsWith("KEYS")) {
-    material.color?.set("#eef3f0");
+    material.color?.set("#b4b8b6");
     material.metalness = 0;
-    material.roughness = 0.58;
+    material.roughness = 0.68;
     return;
   }
 
@@ -110,10 +143,17 @@ function applyCharacterPalette(character: THREE.Object3D) {
   });
 }
 
+function hideFloorPlate(character: THREE.Object3D) {
+  const ground = character.getObjectByName("ground");
+  if (ground) {
+    ground.visible = false;
+  }
+}
+
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
   scene: THREE.Scene,
-  camera: THREE.PerspectiveCamera
+  camera: THREE.PerspectiveCamera,
 ) => {
   const loader = new GLTFLoader();
   const dracoLoader = new DRACOLoader();
@@ -127,7 +167,7 @@ const setCharacter = (
       try {
         const encryptedBlob = await decryptFile(
           "/models/character.enc",
-          "Character3D#@"
+          "Character3D#@",
         );
         blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
 
@@ -136,6 +176,7 @@ const setCharacter = (
           async (gltf) => {
             const character = gltf.scene;
             applyCharacterPalette(character);
+            hideFloorPlate(character);
             await renderer.compileAsync(character, camera, scene);
             character.traverse((child: THREE.Object3D) => {
               if ("isMesh" in child && child.isMesh) {
@@ -167,7 +208,7 @@ const setCharacter = (
             dracoLoader.dispose();
             console.error("Error loading GLTF model:", error);
             reject(error);
-          }
+          },
         );
       } catch (err) {
         if (blobUrl) URL.revokeObjectURL(blobUrl);

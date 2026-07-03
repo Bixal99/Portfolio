@@ -59,11 +59,15 @@ export function Navbar() {
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition duration-300 ${compact ? "border-b border-white/10 bg-black/70 backdrop-blur-xl" : "bg-transparent"}`}>
       <div className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
-        <a href="#home" className="max-w-[220px] text-sm font-bold uppercase tracking-[0.32em] text-white lg:max-w-none">
+        <a href="#home" className="max-w-[220px] text-sm font-bold uppercase tracking-[0.32em] text-white lg:max-w-none lg:-translate-x-4">
           {profile.name}
         </a>
 
-        <nav className="theme-nav-shell absolute left-[56%] hidden w-[640px] -translate-x-1/2 grid-cols-5 items-center overflow-hidden rounded-full border border-white/10 bg-white/[0.025] p-1 backdrop-blur-xl lg:grid" aria-label="Main navigation">
+                <nav
+          className="theme-nav-shell absolute left-[54%] hidden w-[760px] -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/10 bg-white/[0.025] p-1 backdrop-blur-xl lg:grid"
+          style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }}
+          aria-label="Main navigation"
+        >
           <span
             aria-hidden="true"
             className="theme-nav-indicator absolute left-1 top-1 h-[calc(100%-0.5rem)] rounded-full bg-[var(--accent)] shadow-[0_0_28px_rgba(var(--accent-rgb),0.2)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
@@ -125,7 +129,3 @@ export function Navbar() {
     </header>
   );
 }
-
-
-
-

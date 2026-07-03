@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-const phrases = ["Software Engineer", "AI Engineer", "Full-Stack Developer", "Computer Vision Builder", "Machine Learning Developer", "Startup Engineer"];
+const phrases = ["Software Engineer", "AI Engineer", "Full-Stack Developer", "Startup Engineer"];
 
 export function TypewriterLine() {
   const lineRef = useRef<HTMLParagraphElement>(null);
@@ -11,6 +11,10 @@ export function TypewriterLine() {
   const [charIndex, setCharIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
   const current = phrases[phraseIndex] ?? phrases[0];
+  const maxPhraseLength = useMemo(
+    () => phrases.reduce((max, phrase) => Math.max(max, phrase.length), 0),
+    [],
+  );
 
   useEffect(() => {
     let frame = 0;
@@ -79,17 +83,22 @@ export function TypewriterLine() {
   return (
     <p
       ref={lineRef}
-      className="theme-typewriter mt-6 flex min-h-8 items-center text-[clamp(0.95rem,1.5vw,1.18rem)] font-semibold uppercase tracking-[0.26em]"
+      className="theme-typewriter flex min-h-8 w-full items-center justify-center overflow-visible text-center text-[clamp(0.95rem,1.5vw,1.18rem)] font-semibold uppercase tracking-[0.26em]"
       style={{ color: "var(--typewriter-color, var(--accent))" }}
       aria-live="polite"
     >
-      <span className="inline-block text-[var(--typewriter-color,var(--accent))] drop-shadow-[0_0_18px_rgba(var(--typewriter-rgb),0.48)]">
-        {text || "\u00a0"}
-      </span>
       <span
-        className="theme-typewriter-cursor ml-1.5 inline-block h-[1.25em] w-[2px] rounded-full bg-[var(--typewriter-color,var(--accent))] shadow-[0_0_18px_rgba(var(--typewriter-rgb),0.72)]"
-        aria-hidden="true"
-      />
+        className="inline-flex items-center justify-start whitespace-nowrap"
+        style={{ width: `calc(${maxPhraseLength}ch + ${maxPhraseLength} * 0.32em + 1.25rem)` }}
+      >
+        <span className="inline-block whitespace-nowrap text-[var(--typewriter-color,var(--accent))] drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.48)]">
+          {text || "\u00a0"}
+        </span>
+        <span
+          className="theme-typewriter-cursor ml-1.5 inline-block h-[1.25em] w-[2px] rounded-full bg-[var(--typewriter-color,var(--accent))] shadow-[0_0_18px_rgba(var(--accent-rgb),0.72)]"
+          aria-hidden="true"
+        />
+      </span>
     </p>
   );
 }
