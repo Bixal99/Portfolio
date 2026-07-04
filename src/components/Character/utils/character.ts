@@ -25,6 +25,10 @@ const darkMeshes = new Set(["hair", "Eyebrow", "Plane017_1"]);
 const SKIN_COLOR = new THREE.Color("#f1d2c3");
 const DARK_BROWN_SHOE = "#3a2417";
 
+function isDisposableTexture(value: unknown): value is THREE.Texture {
+  return value instanceof THREE.Texture;
+}
+
 function normalizeTextureForWebGL(material: CharacterModelMaterial) {
   const map = material.map;
   if (!map || map.colorSpace !== THREE.SRGBColorSpace) return;
@@ -153,6 +157,55 @@ function applyCharacterPalette(character: THREE.Object3D) {
   });
 }
 
+function disposeMaterial(material: THREE.Material) {
+  Object.values(material as unknown as Record<string, unknown>).forEach((value) => {
+    if (isDisposableTexture(value)) {
+      value.dispose();
+    }
+  });
+
+  material.dispose();
+}
+
+function disposeCharacter(character: THREE.Object3D) {
+  character.traverse((child) => {
+    if (!("isMesh" in child) || !child.isMesh) return;
+
+    const mesh = child as THREE.Mesh;
+    mesh.geometry?.dispose();
+
+    if (Array.isArray(mesh.material)) {
+      mesh.material.forEach(disposeMaterial);
+    } else {
+      disposeMaterial(mesh.material);
+    }
+  });
+}
+
+function prepareCharacterForRender(
+  character: THREE.Object3D,
+  renderer: THREE.WebGLRenderer,
+  camera: THREE.PerspectiveCamera,
+  scene: THREE.Scene,
+) {
+  applyCharacterPalette(character);
+  hideFloorPlate(character);
+
+  character.traverse((child: THREE.Object3D) => {
+    if ("isMesh" in child && child.isMesh) {
+      const mesh = child as THREE.Mesh;
+      mesh.castShadow = false;
+      mesh.receiveShadow = false;
+      mesh.frustumCulled = true;
+      if (mesh.material && !Array.isArray(mesh.material)) {
+        mesh.material.precision = "mediump";
+      }
+    }
+  });
+
+  renderer.compile(character, camera, scene);
+}
+
 function hideFloorPlate(character: THREE.Object3D) {
   const ground = character.getObjectByName("ground");
   if (ground) {
@@ -164,6 +217,7 @@ const setCharacter = (
   renderer: THREE.WebGLRenderer,
   scene: THREE.Scene,
   camera: THREE.PerspectiveCamera,
+  shouldContinue: () => boolean = () => true,
 ) => {
   const loader = new GLTFLoader();
   const dracoLoader = new DRACOLoader();
@@ -183,22 +237,26 @@ const setCharacter = (
 
         loader.load(
           blobUrl,
-          async (gltf) => {
+          (gltf) => {
             const character = gltf.scene;
-            applyCharacterPalette(character);
-            hideFloorPlate(character);
-            await renderer.compileAsync(character, camera, scene);
-            character.traverse((child: THREE.Object3D) => {
-              if ("isMesh" in child && child.isMesh) {
-                const mesh = child as THREE.Mesh;
-                mesh.castShadow = false;
-                mesh.receiveShadow = false;
-                mesh.frustumCulled = true;
-                if (mesh.material && !Array.isArray(mesh.material)) {
-                  mesh.material.precision = "mediump";
-                }
-              }
-            });
+
+            if (!shouldContinue()) {
+              disposeCharacter(character);
+              dracoLoader.dispose();
+              if (blobUrl) URL.revokeObjectURL(blobUrl);
+              resolve(null);
+              return;
+            }
+
+            try {
+              prepareCharacterForRender(character, renderer, camera, scene);
+            } catch (error) {
+              disposeCharacter(character);
+              dracoLoader.dispose();
+              if (blobUrl) URL.revokeObjectURL(blobUrl);
+              reject(error);
+              return;
+            }
 
             setCharTimeline(character, camera);
             setAllTimeline();

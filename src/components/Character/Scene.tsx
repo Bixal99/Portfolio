@@ -18,6 +18,32 @@ type SceneProps = {
   onError?: () => void;
 };
 
+function isDisposableTexture(value: unknown): value is THREE.Texture {
+  return value instanceof THREE.Texture;
+}
+
+function disposeObject(object: THREE.Object3D) {
+  object.traverse((child) => {
+    if (!("isMesh" in child) || !child.isMesh) return;
+
+    const mesh = child as THREE.Mesh;
+    mesh.geometry?.dispose();
+
+    const materials = Array.isArray(mesh.material)
+      ? mesh.material
+      : [mesh.material];
+
+    materials.forEach((material) => {
+      Object.values(material as unknown as Record<string, unknown>).forEach((value) => {
+        if (isDisposableTexture(value)) {
+          value.dispose();
+        }
+      });
+      material.dispose();
+    });
+  });
+}
+
 const Scene = ({ onReady, onError }: SceneProps) => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
   const hoverDivRef = useRef<HTMLDivElement>(null);
@@ -80,7 +106,7 @@ const Scene = ({ onReady, onError }: SceneProps) => {
     const timer = new THREE.Timer();
     timer.connect(document);
     const light = setLighting(scene);
-    const { loadCharacter } = setCharacter(renderer, scene, camera);
+    const { loadCharacter } = setCharacter(renderer, scene, camera, () => mounted);
 
     const onMouseMove = (event: MouseEvent) => {
       handleMouseMove(event, (x, y) => {
@@ -116,7 +142,10 @@ const Scene = ({ onReady, onError }: SceneProps) => {
 
     loadCharacter()
       .then((gltf) => {
-        if (!mounted || !gltf) return;
+        if (!mounted || !gltf) {
+          if (gltf) disposeObject(gltf.scene);
+          return;
+        }
 
         const animations = setAnimations(gltf);
         hoverCleanup = hoverDivRef.current
@@ -175,10 +204,13 @@ const Scene = ({ onReady, onError }: SceneProps) => {
       containerElement.removeEventListener("touchend", onTouchEnd);
       if (resizeHandler) window.removeEventListener("resize", resizeHandler);
       renderer.domElement.removeEventListener("webglcontextlost", handleContextLost);
+      if (character) {
+        scene.remove(character);
+        disposeObject(character);
+      }
       light.dispose();
       scene.clear();
       timer.dispose();
-      renderer.forceContextLoss();
       renderer.dispose();
       renderer.domElement.remove();
     };

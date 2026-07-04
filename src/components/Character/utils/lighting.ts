@@ -7,10 +7,10 @@ const ENV_HEIGHT = 16;
 
 function createThemeEnvironmentTexture() {
   const texture = new THREE.DataTexture(
-    new Uint8Array(ENV_WIDTH * ENV_HEIGHT * 3),
+    new Uint8Array(ENV_WIDTH * ENV_HEIGHT * 4),
     ENV_WIDTH,
     ENV_HEIGHT,
-    THREE.RGBFormat,
+    THREE.RGBAFormat,
   );
   texture.mapping = THREE.EquirectangularReflectionMapping;
   texture.colorSpace = THREE.SRGBColorSpace;
@@ -32,13 +32,14 @@ function updateThemeEnvironmentTexture(texture: THREE.DataTexture, accent: THREE
     for (let x = 0; x < ENV_WIDTH; x += 1) {
       const u = x / (ENV_WIDTH - 1);
       const frontHighlight = Math.exp(-Math.pow((u - 0.56) / 0.16, 2)) * overhead;
-      const index = (y * ENV_WIDTH + x) * 3;
+      const index = (y * ENV_WIDTH + x) * 4;
       const neutral = 18 + frontHighlight * 112;
       const accentStrength = 0.18 + horizon * 0.72;
 
       data[index] = Math.min(255, neutral + accentR * accentStrength);
       data[index + 1] = Math.min(255, neutral + accentG * accentStrength);
       data[index + 2] = Math.min(255, neutral + accentB * accentStrength);
+      data[index + 3] = 255;
     }
   }
 
