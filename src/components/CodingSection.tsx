@@ -39,16 +39,22 @@ export function CodingSection() {
               className="inline-flex whitespace-nowrap"
               aria-label="What I build"
             >
-              {codingTitle.split("").map((char, index) => (
-                <span
-                  key={`${char}-${index}`}
-                  data-pixel-item
-                  className="inline-block will-change-transform"
-                  aria-hidden="true"
-                >
-                  {char === " " ? "\u00a0" : char}
-                </span>
-              ))}
+              {codingTitle.split("").map((char, index) => {
+                const isAccent = index >= codingTitle.indexOf("BUILD");
+
+                return (
+                  <span
+                    key={`${char}-${index}`}
+                    data-pixel-item
+                    className={`inline-block will-change-transform ${
+                      isAccent ? "text-[var(--accent)]" : ""
+                    }`}
+                    aria-hidden="true"
+                  >
+                    {char === " " ? "\u00a0" : char}
+                  </span>
+                );
+              })}
             </span>
           </h2>
 

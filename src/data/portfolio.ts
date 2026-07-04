@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+﻿import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
   Binary,
@@ -334,7 +334,7 @@ export const projects: Project[] = [
 
 export const sectionMeta = {
   journey: {
-    kicker: "MY Journey",
+    kicker: "MY JOURNEY",
     title: "Three beats that shaped the builder I am becoming.",
     icon: BookOpen,
   },
@@ -344,12 +344,12 @@ export const sectionMeta = {
     icon: TerminalSquare,
   },
   education: {
-    kicker: "Education",
+    kicker: "MY EDUCATION",
     title: "Computer science, applied projects, and communication.",
     icon: GraduationCap,
   },
   projects: {
-    kicker: "PROJECTS",
+    kicker: "MY PROJECTS",
     title: "Key projects from the updated resume.",
     icon: BriefcaseBusiness,
   },

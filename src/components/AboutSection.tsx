@@ -31,16 +31,22 @@ export function AboutSection() {
               className="inline-flex whitespace-nowrap"
               aria-label="About me"
             >
-              {aboutTitle.split("").map((char, index) => (
-                <span
-                  key={`${char}-${index}`}
-                  data-pixel-item
-                  className="inline-block will-change-transform"
-                  aria-hidden="true"
-                >
-                  {char === " " ? "\u00a0" : char}
-                </span>
-              ))}
+              {aboutTitle.split("").map((char, index) => {
+                const isAccent = index >= aboutTitle.indexOf("ME");
+
+                return (
+                  <span
+                    key={`${char}-${index}`}
+                    data-pixel-item
+                    className={`inline-block will-change-transform ${
+                      isAccent ? "text-[var(--accent)]" : ""
+                    }`}
+                    aria-hidden="true"
+                  >
+                    {char === " " ? "\u00a0" : char}
+                  </span>
+                );
+              })}
             </span>
           </h2>
 

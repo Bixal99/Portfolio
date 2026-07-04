@@ -29,15 +29,21 @@ export function SectionHeading({ kicker, title, icon: Icon }: SectionHeadingProp
           />
         </span>
         <span className="inline-flex whitespace-nowrap" aria-hidden="true">
-          {heading.split("").map((char, index) => (
-            <span
-              key={`${char}-${index}`}
-              data-pixel-item
-              className="inline-block will-change-transform"
-            >
-              {char === " " ? "\u00a0" : char}
-            </span>
-          ))}
+          {heading.split("").map((char, index) => {
+            const isAccent = heading.startsWith("MY ") && index < 2;
+
+            return (
+              <span
+                key={`${char}-${index}`}
+                data-pixel-item
+                className={`inline-block will-change-transform ${
+                  isAccent ? "text-[var(--accent)]" : ""
+                }`}
+              >
+                {char === " " ? "\u00a0" : char}
+              </span>
+            );
+          })}
         </span>
       </h2>
     </div>
