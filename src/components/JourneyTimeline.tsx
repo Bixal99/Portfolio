@@ -21,24 +21,6 @@ export function JourneyTimeline() {
     gsap.registerPlugin(ScrollTrigger);
 
     const context = gsap.context(() => {
-      gsap.fromTo(
-        "[data-journey-heading-piece]",
-        { autoAlpha: 0, x: -38, filter: "blur(10px)", scale: 0.94 },
-        {
-          autoAlpha: 1,
-          x: 0,
-          filter: "blur(0px)",
-          scale: 1,
-          duration: 0.85,
-          stagger: 0.055,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 78%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
 
       gsap.fromTo(
         "[data-journey-line-fill]",
@@ -156,33 +138,33 @@ export function JourneyTimeline() {
       <div ref={sectionRef} className="relative overflow-hidden py-4">
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.055)_1px,transparent_1px)] bg-[size:52px_52px] opacity-50"
+          className="absolute -inset-x-8 -inset-y-12 -z-10 bg-[linear-gradient(rgba(255,255,255,0.048)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.048)_1px,transparent_1px)] bg-[size:52px_52px] opacity-30 [mask-image:linear-gradient(to_bottom,transparent,black_18%,black_72%,transparent)]"
         />
         <div
           data-journey-panel-glow
           aria-hidden="true"
-          className="absolute left-[16%] top-20 -z-10 h-36 w-44 border border-[var(--accent)]/20 bg-[var(--accent)]/10 blur-xl md:left-[35%] md:h-48 md:w-64"
+          className="absolute left-[16%] top-20 -z-10 h-36 w-44 border border-[var(--accent)]/10 bg-[var(--accent)]/[0.055] opacity-70 blur-2xl [mask-image:radial-gradient(circle,black_0%,transparent_72%)] md:left-[35%] md:h-48 md:w-64"
         />
         <div
           data-journey-panel-glow
           aria-hidden="true"
-          className="absolute bottom-2 right-[2%] -z-10 h-28 w-40 border border-[var(--accent)]/20 bg-[var(--accent)]/10 blur-xl md:right-[22%] md:h-36 md:w-56"
+          className="absolute bottom-2 right-[2%] -z-10 h-28 w-40 border border-[var(--accent)]/10 bg-[var(--accent)]/[0.055] opacity-60 blur-2xl [mask-image:radial-gradient(circle,black_0%,transparent_72%)] md:right-[22%] md:h-36 md:w-56"
         />
 
         <header className="mb-10 max-w-5xl md:mb-12">
           <h2
-            data-journey-heading
+            data-pixel-title
             className="flex items-center gap-4 text-balance text-5xl font-extrabold leading-[0.92] text-white sm:text-6xl lg:text-7xl"
             aria-label={sectionMeta.journey.kicker}
             title={sectionMeta.journey.title}
           >
             <span className="flex shrink-0 items-center gap-4" aria-hidden="true">
               <span
-                data-journey-heading-piece
+                data-pixel-item
                 className="h-1 w-16 rounded-full bg-[var(--accent)] shadow-[0_0_22px_rgba(var(--accent-rgb),0.72)]"
               />
               <HeadingIcon
-                data-journey-heading-piece
+                data-pixel-item
                 className="size-12 text-[var(--accent)] drop-shadow-[0_0_16px_rgba(var(--accent-rgb),0.62)] sm:size-14 lg:size-16"
               />
             </span>
@@ -192,7 +174,7 @@ export function JourneyTimeline() {
                   {word.split("").map((char, charIndex) => (
                     <span
                       key={`${word}-${char}-${charIndex}`}
-                      data-journey-heading-piece
+                      data-pixel-item
                       className={wordIndex === 0 ? "text-[var(--accent)]" : "text-white"}
                     >
                       {char}
