@@ -25,6 +25,15 @@ const darkMeshes = new Set(["hair", "Eyebrow", "Plane017_1"]);
 const SKIN_COLOR = new THREE.Color("#f1d2c3");
 const DARK_BROWN_SHOE = "#3a2417";
 
+function normalizeTextureForWebGL(material: CharacterModelMaterial) {
+  const map = material.map;
+  if (!map || map.colorSpace !== THREE.SRGBColorSpace) return;
+
+  map.format = THREE.RGBAFormat;
+  map.type = THREE.UnsignedByteType;
+  map.needsUpdate = true;
+}
+
 function styleMaterialForMesh(
   objectName: string,
   material: CharacterModelMaterial,
@@ -133,6 +142,7 @@ function applyCharacterPalette(character: THREE.Object3D) {
     const cloneMaterial = (material: THREE.Material) => {
       const cloned = material.clone() as CharacterModelMaterial;
       styleMaterialForMesh(mesh.name, cloned);
+      normalizeTextureForWebGL(cloned);
       cloned.needsUpdate = true;
       return cloned;
     };

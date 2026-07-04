@@ -27,10 +27,15 @@ export function PortfolioExperience() {
     setModelReady(true);
   }, []);
 
+  const handleModelError = useCallback(() => {
+    setModelReady(true);
+    setCanUseModel(false);
+  }, []);
+
   return (
     <>
       <PageLoader ready={canUseModel === false || modelReady} />
-      {canUseModel ? <CharacterModel onReady={handleModelSettled} onError={handleModelSettled} /> : null}
+      {canUseModel ? <CharacterModel onReady={handleModelSettled} onError={handleModelError} /> : null}
     </>
   );
 }

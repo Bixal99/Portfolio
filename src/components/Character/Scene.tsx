@@ -45,17 +45,32 @@ const Scene = ({ onReady, onError }: SceneProps) => {
     };
     const aspect = container.width / container.height;
     const scene = sceneRef.current;
+    let renderer: THREE.WebGLRenderer;
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: window.devicePixelRatio < 2,
-      powerPreference: "high-performance",
-    });
+    try {
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: window.devicePixelRatio < 2,
+        powerPreference: "high-performance",
+      });
+    } catch (error) {
+      console.error("WebGL renderer failed to initialize", error);
+      onError?.();
+      return;
+    }
+
     renderer.setSize(container.width, container.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
     containerElement.appendChild(renderer.domElement);
+
+    const handleContextLost = (event: Event) => {
+      event.preventDefault();
+      console.error("WebGL context lost while rendering character");
+      if (mounted) onError?.();
+    };
+    renderer.domElement.addEventListener("webglcontextlost", handleContextLost);
 
     const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
     camera.position.set(0, 13.1, 24.7);
@@ -159,9 +174,11 @@ const Scene = ({ onReady, onError }: SceneProps) => {
       containerElement.removeEventListener("touchmove", onTouchMove);
       containerElement.removeEventListener("touchend", onTouchEnd);
       if (resizeHandler) window.removeEventListener("resize", resizeHandler);
+      renderer.domElement.removeEventListener("webglcontextlost", handleContextLost);
       light.dispose();
       scene.clear();
       timer.dispose();
+      renderer.forceContextLoss();
       renderer.dispose();
       renderer.domElement.remove();
     };

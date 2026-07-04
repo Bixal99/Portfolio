@@ -110,10 +110,21 @@ export function ScrollAnimator() {
         .toArray<HTMLElement>("[data-pixel-title]")
         .forEach(setupPixelTitle);
 
-      [
-        { selector: "[data-about-bullet]", trigger: "[data-about-panel]" },
-        { selector: "[data-build-list] > li", trigger: "[data-coding-panel]" },
-      ].forEach(({ selector, trigger }) => {
+      const setupBulletAnimation = ({
+        selector,
+        trigger,
+        start,
+        end,
+        scrub,
+        stagger,
+      }: {
+        selector: string;
+        trigger: string;
+        start: string;
+        end: string;
+        scrub: number;
+        stagger: number;
+      }) => {
         const bullets = gsap.utils.toArray<HTMLElement>(selector);
         const triggerElement = document.querySelector<HTMLElement>(trigger);
 
@@ -134,17 +145,35 @@ export function ScrollAnimator() {
             y: 0,
             filter: "blur(0px)",
             clipPath: "inset(0 0% 0 0)",
-            stagger: 0.12,
+            stagger,
             ease: "power2.out",
             scrollTrigger: {
               trigger: triggerElement,
-              start: "top 78%",
-              end: "center 42%",
-              scrub: 1.2,
+              start,
+              end,
+              scrub,
               invalidateOnRefresh: true,
             },
           },
         );
+      };
+
+      setupBulletAnimation({
+        selector: "[data-about-bullet]",
+        trigger: "[data-about-panel]",
+        start: "top 86%",
+        end: "top 50%",
+        scrub: 0.75,
+        stagger: 0.08,
+      });
+
+      setupBulletAnimation({
+        selector: "[data-build-list] > li",
+        trigger: "[data-coding-panel]",
+        start: "top 86%",
+        end: "top 50%",
+        scrub: 0.75,
+        stagger: 0.08,
       });
 
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {

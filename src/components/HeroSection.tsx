@@ -16,7 +16,7 @@ export function HeroSection() {
           data-hero-name
           className="whitespace-nowrap text-[clamp(2rem,4.55vw,4.95rem)] font-semibold leading-none text-white lg:-translate-x-22"
         >
-          <span className="relative inline-block translate-x-2 mr-3 align-middle text-[0.34em] font-semibold uppercase tracking-[0.34em] text-[var(--accent)] sm:mr-4">
+          <span className="relative inline-block translate-x-7 mr-3 align-middle text-[0.34em] font-semibold uppercase tracking-[0.34em] text-[var(--accent)] sm:mr-4">
             Hi, I am
           </span>
           <span
