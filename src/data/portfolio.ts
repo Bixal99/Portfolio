@@ -1,4 +1,4 @@
-﻿import type { ComponentType } from "react";
+import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
   Binary,
@@ -92,35 +92,27 @@ export const socialLinks: SocialLink[] = [
 
 export const journeyItems: JourneyItem[] = [
   {
-    year: "Jun 2025 - Present",
-    title: "AI Engineer",
-    organization: "Zennore, Pakistan",
+    year: "Aug 2022",
+    title: "Joined FAST NUCES University",
+    organization: "Computer Science",
     description:
-      "Building AI solutions in a startup environment while adapting to market trends, evolving technologies, and product development from concept to execution.",
+      "Started the computer science path that shaped my foundation in software engineering, AI, data, and problem solving.",
+    icon: GraduationCap,
+  },
+  {
+    year: "Jun 2025",
+    title: "Startup Journey",
+    organization: "AI Builder",
+    description:
+      "Stepped into a fast-moving startup environment, building AI solutions while learning product thinking, speed, and real-world execution.",
     icon: BriefcaseBusiness,
   },
   {
-    year: "2025",
-    title: "AI Customer Churn Prediction System",
-    organization: "Personal Project",
+    year: "Jun 2026",
+    title: "Graduated",
+    organization: "BS Computer Science",
     description:
-      "Developed an end-to-end telecom churn prediction application using XGBoost, Streamlit, and Gemini AI for analytics and customer retention insights.",
-    icon: BrainCircuit,
-  },
-  {
-    year: "2025",
-    title: "Eye Blink Morse Code Detector",
-    organization: "Personal Project",
-    description:
-      "Created a hands-free Morse code typing system powered by webcam input, OpenCV, MediaPipe Face Mesh, and NumPy.",
-    icon: Binary,
-  },
-  {
-    year: "Aug 2022 - Jun 2026",
-    title: "BS Computer Science",
-    organization: "FAST NUCES, Chiniot-Faisalabad Campus",
-    description:
-      "Focused on AI, software engineering, web development, databases, and machine learning while completing multiple academic and AI-based projects.",
+      "Completed the degree journey with a sharper focus on AI engineering, full-stack systems, and practical software craft.",
     icon: GraduationCap,
   },
 ];
@@ -342,12 +334,12 @@ export const projects: Project[] = [
 
 export const sectionMeta = {
   journey: {
-    kicker: "Experience",
-    title: "The path behind the AI systems I build.",
+    kicker: "MY Journey",
+    title: "Three beats that shaped the builder I am becoming.",
     icon: BookOpen,
   },
   stack: {
-    kicker: "Skills",
+    kicker: "MY SKILLS",
     title: "Technical, framework, AI, and collaboration skills.",
     icon: TerminalSquare,
   },
