@@ -16,15 +16,21 @@ export function HeroSection() {
           data-hero-name
           className="whitespace-nowrap text-[clamp(2rem,4.55vw,4.95rem)] font-semibold leading-none text-white lg:-translate-x-22"
         >
-          <span className="mr-3 align-middle text-[0.34em] font-semibold uppercase tracking-[0.34em] text-[var(--accent)] sm:mr-4">
+          <span className="relative inline-block translate-x-2 mr-3 align-middle text-[0.34em] font-semibold uppercase tracking-[0.34em] text-[var(--accent)] sm:mr-4">
             Hi, I am
           </span>
-          <span data-hero-name-word className="relative inline-block translate-x-6 align-middle text-[1.32em] sm:translate-x-8 lg:translate-x-12">
+          <span
+            data-hero-name-word
+            className="relative inline-block translate-x-6 align-middle text-[1.41em] sm:translate-x-8 lg:translate-x-[4rem]"
+          >
             {profile.name}
           </span>
         </h1>
 
-        <div data-hero-animate className="mt-4 translate-x-4 sm:translate-x-6 lg:translate-x-14">
+        <div
+          data-hero-animate
+          className="mt-4 translate-x-4 sm:translate-x-6 lg:translate-x-[4rem]"
+        >
           <TypewriterLine />
         </div>
       </div>
