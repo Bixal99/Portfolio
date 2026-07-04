@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef } from "react";
 import type { CSSProperties, ElementType } from "react";
 import { animate, stagger } from "animejs";
-import { motion, useReducedMotion } from "motion/react";
 import {
   SiC,
   SiCplusplus,
@@ -62,7 +61,7 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { sectionMeta, techGroups, techSkills } from "@/data/portfolio";
+import { sectionMeta, techSkills } from "@/data/portfolio";
 import { AnimatedSection } from "./AnimatedSection";
 import { SectionHeading } from "./SectionHeading";
 
@@ -71,12 +70,6 @@ type IconColor = {
   light?: string;
 };
 
-type SkillVisual = {
-  name: string;
-  category: string;
-  icon: string;
-  description: string;
-};
 
 const iconMap: Record<string, ElementType> = {
   typescript: SiTypescript,
@@ -239,15 +232,6 @@ const skillDescriptions: Record<string, string> = {
   SQL: "Queries relational databases.",
 };
 
-const groupSkillAliases: Record<string, Pick<SkillVisual, "category" | "icon">> = {
-  ai: { category: "AI", icon: "ai" },
-  ml: { category: "ML", icon: "ml" },
-  promptengineering: { category: "AI", icon: "prompt" },
-  rag: { category: "AI", icon: "rag" },
-  json: { category: "Data", icon: "json" },
-  problemsolving: { category: "Soft Skill", icon: "problem" },
-  teamcollaboration: { category: "Soft Skill", icon: "collaboration" },
-};
 
 const rowShellClasses = [
   "size-[4.75rem] sm:size-24 lg:size-28",
@@ -278,37 +262,8 @@ function getIconStyle(icon: string) {
   } as CSSProperties;
 }
 
-function normalizeSkillName(name: string) {
-  return name.toLowerCase().replace(/[^a-z0-9]/g, "");
-}
-
 function getSkillDescription(name: string, category: string) {
   return skillDescriptions[name] ?? `Useful ${category.toLowerCase()} skill for building software.`;
-}
-
-function getSkillVisual(item: string): SkillVisual {
-  const directMatch = techSkills.find((skill) => skill.name.toLowerCase() === item.toLowerCase());
-  const normalized = normalizeSkillName(item);
-  const normalizedMatch = techSkills.find((skill) => normalizeSkillName(skill.name) === normalized);
-  const matchedSkill = directMatch ?? normalizedMatch;
-
-  if (matchedSkill) {
-    return {
-      name: item,
-      category: matchedSkill.category,
-      icon: matchedSkill.icon,
-      description: getSkillDescription(matchedSkill.name, matchedSkill.category),
-    };
-  }
-
-  const alias = groupSkillAliases[normalized] ?? { category: "Skill", icon: "ai" };
-
-  return {
-    name: item,
-    category: alias.category,
-    icon: alias.icon,
-    description: getSkillDescription(item, alias.category),
-  };
 }
 
 function clamp(value: number, min: number, max: number) {
@@ -334,7 +289,6 @@ export function TechStack() {
   const tooltipCategoryRef = useRef<HTMLSpanElement>(null);
   const tooltipDescriptionRef = useRef<HTMLParagraphElement>(null);
   const skillRows = useMemo(() => [chunkSkillsByRow(0), chunkSkillsByRow(1), chunkSkillsByRow(2)], []);
-  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const surface = surfaceRef.current;
@@ -349,7 +303,6 @@ export function TechStack() {
 
     const laneIconElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-icon]"));
     const rowElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-row]"));
-    const dropZones = Array.from(surface.querySelectorAll<HTMLElement>("[data-skill-drop-zone]"));
     const gridLayer = document.querySelector<HTMLElement>(".interactive-grid-bg");
     const moveTooltipX = gsap.quickTo(tooltip, "x", { duration: 0.2, ease: "power3.out" });
     const moveTooltipY = gsap.quickTo(tooltip, "y", { duration: 0.2, ease: "power3.out" });
@@ -614,41 +567,6 @@ export function TechStack() {
             0,
           );
         });
-
-        dropZones.forEach((zone, zoneIndex) => {
-          const dropIcons = Array.from(zone.querySelectorAll<HTMLElement>("[data-skill-drop-icon]"));
-
-          gsap.fromTo(
-            dropIcons,
-            {
-              autoAlpha: 0,
-              y: -96,
-              scale: 0.76,
-            },
-            {
-              autoAlpha: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.8,
-              stagger: 0.045,
-              ease: "back.out(1.8)",
-              scrollTrigger: {
-                trigger: zone,
-                start: "top 72%",
-                toggleActions: "play none none reverse",
-              },
-              onComplete: () => {
-                animate(dropIcons, {
-                  scale: { from: 0.96, to: 1 },
-                  y: { from: 6, to: 0 },
-                  duration: 420,
-                  delay: stagger(14, { from: "center", jitter: 2, seed: zoneIndex + 1 }),
-                  ease: "out(5)",
-                });
-              },
-            },
-          );
-        });
       }, surface);
     }
 
@@ -708,57 +626,6 @@ export function TechStack() {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="mt-10 space-y-5 sm:mt-14 sm:space-y-6">
-          {techGroups.map((group, groupIndex) => {
-            const GroupIcon = group.icon;
-
-            return (
-              <motion.article
-                key={group.title}
-                data-skill-drop-zone
-                className="relative overflow-hidden border border-white/10 bg-black/55 px-4 py-5 shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-md sm:px-6 sm:py-6"
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 42 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-12% 0px" }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: groupIndex * 0.04 }}
-              >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-50" aria-hidden="true" />
-                <div className="relative z-10 grid gap-5 lg:grid-cols-[minmax(13rem,0.34fr)_1fr] lg:items-center">
-                  <div className="flex items-center gap-4">
-                    <span className="grid size-12 shrink-0 place-items-center border border-[var(--accent)]/25 bg-[var(--accent)]/10 text-[var(--accent)]">
-                      <GroupIcon className="size-6" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <h3 className="text-2xl font-semibold leading-none text-white sm:text-3xl">{group.title}</h3>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3 sm:gap-4">
-                    {group.items.map((item) => {
-                      const skill = getSkillVisual(item);
-                      const Icon = iconMap[skill.icon] ?? Boxes;
-
-                      return (
-                        <span
-                          key={`${group.title}-${item}`}
-                          data-skill-drop-icon
-                          className="group/drop inline-flex min-h-14 min-w-[13.5rem] items-center gap-3 border border-white/10 bg-white/[0.035] px-4 py-2 text-sm text-white/70 shadow-[0_14px_38px_rgba(0,0,0,0.2)] transition-[background-color,border-color,box-shadow,color] duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] hover:text-white hover:shadow-[0_0_28px_rgba(var(--accent-rgb),0.22)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 sm:min-h-16 sm:min-w-[15rem] sm:px-5"
-                          aria-label={skill.name}
-                          role="img"
-                          tabIndex={0}
-                        >
-                          <Icon className="skill-brand-icon size-6 shrink-0 sm:size-7" style={getIconStyle(skill.icon)} aria-hidden="true" />
-                          <span className="whitespace-nowrap font-medium leading-5">{skill.name}</span>
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
         </div>
       </div>
 

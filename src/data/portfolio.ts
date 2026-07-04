@@ -1,4 +1,4 @@
-﻿import type { ComponentType } from "react";
+import type { ComponentType } from "react";
 import type { LucideProps } from "lucide-react";
 import {
   Binary,
@@ -253,25 +253,25 @@ export const techSkills: TechSkill[] = [
 
 export const educationItems: EducationItem[] = [
   {
-    period: "Aug 2022 - Jun 2026",
-    title: "Bachelor of Science in Computer Science",
-    institution: "FAST NUCES, Chiniot-Faisalabad Campus",
+    period: "2018 - 2019",
+    title: "Matric",
+    institution: "School Years",
     details:
-      "BSCS graduate with a focus on AI, software engineering, web development, databases, and machine learning. GPA: 2.85/4.0.",
+      "Built the early academic foundation through science, mathematics, discipline, and the first habits of structured problem solving.",
   },
   {
-    period: "Academic Projects",
-    title: "Software Engineering & AI Project Work",
+    period: "2020 - 2021",
+    title: "FSC",
+    institution: "College Years",
+    details:
+      "Strengthened the pre-university path with analytical subjects, exam pressure, and the focus needed for computer science.",
+  },
+  {
+    period: "2022 - 2026",
+    title: "University Life",
     institution: "FAST NUCES",
     details:
-      "Completed multiple academic and AI-based software projects across management systems, database applications, machine learning, and computer vision.",
-  },
-  {
-    period: "Languages",
-    title: "Communication",
-    institution: "English and Urdu",
-    details:
-      "Fluent in English and Urdu, with experience collaborating in team-based startup, academic, and project environments.",
+      "Moved into computer science, software engineering, AI, databases, web development, and practical project work.",
   },
 ];
 
@@ -345,7 +345,7 @@ export const sectionMeta = {
   },
   education: {
     kicker: "MY EDUCATION",
-    title: "Computer science, applied projects, and communication.",
+    title: "From school foundations to computer science and AI systems.",
     icon: GraduationCap,
   },
   projects: {

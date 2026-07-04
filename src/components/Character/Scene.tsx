@@ -31,15 +31,30 @@ function disposeObject(object: THREE.Object3D) {
 
     const materials = Array.isArray(mesh.material)
       ? mesh.material
-      : [mesh.material];
+      : mesh.material
+        ? [mesh.material]
+        : [];
 
     materials.forEach((material) => {
-      Object.values(material as unknown as Record<string, unknown>).forEach((value) => {
-        if (isDisposableTexture(value)) {
-          value.dispose();
-        }
-      });
-      material.dispose();
+      if (!material || typeof material.dispose !== "function") return;
+
+      try {
+        Object.values(material as unknown as Record<string, unknown>).forEach(
+          (value) => {
+            if (isDisposableTexture(value)) {
+              try {
+                value.dispose();
+              } catch (error) {
+                console.warn("Failed to dispose character texture", error);
+              }
+            }
+          },
+        );
+
+        material.dispose();
+      } catch (error) {
+        console.warn("Failed to dispose character material", error);
+      }
     });
   });
 }
@@ -63,6 +78,7 @@ const Scene = ({ onReady, onError }: SceneProps) => {
     let hoverCleanup: (() => void) | undefined;
     let mouse = { x: 0, y: 0 };
     let interpolation = { x: 0.1, y: 0.2 };
+    let isContextLost = false;
 
     const rect = containerElement.getBoundingClientRect();
     const container = {
@@ -93,6 +109,7 @@ const Scene = ({ onReady, onError }: SceneProps) => {
 
     const handleContextLost = (event: Event) => {
       event.preventDefault();
+      isContextLost = true;
       console.error("WebGL context lost while rendering character");
       if (mounted) onError?.();
     };
@@ -106,7 +123,12 @@ const Scene = ({ onReady, onError }: SceneProps) => {
     const timer = new THREE.Timer();
     timer.connect(document);
     const light = setLighting(scene);
-    const { loadCharacter } = setCharacter(renderer, scene, camera, () => mounted);
+    const { loadCharacter } = setCharacter(
+      renderer,
+      scene,
+      camera,
+      () => mounted,
+    );
 
     const onMouseMove = (event: MouseEvent) => {
       handleMouseMove(event, (x, y) => {
@@ -175,6 +197,8 @@ const Scene = ({ onReady, onError }: SceneProps) => {
       });
 
     const animate = (timestamp?: number) => {
+      if (!mounted || isContextLost) return;
+
       frameId = requestAnimationFrame(animate);
       if (headBone) {
         handleHeadRotation(
@@ -190,7 +214,14 @@ const Scene = ({ onReady, onError }: SceneProps) => {
       timer.update(timestamp);
       const delta = timer.getDelta();
       mixer?.update(delta);
-      renderer.render(scene, camera);
+
+      try {
+        renderer.render(scene, camera);
+      } catch (error) {
+        isContextLost = true;
+        console.error("Character render failed after context loss", error);
+        if (mounted) onError?.();
+      }
     };
     animate();
 
@@ -203,7 +234,10 @@ const Scene = ({ onReady, onError }: SceneProps) => {
       containerElement.removeEventListener("touchmove", onTouchMove);
       containerElement.removeEventListener("touchend", onTouchEnd);
       if (resizeHandler) window.removeEventListener("resize", resizeHandler);
-      renderer.domElement.removeEventListener("webglcontextlost", handleContextLost);
+      renderer.domElement.removeEventListener(
+        "webglcontextlost",
+        handleContextLost,
+      );
       if (character) {
         scene.remove(character);
         disposeObject(character);
