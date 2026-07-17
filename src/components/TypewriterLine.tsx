@@ -3,20 +3,18 @@
 import { useEffect, useMemo, useState } from "react";
 
 const phrases = [
-  "Software Engineer",
-  "AI Engineer",
-  "Full-Stack Developer",
-  "Startup Engineer",
-  "Web Developer",
-  "Open-Source Contributor",
-  "AI Enthusiast",
+  "a Software Engineer",
+  "an AI Engineer",
+  "a Full-Stack Developer",
+  "a Startup Engineer",
+  "a Web Developer",
+  "an Open-Source Contributor",
+  "an AI Enthusiast",
 ];
 
-type TypewriterLineProps = {
-  align?: "left" | "center";
-};
+const longestPhrase = phrases.reduce((a, b) => (a.length >= b.length ? a : b));
 
-export function TypewriterLine({ align = "center" }: TypewriterLineProps) {
+export function TypewriterLine() {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(1);
   const [deleting, setDeleting] = useState(false);
@@ -53,19 +51,28 @@ export function TypewriterLine({ align = "center" }: TypewriterLineProps) {
 
   return (
     <p
-      className={`theme-typewriter flex min-h-8 w-full items-center overflow-visible text-[clamp(1.05rem,1.7vw,1.32rem)] font-semibold uppercase tracking-[0.22em] ${
-        align === "left" ? "justify-start text-left" : "justify-center text-center"
-      }`}
+      className="theme-typewriter relative inline-grid h-9 items-center text-[clamp(1.2rem,2.3vw,1.55rem)] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]"
       aria-live="polite"
     >
-      <span className="inline-flex max-w-full items-center justify-start whitespace-nowrap">
-        <span className="inline-block whitespace-nowrap text-[var(--accent)] drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.48)]">
-          {text || "\u00a0"}
-        </span>
+      {/* Invisible sizer — locks width to the longest phrase so the line never shifts */}
+      <span
+        className="invisible col-start-1 row-start-1 inline-flex items-center whitespace-nowrap"
+        aria-hidden="true"
+      >
+        <span>&quot;</span>
+        <span>{longestPhrase}</span>
+        <span className="mx-[0.06em] inline-block h-[0.95em] w-[2px] shrink-0" />
+        <span>&quot;</span>
+      </span>
+
+      <span className="col-start-1 row-start-1 inline-flex items-center justify-self-start whitespace-nowrap drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.48)]">
+        <span aria-hidden="true">&quot;</span>
+        <span>{text}</span>
         <span
-          className="theme-typewriter-cursor ml-1.5 inline-block h-[1.15em] w-[2px] shrink-0 rounded-full bg-[var(--accent)]"
+          className="theme-typewriter-cursor mx-[0.06em] inline-block h-[0.95em] w-[2px] shrink-0 translate-y-[0.05em] rounded-full"
           aria-hidden="true"
         />
+        <span aria-hidden="true">&quot;</span>
       </span>
     </p>
   );

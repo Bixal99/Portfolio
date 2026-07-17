@@ -1,33 +1,29 @@
 "use client";
 
-import { heroStats, profile, resume } from "@/data/portfolio";
+import { profile } from "@/data/portfolio";
+import { InteractiveGridBackground } from "./InteractiveGridBackground";
 import { TypewriterLine } from "./TypewriterLine";
 
 export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex min-h-dvh scroll-mt-0 items-center justify-center overflow-hidden py-28 sm:py-32"
+      className="relative flex min-h-dvh w-full scroll-mt-0 items-start justify-center overflow-hidden bg-black pt-28 pb-20 sm:pt-36 sm:pb-28"
     >
+      <InteractiveGridBackground />
+
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[min(70vw,28rem)] w-[min(90vw,40rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(var(--accent-rgb),0.14),transparent_68%)]"
+        className="pointer-events-none absolute left-1/2 top-[42%] z-10 h-[min(80vw,34rem)] w-[min(100vw,48rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(var(--accent-rgb),0.16),transparent_68%)]"
         aria-hidden="true"
       />
 
       <div
         data-hero-copy
-        className="relative z-20 mx-auto flex w-full max-w-4xl flex-col items-center text-center"
+        className="relative z-20 mx-auto flex w-full max-w-6xl flex-col items-center px-5 text-center sm:px-8"
       >
         <p
           data-hero-animate
-          className="max-w-3xl text-[clamp(1.65rem,5.2vw,3.35rem)] font-semibold leading-[1.12] tracking-[-0.04em] text-white/30"
-        >
-          {profile.thesis}
-        </p>
-
-        <p
-          data-hero-animate
-          className="mt-10 text-sm font-semibold uppercase tracking-[0.34em] text-[var(--accent)] sm:text-base"
+          className="text-[clamp(1.45rem,3.4vw,2.15rem)] font-semibold uppercase tracking-[0.32em] text-[var(--accent)]"
         >
           Hi, I am
         </p>
@@ -35,57 +31,21 @@ export function HeroSection() {
         <h1
           data-hero-animate
           data-hero-name
-          className="mt-3 text-[clamp(2.6rem,7vw,5.5rem)] font-semibold leading-[0.95] tracking-[-0.04em] text-white"
+          className="mt-5 whitespace-nowrap text-[clamp(2.2rem,9vw,6.5rem)] font-bold uppercase leading-none tracking-[0.06em] text-white"
         >
           <span data-hero-name-word className="inline-block">
             {profile.name}
           </span>
         </h1>
 
-        <div data-hero-animate className="mt-5 w-full max-w-xl">
-          <TypewriterLine align="center" />
-        </div>
-
-        <p
-          data-hero-animate
-          className="mt-6 max-w-lg text-base leading-7 text-white/58 sm:text-lg sm:leading-8"
-        >
-          {profile.intro}
-        </p>
-
         <div
           data-hero-animate
-          className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          className="mt-7 flex translate-x-4 items-center justify-center gap-3 text-[clamp(1.2rem,2.3vw,1.55rem)] sm:translate-x-8"
         >
-          <a
-            href={resume.href}
-            download
-            className="inline-flex items-center border border-white bg-white px-5 py-3 text-sm font-bold uppercase tracking-[0.18em] text-black transition hover:bg-transparent hover:text-white"
-          >
-            {resume.label}
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center border border-white/20 bg-white/[0.04] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
-          >
-            Contact
-          </a>
-        </div>
-
-        <div
-          data-hero-animate
-          className="mt-12 flex w-full max-w-md items-start justify-center gap-8 border-t border-white/10 pt-8 sm:gap-12"
-        >
-          {heroStats.map((stat) => (
-            <div key={stat.label} className="min-w-0 text-center">
-              <p className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
-                {stat.value}
-              </p>
-              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/40">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+          <span className="shrink-0 font-semibold uppercase tracking-[0.22em] text-white/70">
+            Building with
+          </span>
+          <TypewriterLine />
         </div>
       </div>
     </section>

@@ -7,7 +7,6 @@ import { shouldEnableCustomCursor } from "./customCursor/shouldEnableCustomCurso
 const TRAIL_COUNT = 10;
 /** Base spring at 60fps; scaled by deltaRatio so motion stays smooth at 120Hz */
 const SPRING = 0.35;
-const CURSOR_COLOR = "var(--accent)";
 const HOVER_SELECTOR =
   'a, button, [role="button"], [role="link"], .cursor-pointer, .cursor-hover, summary, label, [data-skill-icon], [data-skill-drop-icon]';
 
@@ -81,9 +80,7 @@ export function CustomCursor() {
       const size = Math.max(2, 16 - i * 1.1);
       const opacity = 1 - i * 0.05;
       el.className =
-        "absolute top-0 left-0 rounded-full pointer-events-none will-change-transform box-border border-0";
-      el.style.backgroundColor = CURSOR_COLOR;
-      el.style.borderColor = CURSOR_COLOR;
+        "absolute top-0 left-0 rounded-full bg-white pointer-events-none will-change-transform box-border border-0 border-white";
       gsap.set(el, {
         width: size,
         height: size,
@@ -147,7 +144,7 @@ export function CustomCursor() {
       gsap.to(trail[0].el, {
         width: trail[0].baseSize,
         height: trail[0].baseSize,
-        backgroundColor: CURSOR_COLOR,
+        backgroundColor: "#ffffff",
         borderWidth: 0,
         duration: 0.3,
         ease: "power3.out",
@@ -207,8 +204,7 @@ export function CustomCursor() {
 
       const ripple = document.createElement("div");
       ripple.className =
-        "fixed rounded-full border-2 pointer-events-none z-[9999]";
-      ripple.style.borderColor = CURSOR_COLOR;
+        "fixed rounded-full border border-white mix-blend-difference pointer-events-none z-[9999]";
       document.body.appendChild(ripple);
       gsap.set(ripple, {
         x: mouseX,
@@ -217,6 +213,7 @@ export function CustomCursor() {
         yPercent: -50,
         width: 20,
         height: 20,
+        borderWidth: 3,
         force3D: true,
       });
       gsap.to(ripple, {
@@ -233,7 +230,6 @@ export function CustomCursor() {
     const tick = () => {
       if (document.hidden) return;
 
-      // Keep spring feel consistent across 60/120Hz displays
       const factor = 1 - Math.pow(1 - SPRING, gsap.ticker.deltaRatio(60));
 
       setCoreX(mouseX);
@@ -281,12 +277,11 @@ export function CustomCursor() {
     <div
       ref={rootRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[10001]"
+      className="pointer-events-none fixed inset-0 z-[10001] mix-blend-difference"
     >
       <div
         ref={coreRef}
-        className="fixed top-0 left-0 h-2 w-2 rounded-full will-change-transform"
-        style={{ backgroundColor: CURSOR_COLOR }}
+        className="fixed top-0 left-0 h-2 w-2 rounded-full bg-white will-change-transform"
       />
       <div
         ref={trailRef}

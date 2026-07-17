@@ -1,34 +1,52 @@
 "use client";
 
+import gsap from "gsap";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const CELL_SIZE = 42;
-const HOVER_RADIUS = 3;
+/** Strict 3×3 (9 cells) around the pointer cell */
+const NEIGHBOR_RANGE = 1;
+const POINTER_LERP = 0.22;
+const INTENSITY_LERP = 0.28;
 
 type GridSize = {
   columns: number;
   rows: number;
 };
 
+type CellState = {
+  alpha: number;
+  shadow: number;
+  scale: number;
+  glow: number;
+};
+
 export function InteractiveGridBackground() {
   const layerRef = useRef<HTMLDivElement>(null);
-  const activeCellsRef = useRef<Set<number>>(new Set());
-  const pointerRef = useRef({ x: 0, y: 0 });
-  const rafRef = useRef<number | null>(null);
   const [gridSize, setGridSize] = useState<GridSize>({ columns: 0, rows: 0 });
 
   useEffect(() => {
+    const layer = layerRef.current;
+    if (!layer) return;
+
     const updateGrid = () => {
+      const width = layer.clientWidth || window.innerWidth;
+      const height = layer.clientHeight || window.innerHeight;
       setGridSize({
-        columns: Math.ceil(window.innerWidth / CELL_SIZE) + 1,
-        rows: Math.ceil(window.innerHeight / CELL_SIZE) + 1,
+        columns: Math.ceil(width / CELL_SIZE) + 1,
+        rows: Math.ceil(height / CELL_SIZE) + 1,
       });
     };
 
     updateGrid();
+    const observer = new ResizeObserver(updateGrid);
+    observer.observe(layer);
     window.addEventListener("resize", updateGrid);
 
-    return () => window.removeEventListener("resize", updateGrid);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateGrid);
+    };
   }, []);
 
   const cellCount = useMemo(
@@ -38,92 +56,158 @@ export function InteractiveGridBackground() {
 
   useEffect(() => {
     const layer = layerRef.current;
-    if (!layer || gridSize.columns === 0 || cellCount === 0) {
-      return;
-    }
+    if (!layer || gridSize.columns === 0 || cellCount === 0) return;
 
     const cells = Array.from(layer.children) as HTMLElement[];
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    const resetCell = (index: number) => {
-      const cell = cells[index];
-      if (!cell) return;
-
-      cell.style.setProperty("--grid-alpha", "0");
-      cell.style.setProperty("--grid-shadow-alpha", "0");
-      cell.style.setProperty("--grid-scale", "1");
-      cell.style.setProperty("--grid-glow", "0px");
-    };
-
-    const resetActiveCells = () => {
-      activeCellsRef.current.forEach(resetCell);
-      activeCellsRef.current.clear();
-    };
-
     if (prefersReducedMotion) {
-      resetActiveCells();
+      cells.forEach((cell) => {
+        cell.style.setProperty("--grid-alpha", "0");
+        cell.style.setProperty("--grid-shadow-alpha", "0");
+        cell.style.setProperty("--grid-scale", "1");
+        cell.style.setProperty("--grid-glow", "0px");
+      });
       return;
     }
 
-    const paintCells = () => {
-      rafRef.current = null;
+    const prevFps = gsap.ticker.fps();
+    gsap.ticker.fps(120);
+    gsap.ticker.lagSmoothing(0);
 
-      const centerCol = Math.floor(pointerRef.current.x / CELL_SIZE);
-      const centerRow = Math.floor(pointerRef.current.y / CELL_SIZE);
-      const nextActive = new Set<number>();
+    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const smooth = { x: target.x, y: target.y };
+    const states = new Map<number, CellState>();
+    let pointerInside = false;
 
-      for (let row = centerRow - HOVER_RADIUS; row <= centerRow + HOVER_RADIUS; row += 1) {
-        for (let col = centerCol - HOVER_RADIUS; col <= centerCol + HOVER_RADIUS; col += 1) {
-          if (row < 0 || col < 0 || row >= gridSize.rows || col >= gridSize.columns) {
-            continue;
+    const writeCell = (index: number, state: CellState) => {
+      const cell = cells[index];
+      if (!cell) return;
+      cell.style.setProperty("--grid-alpha", state.alpha.toFixed(3));
+      cell.style.setProperty("--grid-shadow-alpha", state.shadow.toFixed(3));
+      cell.style.setProperty("--grid-scale", state.scale.toFixed(3));
+      cell.style.setProperty("--grid-glow", `${state.glow.toFixed(1)}px`);
+    };
+
+    const targetForOffset = (dc: number, dr: number) => {
+      // Center cell: bright + sharp. Neighbors: much quieter.
+      if (dc === 0 && dr === 0) {
+        return { alpha: 0.48, shadow: 0.4, scale: 1.14, glow: 32 };
+      }
+      const isCorner = Math.abs(dc) === 1 && Math.abs(dr) === 1;
+      if (isCorner) {
+        return { alpha: 0.03, shadow: 0.02, scale: 1.015, glow: 3 };
+      }
+      return { alpha: 0.07, shadow: 0.05, scale: 1.035, glow: 6 };
+    };
+
+    const tick = () => {
+      if (document.hidden) return;
+
+      const dt = gsap.ticker.deltaRatio(60);
+      const pointerK = 1 - Math.pow(1 - POINTER_LERP, dt);
+      const intensityK = 1 - Math.pow(1 - INTENSITY_LERP, dt);
+
+      smooth.x += (target.x - smooth.x) * pointerK;
+      smooth.y += (target.y - smooth.y) * pointerK;
+
+      const next = new Set<number>();
+
+      if (pointerInside) {
+        const centerCol = Math.floor(smooth.x / CELL_SIZE);
+        const centerRow = Math.floor(smooth.y / CELL_SIZE);
+
+        for (let dr = -NEIGHBOR_RANGE; dr <= NEIGHBOR_RANGE; dr += 1) {
+          for (let dc = -NEIGHBOR_RANGE; dc <= NEIGHBOR_RANGE; dc += 1) {
+            const col = centerCol + dc;
+            const row = centerRow + dr;
+            if (
+              row < 0 ||
+              col < 0 ||
+              row >= gridSize.rows ||
+              col >= gridSize.columns
+            ) {
+              continue;
+            }
+
+            const index = row * gridSize.columns + col;
+            const desired = targetForOffset(dc, dr);
+            const prev = states.get(index) ?? {
+              alpha: 0,
+              shadow: 0,
+              scale: 1,
+              glow: 0,
+            };
+            const nextState: CellState = {
+              alpha: prev.alpha + (desired.alpha - prev.alpha) * intensityK,
+              shadow: prev.shadow + (desired.shadow - prev.shadow) * intensityK,
+              scale: prev.scale + (desired.scale - prev.scale) * intensityK,
+              glow: prev.glow + (desired.glow - prev.glow) * intensityK,
+            };
+            states.set(index, nextState);
+            writeCell(index, nextState);
+            next.add(index);
           }
-
-          const distance = Math.hypot(col - centerCol, row - centerRow);
-          if (distance > HOVER_RADIUS) {
-            continue;
-          }
-
-          const index = row * gridSize.columns + col;
-          const cell = cells[index];
-          if (!cell) continue;
-
-          const intensity = 1 - distance / HOVER_RADIUS;
-          cell.style.setProperty("--grid-alpha", (0.05 + intensity * 0.26).toFixed(3));
-          cell.style.setProperty("--grid-shadow-alpha", (0.04 + intensity * 0.24).toFixed(3));
-          cell.style.setProperty("--grid-scale", (1 + intensity * 0.18).toFixed(3));
-          cell.style.setProperty("--grid-glow", `${Math.round(10 + intensity * 34)}px`);
-          nextActive.add(index);
         }
       }
 
-      activeCellsRef.current.forEach((index) => {
-        if (!nextActive.has(index)) {
-          resetCell(index);
+      states.forEach((prev, index) => {
+        if (next.has(index)) return;
+
+        const nextState: CellState = {
+          alpha: prev.alpha + (0 - prev.alpha) * intensityK,
+          shadow: prev.shadow + (0 - prev.shadow) * intensityK,
+          scale: prev.scale + (1 - prev.scale) * intensityK,
+          glow: prev.glow + (0 - prev.glow) * intensityK,
+        };
+
+        if (
+          nextState.alpha < 0.002 &&
+          nextState.shadow < 0.002 &&
+          nextState.glow < 0.05
+        ) {
+          writeCell(index, { alpha: 0, shadow: 0, scale: 1, glow: 0 });
+          states.delete(index);
+          return;
         }
+
+        states.set(index, nextState);
+        writeCell(index, nextState);
       });
-
-      activeCellsRef.current = nextActive;
     };
 
-    const handlePointerMove = (event: PointerEvent) => {
-      pointerRef.current = { x: event.clientX, y: event.clientY };
+    const onMove = (event: PointerEvent) => {
+      const rect = layer.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
 
-      if (rafRef.current === null) {
-        rafRef.current = window.requestAnimationFrame(paintCells);
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+        pointerInside = false;
+        return;
       }
+
+      target.x = x;
+      target.y = y;
+      pointerInside = true;
     };
 
-    window.addEventListener("pointermove", handlePointerMove);
-    window.addEventListener("pointerleave", resetActiveCells);
+    const onLeave = () => {
+      pointerInside = false;
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerleave", onLeave);
+    gsap.ticker.add(tick);
 
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", resetActiveCells);
-      if (rafRef.current !== null) {
-        window.cancelAnimationFrame(rafRef.current);
-      }
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerleave", onLeave);
+      gsap.ticker.remove(tick);
+      gsap.ticker.fps(prevFps);
+      gsap.ticker.lagSmoothing(500, 33);
+      states.clear();
     };
   }, [cellCount, gridSize.columns, gridSize.rows]);
 

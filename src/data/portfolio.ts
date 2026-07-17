@@ -54,7 +54,6 @@ export type Project = {
     source: string;
   };
   featured?: boolean;
-  highlights?: string[];
 };
 
 export type HeroStat = {
@@ -290,34 +289,32 @@ export const educationItems: EducationItem[] = [
 
 export const projects: Project[] = [
   {
-    title: "AI Book Assistant",
-    category: "Generative AI",
+    title: "Software Systems & AI Project Suite",
+    category: "Software Systems",
     description:
-      "Transform books into interactive AI conversations — upload PDFs and explore them through voice with a Next.js companion app.",
+      "Unified collection of management systems, AI-powered games, and database applications built using modern software engineering principles.",
     technologies: [
-      "Next.js",
-      "TypeScript",
-      "PostgreSQL",
-      "Prisma",
-      "Vapi",
-      "Tailwind CSS",
+      "Python",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "OOP",
+      "C++",
+      "CRUD",
+      "AI Algorithms",
+      "C",
     ],
     links: {
-      demo: "https://ai-book-assistant-blush.vercel.app",
-      source: "https://github.com/Bixal99/AIBookAssistant",
+      demo: "https://github.com/Bixal99",
+      source: "https://github.com/Bixal99",
     },
     featured: true,
-    highlights: [
-      "Upload PDFs to Vercel Blob and open voice chat immediately while segments index in the background.",
-      "Live Vapi sessions for questions, summaries, and searchable book segments.",
-      "Dashboard with KPIs, reading history, and library management.",
-    ],
   },
   {
-    title: "Churn Prediction System",
+    title: "AI Customer Churn Prediction System",
     category: "Machine Learning",
     description:
-      "End-to-end telecom churn prediction with a trained XGBoost model, Streamlit dashboard, and optional Gemini retention insights.",
+      "End-to-end telecom churn prediction application using XGBoost, Streamlit, and Gemini AI for churn prediction, interactive analytics, and AI-driven retention insights.",
     technologies: [
       "Python",
       "Streamlit",
@@ -326,120 +323,24 @@ export const projects: Project[] = [
       "Pandas",
       "NumPy",
       "Google Gemini AI",
+      "ML",
     ],
     links: {
       demo: "https://github.com/Bixal99/Churn-Prediction",
       source: "https://github.com/Bixal99/Churn-Prediction",
     },
     featured: true,
-    highlights: [
-      "Trained XGBoost pipeline with preprocessing artifacts for reliable inference.",
-      "Interactive Streamlit UI with probability risk gauge and health score.",
-      "Optional Gemini AI suggestions for retention strategies.",
-    ],
   },
   {
-    title: "Eye Blink Morse Detector",
+    title: "Eye Blink Morse Code Detector",
     category: "Computer Vision",
     description:
-      "Hands-free communication system that converts intentional eye blinks into Morse code text using OpenCV and MediaPipe.",
+      "Hands-free Morse code typing system powered by a webcam, OpenCV, MediaPipe Face Mesh, and NumPy.",
     technologies: ["Python", "OpenCV", "MediaPipe", "NumPy"],
     links: {
       demo: "https://github.com/Bixal99/EyeBlinkMorseDetector",
       source: "https://github.com/Bixal99/EyeBlinkMorseDetector",
     },
-    highlights: [
-      "EAR-based blink detection for intentional short and long blinks.",
-      "Realtime webcam pipeline with OpenCV and MediaPipe Face Mesh.",
-      "Maps blink sequences into Morse code text for accessibility.",
-    ],
-  },
-  {
-    title: "Ghoomora",
-    category: "Full-Stack",
-    description:
-      "Northern Pakistan travel platform — regions, packages, trip builder, maps, weather, safety, and bookings on a modern Next.js stack.",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "PostgreSQL",
-      "Prisma",
-      "MapLibre",
-      "Groq",
-    ],
-    links: {
-      demo: "https://ghoomora.vercel.app",
-      source: "https://github.com/Bixal99/Ghoomora",
-    },
-    featured: true,
-    highlights: [
-      "Trip planning for real northern roads with maps and weather context.",
-      "Auth.js sessions, Prisma/PostgreSQL, and role-based travel ops.",
-      "AI assistance via Groq plus MapLibre mapping for routes and regions.",
-    ],
-  },
-  {
-    title: "RetroVerse",
-    category: "Games",
-    description:
-      "Modern retro gaming arcade with ten classic cabinets, stats, achievements, and LocalStorage persistence on a free stack.",
-    technologies: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "Zustand",
-      "GSAP",
-    ],
-    links: {
-      demo: "https://github.com/Bixal99/RetroVerse",
-      source: "https://github.com/Bixal99/RetroVerse",
-    },
-    highlights: [
-      "Ten playable games including Snake, Pong, Pac-Man, 2048, and more.",
-      "Shared GameShell with pause, settings, HUD, and Chart.js progress.",
-      "Client-only deploy with Zustand + LocalStorage — no backend required.",
-    ],
-  },
-  {
-    title: "Scrapper",
-    category: "Automation",
-    description:
-      "Site scraper utility focused on extracting structured data from web pages for downstream analysis and automation.",
-    technologies: ["Python", "Beautiful Soup", "Selenium", "Requests"],
-    links: {
-      demo: "https://github.com/Bixal99/Scrapper",
-      source: "https://github.com/Bixal99/Scrapper",
-    },
-    highlights: [
-      "Targets web pages for structured content extraction.",
-      "Built for automation pipelines and data collection workflows.",
-      "Lightweight repo focused on scraping fundamentals.",
-    ],
-  },
-  {
-    title: "MediCore HMS",
-    category: "Full-Stack",
-    description:
-      "Hospital management system for real clinical workflows — patient portal, appointments, pharmacy, lab, wards, billing, and role-based ops.",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Express",
-      "PostgreSQL",
-      "Prisma",
-      "Socket.IO",
-    ],
-    links: {
-      demo: "https://github.com/Bixal99/HMS",
-      source: "https://github.com/Bixal99/HMS",
-    },
-    featured: true,
-    highlights: [
-      "Monorepo with Next.js web, Express API, and shared auth packages.",
-      "Realtime queues and ward boards over Socket.IO.",
-      "Role portals for admin, doctor, nurse, pharmacy, lab, billing, and patients.",
-    ],
   },
 ];
 
