@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { shouldEnableCustomCursor } from "./customCursor/shouldEnableCustomCursor";
 
 const TRAIL_COUNT = 10;
@@ -17,22 +17,37 @@ type TrailPoint = {
   baseOpacity: number;
 };
 
+function subscribeCustomCursorCapability(onStoreChange: () => void) {
+  const finePointer = window.matchMedia("(pointer: fine)");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  finePointer.addEventListener("change", onStoreChange);
+  reduceMotion.addEventListener("change", onStoreChange);
+
+  return () => {
+    finePointer.removeEventListener("change", onStoreChange);
+    reduceMotion.removeEventListener("change", onStoreChange);
+  };
+}
+
 export function CustomCursor() {
-  const [enabled, setEnabled] = useState(false);
+  const enabled = useSyncExternalStore(
+    subscribeCustomCursorCapability,
+    shouldEnableCustomCursor,
+    () => false,
+  );
   const coreRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!shouldEnableCustomCursor()) return;
+    if (!enabled) return;
 
-    setEnabled(true);
     document.documentElement.classList.add("has-custom-cursor");
-
     return () => {
       document.documentElement.classList.remove("has-custom-cursor");
     };
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
     if (!enabled) return;
