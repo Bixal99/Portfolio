@@ -14,10 +14,8 @@ export function CodingSection() {
       id="coding"
       className="relative grid min-h-dvh scroll-mt-24 items-center py-24 sm:py-28 lg:py-32"
     >
-      <div className="grid gap-12 lg:grid-cols-[minmax(420px,0.52fr)_minmax(0,0.48fr)] lg:items-center">
-        <div className="hidden min-h-[72dvh] lg:block" aria-hidden="true" />
-
-        <div data-coding-panel className="relative z-20 max-w-2xl lg:ml-auto">
+      <div className="grid gap-12 lg:items-center">
+        <div data-coding-panel className="relative z-20 max-w-3xl">
           <h2
             data-pixel-title
             className="flex items-center gap-6 text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl"

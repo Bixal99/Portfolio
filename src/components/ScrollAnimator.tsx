@@ -19,196 +19,108 @@ export function ScrollAnimator() {
     const context = gsap.context(() => {
       gsap.fromTo(
         "[data-hero-animate]",
-        { autoAlpha: 0, y: 46, filter: "blur(14px)" },
+        { autoAlpha: 0, y: 28 },
         {
           autoAlpha: 1,
           y: 0,
-          filter: "blur(0px)",
-          duration: 1.05,
-          stagger: 0.11,
-          ease: "power4.out",
-          delay: 1.65,
-        },
-      );
-
-      gsap.fromTo(
-        "[data-hero-name-word]",
-        { yPercent: 22, scaleX: 0.96, filter: "blur(8px)" },
-        {
-          yPercent: 0,
-          scaleX: 1,
-          filter: "blur(0px)",
-          duration: 0.9,
+          duration: 0.75,
           stagger: 0.08,
-          ease: "power4.out",
-          delay: 1.82,
+          ease: "power3.out",
+          delay: 0.15,
         },
       );
 
       gsap.utils.toArray<HTMLElement>("[data-animate]").forEach((element) => {
         gsap.fromTo(
           element,
-          { autoAlpha: 0, y: 84, filter: "blur(14px)" },
+          { autoAlpha: 0, y: 40 },
           {
             autoAlpha: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 0.95,
-            ease: "power4.out",
+            duration: 0.7,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: element,
-              start: "top 84%",
-              end: "bottom 18%",
+              start: "top 86%",
               toggleActions: "play none none none",
             },
           },
         );
       });
 
-      const setupPixelTitle = (title: HTMLElement) => {
-        const pixels = gsap.utils.toArray<HTMLElement>(
-          title.querySelectorAll("[data-pixel-item]"),
-        );
-
-        if (!pixels.length) return;
-
-        gsap.fromTo(
-          pixels,
-          {
-            autoAlpha: 0,
-            x: (index) => (index < 2 ? -150 : -96 - index * 6),
-            y: (index) => (index % 2 === 0 ? -22 : 22),
-            scale: (index) => (index < 2 ? 0.34 : 0.68),
-            rotationZ: (index) => (index % 2 === 0 ? -12 : 12),
-            transformOrigin: "0% 50%",
-            filter: "blur(16px) contrast(1.7)",
-            clipPath: "inset(0 100% 0 0)",
-          },
-          {
-            autoAlpha: 1,
-            x: 0,
-            y: 0,
-            scale: 1,
-            rotationZ: 0,
-            filter: "blur(0px) contrast(1)",
-            clipPath: "inset(0 0% 0 0)",
-            stagger: { each: 0.07, from: "start" },
-            ease: "power2.out",
-            immediateRender: true,
-            scrollTrigger: {
-              trigger: title,
-              start: "top 88%",
-              end: "top 38%",
-              scrub: 1.35,
-              invalidateOnRefresh: true,
-            },
-          },
-        );
-      };
-
       gsap.utils
         .toArray<HTMLElement>("[data-pixel-title]")
-        .forEach(setupPixelTitle);
+        .forEach((title) => {
+          const pixels = gsap.utils.toArray<HTMLElement>(
+            title.querySelectorAll("[data-pixel-item]"),
+          );
+          if (!pixels.length) return;
 
-      const setupBulletAnimation = ({
-        selector,
-        trigger,
-        start,
-        end,
-        scrub,
-        stagger,
-      }: {
-        selector: string;
-        trigger: string;
-        start: string;
-        end: string;
-        scrub: number;
-        stagger: number;
-      }) => {
+          gsap.fromTo(
+            pixels,
+            { autoAlpha: 0, x: -12 },
+            {
+              autoAlpha: 1,
+              x: 0,
+              stagger: 0.02,
+              duration: 0.45,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: title,
+                start: "top 88%",
+                toggleActions: "play none none none",
+              },
+            },
+          );
+        });
+
+      const setupBulletAnimation = (selector: string, trigger: string) => {
         const bullets = gsap.utils.toArray<HTMLElement>(selector);
         const triggerElement = document.querySelector<HTMLElement>(trigger);
-
         if (!bullets.length || !triggerElement) return;
 
         gsap.fromTo(
           bullets,
-          {
-            autoAlpha: 0,
-            x: -72,
-            y: 18,
-            filter: "blur(14px)",
-            clipPath: "inset(0 100% 0 0)",
-          },
+          { autoAlpha: 0, y: 16 },
           {
             autoAlpha: 1,
-            x: 0,
             y: 0,
-            filter: "blur(0px)",
-            clipPath: "inset(0 0% 0 0)",
-            stagger,
+            stagger: 0.08,
+            duration: 0.55,
             ease: "power2.out",
             scrollTrigger: {
               trigger: triggerElement,
-              start,
-              end,
-              scrub,
-              invalidateOnRefresh: true,
+              start: "top 80%",
+              toggleActions: "play none none none",
             },
           },
         );
       };
 
-      setupBulletAnimation({
-        selector: "[data-about-bullet]",
-        trigger: "[data-about-panel]",
-        start: "top 86%",
-        end: "top 50%",
-        scrub: 0.75,
-        stagger: 0.08,
-      });
-
-      setupBulletAnimation({
-        selector: "[data-build-list] > li",
-        trigger: "[data-coding-panel]",
-        start: "top 86%",
-        end: "top 50%",
-        scrub: 0.75,
-        stagger: 0.08,
-      });
+      setupBulletAnimation("[data-about-bullet]", "[data-about-panel]");
+      setupBulletAnimation(
+        "[data-build-list] > li",
+        "[data-coding-panel]",
+      );
 
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {
         const children = group.querySelectorAll("[data-stagger-item]");
         gsap.fromTo(
           children,
-          { autoAlpha: 0, y: 58, scale: 0.96 },
+          { autoAlpha: 0, y: 32 },
           {
             autoAlpha: 1,
             y: 0,
-            scale: 1,
-            duration: 0.78,
-            stagger: 0.06,
-            ease: "power4.out",
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: group,
               start: "top 82%",
-              end: "bottom 15%",
               toggleActions: "play none none none",
             },
           },
         );
-      });
-
-      gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((element) => {
-        gsap.to(element, {
-          yPercent: -10,
-          ease: "none",
-          scrollTrigger: {
-            trigger: element,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.8,
-          },
-        });
       });
     });
 

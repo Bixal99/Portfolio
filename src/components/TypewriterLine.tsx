@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const phrases = [
   "Software Engineer",
@@ -12,61 +12,20 @@ const phrases = [
   "AI Enthusiast",
 ];
 
-export function TypewriterLine() {
-  const lineRef = useRef<HTMLParagraphElement>(null);
-  const [started, setStarted] = useState(false);
+type TypewriterLineProps = {
+  align?: "left" | "center";
+};
+
+export function TypewriterLine({ align = "center" }: TypewriterLineProps) {
   const [phraseIndex, setPhraseIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(1);
   const [deleting, setDeleting] = useState(false);
   const current = phrases[phraseIndex] ?? phrases[0];
-  const maxPhraseLength = useMemo(
-    () => phrases.reduce((max, phrase) => Math.max(max, phrase.length), 0),
-    [],
-  );
 
   useEffect(() => {
-    let frame = 0;
-
-    const waitUntilVisible = () => {
-      const line = lineRef.current;
-
-      if (!line) {
-        frame = window.requestAnimationFrame(waitUntilVisible);
-        return;
-      }
-
-      const rect = line.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
-      const topElement = document.elementFromPoint(x, y);
-      const visible =
-        rect.width > 0 &&
-        rect.height > 0 &&
-        window.getComputedStyle(line).visibility !== "hidden" &&
-        topElement !== null &&
-        line.contains(topElement);
-
-      if (visible) {
-        setStarted(true);
-        return;
-      }
-
-      frame = window.requestAnimationFrame(waitUntilVisible);
-    };
-
-    waitUntilVisible();
-
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
-  useEffect(() => {
-    if (!started) {
-      return;
-    }
-
-    const finishedTyping = !deleting && charIndex === current.length;
-    const finishedDeleting = deleting && charIndex === 0;
-    const delay = finishedTyping ? 1850 : deleting ? 24 : 72;
+    const finishedTyping = !deleting && charIndex >= current.length;
+    const finishedDeleting = deleting && charIndex <= 0;
+    const delay = finishedTyping ? 1800 : deleting ? 28 : 70;
 
     const timeout = window.setTimeout(() => {
       if (finishedTyping) {
@@ -77,6 +36,7 @@ export function TypewriterLine() {
       if (finishedDeleting) {
         setDeleting(false);
         setPhraseIndex((index) => (index + 1) % phrases.length);
+        setCharIndex(1);
         return;
       }
 
@@ -84,28 +44,26 @@ export function TypewriterLine() {
     }, delay);
 
     return () => window.clearTimeout(timeout);
-  }, [charIndex, current.length, deleting, started]);
+  }, [charIndex, current.length, deleting, phraseIndex]);
 
-  const text = useMemo(() => current.slice(0, charIndex), [charIndex, current]);
+  const text = useMemo(
+    () => current.slice(0, Math.max(charIndex, 0)),
+    [charIndex, current],
+  );
 
   return (
     <p
-      ref={lineRef}
-      className="theme-typewriter flex min-h-8 w-full items-center justify-center overflow-visible text-center text-[clamp(1.05rem,1.7vw,1.32rem)] font-semibold uppercase tracking-[0.26em]"
-      style={{ color: "var(--typewriter-color, var(--accent))" }}
+      className={`theme-typewriter flex min-h-8 w-full items-center overflow-visible text-[clamp(1.05rem,1.7vw,1.32rem)] font-semibold uppercase tracking-[0.22em] ${
+        align === "left" ? "justify-start text-left" : "justify-center text-center"
+      }`}
       aria-live="polite"
     >
-      <span
-        className="inline-flex items-center justify-start whitespace-nowrap"
-        style={{
-          width: `calc(${maxPhraseLength}ch + ${maxPhraseLength} * 0.32em + 1.25rem)`,
-        }}
-      >
-        <span className="inline-block whitespace-nowrap text-[var(--typewriter-color,var(--accent))] drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.48)]">
+      <span className="inline-flex max-w-full items-center justify-start whitespace-nowrap">
+        <span className="inline-block whitespace-nowrap text-[var(--accent)] drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.48)]">
           {text || "\u00a0"}
         </span>
         <span
-          className="theme-typewriter-cursor ml-1.5 inline-block h-[1.25em] w-[2px] rounded-full bg-[var(--typewriter-color,var(--accent))] shadow-[0_0_18px_rgba(var(--accent-rgb),0.72)]"
+          className="theme-typewriter-cursor ml-1.5 inline-block h-[1.15em] w-[2px] shrink-0 rounded-full bg-[var(--accent)]"
           aria-hidden="true"
         />
       </span>

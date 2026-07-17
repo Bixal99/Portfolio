@@ -7,7 +7,6 @@ import { HeroSection } from "@/components/HeroSection";
 import { InteractiveGridBackground } from "@/components/InteractiveGridBackground";
 import { JourneyTimeline } from "@/components/JourneyTimeline";
 import { Navbar } from "@/components/Navbar";
-import { PortfolioExperience } from "@/components/PortfolioExperience";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ScrollAnimator } from "@/components/ScrollAnimator";
 import { ScrollProgress } from "@/components/ScrollProgress";
@@ -16,7 +15,6 @@ import { TechStack } from "@/components/TechStack";
 export default function Home() {
   return (
     <div className="relative isolate min-h-dvh overflow-x-hidden bg-black text-white">
-      <PortfolioExperience />
       <ScrollAnimator />
       <InteractiveGridBackground />
       <Navbar />

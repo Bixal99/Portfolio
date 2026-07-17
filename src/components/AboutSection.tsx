@@ -8,8 +8,8 @@ export function AboutSection() {
       id="about"
       className="relative grid min-h-dvh scroll-mt-24 items-center py-24 sm:py-28 lg:py-32"
     >
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,0.46fr)_minmax(420px,0.54fr)] lg:items-center">
-        <div data-about-panel className="relative z-20 max-w-2xl">
+      <div className="grid gap-12 lg:items-center">
+        <div data-about-panel className="relative z-20 max-w-3xl">
           <h2
             data-pixel-title
             className="flex items-center gap-6 text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl"
@@ -78,8 +78,6 @@ export function AboutSection() {
             </li>
           </ul>
         </div>
-
-        <div className="hidden min-h-[70dvh] lg:block" aria-hidden="true" />
       </div>
     </section>
   );

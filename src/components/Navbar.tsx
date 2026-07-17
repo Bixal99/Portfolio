@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navItems, profile } from "@/data/portfolio";
-import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -89,8 +88,7 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
-          <ThemeToggle />
+        <div className="ml-auto flex items-center gap-3 lg:ml-0">
           <button
             type="button"
             suppressHydrationWarning

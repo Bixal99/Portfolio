@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties, ElementType } from "react";
-import { animate, stagger } from "animejs";
 import {
   SiC,
   SiCplusplus,
@@ -18,12 +17,10 @@ import {
   SiHtml5,
   SiHuggingface,
   SiJavascript,
-  SiJupyter,
   SiLangchain,
   SiLanggraph,
   SiLinux,
   SiMongodb,
-  SiMysql,
   SiNextdotjs,
   SiNodedotjs,
   SiNumpy,
@@ -46,30 +43,16 @@ import {
 import {
   Bot,
   BrainCircuit,
-  Boxes,
   Code2,
   Eye,
   FileCode2,
-  FileJson,
   FileText,
-  Lightbulb,
-  MessageCircle,
   Network,
   Sparkles,
-  UsersRound,
-  Workflow,
 } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { sectionMeta, techSkills } from "@/data/portfolio";
+import { sectionMeta, techSkills, type TechSkill } from "@/data/portfolio";
 import { AnimatedSection } from "./AnimatedSection";
 import { SectionHeading } from "./SectionHeading";
-
-type IconColor = {
-  dark: string;
-  light?: string;
-};
-
 
 const iconMap: Record<string, ElementType> = {
   typescript: SiTypescript,
@@ -86,7 +69,6 @@ const iconMap: Record<string, ElementType> = {
   flask: SiFlask,
   mongodb: SiMongodb,
   postgresql: SiPostgresql,
-  mysql: SiMysql,
   supabase: SiSupabase,
   langchain: SiLangchain,
   langgraph: SiLanggraph,
@@ -101,7 +83,6 @@ const iconMap: Record<string, ElementType> = {
   pandas: SiPandas,
   numpy: SiNumpy,
   streamlit: SiStreamlit,
-  jupyter: SiJupyter,
   selenium: SiSelenium,
   beautifulsoup: FileCode2,
   pymupdf: FileText,
@@ -116,531 +97,274 @@ const iconMap: Record<string, ElementType> = {
   cplusplus: SiCplusplus,
   c: SiC,
   sql: SiSqlite,
-  ai: BrainCircuit,
-  ml: Network,
-  prompt: MessageCircle,
-  rag: Workflow,
-  json: FileJson,
-  problem: Lightbulb,
-  collaboration: UsersRound,
 };
 
-const iconColors: Record<string, IconColor> = {
-  typescript: { dark: "#3178C6" },
-  react: { dark: "#61DAFB" },
-  next: { dark: "#FFFFFF", light: "#050505" },
-  tailwind: { dark: "#38BDF8" },
-  javascript: { dark: "#F7DF1E" },
-  html: { dark: "#E34F26" },
-  css: { dark: "#663399" },
-  node: { dark: "#5FA04E" },
-  express: { dark: "#FFFFFF", light: "#050505" },
-  python: { dark: "#3776AB" },
-  fastapi: { dark: "#009688" },
-  flask: { dark: "#FFFFFF", light: "#050505" },
-  mongodb: { dark: "#47A248" },
-  postgresql: { dark: "#4169E1" },
-  mysql: { dark: "#4479A1" },
-  supabase: { dark: "#3ECF8E" },
-  langchain: { dark: "#5DD3B6" },
-  langgraph: { dark: "#24C8DB" },
-  gemini: { dark: "#8E75FF" },
-  groq: { dark: "#F55036" },
-  openai: { dark: "#FFFFFF", light: "#050505" },
-  ollama: { dark: "#FFFFFF", light: "#050505" },
-  huggingface: { dark: "#FFD21E" },
-  vision: { dark: "#5DD3B6" },
-  opencv: { dark: "#5C3EE8" },
-  xgboost: { dark: "#F7931E" },
-  pandas: { dark: "#150458", light: "#150458" },
-  numpy: { dark: "#4DABCF" },
-  streamlit: { dark: "#FF4B4B" },
-  jupyter: { dark: "#F37626" },
-  selenium: { dark: "#43B02A" },
-  beautifulsoup: { dark: "#5DD3B6" },
-  pymupdf: { dark: "#FF6F00" },
-  git: { dark: "#F05032" },
-  github: { dark: "#FFFFFF", light: "#050505" },
-  docker: { dark: "#2496ED" },
-  postman: { dark: "#FF6C37" },
-  vscode: { dark: "#007ACC" },
-  figma: { dark: "#F24E1E" },
-  vercel: { dark: "#FFFFFF", light: "#050505" },
-  linux: { dark: "#FCC624", light: "#050505" },
-  cplusplus: { dark: "#00599C" },
-  c: { dark: "#A8B9CC", light: "#394955" },
-  sql: { dark: "#2F2FE4" },
-  ai: { dark: "var(--accent)" },
-  ml: { dark: "var(--accent)" },
-  prompt: { dark: "#FFB86B" },
-  rag: { dark: "var(--accent)" },
-  json: { dark: "#F7DF1E" },
-  problem: { dark: "#FFD166" },
-  collaboration: { dark: "#8E75FF" },
+const iconColors: Record<string, string> = {
+  typescript: "#3178C6",
+  react: "#61DAFB",
+  next: "#FFFFFF",
+  tailwind: "#38BDF8",
+  javascript: "#F7DF1E",
+  html: "#E34F26",
+  css: "#663399",
+  node: "#5FA04E",
+  express: "#FFFFFF",
+  python: "#3776AB",
+  fastapi: "#009688",
+  flask: "#FFFFFF",
+  mongodb: "#47A248",
+  postgresql: "#4169E1",
+  supabase: "#3ECF8E",
+  langchain: "#5DD3B6",
+  langgraph: "#24C8DB",
+  gemini: "#8E75FF",
+  groq: "#F55036",
+  openai: "#FFFFFF",
+  ollama: "#FFFFFF",
+  huggingface: "#FFD21E",
+  vision: "#5DD3B6",
+  opencv: "#5C3EE8",
+  xgboost: "#F7931E",
+  pandas: "#150458",
+  numpy: "#4DABCF",
+  streamlit: "#FF4B4B",
+  selenium: "#43B02A",
+  beautifulsoup: "#5DD3B6",
+  pymupdf: "#FF6F00",
+  git: "#F05032",
+  github: "#FFFFFF",
+  docker: "#2496ED",
+  postman: "#FF6C37",
+  vscode: "#007ACC",
+  figma: "#F24E1E",
+  vercel: "#FFFFFF",
+  linux: "#FCC624",
+  cplusplus: "#00599C",
+  c: "#A8B9CC",
+  sql: "#5DD3B6",
 };
 
-const skillDescriptions: Record<string, string> = {
-  TypeScript: "Typed JavaScript for safer app code.",
-  "React.js": "Builds reusable interactive UI components.",
-  "Next.js": "React framework for fast full-stack pages.",
-  "Tailwind CSS": "Utility CSS for quick responsive styling.",
-  JavaScript: "Powers browser and server interactions.",
-  HTML5: "Structures content for the web.",
-  CSS3: "Styles layouts, visuals, and motion.",
-  "Node.js": "Runs JavaScript on the backend.",
-  "Express.js": "Minimal Node framework for APIs.",
-  Python: "General-purpose language for AI and backend.",
-  FastAPI: "Fast Python framework for typed APIs.",
-  Flask: "Lightweight Python web apps and services.",
-  MongoDB: "Document database for flexible data.",
-  PostgreSQL: "Reliable relational database for structured data.",
-  MySQL: "Relational database for app data.",
-  Supabase: "Backend platform with Postgres and auth.",
-  LangChain: "Connects LLMs with tools and data.",
-  LangGraph: "Builds stateful AI agent workflows.",
-  "Google Generative AI": "Gemini models for text and reasoning.",
-  "Groq API": "Fast inference APIs for LLM apps.",
-  OpenAI: "Models for generation, agents, and embeddings.",
-  Ollama: "Runs local LLMs for private experiments.",
-  "Hugging Face": "Model hub for AI workflows.",
-  AI: "Creates intelligent app behavior.",
-  ML: "Learns patterns from data.",
-  "Computer Vision": "Helps apps understand images and video.",
-  "Prompt Engineering": "Shapes model outputs with precise instructions.",
-  RAG: "Combines retrieval with generated answers.",
-  OpenCV: "Image processing and vision toolkit.",
-  XGBoost: "Strong boosted-tree machine learning model.",
-  Pandas: "DataFrames for cleaning and analysis.",
-  NumPy: "Fast arrays and numerical computing.",
-  Streamlit: "Quick Python dashboards and AI apps.",
-  Selenium: "Automates browser testing and scraping.",
-  "Beautiful Soup": "Parses HTML for web extraction.",
-  PyMuPDF: "Reads and processes PDF documents.",
-  JSON: "Lightweight data exchange format.",
-  Git: "Version control for code history.",
-  GitHub: "Hosts repos, issues, and collaboration.",
-  Docker: "Packages apps into portable containers.",
-  Postman: "Tests and documents API requests.",
-  "VS Code": "Code editor for daily development.",
-  Figma: "Designs and prototypes interfaces.",
-  Vercel: "Deploys frontend apps and APIs.",
-  Linux: "Operating system for servers and dev.",
-  "Problem Solving": "Breaks complex tasks into clear steps.",
-  "Team Collaboration": "Builds better software with others.",
-  "C++": "High-performance systems programming.",
-  C: "Low-level programming close to hardware.",
-  SQL: "Queries relational databases.",
+/** Featured subset for the constellation (readable density). */
+const FEATURED_ICONS = new Set([
+  "typescript",
+  "react",
+  "next",
+  "tailwind",
+  "python",
+  "node",
+  "fastapi",
+  "mongodb",
+  "postgresql",
+  "langchain",
+  "langgraph",
+  "gemini",
+  "openai",
+  "opencv",
+  "git",
+  "docker",
+  "supabase",
+  "streamlit",
+]);
+
+type NodeLayout = TechSkill & { x: number; y: number };
+
+const CATEGORY_ANCHORS: Record<string, { x: number; y: number }> = {
+  Frontend: { x: 22, y: 28 },
+  Languages: { x: 48, y: 18 },
+  Backend: { x: 74, y: 30 },
+  Database: { x: 78, y: 58 },
+  AI: { x: 50, y: 48 },
+  ML: { x: 28, y: 62 },
+  Data: { x: 42, y: 72 },
+  "AI UI": { x: 62, y: 72 },
+  Automation: { x: 18, y: 78 },
+  Documents: { x: 88, y: 78 },
+  Tools: { x: 50, y: 86 },
+  Design: { x: 12, y: 48 },
+  Platform: { x: 88, y: 42 },
 };
 
+function buildLayout(skills: TechSkill[]): NodeLayout[] {
+  const byCategory = new Map<string, TechSkill[]>();
+  for (const skill of skills) {
+    const list = byCategory.get(skill.category) ?? [];
+    list.push(skill);
+    byCategory.set(skill.category, list);
+  }
 
-const rowShellClasses = [
-  "size-[4.75rem] sm:size-24 lg:size-28",
-  "size-[4.75rem] sm:size-24 lg:size-28",
-  "size-[4.75rem] sm:size-24 lg:size-28",
-];
-
-const rowIconClasses = [
-  "size-9 sm:size-12 lg:size-14",
-  "size-9 sm:size-12 lg:size-14",
-  "size-9 sm:size-12 lg:size-14",
-];
-
-const rowOffsets = ["pl-[4vw]", "pl-[18vw]", "pl-[10vw]"];
-const rowTravelFactors = [0.44, 0.54, 0.48];
-const rowEndOffsets = [0.1, 0.18, 0.12];
-
-function chunkSkillsByRow(rowIndex: number) {
-  return techSkills.filter((_, index) => index % 3 === rowIndex);
+  const nodes: NodeLayout[] = [];
+  for (const [category, items] of byCategory) {
+    const anchor = CATEGORY_ANCHORS[category] ?? { x: 50, y: 50 };
+    items.forEach((skill, index) => {
+      const angle = (index / Math.max(items.length, 1)) * Math.PI * 2;
+      const radius = 6 + (index % 3) * 3.5;
+      nodes.push({
+        ...skill,
+        x: Math.min(92, Math.max(8, anchor.x + Math.cos(angle) * radius)),
+        y: Math.min(90, Math.max(10, anchor.y + Math.sin(angle) * radius)),
+      });
+    });
+  }
+  return nodes;
 }
 
-function getIconStyle(icon: string) {
-  const color = iconColors[icon] ?? { dark: "var(--accent)" };
-
-  return {
-    "--icon-color": color.dark,
-    "--icon-light-color": color.light ?? color.dark,
-  } as CSSProperties;
-}
-
-function getSkillDescription(name: string, category: string) {
-  return skillDescriptions[name] ?? `Useful ${category.toLowerCase()} skill for building software.`;
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function getRowTravel(row: HTMLElement, stage: HTMLElement, rowIndex: number) {
-  const stageWidth = stage.clientWidth || window.innerWidth;
-  const rowWidth = row.scrollWidth || stageWidth * 2;
-  const availableTravel = Math.max(rowWidth - stageWidth, stageWidth * 1.3);
-  const from = -Math.min(availableTravel * rowTravelFactors[rowIndex], rowWidth * 0.62);
-  const to = stageWidth * rowEndOffsets[rowIndex];
-
-  return { from, to };
+function related(a: TechSkill, b: TechSkill) {
+  return a.category === b.category && a.name !== b.name;
 }
 
 export function TechStack() {
-  const surfaceRef = useRef<HTMLDivElement>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const tooltipPanelRef = useRef<HTMLDivElement>(null);
-  const tooltipNameRef = useRef<HTMLParagraphElement>(null);
-  const tooltipCategoryRef = useRef<HTMLSpanElement>(null);
-  const tooltipDescriptionRef = useRef<HTMLParagraphElement>(null);
-  const skillRows = useMemo(() => [chunkSkillsByRow(0), chunkSkillsByRow(1), chunkSkillsByRow(2)], []);
+  const featured = useMemo(
+    () => techSkills.filter((s) => FEATURED_ICONS.has(s.icon)),
+    [],
+  );
+  const nodes = useMemo(() => buildLayout(featured), [featured]);
+  const [active, setActive] = useState<TechSkill>(featured[0] ?? techSkills[0]);
+
+  const links = useMemo(() => {
+    const edges: [number, number][] = [];
+    nodes.forEach((node, i) => {
+      nodes.forEach((other, j) => {
+        if (j <= i) return;
+        if (related(node, other)) edges.push([i, j]);
+      });
+    });
+    return edges;
+  }, [nodes]);
 
   useEffect(() => {
-    const surface = surfaceRef.current;
-    const section = sectionRef.current;
-    const tooltip = tooltipRef.current;
-    const tooltipPanel = tooltipPanelRef.current;
-    const tooltipName = tooltipNameRef.current;
-    const tooltipCategory = tooltipCategoryRef.current;
-    const tooltipDescription = tooltipDescriptionRef.current;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!surface || !section || !tooltip || !tooltipPanel || !tooltipName || !tooltipCategory || !tooltipDescription) return;
+    if (!active && featured[0]) setActive(featured[0]);
+  }, [active, featured]);
 
-    const laneIconElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-icon]"));
-    const rowElements = Array.from(section.querySelectorAll<HTMLElement>("[data-skill-row]"));
-    const gridLayer = document.querySelector<HTMLElement>(".interactive-grid-bg");
-    const moveTooltipX = gsap.quickTo(tooltip, "x", { duration: 0.2, ease: "power3.out" });
-    const moveTooltipY = gsap.quickTo(tooltip, "y", { duration: 0.2, ease: "power3.out" });
-    let activeDirection = 0;
-    let didSettle = false;
-    let tooltipRun = 0;
-
-    gsap.set(tooltip, { autoAlpha: 0, x: -9999, y: -9999 });
-    gsap.set(tooltipPanel, { opacity: 0, scale: 0.88, y: 10, rotate: -2, transformOrigin: "50% 100%" });
-
-    const fadeGrid = (visible: boolean) => {
-      if (!gridLayer || prefersReducedMotion) return;
-
-      gsap.to(gridLayer, {
-        autoAlpha: visible ? 1 : 0,
-        duration: 0.42,
-        ease: "power2.out",
-        overwrite: true,
-      });
-    };
-
-    const positionTooltip = (icon: HTMLElement, pointerX?: number, pointerY?: number) => {
-      const iconRect = icon.getBoundingClientRect();
-      const panelWidth = tooltipPanel.offsetWidth || 260;
-      const panelHeight = tooltipPanel.offsetHeight || 130;
-      const sourceX = pointerX ?? iconRect.left + iconRect.width / 2;
-      const sourceY = pointerY ?? iconRect.top;
-      const x = clamp(sourceX - panelWidth / 2, 12, window.innerWidth - panelWidth - 12);
-      const aboveY = sourceY - panelHeight - 18;
-      const belowY = iconRect.bottom + 18;
-      const y = clamp(aboveY > 12 ? aboveY : belowY, 12, window.innerHeight - panelHeight - 12);
-
-      moveTooltipX(x);
-      moveTooltipY(y);
-    };
-
-    const showTooltip = (icon: HTMLElement, event?: PointerEvent | FocusEvent) => {
-      const run = ++tooltipRun;
-      const name = icon.dataset.skillName ?? "Skill";
-      const category = icon.dataset.skillCategory ?? "Skill";
-      const description = icon.dataset.skillDescription ?? "Useful tool for building software.";
-      const pointerEvent = "clientX" in (event ?? {}) ? (event as PointerEvent) : undefined;
-
-      tooltipName.textContent = name;
-      tooltipCategory.textContent = category;
-      tooltipDescription.textContent = description;
-      positionTooltip(icon, pointerEvent?.clientX, pointerEvent?.clientY);
-      gsap.set(tooltip, { autoAlpha: 1 });
-
-      if (prefersReducedMotion) {
-        gsap.set(tooltipPanel, { opacity: 1, scale: 1, y: 0, rotate: 0 });
-        return;
-      }
-
-      animate(tooltipPanel, {
-        opacity: { from: 0, to: 1 },
-        scale: { from: 0.86, to: 1 },
-        y: { from: 14, to: 0 },
-        rotate: { from: "-3deg", to: "0deg" },
-        duration: 330,
-        ease: "out(4)",
-        onComplete: () => {
-          if (run !== tooltipRun) return;
-          gsap.set(tooltipPanel, { opacity: 1, scale: 1, y: 0, rotate: 0 });
-        },
-      });
-    };
-
-    const hideTooltip = () => {
-      const run = ++tooltipRun;
-
-      if (prefersReducedMotion) {
-        gsap.set(tooltip, { autoAlpha: 0 });
-        gsap.set(tooltipPanel, { opacity: 0, scale: 0.88, y: 10, rotate: -2 });
-        return;
-      }
-
-      animate(tooltipPanel, {
-        opacity: 0,
-        scale: 0.88,
-        y: 10,
-        rotate: "2deg",
-        duration: 190,
-        ease: "out(2)",
-        onComplete: () => {
-          if (run !== tooltipRun) return;
-          gsap.set(tooltip, { autoAlpha: 0 });
-        },
-      });
-    };
-
-    const entrance = prefersReducedMotion
-      ? null
-      : animate(laneIconElements, {
-          opacity: { from: 0 },
-          scale: { from: 0.7 },
-          y: { from: 34 },
-          rotate: { from: "-14deg" },
-          duration: 980,
-          delay: stagger(18, { from: "center", jitter: 5, seed: true }),
-          ease: "out(4)",
-          autoplay: false,
-        });
-
-    const runDirectionAccent = (direction: number) => {
-      if (prefersReducedMotion || !direction || direction === activeDirection) return;
-
-      activeDirection = direction;
-      const accentTargets = laneIconElements.filter((_, index) => index % 5 === Math.abs(direction));
-
-      animate(accentTargets, {
-        scale: 1.1,
-        y: direction > 0 ? -8 : 8,
-        rotate: direction > 0 ? "8deg" : "-8deg",
-        duration: 260,
-        delay: stagger(10, { from: direction > 0 ? "first" : "last" }),
-        ease: "out(3)",
-        onComplete: () => {
-          animate(accentTargets, {
-            scale: 1,
-            y: 0,
-            rotate: "0deg",
-            duration: 380,
-            ease: "out(4)",
-          });
-        },
-      });
-    };
-
-    const runSettle = () => {
-      if (prefersReducedMotion || didSettle) return;
-
-      didSettle = true;
-      animate(laneIconElements.filter((_, index) => index % 3 === 0), {
-        scale: 1,
-        y: 0,
-        rotate: "0deg",
-        duration: 620,
-        delay: stagger(16, { from: "center", jitter: 4, seed: 3 }),
-        ease: "out(5)",
-      });
-    };
-
-    const hoverCleanups = laneIconElements.map((icon, index) => {
-      const enter = (event: PointerEvent) => {
-        showTooltip(icon, event);
-
-        if (prefersReducedMotion) return;
-        animate(icon, {
-          scale: 1.14,
-          y: -10,
-          rotate: index % 2 === 0 ? "5deg" : "-5deg",
-          duration: 390,
-          ease: "out(5)",
-        });
-      };
-      const move = (event: PointerEvent) => positionTooltip(icon, event.clientX, event.clientY);
-      const leave = () => {
-        hideTooltip();
-
-        if (prefersReducedMotion) return;
-        animate(icon, {
-          scale: 1,
-          y: 0,
-          rotate: "0deg",
-          duration: 390,
-          ease: "out(4)",
-        });
-      };
-      const press = () => {
-        if (prefersReducedMotion) return;
-        animate(icon, {
-          scale: 0.92,
-          rotate: "0deg",
-          duration: 120,
-          ease: "out(2)",
-          onComplete: () => {
-            animate(icon, {
-              scale: 1.14,
-              y: -10,
-              rotate: index % 2 === 0 ? "5deg" : "-5deg",
-              duration: 300,
-              ease: "out(5)",
-            });
-          },
-        });
-      };
-      const focus = (event: FocusEvent) => showTooltip(icon, event);
-
-      icon.addEventListener("pointerenter", enter);
-      icon.addEventListener("pointermove", move);
-      icon.addEventListener("pointerleave", leave);
-      icon.addEventListener("pointerdown", press);
-      icon.addEventListener("focus", focus);
-      icon.addEventListener("blur", leave);
-
-      return () => {
-        icon.removeEventListener("pointerenter", enter);
-        icon.removeEventListener("pointermove", move);
-        icon.removeEventListener("pointerleave", leave);
-        icon.removeEventListener("pointerdown", press);
-        icon.removeEventListener("focus", focus);
-        icon.removeEventListener("blur", leave);
-      };
-    });
-
-    let context: ReturnType<typeof gsap.context> | undefined;
-
-    if (!prefersReducedMotion) {
-      gsap.registerPlugin(ScrollTrigger);
-
-      context = gsap.context(() => {
-        ScrollTrigger.create({
-          trigger: surface,
-          start: "top bottom",
-          end: "bottom top",
-          onEnter: () => fadeGrid(false),
-          onEnterBack: () => fadeGrid(false),
-          onLeave: () => fadeGrid(true),
-          onLeaveBack: () => fadeGrid(true),
-        });
-
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top 78%",
-          once: true,
-          onEnter: () => entrance?.play(),
-        });
-
-        const timeline = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: section,
-            start: "center center",
-            end: () => `+=${Math.max(window.innerHeight * 1.35, 760)}`,
-            scrub: 0.9,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => runDirectionAccent(self.direction),
-            onEnter: () => {
-              didSettle = false;
-              runDirectionAccent(1);
-            },
-            onEnterBack: () => {
-              didSettle = false;
-              runDirectionAccent(-1);
-            },
-            onLeave: runSettle,
-          },
-        });
-
-        rowElements.forEach((row, index) => {
-          timeline.fromTo(
-            row,
-            {
-              x: () => getRowTravel(row, section, index).from,
-            },
-            {
-              x: () => getRowTravel(row, section, index).to,
-            },
-            0,
-          );
-        });
-      }, surface);
-    }
-
-    return () => {
-      hoverCleanups.forEach((cleanup) => cleanup());
-      entrance?.revert();
-      context?.revert();
-      if (gridLayer) {
-        gsap.set(gridLayer, { autoAlpha: 1 });
-      }
-    };
-  }, []);
+  const ActiveIcon = iconMap[active?.icon ?? ""] ?? BrainCircuit;
+  const activeColor = iconColors[active?.icon ?? ""] ?? "var(--accent)";
 
   return (
-    <AnimatedSection id="stack" className="relative overflow-hidden">
+    <AnimatedSection id="stack">
       <SectionHeading {...sectionMeta.stack} />
 
-      <div ref={surfaceRef} data-stack-surface className="relative">
-        <div ref={sectionRef} className="relative -mx-5 overflow-hidden py-8 sm:-mx-8 sm:py-10 lg:-mx-12">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[var(--background)] via-[var(--background)] to-transparent sm:w-28" aria-hidden="true" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[var(--background)] via-[var(--background)] to-transparent sm:w-28" aria-hidden="true" />
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(260px,0.8fr)] lg:items-start">
+        {/* Desktop constellation */}
+        <div className="relative hidden min-h-[420px] overflow-hidden border border-white/12 bg-black/35 lg:block">
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+          <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full">
+            {links.map(([a, b]) => {
+              const from = nodes[a];
+              const to = nodes[b];
+              const lit =
+                active &&
+                (from.name === active.name || to.name === active.name);
+              return (
+                <line
+                  key={`${from.name}-${to.name}`}
+                  x1={from.x}
+                  y1={from.y}
+                  x2={to.x}
+                  y2={to.y}
+                  stroke={
+                    lit
+                      ? "rgba(93,211,182,0.75)"
+                      : "rgba(93,211,182,0.22)"
+                  }
+                  strokeWidth={lit ? 0.45 : 0.25}
+                />
+              );
+            })}
+          </svg>
 
-          <div className="flex flex-col gap-5 sm:gap-7">
-            {skillRows.map((row, rowIndex) => (
-              <div key={`skill-row-${rowIndex}`} className="overflow-visible py-1">
-                <div
-                  data-skill-row
-                  className={`flex w-max items-center gap-4 whitespace-nowrap will-change-transform sm:gap-6 ${rowOffsets[rowIndex]}`}
-                >
-                  {[...row, ...row, ...row].map((skill, index) => {
-                    const Icon = iconMap[skill.icon] ?? Boxes;
-                    const description = getSkillDescription(skill.name, skill.category);
-
-                    return (
-                      <span
-                        key={`${skill.name}-${rowIndex}-${index}`}
-                        data-skill-icon
-                        data-skill-name={skill.name}
-                        data-skill-category={skill.category}
-                        data-skill-description={description}
-                        className={`group/icon relative grid shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.035] text-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.22)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent)] hover:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/60 ${rowShellClasses[rowIndex]}`}
-                        aria-label={`${skill.name}: ${description}`}
-                        role="img"
-                        tabIndex={0}
-                        style={{ marginTop: `${((index + rowIndex) % 5) * 4}px` }}
-                      >
-                        <Icon
-                          className={`skill-brand-icon drop-shadow-[0_0_22px_rgba(var(--accent-rgb),0.2)] transition duration-300 group-hover/icon:drop-shadow-[0_0_28px_rgba(var(--accent-rgb),0.42)] ${rowIconClasses[rowIndex]}`}
-                          style={getIconStyle(skill.icon)}
-                          aria-hidden="true"
-                        />
-                        <span className="sr-only">{skill.name}</span>
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
+          {nodes.map((node) => {
+            const Icon = iconMap[node.icon] ?? BrainCircuit;
+            const color = iconColors[node.icon] ?? "#5DD3B6";
+            const isActive = active?.name === node.name;
+            return (
+              <button
+                key={node.name}
+                type="button"
+                data-skill-icon
+                onMouseEnter={() => setActive(node)}
+                onFocus={() => setActive(node)}
+                onClick={() => setActive(node)}
+                aria-label={`${node.name}, ${node.category}`}
+                className={`absolute grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border transition duration-200 ${
+                  isActive
+                    ? "border-[var(--accent)] bg-black shadow-[0_0_24px_rgba(var(--accent-rgb),0.45)] scale-110"
+                    : "border-white/15 bg-black/80 hover:border-white/40"
+                }`}
+                style={{ left: `${node.x}%`, top: `${node.y}%` }}
+              >
+                <Icon
+                  className="size-5 skill-brand-icon"
+                  style={{ "--icon-color": color } as CSSProperties}
+                  aria-hidden="true"
+                />
+              </button>
+            );
+          })}
         </div>
-      </div>
 
-      <div ref={tooltipRef} className="pointer-events-none fixed left-0 top-0 z-50 w-[min(17rem,calc(100vw-1.5rem))]" aria-hidden="true">
-        <div ref={tooltipPanelRef} className="relative overflow-hidden rounded-lg border border-white/12 bg-black/88 px-4 py-3 text-left shadow-[0_22px_80px_rgba(0,0,0,0.42)] backdrop-blur-xl">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-80" aria-hidden="true" />
-          <div className="mb-2 flex items-center justify-between gap-3">
-            <p ref={tooltipNameRef} className="text-sm font-semibold leading-5 text-white" />
-            <span ref={tooltipCategoryRef} className="shrink-0 rounded-full border border-[var(--accent)]/25 bg-[var(--accent)]/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--accent)]" />
-          </div>
-          <p ref={tooltipDescriptionRef} className="text-xs leading-5 text-white/62" />
+        {/* Mobile list */}
+        <div className="grid max-h-[320px] gap-2 overflow-y-auto border border-white/12 bg-black/35 p-3 lg:hidden">
+          {featured.map((skill) => {
+            const Icon = iconMap[skill.icon] ?? BrainCircuit;
+            const color = iconColors[skill.icon] ?? "#5DD3B6";
+            const isActive = active?.name === skill.name;
+            return (
+              <button
+                key={skill.name}
+                type="button"
+                onClick={() => setActive(skill)}
+                className={`flex items-center gap-3 border px-3 py-2.5 text-left transition ${
+                  isActive
+                    ? "border-[var(--accent)] bg-[var(--accent)]/10"
+                    : "border-white/10 bg-transparent hover:border-white/30"
+                }`}
+              >
+                <Icon
+                  className="size-5 shrink-0 skill-brand-icon"
+                  style={{ "--icon-color": color } as CSSProperties}
+                  aria-hidden="true"
+                />
+                <span className="text-sm font-semibold text-white">
+                  {skill.name}
+                </span>
+                <span className="ml-auto text-[10px] uppercase tracking-[0.18em] text-white/40">
+                  {skill.category}
+                </span>
+              </button>
+            );
+          })}
         </div>
+
+        {/* Detail panel */}
+        <aside className="border border-white/12 bg-white/[0.03] p-6 backdrop-blur-sm">
+          <div className="mb-5 grid size-14 place-items-center border border-white/15 bg-black">
+            <ActiveIcon
+              className="size-7 skill-brand-icon"
+              style={{ "--icon-color": activeColor } as CSSProperties}
+              aria-hidden="true"
+            />
+          </div>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
+            {active?.category}
+          </p>
+          <h3 className="mt-2 text-2xl font-semibold text-white">
+            {active?.name}
+          </h3>
+          <p className="mt-4 text-sm leading-7 text-white/55">
+            Part of the {active?.category?.toLowerCase()} stack powering AI
+            systems, full-stack products, and practical engineering work.
+          </p>
+          <p className="mt-6 text-[11px] uppercase tracking-[0.2em] text-white/35">
+            Hover or select a node to explore
+          </p>
+        </aside>
       </div>
     </AnimatedSection>
   );
 }
-
-
