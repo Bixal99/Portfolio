@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { JetBrains_Mono, Poppins } from "next/font/google";
+import { CustomCursor } from "@/components/CustomCursor";
 import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -20,8 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html
+      lang="en"
+      className={`${poppins.variable} ${jetbrainsMono.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col">
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }
