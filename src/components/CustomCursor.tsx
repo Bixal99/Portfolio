@@ -5,7 +5,9 @@ import { useEffect, useRef, useSyncExternalStore } from "react";
 import { shouldEnableCustomCursor } from "./customCursor/shouldEnableCustomCursor";
 
 const TRAIL_COUNT = 10;
-const SPRING = 0.4;
+/** Base spring at 60fps; scaled by deltaRatio so motion stays smooth at 120Hz */
+const SPRING = 0.35;
+const CURSOR_COLOR = "var(--accent)";
 const HOVER_SELECTOR =
   'a, button, [role="button"], [role="link"], .cursor-pointer, .cursor-hover, summary, label, [data-skill-icon], [data-skill-drop-icon]';
 
@@ -14,7 +16,8 @@ type TrailPoint = {
   x: number;
   y: number;
   baseSize: number;
-  baseOpacity: number;
+  setX: (v: number) => void;
+  setY: (v: number) => void;
 };
 
 function subscribeCustomCursorCapability(onStoreChange: () => void) {
@@ -57,6 +60,10 @@ export function CustomCursor() {
     const root = rootRef.current;
     if (!core || !trailContainer || !root) return;
 
+    const prevFps = gsap.ticker.fps();
+    gsap.ticker.fps(120);
+    gsap.ticker.lagSmoothing(0);
+
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let isHovering = false;
@@ -65,13 +72,18 @@ export function CustomCursor() {
     gsap.set(core, { xPercent: -50, yPercent: -50, x: mouseX, y: mouseY });
     gsap.set(root, { autoAlpha: 0 });
 
+    const setCoreX = gsap.quickSetter(core, "x", "px");
+    const setCoreY = gsap.quickSetter(core, "y", "px");
+
     const trail: TrailPoint[] = [];
     for (let i = 0; i < TRAIL_COUNT; i++) {
       const el = document.createElement("div");
       const size = Math.max(2, 16 - i * 1.1);
       const opacity = 1 - i * 0.05;
       el.className =
-        "absolute top-0 left-0 rounded-full bg-white pointer-events-none will-change-transform box-border border-0 border-white";
+        "absolute top-0 left-0 rounded-full pointer-events-none will-change-transform box-border border-0";
+      el.style.backgroundColor = CURSOR_COLOR;
+      el.style.borderColor = CURSOR_COLOR;
       gsap.set(el, {
         width: size,
         height: size,
@@ -80,6 +92,7 @@ export function CustomCursor() {
         yPercent: -50,
         x: mouseX,
         y: mouseY,
+        force3D: true,
       });
       trailContainer.appendChild(el);
       trail.push({
@@ -87,19 +100,20 @@ export function CustomCursor() {
         x: mouseX,
         y: mouseY,
         baseSize: size,
-        baseOpacity: opacity,
+        setX: gsap.quickSetter(el, "x", "px"),
+        setY: gsap.quickSetter(el, "y", "px"),
       });
     }
 
     const show = () => {
       if (visible) return;
       visible = true;
-      gsap.to(root, { autoAlpha: 1, duration: 0.2, overwrite: true });
+      gsap.to(root, { autoAlpha: 1, duration: 0.15, overwrite: true });
     };
 
     const hide = () => {
       visible = false;
-      gsap.to(root, { autoAlpha: 0, duration: 0.15, overwrite: true });
+      gsap.to(root, { autoAlpha: 0, duration: 0.12, overwrite: true });
     };
 
     const onMove = (e: MouseEvent) => {
@@ -120,8 +134,8 @@ export function CustomCursor() {
         backgroundColor: "transparent",
         borderWidth: 2,
         borderRadius: "50%",
-        duration: 0.4,
-        ease: "back.out(2)",
+        duration: 0.35,
+        ease: "power3.out",
         overwrite: "auto",
       });
     };
@@ -129,14 +143,14 @@ export function CustomCursor() {
     const leaveHover = () => {
       if (!isHovering) return;
       isHovering = false;
-      gsap.to(core, { scale: 1, duration: 0.3, overwrite: "auto" });
+      gsap.to(core, { scale: 1, duration: 0.25, overwrite: "auto" });
       gsap.to(trail[0].el, {
         width: trail[0].baseSize,
         height: trail[0].baseSize,
-        backgroundColor: "#ffffff",
+        backgroundColor: CURSOR_COLOR,
         borderWidth: 0,
-        duration: 0.35,
-        ease: "power2.out",
+        duration: 0.3,
+        ease: "power3.out",
         overwrite: "auto",
       });
     };
@@ -163,13 +177,13 @@ export function CustomCursor() {
     const onDown = () => {
       gsap.to(core, {
         scale: isHovering ? 0 : 0.5,
-        duration: 0.1,
+        duration: 0.08,
         overwrite: "auto",
       });
       if (isHovering) {
         gsap.to(trail[0].el, {
           scale: 0.85,
-          duration: 0.1,
+          duration: 0.08,
           overwrite: "auto",
         });
       }
@@ -178,22 +192,23 @@ export function CustomCursor() {
     const onUp = () => {
       gsap.to(core, {
         scale: isHovering ? 0 : 1,
-        duration: 0.4,
-        ease: "back.out(3)",
+        duration: 0.35,
+        ease: "power3.out",
         overwrite: "auto",
       });
       if (isHovering) {
         gsap.to(trail[0].el, {
           scale: 1,
-          duration: 0.5,
-          ease: "elastic.out(1, 0.4)",
+          duration: 0.4,
+          ease: "power3.out",
           overwrite: "auto",
         });
       }
 
       const ripple = document.createElement("div");
       ripple.className =
-        "fixed rounded-full border border-white mix-blend-difference pointer-events-none z-[9999]";
+        "fixed rounded-full border-2 pointer-events-none z-[9999]";
+      ripple.style.borderColor = CURSOR_COLOR;
       document.body.appendChild(ripple);
       gsap.set(ripple, {
         x: mouseX,
@@ -202,14 +217,14 @@ export function CustomCursor() {
         yPercent: -50,
         width: 20,
         height: 20,
-        borderWidth: 3,
+        force3D: true,
       });
       gsap.to(ripple, {
         width: 120,
         height: 120,
         opacity: 0,
         borderWidth: 0,
-        duration: 0.6,
+        duration: 0.5,
         ease: "power2.out",
         onComplete: () => ripple.remove(),
       });
@@ -217,21 +232,27 @@ export function CustomCursor() {
 
     const tick = () => {
       if (document.hidden) return;
-      gsap.set(core, { x: mouseX, y: mouseY });
+
+      // Keep spring feel consistent across 60/120Hz displays
+      const factor = 1 - Math.pow(1 - SPRING, gsap.ticker.deltaRatio(60));
+
+      setCoreX(mouseX);
+      setCoreY(mouseY);
 
       let leaderX = mouseX;
       let leaderY = mouseY;
       for (let i = 0; i < TRAIL_COUNT; i++) {
         const pt = trail[i];
-        pt.x += (leaderX - pt.x) * SPRING;
-        pt.y += (leaderY - pt.y) * SPRING;
-        gsap.set(pt.el, { x: pt.x, y: pt.y });
+        pt.x += (leaderX - pt.x) * factor;
+        pt.y += (leaderY - pt.y) * factor;
+        pt.setX(pt.x);
+        pt.setY(pt.y);
         leaderX = pt.x;
         leaderY = pt.y;
       }
     };
 
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove, { passive: true });
     document.documentElement.addEventListener("mouseleave", onLeave);
     document.addEventListener("mouseover", onOver);
     document.addEventListener("mouseout", onOut);
@@ -247,6 +268,8 @@ export function CustomCursor() {
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
       gsap.ticker.remove(tick);
+      gsap.ticker.fps(prevFps);
+      gsap.ticker.lagSmoothing(500, 33);
       trail.forEach((pt) => pt.el.remove());
       gsap.killTweensOf([core, root, ...trail.map((t) => t.el)]);
     };
@@ -258,11 +281,12 @@ export function CustomCursor() {
     <div
       ref={rootRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[10001] mix-blend-difference"
+      className="pointer-events-none fixed inset-0 z-[10001]"
     >
       <div
         ref={coreRef}
-        className="fixed top-0 left-0 h-2 w-2 rounded-full bg-white will-change-transform"
+        className="fixed top-0 left-0 h-2 w-2 rounded-full will-change-transform"
+        style={{ backgroundColor: CURSOR_COLOR }}
       />
       <div
         ref={trailRef}
