@@ -315,12 +315,14 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                     }}
                   >
                     <div
-                      className="pointer-events-none absolute right-0 top-1/2 z-0 h-[2px] origin-right -translate-y-1/2 transition-opacity duration-75"
+                      className="pointer-events-none absolute right-0 top-1/2 z-0 h-[2px] origin-right -translate-y-1/2 transition-opacity duration-150 ease-out"
                       style={{
                         width: orbit.radiusClass,
-                        opacity: isHovered ? 1 : 0.45,
+                        opacity: isHovered ? 1 : 0,
                         background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(var(--accent-rgb),0.35) 18%, ${item.color} 78%, ${item.color} 100%)`,
-                        boxShadow: `0 0 8px ${item.color}, 0 0 18px ${item.color}aa, 0 0 32px rgba(var(--accent-rgb),0.45)`,
+                        boxShadow: isHovered
+                          ? `0 0 8px ${item.color}, 0 0 18px ${item.color}aa, 0 0 32px rgba(var(--accent-rgb),0.45)`
+                          : "none",
                       }}
                     />
 

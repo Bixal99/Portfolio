@@ -213,34 +213,35 @@ export function Footer() {
         >
           <div
             data-footer-reveal
-            className="relative overflow-hidden border border-white/10 bg-white/[0.025] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.065)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent sm:p-8 lg:p-10"
+            className="relative flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.025] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.065)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent sm:p-8 lg:p-10"
           >
             <div
               aria-hidden="true"
               className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--accent-rgb),0.065),transparent_34%,rgba(255,255,255,0.035)_68%,transparent)] opacity-80"
             />
-            <div data-footer-micro className="relative mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-[var(--accent)]">
+            <div className="relative flex h-full flex-col">
+            <div data-footer-micro className="mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-[var(--accent)]">
               <span
                 className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
                 aria-hidden="true"
               />
               Contact
             </div>
-            <h2 data-footer-micro className="relative text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl">
+            <h2 data-footer-micro className="text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl">
               Let us turn an idea into a working system.
             </h2>
-            <p data-footer-micro className="relative mt-5 max-w-xl text-base leading-8 text-white/58">
+            <p data-footer-micro className="mt-5 max-w-xl text-pretty text-base leading-8 text-white/58">
               Send a project note, internship opportunity, or collaboration
               idea. I usually respond with the next practical step.
             </p>
 
-            <div className="relative mt-8 grid gap-4 text-sm text-white/62">
+            <div className="mt-8 grid gap-4 text-sm text-white/62">
               <motion.a
                 data-footer-micro
                 href={`mailto:${profile.email}`}
                 whileHover={{ x: 6 }}
                 transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="inline-flex min-w-0 items-center gap-3 transition hover:text-[var(--accent)]"
+                className="inline-flex min-w-0 items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
               >
                 <Mail className="size-4 shrink-0" aria-hidden="true" />
                 <span className="truncate">{profile.email}</span>
@@ -250,7 +251,7 @@ export function Footer() {
                 href={`tel:${profile.phone.replace(/\s+/g, "")}`}
                 whileHover={{ x: 6 }}
                 transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="inline-flex items-center gap-3 transition hover:text-[var(--accent)]"
+                className="inline-flex items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
               >
                 <Phone className="size-4 shrink-0" aria-hidden="true" />
                 {profile.phone}
@@ -269,7 +270,7 @@ export function Footer() {
               </motion.span>
             </div>
 
-            <div data-footer-micro className="relative mt-8 flex flex-wrap gap-3">
+            <div data-footer-micro className="mt-auto flex flex-wrap gap-3 pt-8">
               {socialLinks.map((link) => (
                 <motion.a
                   key={link.label}
@@ -278,9 +279,9 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   whileHover={{ y: -4, scale: 1.07 }}
-                  whileTap={{ scale: 0.94 }}
-                  transition={{ type: "spring", stiffness: 520, damping: 25 }}
-                  className="group relative grid size-12 place-items-center overflow-hidden border border-white/12 bg-black/50 text-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-black hover:shadow-[0_0_34px_rgba(var(--accent-rgb),0.34)]"
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                  className="group relative grid size-12 place-items-center overflow-hidden rounded-xl bg-black/50 text-white/70 shadow-[var(--shadow-border),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[background-color,box-shadow,color] duration-150 hover:bg-[var(--accent)] hover:text-black hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.55),0_0_34px_rgba(var(--accent-rgb),0.34)]"
                   aria-label={link.label}
                 >
                   <span
@@ -296,6 +297,7 @@ export function Footer() {
                   </span>
                 </motion.a>
               ))}
+            </div>
             </div>
           </div>
 
@@ -319,11 +321,11 @@ export function Footer() {
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
                 transition={{ type: "spring", stiffness: 430, damping: 30 }}
-                className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/42 transition hover:text-[var(--accent)]"
+                className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/42 transition-colors duration-150 hover:text-[var(--accent)]"
               >
                 {item.label}
                 <ArrowUpRight
-                  className="size-3 opacity-0 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
+                  className="size-3 scale-[0.25] opacity-0 blur-[4px] transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-100 group-hover:opacity-100 group-hover:blur-0"
                   aria-hidden="true"
                 />
               </motion.a>
@@ -352,12 +354,12 @@ export function Footer() {
             <a
               key={item.href}
               href={item.href}
-              className="group relative text-[10px] font-semibold uppercase tracking-[0.2em] text-white/32 transition hover:text-[var(--accent)]"
+              className="group relative text-[10px] font-semibold uppercase tracking-[0.2em] text-white/32 transition-colors duration-150 hover:text-[var(--accent)]"
             >
               {item.label}
               <span
                 aria-hidden="true"
-                className="absolute -bottom-1 left-0 h-px w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"
+                className="absolute -bottom-1 left-0 h-px w-0 bg-[var(--accent)] transition-[width] duration-300 group-hover:w-full"
               />
             </a>
           ))}

@@ -5,8 +5,8 @@ import {
   useEffect,
   useCallback,
   useState,
+  type ComponentType,
   type CSSProperties,
-  type ElementType,
   type ReactNode,
   type RefObject,
 } from "react";
@@ -809,7 +809,11 @@ function CardBody({
 
 function TechGlyph({ name }: { name: string }) {
   const key = name.toLowerCase().replace(/[\s._-]/g, "");
-  const iconMap: Record<string, { Icon: ElementType; color: string }> = {
+  type GlyphIcon = ComponentType<{
+    style?: CSSProperties;
+    "aria-hidden"?: boolean;
+  }>;
+  const iconMap: Record<string, { Icon: GlyphIcon; color: string }> = {
     nextjs: { Icon: SiNextdotjs, color: "#ffffff" },
     typescript: { Icon: SiTypescript, color: "#3178C6" },
     javascript: { Icon: SiJavascript, color: "#F7DF1E" },

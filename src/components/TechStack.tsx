@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import type { ElementType } from "react";
+import type { ComponentType, SVGProps } from "react";
 import {
   SiC,
   SiCplusplus,
@@ -59,7 +59,7 @@ const OUTER_ICONS = new Set([
   "vercel",
 ]);
 
-const iconMap: Record<string, ElementType> = {
+const iconMap: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   typescript: SiTypescript,
   react: SiReact,
   next: SiNextdotjs,

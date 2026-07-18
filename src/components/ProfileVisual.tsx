@@ -11,7 +11,7 @@ export function ProfileVisual() {
           width={896}
           height={1195}
           priority
-          className="aspect-[4/5] w-full object-cover object-[50%_28%] opacity-95 grayscale-[12%]"
+          className="aspect-[4/5] w-full object-cover object-[50%_28%] opacity-95 grayscale-[12%] outline outline-1 -outline-offset-1 outline-white/10"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/28 via-transparent to-transparent" aria-hidden="true" />
       </div>

@@ -47,7 +47,7 @@ export function SideNav() {
       <a
         href="#home"
         aria-label={`${profile.name} home`}
-        className="grid size-12 place-items-center border border-white/25 bg-white text-sm font-black text-black shadow-[0_0_28px_rgba(255,255,255,0.12)] transition hover:bg-black hover:text-white"
+        className="grid size-12 place-items-center border border-white/25 bg-white text-sm font-black text-black shadow-[0_0_28px_rgba(255,255,255,0.12)] transition-[background-color,color,transform] duration-150 hover:bg-black hover:text-white active:scale-[0.96]"
       >
         {profile.name
           .split(" ")
@@ -67,7 +67,7 @@ export function SideNav() {
               href={item.href}
               aria-label={item.label}
               title={item.label}
-              className={`grid size-10 place-items-center border text-[10px] font-semibold uppercase tracking-widest transition duration-300 ${
+              className={`grid size-10 place-items-center border text-[10px] font-semibold uppercase tracking-widest transition-[background-color,border-color,color,transform] duration-300 active:scale-[0.96] ${
                 active
                   ? "border-white bg-white text-black"
                   : "border-white/12 bg-white/[0.025] text-white/45 hover:border-white/55 hover:text-white"
@@ -91,7 +91,7 @@ export function SideNav() {
               rel="noreferrer"
               aria-label={link.label}
               title={link.label}
-              className="grid size-10 place-items-center border border-white/12 bg-white/[0.025] text-white/55 transition hover:border-white/55 hover:bg-white hover:text-black"
+              className="grid size-10 place-items-center border border-white/12 bg-white/[0.025] text-white/55 transition-[background-color,border-color,color,transform] duration-150 hover:border-white/55 hover:bg-white hover:text-black active:scale-[0.96]"
             >
               <Icon className="size-4" aria-hidden="true" />
             </a>

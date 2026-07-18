@@ -108,7 +108,7 @@ export function ProjectGrid() {
       <SectionHeading {...sectionMeta.projects} />
 
       <div className="mt-2">
-        <span className="inline-flex items-center border border-[var(--accent)]/45 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
+        <span className="inline-flex items-center rounded-lg bg-[var(--accent)]/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45)]">
           Status: Ready
         </span>
       </div>

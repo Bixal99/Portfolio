@@ -1,4 +1,5 @@
 import { BrainCircuit } from "lucide-react";
+import { AboutLanyard } from "./AboutLanyard";
 
 const aboutTitle = "ABOUT ME";
 
@@ -8,7 +9,7 @@ export function AboutSection() {
       id="about"
       className="relative grid scroll-mt-24 items-center pt-16 pb-14 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20"
     >
-      <div className="grid gap-12 lg:items-center">
+      <div className="grid gap-12 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-center md:gap-8 lg:gap-10">
         <div data-about-panel className="relative z-20 max-w-3xl">
           <h2
             data-pixel-title
@@ -50,7 +51,7 @@ export function AboutSection() {
             </span>
           </h2>
 
-          <ul className="mt-7 max-w-xl list-none space-y-4 pl-0 text-lg leading-8 text-white/62 sm:text-xl sm:leading-9">
+          <ul className="mt-7 max-w-xl list-none space-y-4 pl-0 text-pretty text-lg leading-8 text-white/62 sm:text-xl sm:leading-9">
             <li data-about-bullet className="flex items-start gap-3">
               <span className="mt-[0.72em] size-2 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_14px_rgba(var(--accent-rgb),0.65)]" aria-hidden="true" />
               <span>
@@ -77,6 +78,10 @@ export function AboutSection() {
               </span>
             </li>
           </ul>
+        </div>
+
+        <div className="relative z-10 min-h-[420px] w-full">
+          <AboutLanyard />
         </div>
       </div>
     </section>

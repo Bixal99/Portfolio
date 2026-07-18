@@ -59,7 +59,6 @@ export function CustomCursor() {
     const root = rootRef.current;
     if (!core || !trailContainer || !root) return;
 
-    const prevFps = gsap.ticker.fps();
     gsap.ticker.fps(120);
     gsap.ticker.lagSmoothing(0);
 
@@ -97,8 +96,8 @@ export function CustomCursor() {
         x: mouseX,
         y: mouseY,
         baseSize: size,
-        setX: gsap.quickSetter(el, "x", "px"),
-        setY: gsap.quickSetter(el, "y", "px"),
+        setX: gsap.quickSetter(el, "x", "px") as (v: number) => void,
+        setY: gsap.quickSetter(el, "y", "px") as (v: number) => void,
       });
     }
 
@@ -116,6 +115,14 @@ export function CustomCursor() {
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      const target = e.target;
+      if (
+        target instanceof Element &&
+        target.closest("[data-about-lanyard]")
+      ) {
+        hide();
+        return;
+      }
       show();
     };
 
@@ -264,7 +271,7 @@ export function CustomCursor() {
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
       gsap.ticker.remove(tick);
-      gsap.ticker.fps(prevFps);
+      gsap.ticker.fps(60);
       gsap.ticker.lagSmoothing(500, 33);
       trail.forEach((pt) => pt.el.remove());
       gsap.killTweensOf([core, root, ...trail.map((t) => t.el)]);

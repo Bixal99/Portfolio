@@ -16,7 +16,7 @@ export function JourneyTimeline() {
         return {
           title: item.year,
           content: (
-            <div className="group relative border border-white/12 bg-[#070707]/85 backdrop-blur-xl transition duration-300 hover:border-[var(--accent)]/45">
+            <div className="group relative overflow-hidden rounded-2xl bg-[#070707]/85 shadow-[var(--shadow-border)] backdrop-blur-xl transition-[box-shadow] duration-300 hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45)]">
               {item.image ? (
                 <div className="relative w-full bg-black/40">
                   <Image
@@ -25,7 +25,7 @@ export function JourneyTimeline() {
                     width={1200}
                     height={900}
                     sizes="(max-width: 768px) 100vw, 640px"
-                    className="h-auto w-full"
+                    className="h-auto w-full outline outline-1 -outline-offset-1 outline-white/10"
                   />
                 </div>
               ) : null}
@@ -36,15 +36,15 @@ export function JourneyTimeline() {
                     <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-white/38">
                       {item.organization}
                     </p>
-                    <h3 className="mt-2 text-2xl font-extrabold leading-tight text-white sm:text-3xl">
+                    <h3 className="mt-2 text-balance text-2xl font-extrabold leading-tight text-white sm:text-3xl">
                       {item.title}
                     </h3>
                   </div>
-                  <span className="grid size-10 shrink-0 place-items-center border border-white/18 bg-black/60 text-[var(--accent)]">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-black/60 text-[var(--accent)] shadow-[var(--shadow-border)]">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
                 </div>
-                <p className="text-sm font-medium leading-7 text-white/62 sm:text-base">
+                <p className="text-pretty text-sm font-medium leading-7 text-white/62 sm:text-base">
                   {item.description}
                 </p>
               </div>
@@ -95,7 +95,7 @@ export function JourneyTimeline() {
             ))}
           </span>
         </h2>
-        <p className="mt-5 max-w-2xl text-base font-medium leading-7 text-white/56 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-pretty text-base font-medium leading-7 text-white/56 sm:text-lg">
           {sectionMeta.journey.title}
         </p>
       </header>

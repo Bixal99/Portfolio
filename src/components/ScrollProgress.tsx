@@ -18,22 +18,29 @@ export function ScrollProgress() {
     let frame = 0;
     let current = 0;
     let target = 0;
+    let trackHeight = track.offsetHeight;
     let lastShown = -1;
     let running = true;
+    let lastTs = 0;
+
+    // ~12Hz exponential settle — frame-rate independent
+    const SMOOTHING = 18;
 
     const readTarget = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       target = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     };
 
-    const paint = () => {
-      const height = track.offsetHeight;
-      // Light exponential smoothing so motion feels continuous between frames
-      current += (target - current) * 0.22;
-      if (Math.abs(target - current) < 0.0004) current = target;
+    const paint = (ts: number) => {
+      const dt = lastTs ? Math.min(0.05, (ts - lastTs) / 1000) : 1 / 60;
+      lastTs = ts;
+
+      const k = 1 - Math.exp(-SMOOTHING * dt);
+      current += (target - current) * k;
+      if (Math.abs(target - current) < 0.0003) current = target;
 
       fill.style.transform = `scaleY(${current})`;
-      tip.style.transform = `translate3d(0, ${current * height}px, 0) translateY(-50%)`;
+      tip.style.transform = `translate3d(0, ${current * trackHeight}px, 0) translateY(-50%)`;
 
       const percent = Math.round(current * 100);
       if (percent !== lastShown) {
@@ -41,10 +48,11 @@ export function ScrollProgress() {
         label.textContent = String(percent);
       }
 
-      if (running && Math.abs(target - current) > 0.0004) {
+      if (running && Math.abs(target - current) > 0.0003) {
         frame = requestAnimationFrame(paint);
       } else {
         frame = 0;
+        lastTs = 0;
       }
     };
 
@@ -53,17 +61,25 @@ export function ScrollProgress() {
       if (frame === 0) frame = requestAnimationFrame(paint);
     };
 
+    const onResize = () => {
+      trackHeight = track.offsetHeight;
+      kick();
+    };
+
     readTarget();
     current = target;
-    paint();
+    fill.style.transform = `scaleY(${current})`;
+    tip.style.transform = `translate3d(0, ${current * trackHeight}px, 0) translateY(-50%)`;
+    lastShown = Math.round(current * 100);
+    label.textContent = String(lastShown);
 
     window.addEventListener("scroll", kick, { passive: true });
-    window.addEventListener("resize", kick);
+    window.addEventListener("resize", onResize);
     return () => {
       running = false;
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", kick);
-      window.removeEventListener("resize", kick);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 

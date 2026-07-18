@@ -45,7 +45,7 @@ export function HeroSection() {
           className="mt-7 flex translate-x-6 items-center justify-center gap-3 text-[clamp(1.35rem,2.6vw,1.8rem)] sm:translate-x-11"
         >
           <span className="shrink-0 font-semibold uppercase tracking-[0.22em] text-white/70">
-            Building with
+            Inspired to be
           </span>
           <TypewriterLine />
         </div>
@@ -56,15 +56,15 @@ export function HeroSection() {
         >
           <a
             href="#projects"
-            className="group relative inline-flex h-[52px] w-[260px] min-w-[260px] items-center gap-3.5 overflow-hidden rounded-full border-2 border-[var(--accent)] bg-[rgba(255,255,255,0.025)] py-[5px] pr-[22px] pl-[5px] text-white shadow-[0_18px_58px_rgba(var(--accent-rgb),0.16)] transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-1 hover:border-white hover:bg-[rgba(var(--accent-rgb),0.12)] hover:shadow-[0_22px_70px_rgba(var(--accent-rgb),0.32)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white active:-translate-y-px"
+            className="group relative inline-flex h-[52px] w-[260px] min-w-[260px] items-center gap-3.5 overflow-hidden rounded-full border-2 border-[var(--accent)] bg-[rgba(255,255,255,0.025)] py-[5px] pr-[22px] pl-[5px] text-white shadow-[0_18px_58px_rgba(var(--accent-rgb),0.16)] transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-1 hover:border-white hover:bg-[rgba(var(--accent-rgb),0.12)] hover:shadow-[0_22px_70px_rgba(var(--accent-rgb),0.32)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white active:scale-[0.96]"
           >
             <span
-              className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-20deg] bg-white/25 opacity-0 transition duration-500 group-hover:left-[120%] group-hover:opacity-100"
+              className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-20deg] bg-white/25 opacity-0 transition-[left,opacity] duration-500 group-hover:left-[120%] group-hover:opacity-100"
               aria-hidden="true"
             />
-            <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full bg-[var(--accent)] text-black transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(var(--accent-rgb),0.55)]">
+            <span className="relative z-10 grid size-10 shrink-0 place-items-center rounded-full bg-[var(--accent)] text-black transition-[transform,box-shadow] duration-300 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(var(--accent-rgb),0.55)]">
               <ArrowRight
-                className="size-5 transition-transform duration-300 group-hover:translate-x-0.5"
+                className="size-5 translate-x-px transition-transform duration-300 group-hover:translate-x-1"
                 strokeWidth={1.7}
                 aria-hidden="true"
               />

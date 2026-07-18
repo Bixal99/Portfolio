@@ -73,7 +73,6 @@ export function InteractiveGridBackground() {
       return;
     }
 
-    const prevFps = gsap.ticker.fps();
     gsap.ticker.fps(120);
     gsap.ticker.lagSmoothing(0);
 
@@ -205,7 +204,7 @@ export function InteractiveGridBackground() {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerleave", onLeave);
       gsap.ticker.remove(tick);
-      gsap.ticker.fps(prevFps);
+      gsap.ticker.fps(60);
       gsap.ticker.lagSmoothing(500, 33);
       states.clear();
     };

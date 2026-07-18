@@ -56,14 +56,14 @@ export function Navbar() {
   }, [activeId]);
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition duration-300 ${compact ? "border-b border-white/10 bg-black/70 backdrop-blur-xl" : "bg-transparent"}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${compact ? "border-b border-white/10 bg-black/70 backdrop-blur-xl" : "bg-transparent"}`}>
       <div className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
         <a href="#home" className="max-w-[220px] text-sm font-bold uppercase tracking-[0.32em] text-white lg:max-w-none lg:-translate-x-4">
           {profile.name}
         </a>
 
                 <nav
-          className="theme-nav-shell absolute left-[54%] hidden w-[760px] -translate-x-1/2 items-center overflow-hidden rounded-full border border-white/10 bg-white/[0.025] p-1 backdrop-blur-xl lg:grid"
+          className="theme-nav-shell absolute left-[54%] hidden w-[760px] -translate-x-1/2 items-center overflow-hidden rounded-full bg-white/[0.025] p-1 shadow-[var(--shadow-border)] backdrop-blur-xl lg:grid"
           style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }}
           aria-label="Main navigation"
         >
@@ -78,7 +78,7 @@ export function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className={`relative z-10 rounded-full px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.18em] transition duration-300 ${
+                className={`relative z-10 rounded-full px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-300 ${
                   active ? "text-black" : "text-white/48 hover:text-white"
                 }`}
               >
@@ -93,10 +93,24 @@ export function Navbar() {
             type="button"
             suppressHydrationWarning
             aria-label="Toggle navigation"
+            aria-expanded={open}
             onClick={() => setOpen((value) => !value)}
-            className="grid size-11 place-items-center border border-white/15 text-white lg:hidden"
+            className="relative grid size-11 place-items-center border border-white/15 text-white transition-transform duration-150 ease-out active:scale-[0.96] lg:hidden"
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            <span className="relative size-5">
+              <Menu
+                className={`absolute inset-0 size-5 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
+                  open ? "scale-[0.25] opacity-0 blur-[4px]" : "scale-100 opacity-100 blur-0"
+                }`}
+                aria-hidden="true"
+              />
+              <X
+                className={`absolute inset-0 size-5 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
+                  open ? "scale-100 opacity-100 blur-0" : "scale-[0.25] opacity-0 blur-[4px]"
+                }`}
+                aria-hidden="true"
+              />
+            </span>
           </button>
         </div>
       </div>
@@ -111,7 +125,7 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`border px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition ${
+                  className={`border px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-[background-color,border-color,color] duration-150 active:scale-[0.96] ${
                     active
                       ? "border-[var(--accent)] bg-[var(--accent)] text-black"
                       : "border-white/10 text-white/70 hover:bg-white/10 hover:text-white"

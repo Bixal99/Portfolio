@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  useScroll,
-  useTransform,
-  motion,
-  useMotionValueEvent,
-} from "motion/react";
+import { useScroll, useTransform, motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -104,32 +99,30 @@ export function Timeline({ data, className }: TimelineProps) {
     offset: ["start 70%", "end 50%"],
   });
 
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
+  // Transform-only motion (scaleY + translateY) — avoids layout thrash from animating height
+  const tipY = useTransform(scrollYProgress, [0, 1], [0, height]);
 
-  useMotionValueEvent(heightTransform, "change", (latest) => {
-    const root = ref.current;
-    if (!root) return;
+  useEffect(() => {
+    if (height <= 0) return;
 
-    let lit = -1;
-
-    itemRefs.current.forEach((item, index) => {
-      if (!item) return;
+    const centers = itemRefs.current.map((item, index) => {
+      if (!item) return Number.POSITIVE_INFINITY;
       const node = nodeRefs.current[index];
-      const paddingTop = Number.parseFloat(getComputedStyle(item).paddingTop) || 0;
-      // Layout Y of the node center along the rail (ignore sticky viewport position)
-      const nodeCenter =
-        item.offsetTop +
-        paddingTop +
-        (node ? node.offsetHeight / 2 : 20);
-
-      // Only light once the meteor tip has reached/passed the node
-      if (latest >= nodeCenter) {
-        lit = index;
-      }
+      const paddingTop =
+        Number.parseFloat(getComputedStyle(item).paddingTop) || 0;
+      return item.offsetTop + paddingTop + (node ? node.offsetHeight / 2 : 20);
     });
 
-    setActiveIndex((prev) => (prev === lit ? prev : lit));
-  });
+    const unsub = tipY.on("change", (latest) => {
+      let lit = -1;
+      for (let i = 0; i < centers.length; i += 1) {
+        if (latest >= centers[i]) lit = i;
+      }
+      setActiveIndex((prev) => (prev === lit ? prev : lit));
+    });
+
+    return unsub;
+  }, [height, tipY, data.length]);
 
   return (
     <div
@@ -145,8 +138,12 @@ export function Timeline({ data, className }: TimelineProps) {
         >
           <div className="absolute inset-0 w-1 rounded-full bg-white/45 shadow-[0_0_12px_rgba(255,255,255,0.12)]" />
           <motion.div
-            style={{ height: heightTransform }}
-            className="timeline-meteor absolute inset-x-0 top-0 w-1 origin-top rounded-full"
+            style={{ scaleY: scrollYProgress }}
+            className="timeline-meteor absolute inset-x-0 top-0 h-full w-1 origin-top rounded-full will-change-transform"
+          />
+          <motion.div
+            style={{ y: tipY }}
+            className="timeline-meteor-tip absolute left-1/2 top-0 will-change-transform"
           />
         </div>
 
@@ -171,7 +168,7 @@ export function Timeline({ data, className }: TimelineProps) {
                 >
                   <div
                     className={cn(
-                      "size-3 rounded-full border-2 transition-all duration-500",
+                      "size-3 rounded-full border-2 transition-[transform,border-color,background-color,box-shadow] duration-500",
                       isLit
                         ? "scale-125 border-[var(--accent)] bg-[var(--accent)] shadow-[0_0_16px_rgba(var(--accent-rgb),1),0_0_32px_rgba(var(--accent-rgb),0.65),0_0_48px_rgba(var(--accent-rgb),0.35)]"
                         : "scale-100 border-white/45 bg-white/25 shadow-none",
@@ -180,7 +177,7 @@ export function Timeline({ data, className }: TimelineProps) {
                 </div>
                 <h3
                   className={cn(
-                    "hidden text-xl font-bold transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:block md:pl-20 md:text-5xl",
+                    "hidden text-xl font-bold tabular-nums transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:block md:pl-20 md:text-5xl",
                     isVisible
                       ? "translate-y-0 opacity-100"
                       : "translate-y-8 opacity-0",
@@ -196,7 +193,7 @@ export function Timeline({ data, className }: TimelineProps) {
               <div className="relative w-full min-w-0 pl-20 pr-4 md:pl-4">
                 <h3
                   className={cn(
-                    "mb-4 block text-left text-2xl font-bold transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden",
+                    "mb-4 block text-left text-2xl font-bold tabular-nums transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden",
                     isVisible
                       ? "translate-y-0 opacity-100"
                       : "translate-y-8 opacity-0",

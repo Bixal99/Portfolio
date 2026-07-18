@@ -283,7 +283,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
   const codeCard = (
     <div
       data-code-card
-      className="w-full overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.045] shadow-[0_40px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+      className="w-full overflow-hidden rounded-3xl bg-white/[0.045] shadow-[var(--shadow-border),0_40px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl"
       style={codeFontStyle}
     >
       <div className="flex flex-col gap-4 border-b border-white/10 bg-white/[0.035] px-4 py-4 sm:flex-row sm:items-center">
@@ -308,7 +308,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
                   setTypedChars(0);
                   setActiveFile(index);
                 }}
-                className={`inline-flex shrink-0 items-center gap-2 rounded-lg border px-3 py-2 text-xs font-bold transition ${
+                className={`inline-flex shrink-0 items-center gap-2 rounded-lg border py-2 pl-3 pr-2.5 text-xs font-bold transition-[background-color,border-color,color,box-shadow] duration-150 ${
                   selected
                     ? "border-[var(--accent)]/45 bg-white/12 text-white shadow-[0_0_32px_rgba(var(--accent-rgb),0.18)]"
                     : "border-transparent bg-transparent text-white/42 hover:border-white/10 hover:bg-white/[0.055]"

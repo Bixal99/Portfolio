@@ -58,7 +58,7 @@ export function CodingSection() {
 
           <ul
             data-build-list
-            className="mt-8 max-w-xl list-none space-y-4 pl-0 text-lg leading-8 text-white/62 sm:text-xl sm:leading-9"
+            className="mt-8 max-w-xl list-none space-y-4 pl-0 text-pretty text-lg leading-8 text-white/62 sm:text-xl sm:leading-9"
           >
             {buildBullets.map((item) => (
               <li key={item} data-build-bullet className="flex items-start gap-3">

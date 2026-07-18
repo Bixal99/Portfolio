@@ -27,9 +27,8 @@ function resetFieldVisuals(form: HTMLFormElement) {
 
     if (shell) {
       gsap.to(shell, {
-        borderColor: "rgba(255,255,255,0.1)",
         backgroundColor: "rgba(0,0,0,0.5)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
+        boxShadow: "0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06)",
         scale: 1,
         duration: 0.28,
         ease: "power2.out",
@@ -57,12 +56,12 @@ function resetFieldVisuals(form: HTMLFormElement) {
 }
 
 function FormField({ label, name, type = "text", placeholder, multiline = false, rows = 6 }: FieldProps) {
-  const controlClass = "relative z-10 w-full bg-transparent text-base text-white outline-none transition placeholder:text-white/25 focus:placeholder:text-white/38";
+  const controlClass = "relative z-10 w-full bg-transparent text-base text-white outline-none transition-[caret-color] placeholder:text-white/25 focus:placeholder:text-white/38";
 
   return (
     <label
       data-field-shell
-      className="group relative grid gap-3 overflow-hidden border border-white/10 bg-black/50 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition"
+      className="group relative grid gap-3 overflow-hidden rounded-xl bg-black/50 px-4 py-3 shadow-[var(--shadow-border),inset_0_1px_0_rgba(255,255,255,0.06)] transition-[box-shadow,background-color] duration-150"
     >
       <span
         data-field-label
@@ -103,7 +102,7 @@ function FormField({ label, name, type = "text", placeholder, multiline = false,
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(var(--accent-rgb),0.08),transparent_38%,rgba(255,255,255,0.035))] opacity-0 transition duration-300 group-focus-within:opacity-100"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(var(--accent-rgb),0.08),transparent_38%,rgba(255,255,255,0.035))] opacity-0 transition-opacity duration-300 group-focus-within:opacity-100"
       />
     </label>
   );
@@ -152,7 +151,6 @@ export function ContactForm() {
       const activate = () => {
         if (shell) {
           gsap.to(shell, {
-            borderColor: "rgba(var(--accent-rgb),0.62)",
             backgroundColor: "rgba(255,255,255,0.045)",
             boxShadow: "0 0 0 1px rgba(var(--accent-rgb),0.18), 0 18px 46px rgba(var(--accent-rgb),0.11), inset 0 1px 0 rgba(255,255,255,0.1)",
             scale: 1.01,
@@ -183,9 +181,8 @@ export function ContactForm() {
 
         if (shell) {
           gsap.to(shell, {
-            borderColor: "rgba(255,255,255,0.1)",
             backgroundColor: "rgba(0,0,0,0.5)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)",
+            boxShadow: "0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06)",
             scale: 1,
             duration: 0.3,
             ease: "power2.out",
@@ -259,7 +256,7 @@ export function ContactForm() {
         resetFieldVisuals(event.currentTarget);
         setSent(true);
       }}
-      className="relative overflow-hidden border border-white/12 bg-white/[0.035] p-5 shadow-[0_30px_90px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[var(--accent)] before:to-transparent sm:p-7 lg:p-8"
+      className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-white/[0.035] p-5 shadow-[var(--shadow-border),0_30px_90px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[var(--accent)] before:to-transparent sm:p-7 lg:p-8"
     >
       <div
         aria-hidden="true"
@@ -284,18 +281,18 @@ export function ContactForm() {
         />
       </div>
 
-      <div className="relative mt-5 flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="relative mt-auto flex flex-col items-stretch gap-4 pt-8 sm:flex-row sm:items-center sm:justify-end">
         <motion.button
           type="submit"
           suppressHydrationWarning
           whileHover={{ y: -3, scale: 1.025 }}
-          whileTap={{ y: 0, scale: 0.97 }}
-          transition={{ type: "spring", stiffness: 520, damping: 26 }}
-          className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden bg-[var(--accent)] px-5 py-4 text-sm font-bold uppercase tracking-[0.18em] text-black shadow-[0_18px_52px_rgba(var(--accent-rgb),0.22)] transition hover:bg-white sm:w-auto"
+          whileTap={{ y: 0, scale: 0.96 }}
+          transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+          className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-[var(--accent)] py-4 pl-5 pr-4 text-sm font-bold uppercase tracking-[0.18em] text-black shadow-[0_18px_52px_rgba(var(--accent-rgb),0.22)] transition-colors duration-150 hover:bg-white sm:w-auto"
         >
           <span
             aria-hidden="true"
-            className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-20deg] bg-white/35 opacity-0 transition duration-500 group-hover:left-[125%] group-hover:opacity-100"
+            className="absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-20deg] bg-white/35 opacity-0 transition-[left,opacity] duration-500 group-hover:left-[125%] group-hover:opacity-100"
           />
           <Send className="relative z-10 size-4" aria-hidden="true" />
           <span className="relative z-10">Send Message</span>

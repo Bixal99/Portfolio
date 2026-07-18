@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const phrases = [
   "a Software Engineer",
-  "an AI Engineer",
+  "an AI/ML Engineer",
   "a Full-Stack Developer",
   "a Startup Engineer",
   "a Web Developer",
