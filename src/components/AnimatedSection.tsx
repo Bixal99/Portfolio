@@ -10,7 +10,7 @@ export function AnimatedSection({
   children,
 }: AnimatedSectionProps) {
   return (
-    <section id={id} className={`scroll-mt-24 py-20 sm:py-24 lg:py-28 ${className}`}>
+    <section id={id} className={`scroll-mt-24 py-14 sm:py-16 lg:py-20 ${className}`}>
       {children}
     </section>
   );

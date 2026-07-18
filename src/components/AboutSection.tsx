@@ -6,7 +6,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative grid min-h-dvh scroll-mt-24 items-center py-24 sm:py-28 lg:py-32"
+      className="relative grid scroll-mt-24 items-center pt-16 pb-14 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20"
     >
       <div className="grid gap-12 lg:items-center">
         <div data-about-panel className="relative z-20 max-w-3xl">

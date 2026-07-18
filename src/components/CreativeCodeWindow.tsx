@@ -355,7 +355,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
   }
 
   return (
-    <section ref={sectionRef} id="code-lab" className="relative py-20 sm:py-24 lg:py-28">
+    <section ref={sectionRef} id="code-lab" className="relative py-14 sm:py-16 lg:py-20">
       {codeCard}
     </section>
   );

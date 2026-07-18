@@ -29,6 +29,8 @@ export type JourneyItem = {
   organization: string;
   description: string;
   icon: ComponentType<LucideProps>;
+  image?: string;
+  imageAlt?: string;
 };
 
 export type TechGroup = {
@@ -37,18 +39,12 @@ export type TechGroup = {
   icon: ComponentType<LucideProps>;
 };
 
-export type EducationItem = {
-  period: string;
-  title: string;
-  institution: string;
-  details: string;
-};
-
 export type Project = {
   title: string;
   category: string;
   description: string;
   technologies: string[];
+  highlights?: string[];
   links: {
     demo: string;
     source: string;
@@ -89,7 +85,6 @@ export const navItems: NavItem[] = [
   { label: "About", href: "#about" },
   { label: "Journey", href: "#journey" },
   { label: "Skills", href: "#stack" },
-  { label: "Education", href: "#education" },
   { label: "Projects", href: "#projects" },
 ];
 
@@ -104,12 +99,34 @@ export const socialLinks: SocialLink[] = [
 
 export const journeyItems: JourneyItem[] = [
   {
+    year: "2018 - 2019",
+    title: "Matric",
+    organization: "School Years",
+    description:
+      "Built the early academic foundation through science, mathematics, discipline, and the first habits of structured problem solving.",
+    icon: BookOpen,
+    image: "/journey/pak-shamaa-school.png",
+    imageAlt: "Pak Shamaa School",
+  },
+  {
+    year: "2020 - 2021",
+    title: "FSC",
+    organization: "College Years",
+    description:
+      "Strengthened the pre-university path with analytical subjects, exam pressure, and the focus needed for computer science.",
+    icon: BookOpen,
+    image: "/journey/pak-shamaa-college.png",
+    imageAlt: "Pak Shamaa School college campus",
+  },
+  {
     year: "Aug 2022",
     title: "Joined FAST NUCES University",
     organization: "Computer Science",
     description:
       "Started the computer science path that shaped my foundation in software engineering, AI, data, and problem solving.",
     icon: GraduationCap,
+    image: "/journey/fast-nuces.png",
+    imageAlt: "FAST NUCES University campus",
   },
   {
     year: "Jun 2025",
@@ -118,14 +135,18 @@ export const journeyItems: JourneyItem[] = [
     description:
       "Stepped into a fast-moving startup environment, building AI solutions while learning product thinking, speed, and real-world execution.",
     icon: BriefcaseBusiness,
+    image: "/journey/startup-tech-destination.jpg",
+    imageAlt: "Tech Destination Pakistan startup event",
   },
   {
     year: "Jun 2026",
-    title: "Graduated",
+    title: "Graduation",
     organization: "BS Computer Science",
     description:
       "Completed the degree journey with a sharper focus on AI engineering, full-stack systems, and practical software craft.",
     icon: GraduationCap,
+    image: "/journey/fast-nuces.png",
+    imageAlt: "FAST NUCES University campus",
   },
 ];
 
@@ -263,55 +284,25 @@ export const techSkills: TechSkill[] = [
   { name: "SQL", category: "Database", icon: "sql" },
 ];
 
-export const educationItems: EducationItem[] = [
-  {
-    period: "2018 - 2019",
-    title: "Matric",
-    institution: "School Years",
-    details:
-      "Built the early academic foundation through science, mathematics, discipline, and the first habits of structured problem solving.",
-  },
-  {
-    period: "2020 - 2021",
-    title: "FSC",
-    institution: "College Years",
-    details:
-      "Strengthened the pre-university path with analytical subjects, exam pressure, and the focus needed for computer science.",
-  },
-  {
-    period: "2022 - 2026",
-    title: "University Life",
-    institution: "FAST NUCES",
-    details:
-      "Moved into computer science, software engineering, AI, databases, web development, and practical project work.",
-  },
-];
-
 export const projects: Project[] = [
   {
-    title: "Software Systems & AI Project Suite",
-    category: "Software Systems",
+    title: "AI Book Assistant",
+    category: "Generative AI",
     description:
-      "Unified collection of management systems, AI-powered games, and database applications built using modern software engineering principles.",
-    technologies: [
-      "Python",
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "OOP",
-      "C++",
-      "CRUD",
-      "AI Algorithms",
-      "C",
+      "BookBy - an AI-assisted reading companion that helps explore, summarize, and navigate books with conversational guidance.",
+    technologies: ["Next.js", "TypeScript", "AI", "Vercel"],
+    highlights: [
+      "Conversational book exploration and summaries",
+      "Deployed on Vercel as a live demo",
     ],
     links: {
-      demo: "https://github.com/Bixal99",
-      source: "https://github.com/Bixal99",
+      demo: "https://ai-book-assistant-blush.vercel.app",
+      source: "https://github.com/Bixal99/AIBookAssistant",
     },
     featured: true,
   },
   {
-    title: "AI Customer Churn Prediction System",
+    title: "Churn Prediction System",
     category: "Machine Learning",
     description:
       "End-to-end telecom churn prediction application using XGBoost, Streamlit, and Gemini AI for churn prediction, interactive analytics, and AI-driven retention insights.",
@@ -325,6 +316,11 @@ export const projects: Project[] = [
       "Google Gemini AI",
       "ML",
     ],
+    highlights: [
+      "XGBoost model for churn risk scoring",
+      "Interactive analytics dashboard in Streamlit",
+      "Gemini-powered retention insights",
+    ],
     links: {
       demo: "https://github.com/Bixal99/Churn-Prediction",
       source: "https://github.com/Bixal99/Churn-Prediction",
@@ -332,14 +328,79 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "Eye Blink Morse Code Detector",
+    title: "Eye Blink Morse Detector",
     category: "Computer Vision",
     description:
       "Hands-free Morse code typing system powered by a webcam, OpenCV, MediaPipe Face Mesh, and NumPy.",
     technologies: ["Python", "OpenCV", "MediaPipe", "NumPy"],
+    highlights: [
+      "Face Mesh blink detection from webcam input",
+      "Maps blink patterns to Morse characters",
+    ],
     links: {
       demo: "https://github.com/Bixal99/EyeBlinkMorseDetector",
       source: "https://github.com/Bixal99/EyeBlinkMorseDetector",
+    },
+  },
+  {
+    title: "Ghoomora",
+    category: "Full-Stack",
+    description:
+      "Full-stack web application with a live deployment - built for real-world browsing and interaction flows.",
+    technologies: ["Next.js", "TypeScript", "Full-Stack", "Vercel"],
+    highlights: [
+      "End-to-end product experience on the web",
+      "Live demo hosted on Vercel",
+    ],
+    links: {
+      demo: "https://ghoomora.vercel.app",
+      source: "https://github.com/Bixal99/Ghoomora",
+    },
+    featured: true,
+  },
+  {
+    title: "RetroVerse",
+    category: "Games",
+    description:
+      "Retro-inspired game experience built as a personal systems and interaction project.",
+    technologies: ["JavaScript", "HTML", "CSS", "Game Design"],
+    highlights: [
+      "Classic retro game feel and interaction loops",
+      "Browser-playable game systems",
+    ],
+    links: {
+      demo: "https://github.com/Bixal99/RetroVerse",
+      source: "https://github.com/Bixal99/RetroVerse",
+    },
+  },
+  {
+    title: "Scrapper",
+    category: "Automation",
+    description:
+      "Automation tooling for scraping and collecting structured data from the web.",
+    technologies: ["Python", "Automation", "Scraping"],
+    highlights: [
+      "Scripted data collection pipelines",
+      "Structured output for downstream use",
+    ],
+    links: {
+      demo: "https://github.com/Bixal99/Scrapper",
+      source: "https://github.com/Bixal99/Scrapper",
+    },
+  },
+  {
+    title: "HMS",
+    category: "Full-Stack",
+    description:
+      "Hospital management system covering core admin, records, and workflow features for clinic-style operations.",
+    technologies: ["Full-Stack", "Database", "CRUD", "Web"],
+    highlights: [
+      "Admin and records workflows",
+      "CRUD-backed management flows",
+    ],
+    links: {
+      demo: "https://github.com/Bixal99/HMS",
+      source: "https://github.com/Bixal99/HMS",
     },
   },
 ];
@@ -347,7 +408,7 @@ export const projects: Project[] = [
 export const sectionMeta = {
   journey: {
     kicker: "MY JOURNEY",
-    title: "Three beats that shaped the builder I am becoming.",
+    title: "From school foundations to university, startups, and graduation.",
     icon: BookOpen,
   },
   stack: {
@@ -355,14 +416,9 @@ export const sectionMeta = {
     title: "Technical, framework, AI, and collaboration skills.",
     icon: TerminalSquare,
   },
-  education: {
-    kicker: "MY EDUCATION",
-    title: "From school foundations to computer science and AI systems.",
-    icon: GraduationCap,
-  },
   projects: {
     kicker: "MY PROJECTS",
-    title: "Selected systems from GitHub — toggle one to inspect the build.",
+    title: "Seven builds from GitHub - click one to inspect on the right.",
     icon: BriefcaseBusiness,
   },
 };

@@ -23,6 +23,8 @@ html {
   scroll-behavior: smooth;
   background: var(--background);
   color-scheme: dark;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(93, 211, 182, 0.45) transparent;
 }
 
 body {
@@ -30,6 +32,41 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-poppins), Poppins, Arial, Helvetica, sans-serif;
+}
+
+/* Slim accent scrollbar - WebKit / Chromium / Edge */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(93, 211, 182, 0.28),
+    rgba(93, 211, 182, 0.55)
+  );
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(93, 211, 182, 0.5),
+    rgba(93, 211, 182, 0.85)
+  );
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 a {
@@ -94,7 +131,7 @@ select:disabled,
     rgba(var(--grid-hover-rgb), var(--grid-shadow-alpha, 0));
   transform: scale(var(--grid-scale, 1));
   transform-origin: center;
-  /* Driven every frame by GSAP ticker — keep CSS transitions off so lerp stays crisp */
+  /* Driven every frame by GSAP ticker - keep CSS transitions off so lerp stays crisp */
   will-change: background, box-shadow, transform;
 }
 
@@ -155,6 +192,44 @@ select:disabled,
   50% {
     opacity: 0;
   }
+}
+
+/* Journey timeline - meteor / shooting-star progress */
+.timeline-meteor {
+  background: linear-gradient(
+    to top,
+    #ffffff 0%,
+    rgb(var(--accent-rgb)) 10%,
+    rgba(var(--accent-rgb), 1) 28%,
+    rgba(var(--accent-rgb), 0.7) 52%,
+    rgba(var(--accent-rgb), 0.35) 75%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10px rgba(var(--accent-rgb), 1),
+    0 0 22px rgba(var(--accent-rgb), 0.9),
+    0 0 44px rgba(var(--accent-rgb), 0.5);
+}
+
+.timeline-meteor::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    rgb(var(--accent-rgb)) 40%,
+    transparent 70%
+  );
+  box-shadow:
+    0 0 12px 4px rgba(var(--accent-rgb), 1),
+    0 0 28px 10px rgba(var(--accent-rgb), 0.75);
+  pointer-events: none;
 }
 
 html.has-custom-cursor,

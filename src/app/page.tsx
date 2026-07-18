@@ -1,7 +1,6 @@
 import { AboutSection } from "@/components/AboutSection";
 import { BackToTopButton } from "@/components/BackToTopButton";
 import { CodingSection } from "@/components/CodingSection";
-import { Education } from "@/components/Education";
 import { Footer } from "@/components/Footer";
 import { HeroSection } from "@/components/HeroSection";
 import { JourneyTimeline } from "@/components/JourneyTimeline";
@@ -26,7 +25,6 @@ export default function Home() {
           <CodingSection />
           <JourneyTimeline />
           <TechStack />
-          <Education />
           <ProjectGrid />
         </div>
       </main>

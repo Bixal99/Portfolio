@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
 import gsap from "gsap";
 import { motion } from "motion/react";
-import { resume } from "@/data/portfolio";
-import { ResumeDownloadButton } from "./ResumeDownloadButton";
 
 type FieldControl = HTMLInputElement | HTMLTextAreaElement;
 
@@ -313,9 +311,6 @@ export function ContactForm() {
             Message noted. Use the email link if you want to send it directly.
           </motion.p>
         ) : null}
-      </div>
-      <div className="relative mt-5">
-        <ResumeDownloadButton href={resume.href} label={resume.label} placement="inline" />
       </div>
     </form>
   );

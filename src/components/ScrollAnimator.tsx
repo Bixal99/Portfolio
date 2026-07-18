@@ -105,6 +105,8 @@ export function ScrollAnimator() {
 
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {
         const children = group.querySelectorAll("[data-stagger-item]");
+        if (!children.length) return;
+
         gsap.fromTo(
           children,
           { autoAlpha: 0, y: 32 },

@@ -51,10 +51,10 @@ export function TypewriterLine() {
 
   return (
     <p
-      className="theme-typewriter relative inline-grid h-9 items-center text-[clamp(1.2rem,2.3vw,1.55rem)] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]"
+      className="theme-typewriter relative inline-grid h-10 items-center text-[clamp(1.35rem,2.6vw,1.8rem)] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]"
       aria-live="polite"
     >
-      {/* Invisible sizer — locks width to the longest phrase so the line never shifts */}
+      {/* Invisible sizer - locks width to the longest phrase so the line never shifts */}
       <span
         className="invisible col-start-1 row-start-1 inline-flex items-center whitespace-nowrap"
         aria-hidden="true"

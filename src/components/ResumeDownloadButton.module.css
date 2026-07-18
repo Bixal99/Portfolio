@@ -27,8 +27,23 @@
 }
 
 .button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 22px 70px rgba(var(--accent-rgb), 0.26);
+  transform: translateY(-4px);
+  border-color: #ffffff;
+  background: rgba(var(--accent-rgb), 0.12);
+  box-shadow: 0 22px 70px rgba(var(--accent-rgb), 0.32);
+}
+
+.button:hover .circle {
+  transform: scale(1.06);
+  box-shadow: 0 0 22px rgba(var(--accent-rgb), 0.55);
+}
+
+.button:hover .circle::before {
+  height: 100%;
+}
+
+.button:active {
+  transform: translateY(-1px);
 }
 
 .button:focus-visible {
@@ -44,7 +59,29 @@
 }
 
 .inline {
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+.button::after {
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  content: "";
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transform: translateX(-140%) skewX(-18deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+
+.button:hover::after {
+  opacity: 1;
+  animation: resume-shine 0.7s ease forwards;
 }
 
 .button::before {
@@ -287,6 +324,16 @@
   to {
     opacity: 0;
     visibility: hidden;
+  }
+}
+
+@keyframes resume-shine {
+  from {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+
+  to {
+    transform: translateX(280%) skewX(-18deg);
   }
 }
 

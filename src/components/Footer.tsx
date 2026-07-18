@@ -338,6 +338,30 @@ export function Footer() {
             2026 Mohammad Bilal
           </motion.p>
         </div>
+
+        <nav
+          data-footer-reveal
+          className="relative mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/8 pt-5"
+          aria-label="Legal"
+        >
+          {[
+            { label: "Privacy Policy", href: "/privacy" },
+            { label: "Terms of Use", href: "/terms" },
+            { label: "Contact", href: `mailto:${profile.email}` },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="group relative text-[10px] font-semibold uppercase tracking-[0.2em] text-white/32 transition hover:text-[var(--accent)]"
+            >
+              {item.label}
+              <span
+                aria-hidden="true"
+                className="absolute -bottom-1 left-0 h-px w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full"
+              />
+            </a>
+          ))}
+        </nav>
       </div>
     </footer>
   );

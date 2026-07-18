@@ -19,7 +19,7 @@ export function ScrollExperience() {
     const ctx = gsap.context(() => {
       gsap.set("[data-reveal]", { autoAlpha: 0, y: 36 });
       gsap.set("[data-hero-line]", { autoAlpha: 0, yPercent: 80, rotateX: -18 });
-      gsap.set("[data-project-card], [data-tech-card], [data-education-item]", {
+      gsap.set("[data-project-card], [data-tech-card]", {
         transformPerspective: 900,
         transformOrigin: "50% 100%",
       });
