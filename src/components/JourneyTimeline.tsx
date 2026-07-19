@@ -56,7 +56,10 @@ export function JourneyTimeline() {
   );
 
   return (
-    <AnimatedSection id="journey" className="!py-12 sm:!py-14 lg:!py-16">
+    <AnimatedSection
+      id="journey"
+      className="!pb-8 !pt-16 sm:!pb-10 sm:!pt-20 lg:!pb-12 lg:!pt-24"
+    >
       <header className="mb-6 max-w-5xl md:mb-8">
         <h2
           data-pixel-title
@@ -95,7 +98,7 @@ export function JourneyTimeline() {
             ))}
           </span>
         </h2>
-            <p className="mt-5 max-w-2xl text-pretty text-base font-medium leading-7 text-white/56 sm:text-lg">
+        <p className="mt-5 max-w-2xl text-pretty text-base font-medium leading-7 text-white/56 sm:text-lg">
           {sectionMeta.journey.title}
         </p>
       </header>

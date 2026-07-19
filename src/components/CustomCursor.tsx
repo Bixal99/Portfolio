@@ -8,7 +8,10 @@ const TRAIL_COUNT = 10;
 /** Base spring at 60fps; scaled by deltaRatio so motion stays smooth at 120Hz */
 const SPRING = 0.35;
 const HOVER_SELECTOR =
-  'a, button, [role="button"], [role="link"], .cursor-pointer, .cursor-hover, summary, label, [data-skill-icon], [data-skill-drop-icon]';
+  'a, button, [role="button"], [role="link"], .cursor-pointer, .cursor-hover, summary, label, [data-skill-icon], [data-skill-drop-icon], .magic-bento-card';
+const BENTO_SELECTOR = "[data-magic-bento]";
+const ACCENT = "rgb(93, 211, 182)";
+const ACCENT_SOFT = "rgba(93, 211, 182, 0.35)";
 
 type TrailPoint = {
   el: HTMLDivElement;
@@ -65,6 +68,7 @@ export function CustomCursor() {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let isHovering = false;
+    let inBento = false;
     let visible = false;
 
     gsap.set(core, { xPercent: -50, yPercent: -50, x: mouseX, y: mouseY });
@@ -101,6 +105,42 @@ export function CustomCursor() {
       });
     }
 
+    const paintTrailDefault = () => {
+      trail.forEach((pt, i) => {
+        gsap.to(pt.el, {
+          backgroundColor: "#ffffff",
+          borderColor: "#ffffff",
+          borderWidth: 0,
+          opacity: 1 - i * 0.05,
+          duration: 0.25,
+          overwrite: "auto",
+        });
+      });
+      gsap.to(core, {
+        backgroundColor: "#ffffff",
+        duration: 0.25,
+        overwrite: "auto",
+      });
+    };
+
+    const paintTrailBento = () => {
+      trail.forEach((pt, i) => {
+        gsap.to(pt.el, {
+          backgroundColor: ACCENT,
+          borderColor: ACCENT,
+          borderWidth: 0,
+          opacity: Math.max(0.2, 0.95 - i * 0.08),
+          duration: 0.25,
+          overwrite: "auto",
+        });
+      });
+      gsap.to(core, {
+        backgroundColor: ACCENT,
+        duration: 0.25,
+        overwrite: "auto",
+      });
+    };
+
     const show = () => {
       if (visible) return;
       visible = true;
@@ -112,16 +152,27 @@ export function CustomCursor() {
       gsap.to(root, { autoAlpha: 0, duration: 0.12, overwrite: true });
     };
 
+    const setBentoMode = (next: boolean) => {
+      if (inBento === next) return;
+      inBento = next;
+      if (next) paintTrailBento();
+      else paintTrailDefault();
+    };
+
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       const target = e.target;
       if (
         target instanceof Element &&
-        target.closest("[data-about-lanyard]")
+        (target.closest("[data-about-lanyard]") ||
+          target.closest("[data-demo-screen]"))
       ) {
         hide();
         return;
+      }
+      if (target instanceof Element) {
+        setBentoMode(Boolean(target.closest(BENTO_SELECTOR)));
       }
       show();
     };
@@ -133,10 +184,12 @@ export function CustomCursor() {
       isHovering = true;
       gsap.to(core, { scale: 0, duration: 0.2, overwrite: "auto" });
       gsap.to(trail[0].el, {
-        width: 46,
-        height: 46,
+        width: inBento ? 52 : 46,
+        height: inBento ? 52 : 46,
         backgroundColor: "transparent",
-        borderWidth: 2,
+        borderWidth: inBento ? 2.5 : 2,
+        borderColor: inBento ? ACCENT : "#ffffff",
+        boxShadow: inBento ? `0 0 18px ${ACCENT_SOFT}` : "none",
         borderRadius: "50%",
         duration: 0.35,
         ease: "power3.out",
@@ -151,8 +204,9 @@ export function CustomCursor() {
       gsap.to(trail[0].el, {
         width: trail[0].baseSize,
         height: trail[0].baseSize,
-        backgroundColor: "#ffffff",
+        backgroundColor: inBento ? ACCENT : "#ffffff",
         borderWidth: 0,
+        boxShadow: "none",
         duration: 0.3,
         ease: "power3.out",
         overwrite: "auto",
@@ -163,6 +217,11 @@ export function CustomCursor() {
       const target = e.target;
       if (!(target instanceof Element)) return;
       if (target.closest("[data-no-cursor-change]")) return;
+      if (target.closest("[data-demo-screen]")) {
+        hide();
+        return;
+      }
+      if (target.closest(BENTO_SELECTOR)) setBentoMode(true);
       if (target.closest(HOVER_SELECTOR)) enterHover();
     };
 
@@ -173,7 +232,10 @@ export function CustomCursor() {
           leaveHover();
           return;
         }
+        setBentoMode(Boolean(related.closest(BENTO_SELECTOR)));
         if (related.closest(HOVER_SELECTOR)) return;
+      } else {
+        setBentoMode(false);
       }
       leaveHover();
     };
@@ -211,7 +273,7 @@ export function CustomCursor() {
 
       const ripple = document.createElement("div");
       ripple.className =
-        "fixed rounded-full border border-white mix-blend-difference pointer-events-none z-[9999]";
+        "fixed rounded-full border mix-blend-difference pointer-events-none z-[9999]";
       document.body.appendChild(ripple);
       gsap.set(ripple, {
         x: mouseX,
@@ -221,6 +283,7 @@ export function CustomCursor() {
         width: 20,
         height: 20,
         borderWidth: 3,
+        borderColor: inBento ? ACCENT : "#ffffff",
         force3D: true,
       });
       gsap.to(ripple, {
@@ -284,7 +347,7 @@ export function CustomCursor() {
     <div
       ref={rootRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[10001] mix-blend-difference"
+      className="pointer-events-none fixed inset-0 z-[10001] mix-blend-difference [[data-page-loader]_&]:invisible"
     >
       <div
         ref={coreRef}

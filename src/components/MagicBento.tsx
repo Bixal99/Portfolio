@@ -13,19 +13,29 @@ import {
 import { gsap } from "gsap";
 import {
   SiCss,
+  SiExpress,
+  SiGooglegemini,
   SiHtml5,
   SiJavascript,
+  SiMediapipe,
+  SiMongodb,
   SiNextdotjs,
+  SiNodedotjs,
   SiNumpy,
   SiOpencv,
+  SiPandas,
+  SiPlotly,
+  SiPostgresql,
   SiPython,
   SiReact,
+  SiScrapy,
+  SiSelenium,
   SiStreamlit,
   SiTypescript,
   SiVercel,
 } from "react-icons/si";
-import { Database, Gamepad2, Sparkles, Workflow } from "lucide-react";
 import "./MagicBento.css";
+import { getLiveDemoUrls } from "@/data/portfolio";
 
 export type MagicBentoCard = {
   color?: string;
@@ -41,6 +51,7 @@ export type MagicBentoCard = {
 
 type MagicBentoProps = {
   cards: MagicBentoCard[];
+  layout?: "idle" | "project";
   textAutoHide?: boolean;
   enableStars?: boolean;
   enableSpotlight?: boolean;
@@ -57,6 +68,35 @@ type MagicBentoProps = {
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = "93, 211, 182";
+/** Reveal the iframe even if onLoad is slow — SPA demos often paint before full load. */
+const DEMO_SPINNER_MAX_MS = 900;
+const readyDemoUrls = new Set<string>();
+let warmedDemoUrls = getLiveDemoUrls();
+
+function ensureDemoPreconnect(urls: string[]) {
+  if (typeof document === "undefined") return;
+  for (const url of urls) {
+    try {
+      const origin = new URL(url).origin;
+      if (document.querySelector(`link[data-demo-preconnect="${origin}"]`)) {
+        continue;
+      }
+      const link = document.createElement("link");
+      link.rel = "preconnect";
+      link.href = origin;
+      link.crossOrigin = "anonymous";
+      link.setAttribute("data-demo-preconnect", origin);
+      document.head.appendChild(link);
+
+      const dns = document.createElement("link");
+      dns.rel = "dns-prefetch";
+      dns.href = origin;
+      document.head.appendChild(dns);
+    } catch {
+      /* ignore invalid urls */
+    }
+  }
+}
 const MOBILE_BREAKPOINT = 768;
 const DEFAULT_CARD_COLOR = "#0a0a0a";
 
@@ -114,6 +154,7 @@ function ParticleCard({
   enableTilt = true,
   clickEffect = false,
   enableMagnetism = false,
+  href,
 }: {
   children: ReactNode;
   className?: string;
@@ -124,8 +165,9 @@ function ParticleCard({
   enableTilt?: boolean;
   clickEffect?: boolean;
   enableMagnetism?: boolean;
+  href?: string;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLElement>(null);
   const particlesRef = useRef<HTMLElement[]>([]);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const isHoveredRef = useRef(false);
@@ -353,9 +395,20 @@ function ParticleCard({
     glowColor,
   ]);
 
-  return (
+  return href ? (
+    <a
+      ref={cardRef as RefObject<HTMLAnchorElement | null>}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${className} particle-container`}
+      style={{ ...style, position: "relative", overflow: "hidden" }}
+    >
+      {children}
+    </a>
+  ) : (
     <div
-      ref={cardRef}
+      ref={cardRef as RefObject<HTMLDivElement | null>}
       className={`${className} particle-container`}
       style={{ ...style, position: "relative", overflow: "hidden" }}
     >
@@ -681,6 +734,197 @@ function useMobileDetection() {
   return isMobile;
 }
 
+function DemoScreen({
+  title,
+  description,
+  url,
+  isGithub,
+  isLive,
+}: {
+  title: string;
+  description: string;
+  url?: string;
+  isGithub: boolean;
+  isLive: boolean;
+}) {
+  const screenRef = useRef<HTMLDivElement>(null);
+  const [scrollLocked, setScrollLocked] = useState(false);
+  const [frames, setFrames] = useState<string[]>(() => {
+    const initial = [...warmedDemoUrls];
+    if (url && isLive && !initial.includes(url)) initial.push(url);
+    return initial;
+  });
+  const [loading, setLoading] = useState(
+    () => !!isLive && !!url && !readyDemoUrls.has(url),
+  );
+
+  // Preconnect + warm live demos in a persistent iframe pool.
+  useEffect(() => {
+    const liveUrls = getLiveDemoUrls();
+    ensureDemoPreconnect(liveUrls);
+
+    let cancelled = false;
+    const warm = () => {
+      if (cancelled) return;
+      setFrames((prev) => {
+        const next = [...prev];
+        for (const warmUrl of liveUrls) {
+          if (!next.includes(warmUrl)) next.push(warmUrl);
+        }
+        warmedDemoUrls = liveUrls;
+        return next;
+      });
+    };
+
+    const timeoutId = window.setTimeout(warm, 250);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
+
+  useEffect(() => {
+    setScrollLocked(false);
+
+    if (!isLive || !url) {
+      setLoading(false);
+      return;
+    }
+
+    setFrames((prev) => (prev.includes(url) ? prev : [...prev, url]));
+
+    if (readyDemoUrls.has(url)) {
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    const timer = window.setTimeout(() => {
+      setLoading(false);
+    }, DEMO_SPINNER_MAX_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [url, isLive, title]);
+
+  useEffect(() => {
+    if (!scrollLocked) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      const screen = screenRef.current;
+      if (!screen) return;
+      if (event.target instanceof Node && screen.contains(event.target)) return;
+      setScrollLocked(false);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown, true);
+    return () => document.removeEventListener("pointerdown", onPointerDown, true);
+  }, [scrollLocked]);
+
+  const markReady = (frameUrl: string) => {
+    readyDemoUrls.add(frameUrl);
+    if (frameUrl === url) setLoading(false);
+  };
+
+  return (
+    <div
+      ref={screenRef}
+      className={`magic-bento-demo-screen${scrollLocked ? " is-scroll-locked" : ""}`}
+      data-demo-screen
+      onPointerDown={() => {
+        if (isLive) setScrollLocked(true);
+      }}
+    >
+      <div
+        className="magic-bento-demo-chrome"
+        aria-hidden={url ? undefined : true}
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <div className="magic-bento-demo-url">
+          {url ? url.replace(/^https?:\/\//, "") : "demo.preview"}
+        </div>
+        {url ? (
+          <a
+            className="magic-bento-demo-open"
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+          >
+            Open ↗
+          </a>
+        ) : null}
+      </div>
+      <div className="magic-bento-demo-viewport">
+        <div className="magic-bento-demo-frame-clip">
+          {frames.map((frameUrl) => {
+            const isActive = isLive && frameUrl === url;
+            return (
+              <iframe
+                key={frameUrl}
+                className={[
+                  "magic-bento-demo-frame",
+                  isActive ? "is-active" : "is-cached",
+                  isActive && loading ? "is-loading" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                src={frameUrl}
+                title={
+                  isActive ? `${title} live demo` : "Cached project demo"
+                }
+                loading="eager"
+                referrerPolicy="no-referrer-when-downgrade"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                style={{
+                  pointerEvents:
+                    isActive && scrollLocked ? "auto" : "none",
+                }}
+                onLoad={() => markReady(frameUrl)}
+              />
+            );
+          })}
+
+          {isLive && loading ? (
+            <div className="magic-bento-demo-loader" aria-live="polite">
+              <span className="magic-bento-demo-spinner" aria-hidden="true" />
+              <p className="magic-bento-demo-loader-text">
+                Loading Please Wait
+              </p>
+            </div>
+          ) : null}
+
+          {!isLive ? (
+            <div className="magic-bento-demo-fallback">
+              <p className="magic-bento-demo-kicker">Live demo</p>
+              <p className="magic-bento-card__title">{title}</p>
+              <p className="magic-bento-card__description">{description}</p>
+              {url ? (
+                <a
+                  className="magic-bento-demo-cta"
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {isGithub ? "View on GitHub" : "Launch demo"}
+                </a>
+              ) : (
+                <p className="magic-bento-card__description">
+                  Select a project to load its demo screen.
+                </p>
+              )}
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CardBody({
   card,
   compact = false,
@@ -698,12 +942,27 @@ function CardBody({
           <div className="magic-bento-card__label">{label}</div>
         </div>
         <div className="magic-bento-card__content magic-bento-card__stack">
-          <div className="magic-bento-stack-icons" aria-label={description}>
-            {(technologies ?? []).slice(0, 6).map((tech) => (
-              <span key={tech} className="magic-bento-stack-icon" title={tech}>
-                <TechGlyph name={tech} />
-              </span>
-            ))}
+          <div className="magic-bento-stack-dock">
+            <div className="magic-bento-stack-icons" aria-label={description}>
+              {(technologies ?? [])
+                .filter((tech) => getBrandTechIcon(tech) != null)
+                .slice(0, 6)
+                .map((tech) => (
+                  <span
+                    key={tech}
+                    className="magic-bento-stack-icon"
+                    tabIndex={0}
+                    aria-label={tech}
+                  >
+                    <span className="magic-bento-stack-tooltip" role="tooltip">
+                      {tech}
+                    </span>
+                    <span className="magic-bento-stack-glyph-wrap">
+                      <TechGlyph name={tech} />
+                    </span>
+                  </span>
+                ))}
+            </div>
           </div>
         </div>
       </>
@@ -712,91 +971,69 @@ function CardBody({
 
   if (variant === "demo") {
     const url = demoUrl || href;
+    const isGithub = !!url && /github\.com/i.test(url);
+    const isLive = !!url && /^https?:\/\//i.test(url) && !isGithub;
 
     return (
-      <>
-        <div className="magic-bento-card__header">
-          <div className="magic-bento-card__label">{label}</div>
-          {url ? (
-            <a
-              className="magic-bento-demo-open"
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-            >
-              Open ↗
-            </a>
-          ) : null}
-        </div>
-        <div className="magic-bento-demo-screen">
-          <div className="magic-bento-demo-chrome" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <div className="magic-bento-demo-url">
-              {url ? url.replace(/^https?:\/\//, "") : "demo.preview"}
-            </div>
-          </div>
-          <div className="magic-bento-demo-viewport">
-            <div className="magic-bento-demo-fallback">
-              <p className="magic-bento-demo-kicker">Live demo</p>
-              <p className="magic-bento-card__title">{title}</p>
-              <p className="magic-bento-card__description">{description}</p>
-              {url ? (
-                <a
-                  className="magic-bento-demo-cta"
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Launch demo
-                </a>
-              ) : (
-                <p className="magic-bento-card__description">
-                  Select a project to load its demo screen.
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-      </>
+      <DemoScreen
+        title={title}
+        description={description}
+        url={url}
+        isGithub={isGithub}
+        isLive={isLive}
+      />
     );
   }
 
   return (
     <>
-      <div className="magic-bento-card__header">
-        <div
-          className="magic-bento-card__label"
-          style={compact ? { fontSize: "0.72em" } : undefined}
-        >
-          {label}
+      <div className="magic-bento-card__header magic-bento-card__header--with-title">
+        <div className="magic-bento-card__header-row">
+          <div
+            className="magic-bento-card__label"
+            style={compact ? { fontSize: "0.72em" } : undefined}
+          >
+            {label}
+          </div>
+          {href ? (
+            <span className="magic-bento-card__arrow" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 17L17 7" />
+                <path d="M8 7h9v9" />
+              </svg>
+            </span>
+          ) : null}
         </div>
-      </div>
-      <div className="magic-bento-card__content">
         <h2
           className="magic-bento-card__title"
           style={
             compact
               ? {
-                  fontSize: "0.9em",
-                  ["--clamp-title" as string]: 2,
-                }
+                fontSize: "0.9em",
+                ["--clamp-title" as string]: 2,
+              }
               : undefined
           }
         >
           {title}
         </h2>
+      </div>
+      <div className="magic-bento-card__content">
         <p
           className="magic-bento-card__description"
           style={
             compact
               ? {
-                  fontSize: "0.68em",
-                  ["--clamp-desc" as string]: 5,
-                }
+                fontSize: "0.68em",
+                ["--clamp-desc" as string]: 5,
+              }
               : undefined
           }
         >
@@ -807,44 +1044,58 @@ function CardBody({
   );
 }
 
+type GlyphIcon = ComponentType<{
+  style?: CSSProperties;
+  "aria-hidden"?: boolean;
+}>;
+
+const BRAND_TECH_ICONS: Record<string, { Icon: GlyphIcon; color: string }> = {
+  nextjs: { Icon: SiNextdotjs, color: "#ffffff" },
+  typescript: { Icon: SiTypescript, color: "#3178C6" },
+  javascript: { Icon: SiJavascript, color: "#F7DF1E" },
+  python: { Icon: SiPython, color: "#3776AB" },
+  react: { Icon: SiReact, color: "#61DAFB" },
+  opencv: { Icon: SiOpencv, color: "#5C3EE8" },
+  mediapipe: { Icon: SiMediapipe, color: "#009688" },
+  numpy: { Icon: SiNumpy, color: "#4DABCF" },
+  pandas: { Icon: SiPandas, color: "#150458" },
+  plotly: { Icon: SiPlotly, color: "#3F4F75" },
+  streamlit: { Icon: SiStreamlit, color: "#FF4B4B" },
+  vercel: { Icon: SiVercel, color: "#ffffff" },
+  html: { Icon: SiHtml5, color: "#E34F26" },
+  html5: { Icon: SiHtml5, color: "#E34F26" },
+  css: { Icon: SiCss, color: "#663399" },
+  css3: { Icon: SiCss, color: "#663399" },
+  nodejs: { Icon: SiNodedotjs, color: "#339933" },
+  node: { Icon: SiNodedotjs, color: "#339933" },
+  express: { Icon: SiExpress, color: "#ffffff" },
+  mongodb: { Icon: SiMongodb, color: "#47A248" },
+  postgresql: { Icon: SiPostgresql, color: "#4169E1" },
+  postgres: { Icon: SiPostgresql, color: "#4169E1" },
+  scrapy: { Icon: SiScrapy, color: "#60A839" },
+  selenium: { Icon: SiSelenium, color: "#43B02A" },
+  googlegemini: { Icon: SiGooglegemini, color: "#8E75B2" },
+  gemini: { Icon: SiGooglegemini, color: "#8E75B2" },
+};
+
+function techKey(name: string) {
+  return name.toLowerCase().replace(/[\s._+/()-]/g, "");
+}
+
+function getBrandTechIcon(name: string) {
+  return BRAND_TECH_ICONS[techKey(name)] ?? null;
+}
+
 function TechGlyph({ name }: { name: string }) {
-  const key = name.toLowerCase().replace(/[\s._-]/g, "");
-  type GlyphIcon = ComponentType<{
-    style?: CSSProperties;
-    "aria-hidden"?: boolean;
-  }>;
-  const iconMap: Record<string, { Icon: GlyphIcon; color: string }> = {
-    nextjs: { Icon: SiNextdotjs, color: "#ffffff" },
-    typescript: { Icon: SiTypescript, color: "#3178C6" },
-    javascript: { Icon: SiJavascript, color: "#F7DF1E" },
-    python: { Icon: SiPython, color: "#3776AB" },
-    react: { Icon: SiReact, color: "#61DAFB" },
-    opencv: { Icon: SiOpencv, color: "#5C3EE8" },
-    numpy: { Icon: SiNumpy, color: "#4DABCF" },
-    vercel: { Icon: SiVercel, color: "#ffffff" },
-    html: { Icon: SiHtml5, color: "#E34F26" },
-    css: { Icon: SiCss, color: "#663399" },
-    streamlit: { Icon: SiStreamlit, color: "#FF4B4B" },
-    ai: { Icon: Sparkles, color: "#5DD3B6" },
-    mediapipe: { Icon: Sparkles, color: "#5DD3B6" },
-    fullstack: { Icon: Workflow, color: "#5DD3B6" },
-    database: { Icon: Database, color: "#5DD3B6" },
-    crud: { Icon: Database, color: "#5DD3B6" },
-    web: { Icon: SiHtml5, color: "#E34F26" },
-    automation: { Icon: Workflow, color: "#5DD3B6" },
-    scraping: { Icon: Workflow, color: "#5DD3B6" },
-    gamedesign: { Icon: Gamepad2, color: "#5DD3B6" },
-  };
-  const entry = iconMap[key];
-  if (!entry) {
-    return <span className="magic-bento-stack-glyph">{name.slice(0, 2)}</span>;
-  }
+  const entry = getBrandTechIcon(name);
+  if (!entry) return null;
   const { Icon, color } = entry;
   return <Icon style={{ color }} aria-hidden />;
 }
 
 export default function MagicBento({
   cards,
+  layout = "project",
   textAutoHide = true,
   enableStars = true,
   enableSpotlight = true,
@@ -873,9 +1124,19 @@ export default function MagicBento({
         />
       )}
 
-      <div className="card-grid bento-section" ref={gridRef}>
+      <div
+        className={[
+          "card-grid",
+          "bento-section",
+          layout === "idle" ? "card-grid--idle" : "card-grid--project",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        ref={gridRef}
+        data-magic-bento
+      >
         {cards.map((card, index) => {
-          const isFocusCard = index === 2;
+          const isFocusCard = card.variant === "demo";
           const isSpecial =
             card.variant === "stack" || card.variant === "demo";
           const baseClassName = [
@@ -899,10 +1160,15 @@ export default function MagicBento({
 
           const body = <CardBody card={card} compact={isFocusCard} />;
 
-          if (enableStars) {
+          const cardKey =
+            card.variant === "demo"
+              ? "magic-bento-demo"
+              : `${card.label}-${card.title}-${index}`;
+
+          if (enableStars && card.variant !== "demo") {
             return (
               <ParticleCard
-                key={`${card.label}-${index}`}
+                key={cardKey}
                 className={baseClassName}
                 style={style}
                 disableAnimations={shouldDisableAnimations}
@@ -911,6 +1177,7 @@ export default function MagicBento({
                 enableTilt={enableTilt}
                 clickEffect={clickEffect}
                 enableMagnetism={enableMagnetism}
+                href={cardHref}
               >
                 {body}
               </ParticleCard>
@@ -919,7 +1186,7 @@ export default function MagicBento({
 
           return (
             <InteractiveCard
-              key={`${card.label}-${index}`}
+              key={cardKey}
               className={baseClassName}
               style={style}
               disableAnimations={shouldDisableAnimations}

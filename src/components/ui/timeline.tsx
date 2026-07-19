@@ -129,7 +129,7 @@ export function Timeline({ data, className }: TimelineProps) {
       ref={containerRef}
       className={cn("w-full bg-transparent font-sans md:px-10", className)}
     >
-      <div ref={ref} className="relative mx-auto max-w-7xl pb-20">
+      <div ref={ref} className="relative mx-auto max-w-7xl overflow-hidden pb-8 md:pb-12">
         {/* Rail centered on left-8 = center of left-3 + h-10 node */}
         <div
           aria-hidden="true"

@@ -42,7 +42,7 @@ export function ScrollAnimator() {
             scrollTrigger: {
               trigger: element,
               start: "top 86%",
-              toggleActions: "play none none none",
+              toggleActions: "play none none reverse",
             },
           },
         );
@@ -68,7 +68,7 @@ export function ScrollAnimator() {
               scrollTrigger: {
                 trigger: title,
                 start: "top 88%",
-                toggleActions: "play none none none",
+                toggleActions: "play none none reverse",
               },
             },
           );
@@ -91,17 +91,34 @@ export function ScrollAnimator() {
             scrollTrigger: {
               trigger: triggerElement,
               start: "top 80%",
-              toggleActions: "play none none none",
+              toggleActions: "play none none reverse",
             },
           },
         );
       };
 
       setupBulletAnimation("[data-about-bullet]", "[data-about-panel]");
-      setupBulletAnimation(
-        "[data-build-list] > li",
-        "[data-coding-panel]",
+
+      const aboutLanyard = document.querySelector<HTMLElement>(
+        "[data-about-lanyard]",
       );
+      if (aboutLanyard) {
+        gsap.fromTo(
+          aboutLanyard,
+          { autoAlpha: 0, y: 40 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.75,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#about",
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+      }
 
       gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((group) => {
         const children = group.querySelectorAll("[data-stagger-item]");
@@ -119,7 +136,7 @@ export function ScrollAnimator() {
             scrollTrigger: {
               trigger: group,
               start: "top 82%",
-              toggleActions: "play none none none",
+              toggleActions: "play none none reverse",
             },
           },
         );

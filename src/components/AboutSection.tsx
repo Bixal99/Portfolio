@@ -7,7 +7,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative grid scroll-mt-24 items-center pt-16 pb-14 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20"
+      className="relative grid scroll-mt-24 items-center pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-14"
     >
       <div className="grid gap-12 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-center md:gap-8 lg:gap-10">
         <div data-about-panel className="relative z-20 max-w-3xl">

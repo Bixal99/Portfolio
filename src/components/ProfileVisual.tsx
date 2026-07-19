@@ -3,8 +3,8 @@ import Image from "next/image";
 export function ProfileVisual() {
   return (
     <div data-hero-animate data-parallax className="relative mx-auto w-full max-w-md lg:ml-auto lg:mr-0">
-      <div className="absolute -inset-6 border border-white/8 bg-white/[0.015]" aria-hidden="true" />
-      <div className="relative overflow-hidden border border-white/14 bg-[#070707] shadow-[0_30px_120px_rgba(0,0,0,0.6)]">
+      <div className="absolute -inset-6 bg-white/[0.015] shadow-[var(--shadow-border)]" aria-hidden="true" />
+      <div className="relative overflow-hidden bg-[#070707] shadow-[var(--shadow-border),0_30px_120px_rgba(0,0,0,0.6)]">
         <Image
           src="/Me.jpeg"
           alt="Portrait of Mohammad Bilal"

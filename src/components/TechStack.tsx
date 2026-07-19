@@ -7,7 +7,9 @@ import {
   SiCplusplus,
   SiCss,
   SiDocker,
+  SiExpress,
   SiFastapi,
+  SiFlask,
   SiGit,
   SiHtml5,
   SiJavascript,
@@ -17,6 +19,9 @@ import {
   SiPostgresql,
   SiPython,
   SiReact,
+  SiSelenium,
+  SiStreamlit,
+  SiSupabase,
   SiTailwindcss,
   SiTypescript,
   SiVercel,
@@ -48,15 +53,20 @@ const FRAMEWORK_ICONS = new Set([
   "tailwind",
   "node",
   "git",
+  "express",
 ]);
 
-/** Outer ring - keeps mid orbit from crowding */
+/** Outer ring - platforms & libraries (kept lean to avoid overlap) */
 const OUTER_ICONS = new Set([
   "fastapi",
   "mongodb",
   "docker",
   "postgresql",
   "vercel",
+  "flask",
+  "streamlit",
+  "supabase",
+  "selenium",
 ]);
 
 const iconMap: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
@@ -77,6 +87,11 @@ const iconMap: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
   docker: SiDocker,
   postgresql: SiPostgresql,
   vercel: SiVercel,
+  express: SiExpress,
+  flask: SiFlask,
+  streamlit: SiStreamlit,
+  supabase: SiSupabase,
+  selenium: SiSelenium,
 };
 
 const iconColors: Record<string, string> = {
@@ -97,6 +112,11 @@ const iconColors: Record<string, string> = {
   docker: "#2496ED",
   postgresql: "#4169E1",
   vercel: "#FFFFFF",
+  express: "#FFFFFF",
+  flask: "#FFFFFF",
+  streamlit: "#FF4B4B",
+  supabase: "#3FCF8E",
+  selenium: "#43B02A",
 };
 
 function toSolarItem(skill: (typeof techSkills)[number]): SolarSystemItem {
@@ -130,24 +150,24 @@ function buildOrbits(): OrbitConfig[] {
       id: "inner",
       name: "Languages",
       radiusClass: "var(--radius-inner)",
-      radiusPx: 280,
-      speed: 28,
+      radiusPx: 260,
+      speed: 32,
       items: languages,
     },
     {
       id: "mid",
       name: "Frameworks",
       radiusClass: "var(--radius-mid)",
-      radiusPx: 430,
-      speed: 40,
+      radiusPx: 400,
+      speed: 44,
       items: frameworks,
     },
     {
       id: "outer",
       name: "Platform",
       radiusClass: "var(--radius-outer)",
-      radiusPx: 520,
-      speed: 52,
+      radiusPx: 510,
+      speed: 58,
       items: outer,
     },
   ];
@@ -157,19 +177,24 @@ export function TechStack() {
   const orbits = useMemo(() => buildOrbits(), []);
 
   return (
-    <AnimatedSection id="stack" className="!pb-10 sm:!pb-12 lg:!pb-14">
-      <SectionHeading {...sectionMeta.stack} />
+    <AnimatedSection
+      id="stack"
+      className="!pb-8 !pt-8 sm:!pb-10 sm:!pt-10 lg:!pb-12 lg:!pt-12"
+    >
+      <div className="[&>div]:mb-2 sm:[&>div]:mb-3">
+        <SectionHeading {...sectionMeta.stack} />
+      </div>
 
-      <div className="relative mt-1 overflow-visible pt-6 pb-2 sm:mt-2 sm:pt-8 sm:pb-4">
-        <div className="relative z-10 flex justify-center px-2">
+      <div className="relative -mt-2 overflow-x-clip pb-0">
+        <div className="relative z-0 flex justify-center">
           <SolarSystem
             orbits={orbits}
             speedMultiplier={1}
             centerLogo={
-              <Orbit className="h-10 w-10 text-[var(--accent)] md:h-12 md:w-12" />
+              <Orbit className="h-12 w-12 text-[var(--accent)] md:h-14 md:w-14" />
             }
             centerLogoAlt="Skills core"
-            className="mx-auto -translate-y-2 scale-[1.18] sm:-translate-y-4 sm:scale-[1.22] md:-translate-y-6 md:scale-[1.28] md:h-[480px]"
+            className="mx-auto -translate-y-6 sm:-translate-y-10 md:-translate-y-14"
           />
         </div>
       </div>

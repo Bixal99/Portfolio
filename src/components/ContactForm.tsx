@@ -55,7 +55,7 @@ function resetFieldVisuals(form: HTMLFormElement) {
   });
 }
 
-function FormField({ label, name, type = "text", placeholder, multiline = false, rows = 6 }: FieldProps) {
+function FormField({ label, name, type = "text", placeholder, multiline = false, rows = 10 }: FieldProps) {
   const controlClass = "relative z-10 w-full bg-transparent text-base text-white outline-none transition-[caret-color] placeholder:text-white/25 focus:placeholder:text-white/38";
 
   return (
@@ -77,7 +77,7 @@ function FormField({ label, name, type = "text", placeholder, multiline = false,
           required
           rows={rows}
           placeholder={placeholder}
-          className={`${controlClass} min-h-[154px] resize-none py-1 leading-7`}
+          className={`${controlClass} min-h-[260px] resize-none py-1 leading-7`}
         />
       ) : (
         <input
@@ -277,7 +277,7 @@ export function ContactForm() {
           name="message"
           placeholder="Share the goal, timeline, or problem you want to solve."
           multiline
-          rows={6}
+          rows={10}
         />
       </div>
 
@@ -285,10 +285,10 @@ export function ContactForm() {
         <motion.button
           type="submit"
           suppressHydrationWarning
-          whileHover={{ y: -3, scale: 1.025 }}
+          whileHover={{ y: -3 }}
           whileTap={{ y: 0, scale: 0.96 }}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-          className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-[var(--accent)] py-4 pl-5 pr-4 text-sm font-bold uppercase tracking-[0.18em] text-black shadow-[0_18px_52px_rgba(var(--accent-rgb),0.22)] transition-colors duration-150 hover:bg-white sm:w-auto"
+          className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-[var(--accent)] py-4 pl-4 pr-5 text-sm font-bold uppercase tracking-[0.18em] text-black shadow-[0_18px_52px_rgba(var(--accent-rgb),0.22)] transition-colors duration-150 hover:bg-white sm:w-auto"
         >
           <span
             aria-hidden="true"

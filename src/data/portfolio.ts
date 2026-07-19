@@ -66,7 +66,7 @@ export const profile = {
   summary:
     "Computer Science student with hands-on experience in AI, computer vision, and full-stack development through academic and personal projects. Skilled in Python, JavaScript, React, Node.js, and machine learning.",
   email: "bilalnadeema302003@gmail.com",
-  phone: "+923470405422",
+  phones: ["+92 347 0405422", "+92 322 6459646"],
 };
 
 export const heroStats: HeroStat[] = [
@@ -83,9 +83,9 @@ export const resume = {
 export const navItems: NavItem[] = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Journey", href: "#journey" },
-  { label: "Skills", href: "#stack" },
   { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#stack" },
+  { label: "Journey", href: "#journey" },
 ];
 
 export const socialLinks: SocialLink[] = [
@@ -94,6 +94,16 @@ export const socialLinks: SocialLink[] = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/mohammad-bilal-64489827b/",
     mark: "IN",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/__.bilxl99.__/",
+    mark: "IG",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/mohammed.bilal.312425",
+    mark: "FB",
   },
 ];
 
@@ -286,35 +296,32 @@ export const techSkills: TechSkill[] = [
 
 export const projects: Project[] = [
   {
-    title: "AI Book Assistant",
-    category: "Generative AI",
+    title: "Hospital Management System",
+    category: "Full-Stack",
     description:
-      "BookBy - an AI-assisted reading companion that helps explore, summarize, and navigate books with conversational guidance.",
-    technologies: ["Next.js", "TypeScript", "AI", "Vercel"],
+      "Admin, records, and clinic workflow management in one system.",
+    technologies: ["React", "Node.js", "Express", "MongoDB"],
     highlights: [
-      "Conversational book exploration and summaries",
-      "Deployed on Vercel as a live demo",
+      "Admin and records workflows",
+      "CRUD-backed management flows",
     ],
     links: {
-      demo: "https://ai-book-assistant-blush.vercel.app",
-      source: "https://github.com/Bixal99/AIBookAssistant",
+      demo: "https://github.com/Bixal99/HMS",
+      source: "https://github.com/Bixal99/HMS",
     },
-    featured: true,
   },
   {
     title: "Churn Prediction System",
     category: "Machine Learning",
     description:
-      "End-to-end telecom churn prediction application using XGBoost, Streamlit, and Gemini AI for churn prediction, interactive analytics, and AI-driven retention insights.",
+      "XGBoost churn scoring with Streamlit analytics and Gemini insights.",
     technologies: [
       "Python",
       "Streamlit",
-      "XGBoost",
-      "Plotly",
       "Pandas",
       "NumPy",
-      "Google Gemini AI",
-      "ML",
+      "Plotly",
+      "Google Gemini",
     ],
     highlights: [
       "XGBoost model for churn risk scoring",
@@ -331,7 +338,7 @@ export const projects: Project[] = [
     title: "Eye Blink Morse Detector",
     category: "Computer Vision",
     description:
-      "Hands-free Morse code typing system powered by a webcam, OpenCV, MediaPipe Face Mesh, and NumPy.",
+      "Hands-free Morse typing from webcam blinks with OpenCV and MediaPipe.",
     technologies: ["Python", "OpenCV", "MediaPipe", "NumPy"],
     highlights: [
       "Face Mesh blink detection from webcam input",
@@ -343,18 +350,18 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "Ghoomora",
-    category: "Full-Stack",
+    title: "AI Book Assistant",
+    category: "Generative AI",
     description:
-      "Full-stack web application with a live deployment - built for real-world browsing and interaction flows.",
-    technologies: ["Next.js", "TypeScript", "Full-Stack", "Vercel"],
+      "AI reading companion for exploring, summarizing, and navigating books.",
+    technologies: ["Next.js", "TypeScript", "React", "Vercel"],
     highlights: [
-      "End-to-end product experience on the web",
-      "Live demo hosted on Vercel",
+      "Conversational book exploration and summaries",
+      "Deployed on Vercel as a live demo",
     ],
     links: {
-      demo: "https://ghoomora.vercel.app",
-      source: "https://github.com/Bixal99/Ghoomora",
+      demo: "https://ai-book-assistant-blush.vercel.app",
+      source: "https://github.com/Bixal99/AIBookAssistant",
     },
     featured: true,
   },
@@ -362,8 +369,8 @@ export const projects: Project[] = [
     title: "RetroVerse",
     category: "Games",
     description:
-      "Retro-inspired game experience built as a personal systems and interaction project.",
-    technologies: ["JavaScript", "HTML", "CSS", "Game Design"],
+      "Browser-playable retro game systems and interaction loops.",
+    technologies: ["JavaScript", "HTML", "CSS"],
     highlights: [
       "Classic retro game feel and interaction loops",
       "Browser-playable game systems",
@@ -377,8 +384,8 @@ export const projects: Project[] = [
     title: "Scrapper",
     category: "Automation",
     description:
-      "Automation tooling for scraping and collecting structured data from the web.",
-    technologies: ["Python", "Automation", "Scraping"],
+      "Web scraping pipelines that collect structured data from the web.",
+    technologies: ["Python", "Scrapy", "Selenium"],
     highlights: [
       "Scripted data collection pipelines",
       "Structured output for downstream use",
@@ -389,21 +396,32 @@ export const projects: Project[] = [
     },
   },
   {
-    title: "HMS",
+    title: "Ghoomora",
     category: "Full-Stack",
     description:
-      "Hospital management system covering core admin, records, and workflow features for clinic-style operations.",
-    technologies: ["Full-Stack", "Database", "CRUD", "Web"],
+      "Trip planning web app with live deployment for real browsing flows.",
+    technologies: ["Next.js", "TypeScript", "React", "Vercel"],
     highlights: [
-      "Admin and records workflows",
-      "CRUD-backed management flows",
+      "End-to-end product experience on the web",
+      "Live demo hosted on Vercel",
     ],
     links: {
-      demo: "https://github.com/Bixal99/HMS",
-      source: "https://github.com/Bixal99/HMS",
+      demo: "https://ghoomora.vercel.app",
+      source: "https://github.com/Bixal99/Ghoomora",
     },
+    featured: true,
   },
 ];
+
+/** Live (non-GitHub) demo URLs — used to warm iframe previews. */
+export function getLiveDemoUrls(list: Project[] = projects): string[] {
+  return list
+    .map((project) => project.links.demo)
+    .filter(
+      (url) =>
+        /^https?:\/\//i.test(url) && !/github\.com/i.test(url),
+    );
+}
 
 export const sectionMeta = {
   journey: {
@@ -418,7 +436,7 @@ export const sectionMeta = {
   },
   projects: {
     kicker: "MY PROJECTS",
-    title: "Seven builds from GitHub - click one to inspect on the right.",
+    title: "Seven builds from GitHub. Click one to inspect on the right.",
     icon: BriefcaseBusiness,
   },
 };

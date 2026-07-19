@@ -10,7 +10,10 @@ export function AnimatedSection({
   children,
 }: AnimatedSectionProps) {
   return (
-    <section id={id} className={`scroll-mt-24 py-14 sm:py-16 lg:py-20 ${className}`}>
+    <section
+      id={id}
+      className={`relative isolate scroll-mt-24 overflow-x-clip py-28 sm:py-32 lg:py-36 ${className}`}
+    >
       {children}
     </section>
   );

@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
 import { navItems, profile, socialLinks } from "@/data/portfolio";
+import { navigateWithLegalCurtain } from "@/lib/legal-transition";
 import { ContactForm } from "./ContactForm";
 import { CreativeCodeWindow } from "./CreativeCodeWindow";
 import FlipWordsHero from "./flip-words-demo";
@@ -16,47 +18,86 @@ type SocialIconProps = {
 
 function GitHubIcon({ className }: SocialIconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 2.25c-5.52 0-10 4.48-10 10 0 4.42 2.87 8.17 6.85 9.49.5.09.68-.22.68-.48v-1.7c-2.79.61-3.38-1.2-3.38-1.2-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1.01.07 1.54 1.04 1.54 1.04.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.23-.25-4.57-1.11-4.57-4.95 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 7.2c.85 0 1.7.11 2.5.34 1.91-1.29 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.85-2.35 4.7-4.58 4.95.36.31.68.92.68 1.86v2.6c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.25c0-5.52-4.48-10-10-10Z" />
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
     </svg>
   );
 }
 
 function LinkedInIcon({ className }: SocialIconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M5.34 3.55a2.3 2.3 0 1 1 0 4.6 2.3 2.3 0 0 1 0-4.6ZM3.48 9.5h3.71v10.95H3.48V9.5Zm5.88 0h3.55V11h.05c.5-.94 1.7-1.93 3.5-1.93 3.75 0 4.44 2.47 4.44 5.68v5.7h-3.7v-5.05c0-1.21-.02-2.76-1.68-2.76-1.69 0-1.95 1.32-1.95 2.67v5.14H9.36V9.5Z" />
-    </svg>
-  );
-}
-
-function XIcon({ className }: SocialIconProps) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M14.5 10.56 21.16 3h-1.58l-5.78 6.56L9.18 3H3.86l6.99 9.93L3.86 21h1.58l6.1-6.93L16.42 21h5.32l-7.24-10.44Zm-2.16 2.45-.71-.99-5.63-7.9h2.42l4.54 6.38.7.99 5.91 8.29h-2.42l-4.81-6.77Z" />
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
     </svg>
   );
 }
 
 function InstagramIcon({ className }: SocialIconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3.35" y="3.35" width="17.3" height="17.3" rx="5.2" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="12" cy="12" r="3.7" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="17.08" cy="6.92" r="1.15" fill="currentColor" />
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
     </svg>
   );
 }
 
-function SocialIcon({ label }: { label: string }) {
-  if (label === "GitHub") return <GitHubIcon className="size-5" />;
-  if (label === "LinkedIn") return <LinkedInIcon className="size-5" />;
-  if (label === "X") return <XIcon className="size-5" />;
-  return <InstagramIcon className="size-5" />;
+function FacebookIcon({ className }: SocialIconProps) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
+function SocialIcon({ label, className = "size-7" }: { label: string; className?: string }) {
+  if (label === "GitHub") return <GitHubIcon className={className} />;
+  if (label === "LinkedIn") return <LinkedInIcon className={className} />;
+  if (label === "Facebook") return <FacebookIcon className={className} />;
+  return <InstagramIcon className={className} />;
 }
 
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -127,54 +168,7 @@ export function Footer() {
       });
     }, footer);
 
-    const socialItems = Array.from(footer.querySelectorAll<HTMLElement>("[data-social-link]"));
-    const cleanups = socialItems.map((item) => {
-      const glow = item.querySelector<HTMLElement>("[data-social-glow]");
-      const glyph = item.querySelector<HTMLElement>("[data-social-glyph]");
-
-      const enter = () => {
-        if (glow) {
-          gsap.to(glow, { autoAlpha: 1, scale: 1, duration: 0.34, ease: "power3.out" });
-        }
-
-        if (glyph) {
-          gsap.to(glyph, {
-            rotate: -8,
-            scale: 1.12,
-            color: "#000000",
-            duration: 0.36,
-            ease: "back.out(2.2)",
-          });
-        }
-      };
-
-      const leave = () => {
-        if (glow) {
-          gsap.to(glow, { autoAlpha: 0, scale: 0.62, duration: 0.28, ease: "power2.out" });
-        }
-
-        if (glyph) {
-          gsap.to(glyph, {
-            rotate: 0,
-            scale: 1,
-            color: "rgba(255,255,255,0.68)",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-      };
-
-      item.addEventListener("mouseenter", enter);
-      item.addEventListener("mouseleave", leave);
-
-      return () => {
-        item.removeEventListener("mouseenter", enter);
-        item.removeEventListener("mouseleave", leave);
-      };
-    });
-
     return () => {
-      cleanups.forEach((cleanup) => cleanup());
       context.revert();
     };
   }, []);
@@ -183,7 +177,7 @@ export function Footer() {
     <footer
       ref={footerRef}
       id="contact"
-      className="relative overflow-hidden border-t border-white/10 bg-black py-16 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.18),0_-36px_120px_rgba(0,0,0,0.78)] sm:py-20"
+      className="relative overflow-hidden border-t border-white/10 bg-black pt-28 pb-24 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.18),0_-36px_120px_rgba(0,0,0,0.78)] sm:pt-32 sm:pb-28 lg:pt-36 lg:pb-28"
     >
       <div
         aria-hidden="true"
@@ -213,7 +207,7 @@ export function Footer() {
         >
           <div
             data-footer-reveal
-            className="relative flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.025] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.065)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent sm:p-8 lg:p-10"
+            className="relative flex h-full flex-col overflow-hidden bg-white/[0.025] p-6 shadow-[var(--shadow-border),0_30px_90px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.065)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent sm:p-8 lg:p-10"
           >
             <div
               aria-hidden="true"
@@ -246,16 +240,27 @@ export function Footer() {
                 <Mail className="size-4 shrink-0" aria-hidden="true" />
                 <span className="truncate">{profile.email}</span>
               </motion.a>
-              <motion.a
-                data-footer-micro
-                href={`tel:${profile.phone.replace(/\s+/g, "")}`}
-                whileHover={{ x: 6 }}
-                transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="inline-flex items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
-              >
-                <Phone className="size-4 shrink-0" aria-hidden="true" />
-                {profile.phone}
-              </motion.a>
+              {profile.phones.map((phone, index) => (
+                <motion.a
+                  key={phone}
+                  data-footer-micro
+                  href={`tel:${phone.replace(/\s+/g, "")}`}
+                  whileHover={{ x: 6 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                  className="inline-flex items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
+                >
+                  <span className="relative inline-flex shrink-0">
+                    <Phone className="size-4" aria-hidden="true" />
+                    <span
+                      className="absolute -right-1.5 -top-1.5 flex size-3 items-center justify-center rounded-full bg-[var(--accent)] text-[0.55rem] font-bold leading-none text-black"
+                      aria-hidden="true"
+                    >
+                      {index + 1}
+                    </span>
+                  </span>
+                  <span>{phone}</span>
+                </motion.a>
+              ))}
               <motion.span
                 data-footer-micro
                 whileHover={{ x: 6, color: "rgba(255,255,255,0.86)" }}
@@ -270,32 +275,29 @@ export function Footer() {
               </motion.span>
             </div>
 
-            <div data-footer-micro className="mt-auto flex flex-wrap gap-3 pt-8">
+            <div data-footer-micro className="mt-auto flex flex-wrap items-center gap-5 pt-8">
               {socialLinks.map((link) => (
-                <motion.a
-                  key={link.label}
-                  data-social-link
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  whileHover={{ y: -4, scale: 1.07 }}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-                  className="group relative grid size-12 place-items-center overflow-hidden rounded-xl bg-black/50 text-white/70 shadow-[var(--shadow-border),inset_0_1px_0_rgba(255,255,255,0.08)] transition-[background-color,box-shadow,color] duration-150 hover:bg-[var(--accent)] hover:text-black hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.55),0_0_34px_rgba(var(--accent-rgb),0.34)]"
-                  aria-label={link.label}
-                >
-                  <span
-                    data-social-glow
-                    aria-hidden="true"
-                    className="absolute inset-1 scale-50 bg-[var(--accent)] opacity-0 blur-md"
-                  />
-                  <span
-                    data-social-glyph
-                    className="relative z-10 text-white/70 transition-colors group-hover:text-black"
+                <div key={link.label} className="group relative">
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={link.label}
+                    onMouseLeave={(e) => e.currentTarget.blur()}
+                    className="inline-flex text-white/70 transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-white/70 focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)]"
                   >
                     <SocialIcon label={link.label} />
+                  </a>
+                  <span
+                    className="pointer-events-none absolute -top-12 left-1/2 z-20 origin-bottom -translate-x-1/2 scale-0 whitespace-nowrap rounded-lg border border-white/15 bg-black px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-white shadow-[0_10px_30px_rgba(0,0,0,0.55),0_0_0_1px_rgba(var(--accent-rgb),0.2)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-100"
+                  >
+                    {link.label}
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-1/2 top-full size-2 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-white/15 bg-black"
+                    />
                   </span>
-                </motion.a>
+                </div>
               ))}
             </div>
             </div>
@@ -307,11 +309,11 @@ export function Footer() {
         <div
           data-stagger
           data-footer-reveal
-          className="relative mt-10 grid gap-6 border-t border-white/10 pt-8 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.12)] lg:grid-cols-[1fr_auto] lg:items-center"
+          className="relative mt-10 border-t border-white/10 pt-6 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.12)]"
         >
           <nav
             data-stagger-item
-            className="flex flex-wrap gap-x-5 gap-y-3"
+            className="flex flex-wrap items-center gap-x-4 gap-y-2"
             aria-label="Footer navigation"
           >
             {navItems.map((item) => (
@@ -321,7 +323,7 @@ export function Footer() {
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
                 transition={{ type: "spring", stiffness: 430, damping: 30 }}
-                className="group inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/42 transition-colors duration-150 hover:text-[var(--accent)]"
+                className="group inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/42 transition-colors duration-150 hover:text-[var(--accent)]"
               >
                 {item.label}
                 <ArrowUpRight
@@ -331,39 +333,49 @@ export function Footer() {
               </motion.a>
             ))}
           </nav>
-          <motion.p
-            data-stagger-item
-            whileHover={{ color: "rgba(93,211,182,0.9)", letterSpacing: "0.24em" }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
-            className="text-xs uppercase tracking-[0.2em] text-white/34"
-          >
-            2026 Mohammad Bilal
-          </motion.p>
-        </div>
 
-        <nav
-          data-footer-reveal
-          className="relative mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/8 pt-5"
-          aria-label="Legal"
-        >
-          {[
-            { label: "Privacy Policy", href: "/privacy" },
-            { label: "Terms of Use", href: "/terms" },
-            { label: "Contact", href: `mailto:${profile.email}` },
-          ].map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="group relative text-[10px] font-semibold uppercase tracking-[0.2em] text-white/32 transition-colors duration-150 hover:text-[var(--accent)]"
+          <div className="mt-5 flex flex-col gap-4 border-t border-white/8 pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8 sm:pr-28">
+            <nav
+              className="flex flex-wrap items-center"
+              aria-label="Legal"
             >
-              {item.label}
-              <span
-                aria-hidden="true"
-                className="absolute -bottom-1 left-0 h-px w-0 bg-[var(--accent)] transition-[width] duration-300 group-hover:w-full"
-              />
-            </a>
-          ))}
-        </nav>
+              {[
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Terms of Use", href: "/terms" },
+                { label: "Contact", href: `mailto:${profile.email}` },
+              ].map((item, index) => (
+                <span key={item.href} className="inline-flex items-center">
+                  {index > 0 ? (
+                    <span
+                      aria-hidden="true"
+                      className="mx-3 h-3 w-px shrink-0 bg-white/15 sm:mx-3.5"
+                    />
+                  ) : null}
+                  <a
+                    href={item.href}
+                    onClick={(e) => {
+                      if (item.href.startsWith("mailto:")) return;
+                      e.preventDefault();
+                      navigateWithLegalCurtain(router.push.bind(router), item.href);
+                    }}
+                    className="inline-flex h-8 items-center whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.14em] text-white/40 transition-colors duration-150 hover:text-[var(--accent)] active:scale-[0.96]"
+                  >
+                    {item.label}
+                  </a>
+                </span>
+              ))}
+            </nav>
+
+            <motion.p
+              data-stagger-item
+              whileHover={{ color: "rgba(93,211,182,0.9)" }}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+              className="shrink-0 text-[11px] uppercase tracking-[0.16em] text-white/34"
+            >
+              2026 Mohammad Bilal
+            </motion.p>
+          </div>
+        </div>
       </div>
     </footer>
   );

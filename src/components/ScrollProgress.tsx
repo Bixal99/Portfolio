@@ -85,7 +85,7 @@ export function ScrollProgress() {
 
   return (
     <div
-      className="fixed left-5 top-1/2 z-40 hidden h-56 -translate-y-1/2 lg:block"
+      className="fixed left-5 top-1/2 z-50 hidden h-56 -translate-y-1/2 lg:block"
       aria-hidden="true"
     >
       <div

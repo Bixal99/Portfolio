@@ -48,10 +48,15 @@
   position: relative;
   display: inline-flex;
   align-items: baseline;
+  white-space: nowrap;
   font-size: var(--font-size);
   line-height: 1.2;
   color: color-mix(in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--text-color));
   transform: translateX(calc(var(--effect, 0) * var(--max-shift)));
+}
+
+.line-sidebar__text {
+  white-space: nowrap;
 }
 
 .line-sidebar__index {
@@ -60,6 +65,7 @@
   font-size: 0.85em;
   font-weight: 500;
   letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
   opacity: calc(0.55 + var(--effect, 0) * 0.45);
 }
 

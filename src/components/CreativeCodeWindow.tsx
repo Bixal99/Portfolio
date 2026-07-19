@@ -225,7 +225,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
           scrollTrigger: {
             trigger: section,
             start: "top 78%",
-            toggleActions: "play none none none",
+            toggleActions: "play none none reverse",
           },
         },
       );
@@ -308,10 +308,10 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
                   setTypedChars(0);
                   setActiveFile(index);
                 }}
-                className={`inline-flex shrink-0 items-center gap-2 rounded-lg border py-2 pl-3 pr-2.5 text-xs font-bold transition-[background-color,border-color,color,box-shadow] duration-150 ${
+                className={`inline-flex shrink-0 items-center gap-2 rounded-lg py-2 pl-2.5 pr-3 text-xs font-bold transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] ${
                   selected
-                    ? "border-[var(--accent)]/45 bg-white/12 text-white shadow-[0_0_32px_rgba(var(--accent-rgb),0.18)]"
-                    : "border-transparent bg-transparent text-white/42 hover:border-white/10 hover:bg-white/[0.055]"
+                    ? "bg-white/12 text-white shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_32px_rgba(var(--accent-rgb),0.18)]"
+                    : "bg-transparent text-white/42 shadow-[0_0_0_1px_transparent] hover:bg-white/[0.055] hover:shadow-[var(--shadow-border)]"
                 } ${file.accent}`}
               >
                 <FileCode2 className="size-3.5" aria-hidden="true" />
@@ -355,7 +355,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
   }
 
   return (
-    <section ref={sectionRef} id="code-lab" className="relative py-14 sm:py-16 lg:py-20">
+    <section ref={sectionRef} id="code-lab" className="relative py-28 sm:py-32 lg:py-36">
       {codeCard}
     </section>
   );

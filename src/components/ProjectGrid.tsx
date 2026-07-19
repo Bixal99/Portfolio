@@ -9,16 +9,9 @@ import MagicBento, { type MagicBentoCard } from "./MagicBento";
 
 const idleCards: MagicBentoCard[] = [
   {
-    label: "Select",
-    title: "Pick a project",
-    description: "Click any title on the left to load its details here.",
-  },
-  {
-    label: "Stack",
-    title: "Tech used",
-    description: "Icons appear here once a project is selected.",
-    variant: "stack",
-    technologies: ["Next.js", "TypeScript", "Python", "React"],
+    label: "Overview",
+    title: "Project story",
+    description: "Category, summary, and details load beside the demo screen.",
   },
   {
     label: "Demo",
@@ -27,14 +20,10 @@ const idleCards: MagicBentoCard[] = [
     variant: "demo",
   },
   {
-    label: "Overview",
-    title: "Project story",
-    description: "Category, summary, and scope load beside the demo screen.",
-  },
-  {
-    label: "Browse",
-    title: "Seven builds",
-    description: "AI, vision, full-stack, games, and automation work.",
+    label: "Stack",
+    title: "What is a stack?",
+    description:
+      "The set of languages, frameworks, and tools used to build a project — frontend, backend, and everything in between.",
   },
   {
     label: "Source",
@@ -44,24 +33,12 @@ const idleCards: MagicBentoCard[] = [
 ];
 
 function projectToBentoCards(project: Project): MagicBentoCard[] {
-  const highlights = project.highlights ?? [];
-
-  // Index 2 = tall right DEMO screen in MagicBento’s grid.
+  // Same grid as idle: Overview → Demo → Stack → Source
   return [
     {
-      label: "Category",
-      title: project.category,
-      description: project.featured
-        ? "Featured project in the portfolio."
-        : "Selected from the project list.",
-    },
-    {
-      label: "Stack",
-      title: "Built with",
-      description: project.technologies.join(" · "),
-      variant: "stack",
-      technologies: project.technologies,
-      href: project.links.source,
+      label: project.category,
+      title: project.title,
+      description: project.description,
     },
     {
       label: "Demo",
@@ -72,17 +49,11 @@ function projectToBentoCards(project: Project): MagicBentoCard[] {
       href: project.links.demo,
     },
     {
-      label: "Overview",
-      title: project.title,
-      description: project.description,
-    },
-    {
-      label: "Scope",
-      title: "What it does",
-      description:
-        highlights.length > 0
-          ? highlights.join(" · ")
-          : "End-to-end product work across design, build, and delivery.",
+      label: "Stack",
+      title: "Built with",
+      description: project.technologies.join(" · "),
+      variant: "stack",
+      technologies: project.technologies,
     },
     {
       label: "Source",
@@ -104,17 +75,17 @@ export function ProjectGrid() {
   );
 
   return (
-    <AnimatedSection id="projects" className="!pt-12 sm:!pt-14 lg:!pt-16">
+    <AnimatedSection
+      id="projects"
+      className="!overflow-x-visible !pt-8 sm:!pt-10 lg:!pt-12"
+    >
       <SectionHeading {...sectionMeta.projects} />
 
-      <div className="mt-2">
-        <span className="inline-flex items-center rounded-lg bg-[var(--accent)]/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45)]">
-          Status: Ready
-        </span>
-      </div>
-
-      <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
-        <div data-stagger className="w-full shrink-0 lg:w-[14.5rem] lg:max-w-[30%]">
+      <div
+        data-animate
+        className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10 xl:gap-12"
+      >
+        <div className="w-full shrink-0 lg:sticky lg:top-28 lg:w-[22rem]">
           <LineSidebar
             items={projects.map((project) => project.title)}
             accentColor="#5dd3b6"
@@ -135,16 +106,18 @@ export function ProjectGrid() {
             defaultActive={null}
             activeIndex={activeIndex}
             persistActiveOnClick
-            onItemClick={(index) => setActiveIndex(index)}
+            onItemClick={(index) =>
+              setActiveIndex((current) => (current === index ? null : index))
+            }
             className="max-w-full"
           />
         </div>
 
-        <div className="min-w-0 flex-1 lg:sticky lg:top-28">
+        <div className="min-w-0 w-full flex-1">
           <MagicBento
             cards={cards}
-            textAutoHide
-            enableStars={false}
+            layout="idle"
+            textAutoHide={false}
             enableSpotlight
             enableBorderGlow
             enableTilt={false}

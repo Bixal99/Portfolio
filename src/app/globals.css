@@ -261,3 +261,9 @@ html.has-custom-cursor [data-about-lanyard]:active,
 html.has-custom-cursor [data-about-lanyard] *:active {
   cursor: grabbing !important;
 }
+
+/* Demo preview: use system cursor so the custom one does not freeze over iframes */
+html.has-custom-cursor [data-demo-screen],
+html.has-custom-cursor [data-demo-screen] * {
+  cursor: default !important;
+}

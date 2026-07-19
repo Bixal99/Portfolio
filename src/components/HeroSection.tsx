@@ -10,7 +10,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex min-h-dvh w-full scroll-mt-0 items-start justify-center overflow-hidden bg-black pt-28 pb-16 sm:pt-36 sm:pb-20"
+      className="relative flex min-h-[78dvh] w-full scroll-mt-0 items-start justify-center overflow-hidden bg-black pt-28 pb-20 sm:min-h-[82dvh] sm:pt-36 sm:pb-24"
     >
       <InteractiveGridBackground />
 

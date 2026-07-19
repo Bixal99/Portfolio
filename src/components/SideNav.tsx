@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import type { ComponentType } from "react";
@@ -11,6 +11,7 @@ const socialIcons: Record<string, ComponentType<LucideProps>> = {
   LinkedIn: BriefcaseBusiness,
   X,
   Instagram: Camera,
+  Facebook: BriefcaseBusiness,
 };
 
 export function SideNav() {
@@ -47,7 +48,7 @@ export function SideNav() {
       <a
         href="#home"
         aria-label={`${profile.name} home`}
-        className="grid size-12 place-items-center border border-white/25 bg-white text-sm font-black text-black shadow-[0_0_28px_rgba(255,255,255,0.12)] transition-[background-color,color,transform] duration-150 hover:bg-black hover:text-white active:scale-[0.96]"
+        className="grid size-12 place-items-center bg-white text-sm font-black text-black shadow-[0_0_0_1px_rgba(255,255,255,0.25),0_0_28px_rgba(255,255,255,0.12)] transition-[background-color,color,transform,box-shadow] duration-150 hover:bg-black hover:text-white hover:shadow-[var(--shadow-border-hover)] active:scale-[0.96]"
       >
         {profile.name
           .split(" ")
@@ -67,10 +68,10 @@ export function SideNav() {
               href={item.href}
               aria-label={item.label}
               title={item.label}
-              className={`grid size-10 place-items-center border text-[10px] font-semibold uppercase tracking-widest transition-[background-color,border-color,color,transform] duration-300 active:scale-[0.96] ${
+              className={`grid size-10 place-items-center text-[10px] font-semibold uppercase tracking-widest transition-[background-color,box-shadow,color,transform] duration-300 active:scale-[0.96] ${
                 active
-                  ? "border-white bg-white text-black"
-                  : "border-white/12 bg-white/[0.025] text-white/45 hover:border-white/55 hover:text-white"
+                  ? "bg-white text-black shadow-[0_0_0_1px_rgba(255,255,255,0.55)]"
+                  : "bg-white/[0.025] text-white/45 shadow-[var(--shadow-border)] hover:text-white hover:shadow-[var(--shadow-border-hover)]"
               }`}
             >
               <span aria-hidden="true">{item.label.slice(0, 2)}</span>
@@ -91,7 +92,7 @@ export function SideNav() {
               rel="noreferrer"
               aria-label={link.label}
               title={link.label}
-              className="grid size-10 place-items-center border border-white/12 bg-white/[0.025] text-white/55 transition-[background-color,border-color,color,transform] duration-150 hover:border-white/55 hover:bg-white hover:text-black active:scale-[0.96]"
+              className="grid size-10 place-items-center bg-white/[0.025] text-white/55 shadow-[var(--shadow-border)] transition-[background-color,box-shadow,color,transform] duration-150 hover:bg-white hover:text-black hover:shadow-[var(--shadow-border-hover)] active:scale-[0.96]"
             >
               <Icon className="size-4" aria-hidden="true" />
             </a>

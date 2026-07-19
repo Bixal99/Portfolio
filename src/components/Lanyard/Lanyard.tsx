@@ -330,6 +330,10 @@ function Band({
       Number.isFinite(v.y) &&
       Number.isFinite(v.z);
 
+    // Tab switches / hitch frames can yield huge or non-finite deltas;
+    // uncapped lerp alpha turns rope sample points into NaNs for MeshLine.
+    const frameDelta = Number.isFinite(delta) ? Math.min(delta, 1 / 30) : 1 / 60;
+
     if (dragged && card.current) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
@@ -356,10 +360,11 @@ function Band({
           0.1,
           Math.min(1, body.lerped.distanceTo(current)),
         );
-        body.lerped.lerp(
-          current,
-          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
+        const alpha = Math.min(
+          1,
+          frameDelta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
         );
+        body.lerped.lerp(current, alpha);
       });
 
       if (
@@ -392,14 +397,26 @@ function Band({
       curve.points[2].copy(j1Body.lerped!);
       curve.points[3].set(fixedT.x, fixedT.y, fixedT.z);
 
+      // Chordal CatmullRom + zero-length rope (physics not settled) yields NaNs
+      // inside MeshLineGeometry.setPoints → computeBoundingSphere warnings.
+      let curveLength = 0;
+      for (let i = 0; i < 3; i++) {
+        curveLength += curve.points[i].distanceTo(curve.points[i + 1]);
+      }
+      if (curveLength < 1e-4) return;
+
       const points = curve.getPoints(isMobile ? 16 : 32);
-      if (points.some((point) => !isFiniteVec3(point))) {
+      if (
+        points.length < 2 ||
+        points.some((point) => !isFiniteVec3(point))
+      ) {
         return;
       }
 
       const geometry = band.current.geometry as THREE.BufferGeometry & {
-        setPoints: (pts: THREE.Vector3[]) => void;
+        setPoints?: (pts: THREE.Vector3[]) => void;
       };
+      if (typeof geometry.setPoints !== "function") return;
       geometry.setPoints(points);
 
       const angVel = card.current.angvel();

@@ -32,11 +32,18 @@ export const privacyDocument: LegalDocument = {
       ],
     },
     {
-      id: "information-you-provide",
-      title: "Information you provide",
+      id: "data-you-share",
+      title: "Data you share",
       body: [
         "If you use the contact form, you may send your name, email address, subject, and message. That content is used only to understand and respond to your inquiry.",
         "If you email or call me directly using the details on this site, normal communication records may exist in those channels (email inbox, phone history) under your provider's terms.",
+      ],
+    },
+    {
+      id: "resume",
+      title: "Resume downloads",
+      body: [
+        "Downloading my CV is optional. The file is provided for evaluation and hiring conversations. Please do not redistribute it without permission.",
       ],
     },
     {
@@ -49,7 +56,7 @@ export const privacyDocument: LegalDocument = {
     },
     {
       id: "cookies",
-      title: "Cookies and local storage",
+      title: "Cookies",
       body: [
         "This site may use essential storage needed for the experience to function (for example, remembering UI preferences in your browser). It is not used to build marketing profiles.",
         "You can clear cookies and site data anytime through your browser settings.",
@@ -57,17 +64,10 @@ export const privacyDocument: LegalDocument = {
     },
     {
       id: "third-parties",
-      title: "Third-party services",
+      title: "Third parties",
       body: [
         "The site may load fonts, icons, analytics-free hosting infrastructure, or embedded project demos hosted elsewhere. Those services process requests under their own privacy policies.",
         "External project links (GitHub, live demos, LinkedIn) open third-party platforms. Their privacy practices apply once you leave this site.",
-      ],
-    },
-    {
-      id: "resume",
-      title: "Resume downloads",
-      body: [
-        "Downloading my CV is optional. The file is provided for evaluation and hiring conversations. Please do not redistribute it without permission.",
       ],
     },
     {
@@ -75,12 +75,6 @@ export const privacyDocument: LegalDocument = {
       title: "Retention",
       body: [
         "Contact messages are kept only as long as needed to reply and follow up. Technical logs retained by hosting providers follow their own retention schedules.",
-      ],
-    },
-    {
-      id: "your-choices",
-      title: "Your choices",
-      body: [
         "You can choose not to use the contact form and reach me by email instead. You can also ask me to delete a message you previously sent, and I will do so when reasonably possible.",
       ],
     },
@@ -101,30 +95,24 @@ export const termsDocument: LegalDocument = {
   updated: "July 18, 2026",
   sections: [
     {
-      id: "acceptance",
-      title: "Acceptance",
+      id: "using-this-site",
+      title: "Using this site",
       body: [
         "By using this website, you agree to these terms. If you do not agree, please do not use the site.",
-      ],
-    },
-    {
-      id: "purpose",
-      title: "Purpose of the site",
-      body: [
         "This website is a personal portfolio for presenting projects, skills, and contact information. It is provided as-is for informational and professional networking purposes.",
       ],
     },
     {
-      id: "intellectual-property",
-      title: "Intellectual property",
+      id: "ownership",
+      title: "Ownership",
       body: [
         "Unless otherwise noted, the design, writing, branding, and original project materials on this site belong to me. You may view and share links to public pages, but you may not copy, republish, or reuse substantial content without permission.",
         "Project demos and repositories may include open-source licenses. Follow those licenses when using that code.",
       ],
     },
     {
-      id: "resume",
-      title: "Resume and materials",
+      id: "materials",
+      title: "Materials",
       body: [
         "Any resume or portfolio materials you download are for evaluation related to roles, collaborations, or interviews. Do not redistribute them publicly without consent.",
       ],
@@ -141,6 +129,13 @@ export const termsDocument: LegalDocument = {
       title: "External links",
       body: [
         "Links to GitHub, demos, social profiles, and other sites are provided for convenience. I am not responsible for third-party content, availability, or policies.",
+      ],
+    },
+    {
+      id: "availability",
+      title: "Availability",
+      body: [
+        "I may update, pause, or remove pages, demos, or downloads at any time. The site may be temporarily unavailable for maintenance or hosting issues.",
       ],
     },
     {

@@ -11,7 +11,7 @@ export function SectionHeading({ kicker, title, icon: Icon }: SectionHeadingProp
   const heading = kicker.toUpperCase();
 
   return (
-    <div className="mb-12 max-w-5xl">
+    <div className="relative z-10 mb-10 max-w-5xl sm:mb-12">
       <h2
         data-pixel-title
         className="flex items-center gap-6 text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl"
