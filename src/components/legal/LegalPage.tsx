@@ -93,14 +93,15 @@ export function LegalPage({ doc }: LegalPageProps) {
       <aside
         className="fixed inset-y-0 left-0 z-40 hidden flex-col border-r border-white/10 bg-black lg:flex"
         style={{ width: SIDEBAR_W }}
-        aria-label="On this page"
+        aria-label="Page sections"
       >
         <div className="flex h-full flex-col px-7 pb-8 pt-10">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">
-            On this page
-          </p>
+          <LegalBackButton
+            onNavigate={() => navigateWithCurtain("/")}
+            className="mb-8"
+          />
 
-          <nav className="mt-8 flex flex-1 flex-col gap-1">
+          <nav className="flex flex-1 flex-col gap-1" aria-label="Sections">
             {doc.sections.map((section, index) => {
               const active = activeId === section.id;
               return (
@@ -132,17 +133,6 @@ export function LegalPage({ doc }: LegalPageProps) {
           </nav>
 
           <div className="mt-auto space-y-3 border-t border-white/10 pt-6">
-            <Link
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                navigateWithCurtain("/");
-              }}
-              className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40 transition-colors duration-150 hover:text-[var(--accent)]"
-            >
-              <ArrowLeft className="size-3" aria-hidden="true" />
-              Home
-            </Link>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               <LegalNavLink
                 href="/privacy"
@@ -163,24 +153,30 @@ export function LegalPage({ doc }: LegalPageProps) {
 
       {/* Mobile section strip */}
       <div className="sticky top-0 z-30 border-b border-white/10 bg-black/90 backdrop-blur-xl lg:hidden">
-        <div className="flex gap-2 overflow-x-auto px-5 py-3">
-          {doc.sections.map((section) => {
-            const active = activeId === section.id;
-            return (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className={cn(
-                  "inline-flex shrink-0 items-center rounded-lg px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-150",
-                  active
-                    ? "bg-white/[0.06] text-[var(--accent)]"
-                    : "text-white/45 hover:text-white/80",
-                )}
-              >
-                {section.title}
-              </a>
-            );
-          })}
+        <div className="flex items-center gap-3 px-5 py-3">
+          <LegalBackButton
+            onNavigate={() => navigateWithCurtain("/")}
+            compact
+          />
+          <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto">
+            {doc.sections.map((section) => {
+              const active = activeId === section.id;
+              return (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className={cn(
+                    "inline-flex shrink-0 items-center rounded-lg px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-150",
+                    active
+                      ? "bg-white/[0.06] text-[var(--accent)]"
+                      : "text-white/45 hover:text-white/80",
+                  )}
+                >
+                  {section.title}
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -201,35 +197,10 @@ export function LegalPage({ doc }: LegalPageProps) {
               className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(var(--accent-rgb),0.12),transparent_55%)]"
             />
             <div className="relative mx-auto max-w-3xl px-5 pb-14 pt-10 sm:px-8 sm:pb-16 sm:pt-14 lg:px-10">
-              <motion.div {...reveal} transition={{ duration: 0.4, ease: easeOut }}>
-                <Link
-                  href="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigateWithCurtain("/");
-                  }}
-                  className="group inline-flex min-h-10 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45 transition-colors duration-150 hover:text-[var(--accent)] lg:hidden"
-                >
-                  <ArrowLeft
-                    className="size-3.5 transition-transform duration-150 group-hover:-translate-x-0.5"
-                    aria-hidden="true"
-                  />
-                  Back home
-                </Link>
-              </motion.div>
-
-              <motion.p
-                {...reveal}
-                transition={{ duration: 0.4, delay: 0.05, ease: easeOut }}
-                className="mt-8 text-xs font-semibold uppercase tracking-[0.28em] text-[var(--accent)] sm:mt-10"
-              >
-                {profile.name}
-              </motion.p>
-
               <motion.div
                 {...reveal}
-                transition={{ duration: 0.45, delay: 0.1, ease: easeOut }}
-                className="mt-4 flex items-center gap-3 sm:gap-4"
+                transition={{ duration: 0.45, delay: 0.06, ease: easeOut }}
+                className="flex items-center gap-3 sm:gap-4"
               >
                 <Icon
                   className="size-8 shrink-0 text-[var(--accent)] sm:size-9"
@@ -242,7 +213,7 @@ export function LegalPage({ doc }: LegalPageProps) {
 
               <motion.p
                 {...reveal}
-                transition={{ duration: 0.4, delay: 0.16, ease: easeOut }}
+                transition={{ duration: 0.4, delay: 0.12, ease: easeOut }}
                 className="mt-5 max-w-xl text-pretty text-[1.05rem] leading-8 text-white/58"
               >
                 {doc.summary}
@@ -250,7 +221,7 @@ export function LegalPage({ doc }: LegalPageProps) {
 
               <motion.p
                 {...reveal}
-                transition={{ duration: 0.35, delay: 0.22, ease: easeOut }}
+                transition={{ duration: 0.35, delay: 0.18, ease: easeOut }}
                 className="mt-6 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/35"
               >
                 <span className="tabular-nums text-[var(--accent)]/85">
@@ -332,21 +303,59 @@ export function LegalPage({ doc }: LegalPageProps) {
                 active={doc.slug === "terms"}
                 onNavigate={navigateWithCurtain}
               />
-              <a
-                href={`mailto:${profile.email}`}
-                className="group inline-flex min-h-10 items-center gap-2 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/40 transition-colors duration-150 hover:text-[var(--accent)]"
+              <button
+                type="button"
+                onClick={() => navigateWithCurtain("/#contact")}
+                className="group inline-flex min-h-10 items-center gap-2 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/40 transition-colors duration-150 hover:text-[var(--accent)] active:scale-[0.96]"
               >
                 Contact
                 <ArrowUpRight
-                  className="size-3.5 opacity-0 transition-[opacity,transform] duration-200 group-hover:opacity-100"
+                  className="size-3.5 translate-y-0 opacity-50 transition-[opacity,transform] duration-200 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
                   aria-hidden="true"
                 />
-              </a>
+              </button>
             </nav>
           </div>
         </div>
       </div>
     </main>
+  );
+}
+
+function LegalBackButton({
+  onNavigate,
+  compact = false,
+  className,
+}: {
+  onNavigate: () => void;
+  compact?: boolean;
+  className?: string;
+}) {
+  return (
+    <Link
+      href="/"
+      onClick={(e) => {
+        e.preventDefault();
+        onNavigate();
+      }}
+      className={cn(
+        "group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-white/12 bg-white/[0.03] text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-[color,border-color,background-color,box-shadow,transform] duration-300 ease-[cubic-bezier(0.2,0,0,1)] hover:border-[rgba(var(--accent-rgb),0.45)] hover:bg-[rgba(var(--accent-rgb),0.08)] hover:text-[var(--accent)] hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.2),0_0_28px_rgba(var(--accent-rgb),0.18)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] active:scale-[0.96]",
+        compact ? "min-h-9 px-3 py-1.5" : "min-h-10 px-4 py-2",
+        className,
+      )}
+    >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(110deg,transparent_20%,rgba(var(--accent-rgb),0.18)_48%,transparent_72%)] opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-full group-hover:opacity-100"
+      />
+      <span className="relative grid size-5 place-items-center overflow-hidden">
+        <ArrowLeft
+          className="size-3.5 transition-[transform,opacity,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:-translate-x-0.5 group-hover:opacity-100"
+          aria-hidden="true"
+        />
+      </span>
+      <span className="relative">{compact ? "Home" : "Back home"}</span>
+    </Link>
   );
 }
 

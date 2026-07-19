@@ -28,6 +28,21 @@ function readBootMode(): BootMode {
   return "horizontal-drawer";
 }
 
+function scrollToHashTarget() {
+  if (typeof window === "undefined") return;
+  const hash = window.location.hash.replace(/^#/, "");
+  if (!hash) return;
+
+  window.requestAnimationFrame(() => {
+    window.setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 60);
+  });
+}
+
 export function PageLoader() {
   const [bootMode, setBootMode] = useState<BootMode>("normal");
   const [phase, setPhase] = useState<Phase>("boot");
@@ -61,7 +76,10 @@ export function PageLoader() {
 
     if (bootMode === "dom-reveal") {
       revealCurtain(() => {
-        if (!cancelled) setPhase("done");
+        if (!cancelled) {
+          setPhase("done");
+          scrollToHashTarget();
+        }
       });
       return () => {
         cancelled = true;
@@ -72,7 +90,10 @@ export function PageLoader() {
     if (bootMode === "horizontal-drawer") {
       consumeHorizontalCurtain();
       schedule(() => {
-        if (!cancelled) setPhase("done");
+        if (!cancelled) {
+          setPhase("done");
+          scrollToHashTarget();
+        }
       }, DRAWER_MS + 40);
       return () => {
         cancelled = true;
@@ -206,7 +227,7 @@ export function PageLoader() {
                   <span className="text-[0.45em] font-semibold">%</span>
                 </p>
 
-                <p className="relative mt-6 text-center text-sm font-semibold uppercase tracking-[0.32em] text-[var(--accent)] pl-[0.32em] sm:text-base">
+                <p className="relative mt-6 max-w-[90vw] text-center text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)] pl-[0.2em] sm:text-base sm:tracking-[0.32em] sm:pl-[0.32em]">
                   Loading Portfolio
                 </p>
               </div>

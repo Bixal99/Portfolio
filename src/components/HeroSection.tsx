@@ -25,7 +25,7 @@ export function HeroSection() {
       >
         <p
           data-hero-animate
-          className="whitespace-nowrap text-[clamp(1.5rem,3.5vw,2.2rem)] font-semibold uppercase tracking-[0.32em] text-[var(--accent)]"
+          className="max-w-full text-[clamp(1.15rem,4.2vw,2.2rem)] font-semibold uppercase tracking-[0.2em] text-[var(--accent)] sm:whitespace-nowrap sm:tracking-[0.32em]"
         >
           Hi, I am
         </p>
@@ -33,18 +33,18 @@ export function HeroSection() {
         <h1
           data-hero-animate
           data-hero-name
-          className="mt-5 whitespace-nowrap text-[clamp(2.45rem,9.6vw,7.15rem)] font-bold uppercase leading-none tracking-[0.05em] text-white"
+          className="mt-5 max-w-full text-[clamp(1.85rem,11vw,7.15rem)] font-bold uppercase leading-none tracking-[0.02em] text-white sm:whitespace-nowrap sm:tracking-[0.05em]"
         >
-          <span data-hero-name-word className="inline-block whitespace-nowrap">
+          <span data-hero-name-word className="inline-block max-w-full break-words sm:whitespace-nowrap">
             {profile.name}
           </span>
         </h1>
 
         <div
           data-hero-animate
-          className="mt-7 flex translate-x-6 items-center justify-center gap-3 text-[clamp(1.35rem,2.6vw,1.8rem)] sm:translate-x-11"
+          className="mt-7 flex max-w-full translate-x-0 flex-col items-center justify-center gap-2 text-[clamp(1rem,3.8vw,1.8rem)] sm:translate-x-11 sm:flex-row sm:gap-3"
         >
-          <span className="shrink-0 font-semibold uppercase tracking-[0.22em] text-white/70">
+          <span className="shrink-0 font-semibold uppercase tracking-[0.14em] text-white/70 sm:tracking-[0.22em]">
             Inspired to be
           </span>
           <TypewriterLine />
@@ -52,11 +52,11 @@ export function HeroSection() {
 
         <div
           data-hero-animate
-          className="mt-28 flex flex-col items-center gap-4 sm:mt-32 sm:flex-row sm:justify-center sm:gap-5"
+          className="mt-20 flex w-full max-w-full flex-col items-center gap-4 sm:mt-32 sm:flex-row sm:justify-center sm:gap-5"
         >
           <a
             href="#projects"
-            className="group relative inline-flex h-[52px] w-[260px] min-w-[260px] items-center gap-3.5 overflow-hidden rounded-full border-2 border-[var(--accent)] bg-[rgba(255,255,255,0.025)] py-[5px] pr-[22px] pl-[5px] text-white shadow-[0_18px_58px_rgba(var(--accent-rgb),0.16)] transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-1 hover:border-white hover:bg-[rgba(var(--accent-rgb),0.12)] hover:shadow-[0_22px_70px_rgba(var(--accent-rgb),0.32)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white active:scale-[0.96]"
+            className="group relative inline-flex h-[52px] w-full max-w-[260px] min-w-0 items-center gap-3.5 overflow-hidden rounded-full border-2 border-[var(--accent)] bg-[rgba(255,255,255,0.025)] py-[5px] pr-[22px] pl-[5px] text-white shadow-[0_18px_58px_rgba(var(--accent-rgb),0.16)] transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-1 hover:border-white hover:bg-[rgba(var(--accent-rgb),0.12)] hover:shadow-[0_22px_70px_rgba(var(--accent-rgb),0.32)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white active:scale-[0.96] sm:w-[260px] sm:min-w-[260px]"
           >
             <span
               className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 skew-x-[-20deg] bg-white/25 opacity-0 transition-[left,opacity] duration-500 group-hover:left-[120%] group-hover:opacity-100"

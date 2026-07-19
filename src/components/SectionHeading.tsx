@@ -11,24 +11,24 @@ export function SectionHeading({ kicker, title, icon: Icon }: SectionHeadingProp
   const heading = kicker.toUpperCase();
 
   return (
-    <div className="relative z-10 mb-10 max-w-5xl sm:mb-12">
+    <div className="relative z-10 mb-8 max-w-5xl sm:mb-12">
       <h2
         data-pixel-title
-        className="flex items-center gap-6 text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl"
+        className="flex min-w-0 max-w-full items-center gap-3 text-balance text-[clamp(1.55rem,7.5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:gap-5 sm:text-6xl lg:gap-6 lg:text-7xl"
         aria-label={heading}
         title={title}
       >
-        <span className="flex shrink-0 items-center gap-5" aria-hidden="true">
+        <span className="flex shrink-0 items-center gap-2.5 sm:gap-5" aria-hidden="true">
           <span
             data-pixel-item
-            className="h-1 w-16 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
+            className="h-1 w-8 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)] sm:w-16"
           />
           <Icon
             data-pixel-item
-            className="size-12 shrink-0 text-[var(--accent)] sm:size-14 lg:size-16"
+            className="size-8 shrink-0 text-[var(--accent)] sm:size-14 lg:size-16"
           />
         </span>
-        <span className="inline-flex whitespace-nowrap" aria-hidden="true">
+        <span className="inline-flex min-w-0 max-w-full sm:whitespace-nowrap" aria-hidden="true">
           {heading.split("").map((char, index) => {
             const isAccent = heading.startsWith("MY ") && index < 2;
 

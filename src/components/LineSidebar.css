@@ -98,3 +98,22 @@
   transform-origin: left center;
   transform: translateY(-50%) scaleX(calc(0.7 + var(--effect, 0) * 0.6));
 }
+
+@media (max-width: 639px) {
+  .line-sidebar {
+    --marker-length: 28px;
+    --max-shift: 8px;
+    --font-size: 0.95rem;
+    --item-gap: 14px;
+  }
+
+  .line-sidebar__item::before {
+    inset: -4px -8px;
+  }
+
+  .line-sidebar__label,
+  .line-sidebar__text {
+    max-width: 100%;
+    white-space: normal;
+  }
+}

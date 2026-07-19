@@ -7,7 +7,7 @@ const Lanyard = dynamic(() => import("@/components/Lanyard/Lanyard"), {
   ssr: false,
   loading: () => (
     <div
-      className="flex h-full min-h-[420px] w-full items-center justify-center"
+      className="flex h-full min-h-[280px] w-full items-center justify-center sm:min-h-[420px]"
       aria-hidden="true"
     >
       <div className="size-40 rounded-full bg-[rgba(var(--accent-rgb),0.12)] blur-2xl" />
@@ -54,7 +54,7 @@ export function AboutLanyard() {
           className="pointer-events-none absolute inset-0 z-10 rounded-2xl shadow-[inset_0_0_40px_rgba(var(--accent-rgb),0.08),inset_0_0_0_1px_rgba(var(--accent-rgb),0.18)]"
           aria-hidden="true"
         />
-        <div className="relative h-[min(70vh,560px)] w-full md:h-[min(72vh,620px)]">
+        <div className="relative h-[min(55vh,420px)] w-full md:h-[min(72vh,620px)]">
           {inSection ? (
             <Lanyard
               position={[0, 0, 13]}

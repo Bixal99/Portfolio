@@ -177,7 +177,7 @@ export function Footer() {
     <footer
       ref={footerRef}
       id="contact"
-      className="relative overflow-hidden border-t border-white/10 bg-black pt-28 pb-24 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.18),0_-36px_120px_rgba(0,0,0,0.78)] sm:pt-32 sm:pb-28 lg:pt-36 lg:pb-28"
+      className="relative mt-10 overflow-hidden border-t border-white/10 bg-black pt-16 pb-16 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.18),0_-36px_120px_rgba(0,0,0,0.78)] sm:mt-16 sm:pt-32 sm:pb-28 lg:mt-20 lg:pt-36 lg:pb-28"
     >
       <div
         aria-hidden="true"
@@ -214,92 +214,92 @@ export function Footer() {
               className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--accent-rgb),0.065),transparent_34%,rgba(255,255,255,0.035)_68%,transparent)] opacity-80"
             />
             <div className="relative flex h-full flex-col">
-            <div data-footer-micro className="mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-[var(--accent)]">
-              <span
-                className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
-                aria-hidden="true"
-              />
-              Contact
-            </div>
-            <h2 data-footer-micro className="text-4xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl">
-              Let us turn an idea into a working system.
-            </h2>
-            <p data-footer-micro className="mt-5 max-w-xl text-pretty text-base leading-8 text-white/58">
-              Send a project note, internship opportunity, or collaboration
-              idea. I usually respond with the next practical step.
-            </p>
-
-            <div className="mt-8 grid gap-4 text-sm text-white/62">
-              <motion.a
-                data-footer-micro
-                href={`mailto:${profile.email}`}
-                whileHover={{ x: 6 }}
-                transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="inline-flex min-w-0 items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
-              >
-                <Mail className="size-4 shrink-0" aria-hidden="true" />
-                <span className="truncate">{profile.email}</span>
-              </motion.a>
-              {profile.phones.map((phone, index) => (
-                <motion.a
-                  key={phone}
-                  data-footer-micro
-                  href={`tel:${phone.replace(/\s+/g, "")}`}
-                  whileHover={{ x: 6 }}
-                  transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                  className="inline-flex items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
-                >
-                  <span className="relative inline-flex shrink-0">
-                    <Phone className="size-4" aria-hidden="true" />
-                    <span
-                      className="absolute -right-1.5 -top-1.5 flex size-3 items-center justify-center rounded-full bg-[var(--accent)] text-[0.55rem] font-bold leading-none text-black"
-                      aria-hidden="true"
-                    >
-                      {index + 1}
-                    </span>
-                  </span>
-                  <span>{phone}</span>
-                </motion.a>
-              ))}
-              <motion.span
-                data-footer-micro
-                whileHover={{ x: 6, color: "rgba(255,255,255,0.86)" }}
-                transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                className="inline-flex items-center gap-3"
-              >
-                <MapPin
-                  className="size-4 shrink-0 text-[var(--accent)]"
+              <div data-footer-micro className="mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-[var(--accent)]">
+                <span
+                  className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
                   aria-hidden="true"
                 />
-                {profile.location}
-              </motion.span>
-            </div>
+                Contact
+              </div>
+              <h2 data-footer-micro className="text-[clamp(1.75rem,7vw,3rem)] font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl">
+                Let us turn an idea into a working system.
+              </h2>
+              <p data-footer-micro className="mt-5 max-w-xl text-pretty text-base leading-8 text-white/58">
+                Send a project note, internship opportunity, or collaboration
+                idea. I usually respond with the next practical step.
+              </p>
 
-            <div data-footer-micro className="mt-auto flex flex-wrap items-center gap-5 pt-8">
-              {socialLinks.map((link) => (
-                <div key={link.label} className="group relative">
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={link.label}
-                    onMouseLeave={(e) => e.currentTarget.blur()}
-                    className="inline-flex text-white/70 transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-white/70 focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)]"
+              <div className="mt-8 grid gap-4 text-sm text-white/62">
+                <motion.a
+                  data-footer-micro
+                  href={`mailto:${profile.email}`}
+                  whileHover={{ x: 6 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                  className="inline-flex min-w-0 items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
+                >
+                  <Mail className="size-4 shrink-0" aria-hidden="true" />
+                  <span className="truncate">{profile.email}</span>
+                </motion.a>
+                {profile.phones.map((phone, index) => (
+                  <motion.a
+                    key={phone}
+                    data-footer-micro
+                    href={`tel:${phone.replace(/\s+/g, "")}`}
+                    whileHover={{ x: 6 }}
+                    transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                    className="inline-flex items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
                   >
-                    <SocialIcon label={link.label} />
-                  </a>
-                  <span
-                    className="pointer-events-none absolute -top-12 left-1/2 z-20 origin-bottom -translate-x-1/2 scale-0 whitespace-nowrap rounded-lg border border-white/15 bg-black px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-white shadow-[0_10px_30px_rgba(0,0,0,0.55),0_0_0_1px_rgba(var(--accent-rgb),0.2)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-100"
-                  >
-                    {link.label}
+                    <span className="relative inline-flex shrink-0">
+                      <Phone className="size-4" aria-hidden="true" />
+                      <span
+                        className="absolute -right-1.5 -top-1.5 flex size-3 items-center justify-center rounded-full bg-[var(--accent)] text-[0.55rem] font-bold leading-none text-black"
+                        aria-hidden="true"
+                      >
+                        {index + 1}
+                      </span>
+                    </span>
+                    <span>{phone}</span>
+                  </motion.a>
+                ))}
+                <motion.span
+                  data-footer-micro
+                  whileHover={{ x: 6, color: "rgba(255,255,255,0.86)" }}
+                  transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                  className="inline-flex items-center gap-3"
+                >
+                  <MapPin
+                    className="size-4 shrink-0 text-[var(--accent)]"
+                    aria-hidden="true"
+                  />
+                  {profile.location}
+                </motion.span>
+              </div>
+
+              <div data-footer-micro className="mt-auto flex flex-wrap items-center gap-5 pt-8">
+                {socialLinks.map((link) => (
+                  <div key={link.label} className="group relative">
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={link.label}
+                      onMouseLeave={(e) => e.currentTarget.blur()}
+                      className="inline-flex text-white/70 transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-white/70 focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)]"
+                    >
+                      <SocialIcon label={link.label} />
+                    </a>
                     <span
-                      aria-hidden="true"
-                      className="absolute left-1/2 top-full size-2 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-white/15 bg-black"
-                    />
-                  </span>
-                </div>
-              ))}
-            </div>
+                      className="pointer-events-none absolute -top-12 left-1/2 z-20 origin-bottom -translate-x-1/2 scale-0 whitespace-nowrap rounded-lg border border-white/15 bg-black px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-white shadow-[0_10px_30px_rgba(0,0,0,0.55),0_0_0_1px_rgba(var(--accent-rgb),0.2)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-100"
+                    >
+                      {link.label}
+                      <span
+                        aria-hidden="true"
+                        className="absolute left-1/2 top-full size-2 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-white/15 bg-black"
+                      />
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -342,7 +342,7 @@ export function Footer() {
               {[
                 { label: "Privacy Policy", href: "/privacy" },
                 { label: "Terms of Use", href: "/terms" },
-                { label: "Contact", href: `mailto:${profile.email}` },
+                { label: "Contact", href: "/#contact" },
               ].map((item, index) => (
                 <span key={item.href} className="inline-flex items-center">
                   {index > 0 ? (
@@ -354,7 +354,22 @@ export function Footer() {
                   <a
                     href={item.href}
                     onClick={(e) => {
-                      if (item.href.startsWith("mailto:")) return;
+                      if (item.href === "/#contact") {
+                        e.preventDefault();
+                        const contact = document.getElementById("contact");
+                        if (contact) {
+                          contact.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                          });
+                          return;
+                        }
+                        navigateWithLegalCurtain(
+                          router.push.bind(router),
+                          "/#contact",
+                        );
+                        return;
+                      }
                       e.preventDefault();
                       navigateWithLegalCurtain(router.push.bind(router), item.href);
                     }}

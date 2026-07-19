@@ -58,27 +58,27 @@ export function JourneyTimeline() {
   return (
     <AnimatedSection
       id="journey"
-      className="!pb-8 !pt-16 sm:!pb-10 sm:!pt-20 lg:!pb-12 lg:!pt-24"
+      className="!pb-28 !pt-16 sm:!pb-32 sm:!pt-20 lg:!pb-40 lg:!pt-24"
     >
       <header className="mb-6 max-w-5xl md:mb-8">
         <h2
           data-pixel-title
-          className="flex items-center gap-4 text-balance text-5xl font-extrabold leading-[0.92] text-white sm:text-6xl lg:text-7xl"
+          className="flex min-w-0 max-w-full items-center gap-2.5 text-balance text-[clamp(1.55rem,7.5vw,4.5rem)] font-extrabold leading-[0.92] text-white sm:gap-4 sm:text-6xl lg:text-7xl"
           aria-label={sectionMeta.journey.kicker}
           title={sectionMeta.journey.title}
         >
-          <span className="flex shrink-0 items-center gap-4" aria-hidden="true">
+          <span className="flex shrink-0 items-center gap-2.5 sm:gap-4" aria-hidden="true">
             <span
               data-pixel-item
-              className="h-1 w-16 rounded-full bg-[var(--accent)] shadow-[0_0_22px_rgba(var(--accent-rgb),0.72)]"
+              className="h-1 w-8 rounded-full bg-[var(--accent)] shadow-[0_0_22px_rgba(var(--accent-rgb),0.72)] sm:w-16"
             />
             <HeadingIcon
               data-pixel-item
-              className="size-12 text-[var(--accent)] drop-shadow-[0_0_16px_rgba(var(--accent-rgb),0.62)] sm:size-14 lg:size-16"
+              className="size-8 text-[var(--accent)] drop-shadow-[0_0_16px_rgba(var(--accent-rgb),0.62)] sm:size-14 lg:size-16"
             />
           </span>
           <span
-            className="inline-flex flex-wrap items-baseline gap-x-3"
+            className="inline-flex min-w-0 flex-wrap items-baseline gap-x-2 sm:gap-x-3"
             aria-hidden="true"
           >
             {sectionMeta.journey.kicker.split(" ").map((word, wordIndex) => (

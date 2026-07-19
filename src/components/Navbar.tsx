@@ -97,8 +97,8 @@ export function Navbar() {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${compact ? "border-b border-white/10 bg-black/70 backdrop-blur-xl" : "bg-transparent"}`}>
-      <div className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
-        <a href="#home" className="max-w-[220px] text-sm font-bold uppercase tracking-[0.32em] text-white lg:max-w-none lg:-translate-x-4">
+      <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-5 sm:h-20 sm:gap-4 sm:px-8 lg:px-12">
+        <a href="#home" className="min-w-0 max-w-[46%] truncate text-xs font-bold uppercase tracking-[0.16em] text-white sm:max-w-[220px] sm:text-sm sm:tracking-[0.32em] lg:max-w-none lg:-translate-x-4">
           {profile.name}
         </a>
 
@@ -118,9 +118,8 @@ export function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className={`relative z-10 rounded-full px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-300 ${
-                  active ? "text-black" : "text-white/48 hover:text-white"
-                }`}
+                className={`relative z-10 rounded-full px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-300 ${active ? "text-black" : "text-white/48 hover:text-white"
+                  }`}
               >
                 {item.label}
               </a>
@@ -128,8 +127,8 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-4 lg:ml-0 lg:gap-5 lg:translate-x-2">
-          <div className="flex items-center gap-4">
+        <div className="ml-auto flex shrink-0 items-center gap-2.5 sm:gap-4 lg:ml-0 lg:gap-5 lg:translate-x-2">
+          <div className="flex items-center gap-2.5 sm:gap-4">
             {navbarSocial.map((link) => (
               <a
                 key={link.label}
@@ -137,14 +136,14 @@ export function Navbar() {
                 target="_blank"
                 rel="noreferrer"
                 onMouseLeave={(e) => e.currentTarget.blur()}
-                className="group inline-flex flex-col items-center gap-1 text-white/70 transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-white/70 focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)]"
+                className="group inline-flex flex-col items-center gap-0.5 text-white/70 transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-white/70 focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] sm:gap-1"
               >
                 {link.label === "GitHub" ? (
-                  <GitHubIcon className="size-6" />
+                  <GitHubIcon className="size-5 sm:size-6" />
                 ) : (
-                  <LinkedInIcon className="size-6" />
+                  <LinkedInIcon className="size-5 sm:size-6" />
                 )}
-                <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/45 transition-colors duration-200 group-hover:text-[var(--accent)]">
+                <span className="hidden text-[9px] font-semibold uppercase tracking-[0.14em] text-white/45 transition-colors duration-200 group-hover:text-[var(--accent)] sm:inline">
                   {link.label}
                 </span>
               </a>
@@ -161,15 +160,13 @@ export function Navbar() {
           >
             <span className="relative size-5">
               <Menu
-                className={`absolute inset-0 size-5 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
-                  open ? "scale-[0.25] opacity-0 blur-[4px]" : "scale-100 opacity-100 blur-0"
-                }`}
+                className={`absolute inset-0 size-5 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${open ? "scale-[0.25] opacity-0 blur-[4px]" : "scale-100 opacity-100 blur-0"
+                  }`}
                 aria-hidden="true"
               />
               <X
-                className={`absolute inset-0 size-5 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
-                  open ? "scale-100 opacity-100 blur-0" : "scale-[0.25] opacity-0 blur-[4px]"
-                }`}
+                className={`absolute inset-0 size-5 transition-[opacity,transform,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${open ? "scale-100 opacity-100 blur-0" : "scale-[0.25] opacity-0 blur-[4px]"
+                  }`}
                 aria-hidden="true"
               />
             </span>
@@ -187,11 +184,10 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] ${
-                    active
+                  className={`px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] ${active
                       ? "bg-[var(--accent)] text-black shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.55)]"
                       : "text-white/70 shadow-[var(--shadow-border)] hover:bg-white/10 hover:text-white hover:shadow-[var(--shadow-border-hover)]"
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </a>

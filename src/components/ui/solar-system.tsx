@@ -62,7 +62,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
       <div
         ref={ref}
         className={cn(
-          "solar-system-root relative mx-auto flex h-[480px] w-full max-w-full select-none items-start justify-center overflow-hidden perspective-[1200px] pt-2 sm:h-[560px] sm:pt-4 md:h-[680px] md:max-w-[1200px] lg:h-[760px]",
+          "solar-system-root relative mx-auto flex h-[400px] w-full max-w-full select-none items-start justify-center overflow-hidden perspective-[1200px] pt-2 sm:h-[560px] sm:pt-4 md:h-[680px] md:max-w-[1200px] lg:h-[760px]",
           className,
         )}
         {...props}
@@ -88,10 +88,19 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
 
           @media (max-width: 480px) {
             .solar-system-root {
-              --radius-inner: 135px;
-              --radius-mid: 205px;
-              --radius-outer: 265px;
-              --radius-far: 305px;
+              --radius-inner: 110px;
+              --radius-mid: 165px;
+              --radius-outer: 210px;
+              --radius-far: 240px;
+            }
+          }
+
+          @media (max-width: 380px) {
+            .solar-system-root {
+              --radius-inner: 95px;
+              --radius-mid: 140px;
+              --radius-outer: 180px;
+              --radius-far: 205px;
             }
           }
 
@@ -217,7 +226,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
         />
 
         <div
-          className="absolute left-1/2 top-[42%] flex h-[640px] w-[640px] items-center justify-center sm:h-[780px] sm:w-[780px] md:top-[46%] md:h-[1200px] md:w-[1200px]"
+          className="absolute left-1/2 top-[42%] flex h-[min(100vw,420px)] w-[min(100vw,420px)] items-center justify-center sm:h-[780px] sm:w-[780px] md:top-[46%] md:h-[1200px] md:w-[1200px]"
           style={{
             transform:
               "translate(-50%, -50%) rotateX(58deg) rotateY(-8deg) translateY(-2%)",

@@ -12,7 +12,7 @@ export function AnimatedSection({
   return (
     <section
       id={id}
-      className={`relative isolate scroll-mt-24 overflow-x-clip py-28 sm:py-32 lg:py-36 ${className}`}
+      className={`relative isolate scroll-mt-24 overflow-x-clip py-12 sm:py-32 lg:py-36 ${className}`}
     >
       {children}
     </section>

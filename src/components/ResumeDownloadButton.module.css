@@ -341,8 +341,9 @@
   .button,
   .done,
   .open {
-    width: 255px;
-    min-width: 255px;
+    width: min(260px, 100%);
+    min-width: 0;
+    max-width: 100%;
   }
 
   .title {

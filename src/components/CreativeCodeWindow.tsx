@@ -238,7 +238,10 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) {
       window.requestAnimationFrame(() => setTypedChars(fullText.length));
-      return;
+      const timeoutId = window.setTimeout(() => {
+        setActiveFile((index) => (index + 1) % files.length);
+      }, LOOP_DELAY_MS);
+      return () => window.clearTimeout(timeoutId);
     }
 
     let nextChar = 0;
@@ -256,9 +259,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
       if (nextChar >= fullText.length) {
         timeoutId = window.setTimeout(() => {
           if (cancelled) return;
-          nextChar = 0;
-          setTypedChars(0);
-          timeoutId = window.setTimeout(typeNextChar, TYPE_DELAY_MS);
+          setActiveFile((index) => (index + 1) % files.length);
         }, LOOP_DELAY_MS);
         return;
       }
@@ -286,13 +287,17 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
       className="w-full overflow-hidden rounded-3xl bg-white/[0.045] shadow-[var(--shadow-border),0_40px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl"
       style={codeFontStyle}
     >
-      <div className="flex flex-col gap-4 border-b border-white/10 bg-white/[0.035] px-4 py-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-3 border-b border-white/10 bg-white/[0.035] px-3 py-3 sm:gap-4 sm:px-4 sm:py-4 sm:flex-row sm:items-center">
         <div className="flex shrink-0 gap-2">
           <span className="size-3 rounded-full bg-[#ff5f57]" />
           <span className="size-3 rounded-full bg-[#ffbd2e]" />
           <span className="size-3 rounded-full bg-[#28c840]" />
         </div>
-        <div className="flex min-w-0 flex-1 items-center justify-between gap-3 overflow-hidden" role="tablist" aria-label="Code files">
+        <div
+          className="grid min-w-0 flex-1 grid-cols-2 gap-1 sm:grid-cols-4 lg:grid-cols-8 lg:gap-1.5"
+          role="tablist"
+          aria-label="Code files"
+        >
           {files.map((file, index) => {
             const selected = index === activeFile;
 
@@ -300,6 +305,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
               <button
                 key={file.name}
                 type="button"
+                data-code-tab={index}
                 suppressHydrationWarning
                 role="tab"
                 aria-selected={selected}
@@ -308,14 +314,13 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
                   setTypedChars(0);
                   setActiveFile(index);
                 }}
-                className={`inline-flex shrink-0 items-center gap-2 rounded-lg py-2 pl-2.5 pr-3 text-xs font-bold transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] ${
-                  selected
+                className={`inline-flex min-w-0 w-full items-center justify-center gap-1 rounded-lg px-1.5 py-1.5 text-[9px] font-bold transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] sm:gap-1.5 sm:px-2 sm:py-2 sm:text-[10px] lg:text-[11px] ${selected
                     ? "bg-white/12 text-white shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_32px_rgba(var(--accent-rgb),0.18)]"
                     : "bg-transparent text-white/42 shadow-[0_0_0_1px_transparent] hover:bg-white/[0.055] hover:shadow-[var(--shadow-border)]"
-                } ${file.accent}`}
+                  } ${file.accent}`}
               >
-                <FileCode2 className="size-3.5" aria-hidden="true" />
-                <span>{file.name}</span>
+                <FileCode2 className="size-3 shrink-0 sm:size-3.5" aria-hidden="true" />
+                <span className="truncate">{file.name}</span>
               </button>
             );
           })}

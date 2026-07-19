@@ -96,7 +96,7 @@ export function Timeline({ data, className }: TimelineProps) {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 70%", "end 50%"],
+    offset: ["start 70%", "end 80%"],
   });
 
   // Transform-only motion (scaleY + translateY) — avoids layout thrash from animating height
@@ -129,7 +129,7 @@ export function Timeline({ data, className }: TimelineProps) {
       ref={containerRef}
       className={cn("w-full bg-transparent font-sans md:px-10", className)}
     >
-      <div ref={ref} className="relative mx-auto max-w-7xl overflow-hidden pb-8 md:pb-12">
+      <div ref={ref} className="relative mx-auto max-w-7xl overflow-visible pb-20 md:pb-28">
         {/* Rail centered on left-8 = center of left-3 + h-10 node */}
         <div
           aria-hidden="true"
@@ -190,10 +190,10 @@ export function Timeline({ data, className }: TimelineProps) {
                 </h3>
               </div>
 
-              <div className="relative w-full min-w-0 pl-20 pr-4 md:pl-4">
+              <div className="relative w-full min-w-0 pl-14 pr-2 sm:pl-20 sm:pr-4 md:pl-4">
                 <h3
                   className={cn(
-                    "mb-4 block text-left text-2xl font-bold tabular-nums transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden",
+                    "mb-4 block text-left text-xl font-bold tabular-nums transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-2xl md:hidden",
                     isVisible
                       ? "translate-y-0 opacity-100"
                       : "translate-y-8 opacity-0",

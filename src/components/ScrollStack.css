@@ -13,6 +13,9 @@
 }
 
 .scroll-stack-card {
+  --card-face: #1a1c1e;
+  --card-face-deep: #0e1012;
+  --card-rim: rgba(255, 255, 255, 0.1);
   transform-origin: top center;
   will-change: transform, filter;
   backface-visibility: hidden;
@@ -25,70 +28,84 @@
   height: auto;
   margin-left: 0;
   margin-right: 0;
-  padding: 3rem 2.75rem;
+  padding: 2.5rem 2.25rem;
   border-radius: 2.25rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: center;
-  text-align: left;
-  color: #0a0a0a;
+  overflow: hidden;
+  color: #f4f7f6;
   font-family: var(--font-poppins), Poppins, ui-sans-serif, system-ui, sans-serif;
   isolation: isolate;
   background:
-    linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.34) 0%,
-      rgba(255, 255, 255, 0.08) 26%,
-      transparent 50%
+    radial-gradient(
+      90% 70% at 92% 18%,
+      rgba(var(--accent-rgb), 0.18) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      70% 55% at 8% 88%,
+      rgba(var(--accent-rgb), 0.07) 0%,
+      transparent 60%
     ),
     linear-gradient(
-      205deg,
-      transparent 35%,
-      rgba(0, 0, 0, 0.2) 100%
+      155deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 34%
     ),
-    var(--accent);
+    linear-gradient(
+      180deg,
+      var(--card-face) 0%,
+      var(--card-face-deep) 100%
+    );
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.42),
-    0 8px 16px rgba(0, 0, 0, 0.22),
-    0 22px 44px rgba(0, 0, 0, 0.38),
-    0 44px 88px rgba(0, 0, 0, 0.45),
-    0 72px 140px rgba(0, 0, 0, 0.32),
-    0 0 0 1px rgba(0, 0, 0, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -22px 48px rgba(0, 0, 0, 0.16),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 3px 6px rgba(0, 0, 0, 0.4),
+    0 14px 28px rgba(0, 0, 0, 0.5),
+    0 36px 72px rgba(0, 0, 0, 0.58),
+    0 72px 140px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -40px 70px rgba(0, 0, 0, 0.45);
   transition:
     box-shadow 0.35s cubic-bezier(0.2, 0, 0, 1),
     filter 0.35s cubic-bezier(0.2, 0, 0, 1);
 }
 
+/* Fine grid texture for technical depth */
 .scroll-stack-card::before {
   content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.08),
-    0 18px 40px rgba(0, 0, 0, 0.18);
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 70% at 70% 40%, black 20%, transparent 75%);
   z-index: 0;
 }
 
+/* Specular edge + bottom depth veil */
 .scroll-stack-card::after {
   content: "";
   pointer-events: none;
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(
-    125deg,
-    rgba(255, 255, 255, 0.22) 0%,
-    transparent 32%,
-    transparent 62%,
-    rgba(0, 0, 0, 0.12) 100%
-  );
-  opacity: 1;
+  background:
+    linear-gradient(
+      125deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 26%,
+      transparent 68%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
   z-index: 0;
 }
 
@@ -99,46 +116,201 @@
 
 .scroll-stack-card.is-hovered {
   z-index: 40 !important;
-  filter: brightness(1.05);
+  filter: brightness(1.06);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.48),
-    0 12px 24px rgba(0, 0, 0, 0.28),
-    0 28px 56px rgba(0, 0, 0, 0.42),
-    0 56px 110px rgba(0, 0, 0, 0.5),
-    0 88px 160px rgba(0, 0, 0, 0.36),
-    0 0 0 1px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    inset 0 -22px 48px rgba(0, 0, 0, 0.18),
-    0 0 56px rgba(var(--accent-rgb), 0.45);
+    0 1px 0 rgba(255, 255, 255, 0.16),
+    0 0 0 1px rgba(var(--accent-rgb), 0.35),
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    0 18px 36px rgba(0, 0, 0, 0.55),
+    0 44px 88px rgba(0, 0, 0, 0.6),
+    0 80px 150px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -40px 70px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(var(--accent-rgb), 0.2);
+}
+
+.scroll-stack-card-watermark {
+  pointer-events: none;
+  position: absolute;
+  right: -0.15em;
+  bottom: -0.28em;
+  z-index: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: clamp(7rem, 18vw, 12.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+  color: transparent;
+  background: linear-gradient(
+    160deg,
+    rgba(var(--accent-rgb), 0.18) 0%,
+    rgba(255, 255, 255, 0.04) 55%,
+    transparent 85%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+}
+
+.scroll-stack-card-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem 2rem;
+  width: 100%;
+}
+
+.scroll-stack-card-copy {
+  min-width: 0;
+  max-width: 38rem;
+}
+
+.scroll-stack-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+  margin-bottom: 1.15rem;
 }
 
 .scroll-stack-card-index {
-  margin: 0 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.6rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   font-variant-numeric: tabular-nums;
-  color: #0a0a0a;
+  color: #04120f;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), 0.55),
+    0 0 28px rgba(var(--accent-rgb), 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.scroll-stack-card-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(var(--accent-rgb), 0.9);
 }
 
 .scroll-stack-card h2 {
   margin: 0;
-  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.45rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  color: #0a0a0a;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  color: #f7faf9;
   text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.scroll-stack-card h2::after {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 3px;
+  margin-top: 1rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    rgba(var(--accent-rgb), 0.15) 100%
+  );
+  box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.55);
 }
 
 .scroll-stack-card p {
-  margin: 0.85rem 0 0;
-  max-width: 48rem;
-  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  margin: 1rem 0 0;
+  max-width: 36rem;
+  font-size: clamp(1.02rem, 1.6vw, 1.2rem);
   line-height: 1.65;
-  color: rgba(10, 10, 10, 0.72);
+  color: rgba(232, 240, 237, 0.68);
   text-wrap: pretty;
+}
+
+.scroll-stack-card-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(5.5rem, 12vw, 8rem);
+  height: clamp(5.5rem, 12vw, 8rem);
+  flex-shrink: 0;
+}
+
+.scroll-stack-card-icon-glow {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(var(--accent-rgb), 0.45) 0%,
+    rgba(var(--accent-rgb), 0.12) 42%,
+    transparent 72%
+  );
+  filter: blur(10px);
+  opacity: 0.9;
+  transition: opacity 0.35s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.scroll-stack-card-icon-ring {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 72%;
+  height: 72%;
+  border-radius: 1.35rem;
+  color: var(--accent);
+  background:
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.02) 40%,
+      rgba(0, 0, 0, 0.25) 100%
+    ),
+    rgba(8, 12, 11, 0.85);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), 0.35),
+    0 0 0 6px rgba(var(--accent-rgb), 0.08),
+    0 18px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 0.35s cubic-bezier(0.2, 0, 0, 1),
+    color 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.scroll-stack-card-icon-svg {
+  width: 48%;
+  height: 48%;
+}
+
+.scroll-stack-card.is-hovered .scroll-stack-card-icon-glow {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.scroll-stack-card.is-hovered .scroll-stack-card-icon-ring {
+  transform: scale(1.04);
+  color: #ecfffa;
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), 0.55),
+    0 0 0 8px rgba(var(--accent-rgb), 0.12),
+    0 22px 48px rgba(0, 0, 0, 0.5),
+    0 0 42px rgba(var(--accent-rgb), 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-stack-end {
@@ -150,32 +322,152 @@
 @media (min-width: 640px) {
   .scroll-stack-card {
     min-height: 24rem;
-    padding: 3.75rem 3.5rem;
+    padding: 3.25rem 3.25rem;
     border-radius: 2.75rem;
+  }
+
+  .scroll-stack-card-layout {
+    gap: 2rem 3rem;
   }
 }
 
 @media (min-width: 1024px) {
   .scroll-stack-card {
     min-height: 26rem;
-    padding: 4rem 4rem;
+    padding: 3.75rem 4rem;
+  }
+
+  .scroll-stack-card-copy {
+    max-width: 42rem;
   }
 }
 
 @media (max-width: 639px) {
   .scroll-stack-inner {
-    padding: 1rem 0 16vh;
+    padding: 0.75rem 0 12vh;
   }
 
   .scroll-stack-card {
-    min-height: 16rem;
-    padding: 2rem 1.5rem;
-    border-radius: 1.75rem;
+    min-height: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 1.25rem 1.1rem 1.35rem;
+    border-radius: 1.35rem;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 8px 18px rgba(0, 0, 0, 0.45),
+      0 24px 48px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -24px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  .scroll-stack-card-layout {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.75rem 0.85rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .scroll-stack-card-copy {
+    max-width: none;
+  }
+
+  .scroll-stack-card-meta {
+    gap: 0.45rem 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .scroll-stack-card-index {
+    min-width: 2.2rem;
+    padding: 0.28rem 0.55rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .scroll-stack-card-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+
+  .scroll-stack-card h2 {
+    font-size: clamp(1.2rem, 5.6vw, 1.55rem);
+    letter-spacing: -0.03em;
+    line-height: 1.18;
+  }
+
+  .scroll-stack-card h2::after {
+    width: 2.1rem;
+    height: 2px;
+    margin-top: 0.7rem;
+  }
+
+  .scroll-stack-card p {
+    margin-top: 0.7rem;
+    max-width: none;
+    font-size: clamp(0.92rem, 3.8vw, 1.02rem);
+    line-height: 1.55;
+  }
+
+  .scroll-stack-card-icon {
+    width: 3.35rem;
+    height: 3.35rem;
+    margin-top: 0.1rem;
+  }
+
+  .scroll-stack-card-icon-ring {
+    width: 78%;
+    height: 78%;
+    border-radius: 0.85rem;
+    box-shadow:
+      0 0 0 1px rgba(var(--accent-rgb), 0.35),
+      0 0 0 4px rgba(var(--accent-rgb), 0.08),
+      0 10px 22px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+
+  .scroll-stack-card-icon-glow {
+    filter: blur(6px);
+  }
+
+  .scroll-stack-card-watermark {
+    right: 0;
+    bottom: -0.12em;
+    font-size: clamp(3.75rem, 28vw, 5.25rem);
+    opacity: 0.7;
+  }
+
+  .scroll-stack-end {
+    height: 24vh;
+  }
+}
+
+@media (max-width: 380px) {
+  .scroll-stack-card {
+    padding: 1.1rem 0.95rem 1.2rem;
+    border-radius: 1.2rem;
+  }
+
+  .scroll-stack-card-layout {
+    gap: 0.65rem 0.7rem;
+  }
+
+  .scroll-stack-card-icon {
+    width: 2.95rem;
+    height: 2.95rem;
+  }
+
+  .scroll-stack-card-tag {
+    letter-spacing: 0.12em;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-stack-card {
+  .scroll-stack-card,
+  .scroll-stack-card-icon-glow,
+  .scroll-stack-card-icon-ring {
     will-change: auto;
+    transition: none;
   }
 }

@@ -10,26 +10,26 @@ export function AboutSection() {
       className="relative grid scroll-mt-24 items-center pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-14"
     >
       <div className="grid gap-12 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-center md:gap-8 lg:gap-10">
-        <div data-about-panel className="relative z-20 max-w-3xl">
+        <div data-about-panel className="relative z-20 min-w-0 max-w-3xl">
           <h2
             data-pixel-title
-            className="flex items-center gap-6 text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl"
+            className="flex min-w-0 max-w-full items-center gap-3 text-balance text-[clamp(1.55rem,7.5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:gap-5 sm:text-6xl lg:gap-6 lg:text-7xl"
           >
             <span
-              className="flex shrink-0 items-center gap-5"
+              className="flex shrink-0 items-center gap-2.5 sm:gap-5"
               aria-hidden="true"
             >
               <span
                 data-pixel-item
-                className="h-1 w-16 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
+                className="h-1 w-8 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)] sm:w-16"
               />
               <BrainCircuit
                 data-pixel-item
-                className="size-12 shrink-0 text-[var(--accent)] sm:size-14 lg:size-16"
+                className="size-8 shrink-0 text-[var(--accent)] sm:size-14 lg:size-16"
               />
             </span>
             <span
-              className="inline-flex whitespace-nowrap"
+              className="inline-flex min-w-0 sm:whitespace-nowrap"
               aria-label="About me"
             >
               {aboutTitle.split("").map((char, index) => {
@@ -39,9 +39,8 @@ export function AboutSection() {
                   <span
                     key={`${char}-${index}`}
                     data-pixel-item
-                    className={`inline-block will-change-transform ${
-                      isAccent ? "text-[var(--accent)]" : ""
-                    }`}
+                    className={`inline-block will-change-transform ${isAccent ? "text-[var(--accent)]" : ""
+                      }`}
                     aria-hidden="true"
                   >
                     {char === " " ? "\u00a0" : char}
@@ -51,7 +50,7 @@ export function AboutSection() {
             </span>
           </h2>
 
-          <ul className="mt-7 max-w-xl list-none space-y-4 pl-0 text-pretty text-lg leading-8 text-white/62 sm:text-xl sm:leading-9">
+          <ul className="mt-7 max-w-xl list-none space-y-4 pl-0 text-pretty text-base leading-7 text-white/62 sm:text-xl sm:leading-9">
             <li data-about-bullet className="flex items-start gap-3">
               <span className="mt-[0.72em] size-2 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_14px_rgba(var(--accent-rgb),0.65)]" aria-hidden="true" />
               <span>
