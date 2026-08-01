@@ -33,6 +33,8 @@ const idleCards: MagicBentoCard[] = [
 ];
 
 function projectToBentoCards(project: Project): MagicBentoCard[] {
+  const sourceIsGithub = /github\.com/i.test(project.links.source);
+
   // Same grid as idle: Overview → Demo → Stack → Source
   return [
     {
@@ -57,8 +59,10 @@ function projectToBentoCards(project: Project): MagicBentoCard[] {
     },
     {
       label: "Source",
-      title: "Repository",
-      description: "Open the GitHub repository for this project.",
+      title: sourceIsGithub ? "Repository" : "Project link",
+      description: sourceIsGithub
+        ? "Open the GitHub repository for this project."
+        : "Open the live project for this build.",
       href: project.links.source,
     },
   ];

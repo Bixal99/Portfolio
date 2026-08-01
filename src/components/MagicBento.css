@@ -382,13 +382,17 @@ a.magic-bento-card:focus-visible .magic-bento-card__arrow {
 }
 
 .magic-bento-demo-fallback--live {
+  justify-content: center;
   background:
+    radial-gradient(
+      ellipse at 50% 18%,
+      rgba(93, 211, 182, 0.14),
+      transparent 52%
+    ),
     linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.88) 0%,
-      rgba(0, 0, 0, 0.55) 42%,
-      rgba(0, 0, 0, 0.15) 72%,
-      transparent 100%
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(10, 10, 10, 0.88) 100%
     );
 }
 

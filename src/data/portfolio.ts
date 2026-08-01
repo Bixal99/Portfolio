@@ -70,7 +70,7 @@ export const profile = {
 };
 
 export const heroStats: HeroStat[] = [
-  { value: "7+", label: "Solutions Delivered" },
+  { value: "9+", label: "Solutions Delivered" },
   { value: "100%", label: "Success Rate" },
   { value: "AI", label: "Focus" },
 ];
@@ -95,6 +95,7 @@ export const socialLinks: SocialLink[] = [
     href: "https://www.linkedin.com/in/mohammad-bilal-64489827b/",
     mark: "IN",
   },
+  { label: "X", href: "https://x.com/Bilxl99", mark: "X" },
   {
     label: "Instagram",
     href: "https://www.instagram.com/__.bilxl99.__/",
@@ -300,13 +301,13 @@ export const projects: Project[] = [
     category: "Full-Stack",
     description:
       "Admin, records, and clinic workflow management in one system.",
-    technologies: ["React", "Node.js", "Express", "MongoDB"],
+    technologies: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
     highlights: [
       "Admin and records workflows",
       "CRUD-backed management flows",
     ],
     links: {
-      demo: "https://github.com/Bixal99/HMS",
+      demo: "https://hms-alpha-seven.vercel.app",
       source: "https://github.com/Bixal99/HMS",
     },
   },
@@ -329,7 +330,7 @@ export const projects: Project[] = [
       "Gemini-powered retention insights",
     ],
     links: {
-      demo: "https://github.com/Bixal99/Churn-Prediction",
+      demo: "https://churn-prediction-k3yjzaxx2mgel668arspbc.streamlit.app",
       source: "https://github.com/Bixal99/Churn-Prediction",
     },
     featured: true,
@@ -345,7 +346,7 @@ export const projects: Project[] = [
       "Maps blink patterns to Morse characters",
     ],
     links: {
-      demo: "https://github.com/Bixal99/EyeBlinkMorseDetector",
+      demo: "https://eye-blink-morse-detector.vercel.app",
       source: "https://github.com/Bixal99/EyeBlinkMorseDetector",
     },
   },
@@ -370,13 +371,13 @@ export const projects: Project[] = [
     category: "Games",
     description:
       "Browser-playable retro game systems and interaction loops.",
-    technologies: ["JavaScript", "HTML", "CSS"],
+    technologies: ["JavaScript", "HTML", "CSS", "TypeScript"],
     highlights: [
       "Classic retro game feel and interaction loops",
       "Browser-playable game systems",
     ],
     links: {
-      demo: "https://github.com/Bixal99/RetroVerse",
+      demo: "https://retroverse-opal.vercel.app",
       source: "https://github.com/Bixal99/RetroVerse",
     },
   },
@@ -391,7 +392,7 @@ export const projects: Project[] = [
       "Structured output for downstream use",
     ],
     links: {
-      demo: "https://github.com/Bixal99/Scrapper",
+      demo: "https://helpscript.vercel.app",
       source: "https://github.com/Bixal99/Scrapper",
     },
   },
@@ -411,16 +412,62 @@ export const projects: Project[] = [
     },
     featured: true,
   },
+  {
+    title: "Pentagram",
+    category: "Generative AI",
+    description:
+      "Local SDXL text-to-image console with prompt studio, variations, and gallery.",
+    technologies: ["React", "TypeScript", "Python", "Flask", "Vercel"],
+    highlights: [
+      "Prompt studio with style presets and seed variations",
+      "Flask + Diffusers SDXL backend with Redis history",
+      "Live frontend console on Vercel",
+    ],
+    links: {
+      demo: "https://pentagram-image-diffusion-lake.vercel.app",
+      source: "https://github.com/Bixal99/Pentagram-Image-Diffusion",
+    },
+    featured: true,
+  },
+  {
+    title: "School Management System",
+    category: "Full-Stack",
+    description:
+      "Student, teacher, and course workflows in one school operations app.",
+    technologies: ["React", "JavaScript", "HTML", "CSS"],
+    highlights: [
+      "Home, student, teacher, and course navigation",
+      "CRUD-style academic management flows",
+    ],
+    links: {
+      demo: "https://schoolmanagement.vercel.app",
+      source: "https://schoolmanagement.vercel.app",
+    },
+  },
 ];
 
-/** Live (non-GitHub) demo URLs — used to warm iframe previews. */
+/** True when a demo URL can be previewed inside an iframe. */
+export function canEmbedDemo(url: string): boolean {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    // Streamlit Cloud sends embeds through an auth wall that breaks iframes.
+    if (host.endsWith("streamlit.app") || host === "share.streamlit.io") {
+      return false;
+    }
+    if (host === "github.com" || host.endsWith(".github.com")) {
+      return false;
+    }
+    return /^https?:$/i.test(new URL(url).protocol);
+  } catch {
+    return false;
+  }
+}
+
+/** Live embeddable demo URLs — used to warm iframe previews. */
 export function getLiveDemoUrls(list: Project[] = projects): string[] {
   return list
     .map((project) => project.links.demo)
-    .filter(
-      (url) =>
-        /^https?:\/\//i.test(url) && !/github\.com/i.test(url),
-    );
+    .filter((url) => canEmbedDemo(url));
 }
 
 export const sectionMeta = {
@@ -436,7 +483,7 @@ export const sectionMeta = {
   },
   projects: {
     kicker: "MY PROJECTS",
-    title: "Seven builds from GitHub. Click one to inspect on the right.",
+    title: "Nine builds. Click one to inspect on the right.",
     icon: BriefcaseBusiness,
   },
 };

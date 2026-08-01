@@ -14,6 +14,7 @@ import { gsap } from "gsap";
 import {
   SiCss,
   SiExpress,
+  SiFlask,
   SiGooglegemini,
   SiHtml5,
   SiJavascript,
@@ -35,7 +36,7 @@ import {
   SiVercel,
 } from "react-icons/si";
 import "./MagicBento.css";
-import { getLiveDemoUrls } from "@/data/portfolio";
+import { canEmbedDemo, getLiveDemoUrls } from "@/data/portfolio";
 
 export type MagicBentoCard = {
   color?: string;
@@ -749,13 +750,14 @@ function DemoScreen({
 }) {
   const screenRef = useRef<HTMLDivElement>(null);
   const [scrollLocked, setScrollLocked] = useState(false);
+  const canEmbed = !!url && isLive && canEmbedDemo(url);
   const [frames, setFrames] = useState<string[]>(() => {
     const initial = [...warmedDemoUrls];
-    if (url && isLive && !initial.includes(url)) initial.push(url);
+    if (url && canEmbed && !initial.includes(url)) initial.push(url);
     return initial;
   });
   const [loading, setLoading] = useState(
-    () => !!isLive && !!url && !readyDemoUrls.has(url),
+    () => canEmbed && !!url && !readyDemoUrls.has(url),
   );
 
   // Preconnect + warm live demos in a persistent iframe pool.
@@ -787,7 +789,7 @@ function DemoScreen({
   useEffect(() => {
     setScrollLocked(false);
 
-    if (!isLive || !url) {
+    if (!canEmbed || !url) {
       setLoading(false);
       return;
     }
@@ -805,7 +807,7 @@ function DemoScreen({
     }, DEMO_SPINNER_MAX_MS);
 
     return () => window.clearTimeout(timer);
-  }, [url, isLive, title]);
+  }, [url, canEmbed, title]);
 
   useEffect(() => {
     if (!scrollLocked) return;
@@ -832,7 +834,7 @@ function DemoScreen({
       className={`magic-bento-demo-screen${scrollLocked ? " is-scroll-locked" : ""}`}
       data-demo-screen
       onPointerDown={() => {
-        if (isLive) setScrollLocked(true);
+        if (canEmbed) setScrollLocked(true);
       }}
     >
       <div
@@ -861,7 +863,7 @@ function DemoScreen({
       <div className="magic-bento-demo-viewport">
         <div className="magic-bento-demo-frame-clip">
           {frames.map((frameUrl) => {
-            const isActive = isLive && frameUrl === url;
+            const isActive = canEmbed && frameUrl === url;
             return (
               <iframe
                 key={frameUrl}
@@ -888,7 +890,7 @@ function DemoScreen({
             );
           })}
 
-          {isLive && loading ? (
+          {canEmbed && loading ? (
             <div className="magic-bento-demo-loader" aria-live="polite">
               <span className="magic-bento-demo-spinner" aria-hidden="true" />
               <p className="magic-bento-demo-loader-text">
@@ -897,9 +899,13 @@ function DemoScreen({
             </div>
           ) : null}
 
-          {!isLive ? (
-            <div className="magic-bento-demo-fallback">
-              <p className="magic-bento-demo-kicker">Live demo</p>
+          {!canEmbed ? (
+            <div
+              className={`magic-bento-demo-fallback${isLive ? " magic-bento-demo-fallback--live" : ""}`}
+            >
+              <p className="magic-bento-demo-kicker">
+                {isLive ? "External demo" : "Live demo"}
+              </p>
               <p className="magic-bento-card__title">{title}</p>
               <p className="magic-bento-card__description">{description}</p>
               {url ? (
@@ -1069,6 +1075,7 @@ const BRAND_TECH_ICONS: Record<string, { Icon: GlyphIcon; color: string }> = {
   nodejs: { Icon: SiNodedotjs, color: "#339933" },
   node: { Icon: SiNodedotjs, color: "#339933" },
   express: { Icon: SiExpress, color: "#ffffff" },
+  flask: { Icon: SiFlask, color: "#ffffff" },
   mongodb: { Icon: SiMongodb, color: "#47A248" },
   postgresql: { Icon: SiPostgresql, color: "#4169E1" },
   postgres: { Icon: SiPostgresql, color: "#4169E1" },
