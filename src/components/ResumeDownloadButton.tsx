@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Download } from "lucide-react";
 import styles from "./ResumeDownloadButton.module.css";
 
@@ -8,26 +8,39 @@ type DownloadState = "idle" | "loading" | "done" | "open";
 
 type ResumeDownloadButtonProps = {
   href: string;
+  files?: string[];
   label?: string;
   placement?: "floating" | "inline";
 };
 
-function downloadFile(href: string) {
+function downloadFile(fileHref: string) {
   const link = document.createElement("a");
-  link.href = href;
-  link.download = "";
+  link.href = fileHref;
+  link.download = fileHref.split("/").pop() || "resume.pdf";
   link.rel = "noreferrer";
   document.body.appendChild(link);
   link.click();
   link.remove();
 }
 
+function downloadFiles(hrefs: string[]) {
+  hrefs.forEach((fileHref, index) => {
+    window.setTimeout(() => downloadFile(fileHref), index * 350);
+  });
+}
+
 export function ResumeDownloadButton({
   href,
+  files,
   label = "Download CV",
   placement = "inline",
 }: ResumeDownloadButtonProps) {
   const [downloadState, setDownloadState] = useState<DownloadState>("idle");
+  const downloadHrefs = useMemo(
+    () => (files?.length ? files : [href]),
+    [files, href],
+  );
+  const downloadKey = downloadHrefs.join("|");
 
   useEffect(() => {
     if (downloadState !== "loading") {
@@ -35,12 +48,12 @@ export function ResumeDownloadButton({
     }
 
     const downloadTimer = window.setTimeout(() => {
-      downloadFile(href);
+      downloadFiles(downloadKey.split("|"));
       setDownloadState("done");
     }, 3700);
 
     return () => window.clearTimeout(downloadTimer);
-  }, [downloadState, href]);
+  }, [downloadState, downloadKey]);
 
   useEffect(() => {
     if (downloadState !== "done") {

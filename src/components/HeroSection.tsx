@@ -75,6 +75,7 @@ export function HeroSection() {
           </a>
           <ResumeDownloadButton
             href={resume.href}
+            files={resume.files}
             label={resume.label}
             placement="inline"
           />

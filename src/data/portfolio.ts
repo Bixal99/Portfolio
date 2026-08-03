@@ -66,7 +66,7 @@ export const profile = {
   summary:
     "Computer Science student with hands-on experience in AI, computer vision, and full-stack development through academic and personal projects. Skilled in Python, JavaScript, React, Node.js, and machine learning.",
   email: "bilalnadeema302003@gmail.com",
-  phones: ["+92 347 0405422", "+92 322 6459646"],
+  phones: ["+92 347 0405422", "+92 322 6459646", "+974 55470358"],
 };
 
 export const heroStats: HeroStat[] = [
@@ -77,7 +77,12 @@ export const heroStats: HeroStat[] = [
 
 export const resume = {
   label: "Download CV",
-  href: "/Mohammad_Bilal_resume.pdf",
+  href: "/Mohammad_Bilal_resume_Modern_Prof.pdf",
+  files: [
+    "/Mohammad_Bilal_resume_Modern_Prof.pdf",
+    "/Mohammad_Bilal_resume_ATS.pdf",
+    "/Mohammad_Bilal_resume_Cont_clean.pdf",
+  ],
 };
 
 export const navItems: NavItem[] = [
