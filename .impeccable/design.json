@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T22:37:24.703Z",
+  "title": "Design System: Mohammad Bilal Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "background": {
+        "role": "neutral",
+        "displayName": "Light gray background",
+        "tonalRamp": [
+          "oklch(15.00% 0.00578 264.53)",
+          "oklch(26.43% 0.00578 264.53)",
+          "oklch(37.86% 0.00578 264.53)",
+          "oklch(49.29% 0.00578 264.53)",
+          "oklch(60.71% 0.00578 264.53)",
+          "oklch(72.14% 0.00578 264.53)",
+          "oklch(83.57% 0.00578 264.53)",
+          "oklch(95.00% 0.00578 264.53)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Navy foreground",
+        "tonalRamp": [
+          "oklch(15.00% 0.04855 269.66)",
+          "oklch(26.43% 0.04855 269.66)",
+          "oklch(37.86% 0.04855 269.66)",
+          "oklch(49.29% 0.04855 269.66)",
+          "oklch(60.71% 0.04855 269.66)",
+          "oklch(72.14% 0.04855 269.66)",
+          "oklch(83.57% 0.04855 269.66)",
+          "oklch(95.00% 0.04855 269.66)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "White surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
+      },
+      "surface-soft": {
+        "role": "neutral",
+        "displayName": "Soft gray surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.01041 261.79)",
+          "oklch(26.43% 0.01041 261.79)",
+          "oklch(37.86% 0.01041 261.79)",
+          "oklch(49.29% 0.01041 261.79)",
+          "oklch(60.71% 0.01041 261.79)",
+          "oklch(72.14% 0.01041 261.79)",
+          "oklch(83.57% 0.01041 261.79)",
+          "oklch(95.00% 0.01041 261.79)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted slate",
+        "tonalRamp": [
+          "oklch(15.00% 0.04631 263.91)",
+          "oklch(26.43% 0.04631 263.91)",
+          "oklch(37.86% 0.04631 263.91)",
+          "oklch(49.29% 0.04631 263.91)",
+          "oklch(60.71% 0.04631 263.91)",
+          "oklch(72.14% 0.04631 263.91)",
+          "oklch(83.57% 0.04631 263.91)",
+          "oklch(95.00% 0.04631 263.91)"
+        ]
+      },
+      "edge": {
+        "role": "neutral",
+        "displayName": "Gray edge",
+        "tonalRamp": [
+          "oklch(15.00% 0.01834 261.33)",
+          "oklch(26.43% 0.01834 261.33)",
+          "oklch(37.86% 0.01834 261.33)",
+          "oklch(49.29% 0.01834 261.33)",
+          "oklch(60.71% 0.01834 261.33)",
+          "oklch(72.14% 0.01834 261.33)",
+          "oklch(83.57% 0.01834 261.33)",
+          "oklch(95.00% 0.01834 261.33)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Vivid blue accent",
+        "tonalRamp": [
+          "oklch(15.00% 0.22151 265.96)",
+          "oklch(26.43% 0.22151 265.96)",
+          "oklch(37.86% 0.22151 265.96)",
+          "oklch(49.29% 0.22151 265.96)",
+          "oklch(60.71% 0.22151 265.96)",
+          "oklch(72.14% 0.22151 265.96)",
+          "oklch(83.57% 0.22151 265.96)",
+          "oklch(95.00% 0.22151 265.96)"
+        ]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Deep blue hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.18020 265.28)",
+          "oklch(26.43% 0.18020 265.28)",
+          "oklch(37.86% 0.18020 265.28)",
+          "oklch(49.29% 0.18020 265.28)",
+          "oklch(60.71% 0.18020 265.28)",
+          "oklch(72.14% 0.18020 265.28)",
+          "oklch(83.57% 0.18020 265.28)",
+          "oklch(95.00% 0.18020 265.28)"
+        ]
+      },
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "Soft blue accent",
+        "tonalRamp": [
+          "oklch(15.00% 0.03371 271.04)",
+          "oklch(26.43% 0.03371 271.04)",
+          "oklch(37.86% 0.03371 271.04)",
+          "oklch(49.29% 0.03371 271.04)",
+          "oklch(60.71% 0.03371 271.04)",
+          "oklch(72.14% 0.03371 271.04)",
+          "oklch(83.57% 0.03371 271.04)",
+          "oklch(95.00% 0.03371 271.04)"
+        ]
+      },
+      "on-accent": {
+        "role": "neutral",
+        "displayName": "White on-accent",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Existing hero name; larger-breakpoint tracking is described in DESIGN.md."
+      },
+      "headline": {
+        "displayName": "Section headline",
+        "purpose": "About-format headings; 60px at 640px and 72px at 1024px."
+      },
+      "title": {
+        "displayName": "Project title",
+        "purpose": "Selected project; 28px at mobile widths up to 760px."
+      },
+      "body": {
+        "displayName": "Reading body",
+        "purpose": "About copy; 20px/36px at the small breakpoint."
+      },
+      "project-body": {
+        "displayName": "Project summary",
+        "purpose": "Factual compact summary; 48ch measure, 14px on mobile."
+      },
+      "action-label": {
+        "displayName": "Project action",
+        "purpose": "Live demo and source links."
+      },
+      "skill-label": {
+        "displayName": "Skill name",
+        "purpose": "Persistent name beneath each technology mark."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-border",
+        "value": "0 0 0 1px var(--edge)",
+        "purpose": "Existing global resting elevation ring."
+      },
+      {
+        "name": "shadow-border-hover",
+        "value": "0 0 0 1px var(--accent)",
+        "purpose": "Existing global stronger hover edge."
+      },
+      {
+        "name": "heading-line-glow",
+        "value": "0 0 18px rgba(var(--accent-rgb),0.55)",
+        "purpose": "Shared About-format accent line."
+      },
+      {
+        "name": "play-rest",
+        "value": "0 8px 28px rgb(16 23 47 / 30%)",
+        "purpose": "Explicit video play control."
+      },
+      {
+        "name": "play-emphasis",
+        "value": "0 10px 36px rgb(37 76 219 / 24%)",
+        "purpose": "Video play hover/focus halo."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-color",
+        "value": "180ms ease-out",
+        "purpose": "Project action colors, thumbnails, and arrow controls."
+      },
+      {
+        "name": "mark-color",
+        "value": "220ms ease-out",
+        "purpose": "Technology color/filter emphasis."
+      },
+      {
+        "name": "mark-lift",
+        "value": "300ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "Skill mark lift and scale."
+      },
+      {
+        "name": "selector-lift",
+        "value": "240ms cubic-bezier(.16,1,.3,1)",
+        "purpose": "Named poster selector lift."
+      },
+      {
+        "name": "project-exchange",
+        "value": "140ms",
+        "purpose": "Complete article fade; incoming vertical offset 6px. Reduced motion uses 0ms and no offset."
+      },
+      {
+        "name": "nav-indicator",
+        "value": "500ms cubic-bezier(0.22,1,0.36,1)",
+        "purpose": "Existing desktop active-section indicator."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "small",
+        "value": "640px"
+      },
+      {
+        "name": "projects-skills-mobile-max",
+        "value": "760px"
+      },
+      {
+        "name": "project-narrow-max",
+        "value": "1000px"
+      },
+      {
+        "name": "large",
+        "value": "1024px"
+      },
+      {
+        "name": "skills-dense-min",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Live demo action",
+      "kind": "button",
+      "refersTo": "button-demo",
+      "description": "The compact blue link beside selected project media.",
+      "html": "<a class=\"ds-demo\" href=\"#projects\">Live demo <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></a>",
+      "css": ".ds-demo{display:inline-flex;min-height:44px;align-items:center;gap:10px;background:var(--accent);color:var(--on-accent);padding:0 18px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;transition:color 180ms ease-out,background 180ms ease-out}.ds-demo svg{transition:transform 220ms cubic-bezier(.16,1,.3,1)}.ds-demo:hover{background:var(--accent-hover)}.ds-demo:hover svg,.ds-demo:focus-visible svg{transform:translate(2px,-2px)}.ds-demo:focus-visible,.ds-source:focus-visible,.ds-play:focus-visible{outline:2px solid var(--accent);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-demo,.ds-demo svg{transition:none;transform:none}}"
+    },
+    {
+      "name": "Project source link",
+      "kind": "button",
+      "description": "Unfilled secondary action; the external-link variant is used for non-GitHub project sites.",
+      "html": "<a class=\"ds-source\" href=\"#projects\">Project site <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></a>",
+      "css": ".ds-source{display:inline-flex;min-height:44px;align-items:center;gap:10px;color:var(--foreground);font-size:13px;text-decoration:none;font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;transition:color 180ms ease-out}.ds-source:hover{color:var(--accent)}.ds-demo:focus-visible,.ds-source:focus-visible,.ds-play:focus-visible{outline:2px solid var(--accent);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-source{transition:none}}"
+    },
+    {
+      "name": "Explicit video play",
+      "kind": "button",
+      "description": "The centered video play affordance before native playback controls appear.",
+      "html": "<button class=\"ds-play\" type=\"button\" aria-label=\"Play recorded demo\"><span class=\"ds-play-circle\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" fill=\"currentColor\"/></svg></span><span class=\"ds-play-label\">Watch demo</span></button>",
+      "css": ".ds-play{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;border:0;background:rgb(16 23 47 / 22%);cursor:pointer;font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;transition:background 220ms ease-out}.ds-play-circle{display:grid;place-items:center;width:64px;height:64px;padding-left:3px;border-radius:50%;background:var(--accent);color:var(--on-accent);box-shadow:0 8px 28px rgb(16 23 47 / 30%);transition:transform 260ms cubic-bezier(.16,1,.3,1),box-shadow 260ms ease-out}.ds-play-label{padding:5px 10px;border-radius:6px;background:rgb(16 23 47 / 85%);font-size:13px;color:var(--on-accent)}.ds-play:hover,.ds-play:focus-visible{background:rgb(16 23 47 / 8%)}.ds-play:hover .ds-play-circle,.ds-play:focus-visible .ds-play-circle{transform:scale(1.08);box-shadow:0 10px 36px rgb(37 76 219 / 24%)}.ds-play:active{transform:scale(.97)}.ds-demo:focus-visible,.ds-source:focus-visible,.ds-play:focus-visible{outline:2px solid var(--accent);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-play,.ds-play-circle{transition:none;transform:none!important}}"
+    },
+    {
+      "name": "Skill detail control",
+      "kind": "custom",
+      "refersTo": "skill-control",
+      "description": "SQL demonstrates the semantic-concept exception to technology brand marks; the source component updates a shared role region. XGBoost preserves its original PNG and uses navy backing for its white wordmark lettering.",
+      "html": "<button class=\"ds-skill\" type=\"button\" aria-label=\"Show SQL details\" title=\"SQL: Database querying\" aria-pressed=\"false\"><span class=\"ds-mark\"><svg width=\"29\" height=\"29\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><ellipse cx=\"12\" cy=\"5\" rx=\"9\" ry=\"3\"/><path d=\"M3 5V19A9 3 0 0 0 21 19V5\"/><path d=\"M3 12A9 3 0 0 0 21 12\"/></svg></span><span class=\"ds-skill-label\">SQL</span></button>",
+      "css": ".ds-skill{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:68px;min-height:76px;padding:8px 2px;border:0;border-radius:8px;background:transparent;cursor:pointer;font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;}.ds-mark{display:inline-block;width:29px;height:29px;color:var(--muted);transition:color 220ms ease-out,transform 300ms cubic-bezier(.16,1,.3,1),filter 220ms ease-out}.ds-skill-label{font-size:10px;line-height:1.45;color:var(--muted);min-height:15px;text-align:center}.ds-skill:hover .ds-mark,.ds-skill:focus-visible .ds-mark,.ds-skill[aria-pressed=true] .ds-mark{color:#7bb8da;transform:translateY(-4px) scale(1.1);filter:drop-shadow(0 5px 8px rgb(0 0 0 / 25%))}.ds-skill:hover .ds-skill-label,.ds-skill:focus-visible .ds-skill-label,.ds-skill[aria-pressed=true] .ds-skill-label{color:var(--foreground)}.ds-skill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.ds-skill:active .ds-mark{transform:translateY(-2px) scale(1.03)}@media(prefers-reduced-motion:reduce){.ds-mark{transition:none;transform:none!important}}.ds-mark[data-mark=\"xgboost\"]{width:64px;height:34px;background:var(--foreground)}"
+    },
+    {
+      "name": "About-format section heading",
+      "kind": "custom",
+      "description": "Shared section heading: blue line, relevant SVG, uppercase words, blue final word.",
+      "html": "<h2 class=\"ds-heading\"><span class=\"ds-heading-prefix\" aria-hidden=\"true\"><span class=\"ds-heading-line\"></span><svg width=\"32\" height=\"32\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 12h.01\"/><path d=\"M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2\"/><path d=\"M22 13a18.15 18.15 0 0 1-20 0\"/><rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\"/></svg></span><span>MY <span class=\"ds-heading-accent\">PROJECTS</span></span></h2>",
+      "css": ".ds-heading{display:flex;align-items:center;gap:12px;margin:0;color:var(--foreground);font-size:clamp(1.55rem,7.5vw,4.5rem);font-weight:600;line-height:.95;letter-spacing:-.05em;text-wrap:balance;font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;}.ds-heading-prefix{display:flex;flex-shrink:0;align-items:center;gap:10px;color:var(--accent)}.ds-heading-line{height:4px;width:32px;border-radius:999px;background:var(--accent);box-shadow:0 0 18px rgba(var(--accent-rgb),.55)}.ds-heading-accent{color:var(--accent)}@media(min-width:640px){.ds-heading{font-size:60px;gap:20px}.ds-heading-prefix{gap:20px}.ds-heading-line{width:64px}.ds-heading-prefix svg{width:56px;height:56px}}@media(min-width:1024px){.ds-heading{font-size:72px;gap:24px}.ds-heading-prefix svg{width:64px;height:64px}}"
+    },
+    {
+      "name": "Desktop navigation pill",
+      "kind": "nav",
+      "description": "Incumbent desktop navigation with a blue active item; this excerpt shows the settled active indicator.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a class=\"ds-nav-link ds-nav-active\" href=\"#home\">Home</a><a class=\"ds-nav-link\" href=\"#about\">About</a><a class=\"ds-nav-link\" href=\"#projects\">Projects</a><a class=\"ds-nav-link\" href=\"#stack\">Skills</a></nav>",
+      "css": ".ds-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:min(50vw,640px);padding:4px;border-radius:999px;background:var(--surface);box-shadow:var(--shadow-border);backdrop-filter:blur(24px);font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;}.ds-nav-link{padding:10px 16px;border-radius:999px;font-size:12px;font-weight:600;text-align:center;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);text-decoration:none;transition:color 300ms}.ds-nav-link:hover{color:var(--foreground)}.ds-nav-active,.ds-nav-active:hover{background:var(--accent);color:var(--on-accent);box-shadow:0 0 28px rgba(var(--accent-rgb),.2)}.ds-nav-link:focus-visible{outline:auto}@media(prefers-reduced-motion:reduce){.ds-nav-link{transition:none}}"
+    },
+    {
+      "name": "Contact field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Incumbent labeled field; focus CSS reproduces the settled source GSAP treatment without requiring a runtime. Reduced motion preserves a static white surface, 1px blue outer ring, and blue label independently of GSAP.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Name</span><input class=\"ds-field-input\" name=\"name\" placeholder=\"Your name\" required/><span class=\"ds-field-underline\" aria-hidden=\"true\"></span></label>",
+      "css": ".ds-field{position:relative;display:grid;gap:12px;padding:12px 16px;overflow:hidden;border-radius:12px;background:var(--background);box-shadow:var(--shadow-border),inset 0 1px 0 rgba(255,255,255,.06);font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;transition:background-color 320ms,box-shadow 320ms}.ds-field-label{font-size:11px;font-weight:700;text-transform:uppercase;line-height:1;letter-spacing:.22em;color:var(--muted)}.ds-field-input{width:100%;min-height:36px;border:0;background:transparent;color:var(--foreground);font-size:16px;outline:none;font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;}.ds-field-input::placeholder{color:var(--muted)}.ds-field-input:focus::placeholder{color:var(--muted)}.ds-field-underline{position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;box-shadow:0 0 24px rgba(var(--accent-rgb),.7);transition:transform 420ms}.ds-field:focus-within{background:var(--surface);box-shadow:0 0 0 1px rgba(var(--accent-rgb),.18),0 18px 46px rgba(var(--accent-rgb),.11),inset 0 1px 0 rgba(255,255,255,.1)}.ds-field:focus-within .ds-field-label{color:var(--accent);letter-spacing:.28em}.ds-field:focus-within .ds-field-underline{transform:scaleX(1)}@media(prefers-reduced-motion:reduce){.ds-field,.ds-field-underline{transition:none}.ds-field:focus-within{background:var(--surface);box-shadow:0 0 0 1px var(--accent)}.ds-field:focus-within .ds-field-label{color:var(--accent);letter-spacing:.22em}.ds-field:focus-within .ds-field-underline{transform:scaleX(0)}}"
+    },
+    {
+      "name": "Project media recovery frame",
+      "kind": "card",
+      "refersTo": "project-media",
+      "description": "Actual failed-video state: restrained media frame with a live-app recovery action over the retained poster.",
+      "html": "<div class=\"ds-media\"><div class=\"ds-media-fallback\"><p>This video couldn't load.</p><a href=\"#projects\">Explore the live app <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></a></div></div>",
+      "css": ".ds-media{position:relative;width:100%;height:300px;overflow:hidden;border:1px solid var(--edge);border-radius:14px;background:var(--surface);font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;}.ds-media-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgb(16 23 47 / 90%);padding:20px;text-align:center;color:var(--on-accent)}.ds-media-fallback p{font-size:14px}.ds-media-fallback a{--accent:#b6c9ff;display:flex;gap:8px;align-items:center;min-height:44px;color:var(--accent);font-size:13px;text-decoration:none}.ds-media-fallback a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}@media(max-width:1000px){.ds-media{height:290px}}@media(max-width:760px){.ds-media{height:auto;aspect-ratio:16/10}}"
+    },
+    {
+      "name": "Contact submit action",
+      "kind": "button",
+      "description": "Existing blue contact action: a translucent white shine preserves white label readability. CSS hover/pressed positions represent the source Motion states without requiring its runtime.",
+      "html": "<button class=\"ds-contact-submit\" type=\"button\"><span class=\"ds-contact-shine\" aria-hidden=\"true\"></span><span class=\"ds-contact-content\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\"/><path d=\"m21.854 2.147-10.94 10.939\"/></svg><span>Send Message</span></span></button>",
+      "css": ".ds-contact-submit{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;overflow:hidden;border:0;border-radius:12px;padding:16px 20px 16px 16px;background:var(--accent);color:var(--on-accent);font-family:var(--font-poppins),Poppins,Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;box-shadow:0 18px 52px rgba(var(--accent-rgb),.22);transition:background-color 150ms;cursor:pointer}.ds-contact-content{position:relative;z-index:10;display:inline-flex;align-items:center;gap:12px}.ds-contact-shine{position:absolute;top:0;bottom:0;left:-50%;width:50%;transform:skewX(-20deg);background:rgba(255,255,255,.35);opacity:0;transition:left 500ms,opacity 500ms}.ds-contact-submit:hover{background:var(--accent-hover);transform:translateY(-3px)}.ds-contact-submit:hover .ds-contact-shine{left:125%;opacity:1}.ds-contact-submit:active{transform:translateY(0) scale(.96)}.ds-contact-submit:focus-visible{outline:auto}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The engineer's own work",
+    "overview": "This records the portfolio after the user's October 8, 2026 colors-only directive, which supersedes the earlier black/mint palette across the codebase. Light gray provides the canvas, navy carries primary text, and vivid blue identifies important words and actions. Established Poppins typography, layout, content, animations, and interactions remain intact. The engineer's software and authentic technology marks supply visual variety.\n\nThe scoped extension is compact and open: media has a restrained frame, explanation sits on the page, and tools form labeled bands. This is a description of the shipped source, not a replacement brand or a preferred workflow for future tasks.",
+    "keyCharacteristics": [
+      "Light gray page, white surfaces, navy text, and vivid blue emphasis.",
+      "Uppercase Poppins section headings in the About Me format.",
+      "Open compositions with subtle edges around controls and media.",
+      "Authentic application footage and recognizable technology artwork.",
+      "Short interaction feedback with keyboard, touch, and reduced-motion equivalents."
+    ],
+    "rules": [
+      {
+        "name": "The Identity Accent Rule",
+        "body": "Blue belongs to the portfolio interface. Preserve authentic colors inside application media and multicolor technology artwork rather than recoloring them to extend the theme. Monochrome technology marks use navy for legibility on the light canvas. XGBoost's original white wordmark lettering keeps a navy backing rather than altering the PNG artwork.",
+        "section": "colors"
+      },
+      {
+        "name": "The About Heading Rule",
+        "body": "Section headings begin with a blue line and a relevant SVG icon, followed by bold uppercase Poppins with the final word in blue. The line grows from (32px) to (64px); icons grow from (32px) to (56px), then (64px).",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do preserve the user-approved light gray, navy, and blue palette with existing Poppins typography and the About Me section-heading grammar.",
+      "Do limit the color refresh to color assignments while retaining existing layout, content, animations, and interactions.",
+      "Do retain genuine application footage, honest media labels, original technology artwork, and equivalent hover, focus, and tap information.",
+      "Do keep compact Projects and static Skills behavior scoped to these sections, with every project and skill reachable.",
+      "Do keep visible focus and reduced-motion selection feedback when extending the interaction patterns."
+    ],
+    "donts": [
+      "Don't replace authentic software footage with abstract stand-in illustrations in Projects.",
+      "Don't add a second full project collection or return Skills to orbiting content, automatic cycling, or a large repeated tile grid.",
+      "Don't recolor original multicolor technology artwork as a blue substitute or imply unavailable backend output."
+    ]
+  }
+}
