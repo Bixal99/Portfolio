@@ -1,0 +1,1510 @@
+﻿[
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\app\\globals.css",
+    "line": 82,
+    "snippet": "border-radius: 999px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "999px",
+    "importedBy": [
+      "layout.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\app\\globals.css",
+    "line": 249,
+    "snippet": "border-radius: 999px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "999px",
+    "importedBy": [
+      "layout.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\BackToTopButton.tsx",
+    "line": 72,
+    "snippet": "text-[…] class: 12px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "12px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ContactForm.tsx",
+    "line": 68,
+    "snippet": "text-[…] class: 11px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "11px",
+    "importedBy": [
+      "Footer.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\CreativeCodeWindow.tsx",
+    "line": 317,
+    "snippet": "text-[…] class: 9px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "9px",
+    "importedBy": [
+      "Footer.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\CreativeCodeWindow.tsx",
+    "line": 317,
+    "snippet": "text-[…] class: 11px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "11px",
+    "importedBy": [
+      "Footer.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\Footer.tsx",
+    "line": 266,
+    "snippet": "text-[…] class: 0.55rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "0.55rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\Footer.tsx",
+    "line": 351,
+    "snippet": "text-[…] class: 11px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "11px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\Footer.tsx",
+    "line": 360,
+    "snippet": "text-[…] class: 11px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "11px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\JourneyTimeline.tsx",
+    "line": 35,
+    "snippet": "text-[…] class: 11px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "11px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\Navbar.tsx",
+    "line": 146,
+    "snippet": "text-[…] class: 9px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "9px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ProjectGrid.module.css",
+    "line": 11,
+    "snippet": "font-size: 11px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "11px",
+    "importedBy": [
+      "ProjectGrid.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ProjectGrid.module.css",
+    "line": 15,
+    "snippet": "font-size: 12px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "12px",
+    "importedBy": [
+      "ProjectGrid.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ProjectGrid.module.css",
+    "line": 18,
+    "snippet": "font-size: 11px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "11px",
+    "importedBy": [
+      "ProjectGrid.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ProjectGrid.module.css",
+    "line": 41,
+    "snippet": "font-size: 14px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "14px",
+    "importedBy": [
+      "ProjectGrid.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ProjectGrid.module.css",
+    "line": 46,
+    "snippet": "font-size: 28px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "28px",
+    "importedBy": [
+      "ProjectGrid.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ProjectGrid.module.css",
+    "line": 46,
+    "snippet": "font-size: 14px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "14px",
+    "importedBy": [
+      "ProjectGrid.tsx"
+    ]
+  },
+  {
+    "antipattern": "layout-transition",
+    "name": "Layout property animation",
+    "description": "Animating width, height, padding, or margin causes layout thrash and janky performance. Use transform and opacity instead, or grid-template-rows for height animations.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 128,
+    "snippet": "transition: height",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "side-tab",
+    "name": "Side-tab accent border",
+    "description": "Thick colored border on one side of a card — the most recognizable tell of AI-generated UIs. Use a subtler accent or remove it entirely.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 87,
+    "snippet": ".button::before — absolute 8px pseudo-element stripe (left: 0)",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 13,
+    "snippet": "border-radius: 999px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "999px",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 93,
+    "snippet": "border-radius: 999px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "999px",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 108,
+    "snippet": "border-radius: 999px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "999px",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 126,
+    "snippet": "Undocumented color rgba(0, 0, 0, 0.24) is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(0, 0, 0, 0.24)",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 151,
+    "snippet": "border-radius: 3px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "3px",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\ResumeDownloadButton.module.css",
+    "line": 175,
+    "snippet": "font-size: 0.875rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "0.875rem",
+    "importedBy": [
+      "ResumeDownloadButton.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 71,
+    "snippet": "font-size: 0.85rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "0.85rem",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 104,
+    "snippet": "border-radius: 4px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "4px",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-radius",
+    "name": "Radius outside DESIGN.md",
+    "description": "A border-radius value is outside the DESIGN.md rounded scale. Use a documented radius token or update the design system if the new shape is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 164,
+    "snippet": "border-radius: 2px is outside the DESIGN.md rounded scale",
+    "advisory": true,
+    "ignoreValue": "2px",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 281,
+    "snippet": "font-size: 1.2rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.2rem",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 318,
+    "snippet": "font-size: 3.5rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "3.5rem",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 377,
+    "snippet": "font-size: clamp(1.35rem, 3vw, 2.35rem) has fluid endpoint 1.35rem off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.35rem",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 435,
+    "snippet": "font-size: 1.05rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.05rem",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 465,
+    "snippet": "font-size: 18px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "18px",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 578,
+    "snippet": "Undocumented color rgba(0, 0, 0, 0.08) is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(0, 0, 0, 0.08)",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 590,
+    "snippet": "Undocumented color rgba(0, 0, 0, 0.35) is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(0, 0, 0, 0.35)",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 609,
+    "snippet": "Undocumented color rgba(0, 0, 0, 0.45) is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(0, 0, 0, 0.45)",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 623,
+    "snippet": "Undocumented color rgba(0, 0, 0, 0.8) is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(0, 0, 0, 0.8)",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\StaggeredMenu.css",
+    "line": 627,
+    "snippet": "Undocumented color rgba(0, 0, 0, 0.06) is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgba(0, 0, 0, 0.06)",
+    "importedBy": [
+      "StaggeredMenu.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechStack.module.css",
+    "line": 14,
+    "snippet": "Undocumented color rgb(0 0 0 / 25%) is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "rgb(0 0 0 / 25%)",
+    "importedBy": [
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechStack.module.css",
+    "line": 18,
+    "snippet": "font-size: 12px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "12px",
+    "importedBy": [
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechStack.module.css",
+    "line": 21,
+    "snippet": "font-size: 12px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "12px",
+    "importedBy": [
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 16,
+    "snippet": "Undocumented color #3178c6 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#3178c6",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 17,
+    "snippet": "Undocumented color #61dafb is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#61dafb",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 18,
+    "snippet": "Undocumented color #38bdf8 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#38bdf8",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 18,
+    "snippet": "Undocumented color #f7df1e is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#f7df1e",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 19,
+    "snippet": "Undocumented color #e34f26 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#e34f26",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 19,
+    "snippet": "Undocumented color #a77ce1 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#a77ce1",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 20,
+    "snippet": "Undocumented color #ffd343 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#ffd343",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 20,
+    "snippet": "Undocumented color #659ad2 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#659ad2",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 21,
+    "snippet": "Undocumented color #a8b9cc is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#a8b9cc",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 21,
+    "snippet": "Undocumented color #5fa04e is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#5fa04e",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 22,
+    "snippet": "Undocumented color #009688 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#009688",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 23,
+    "snippet": "Undocumented color #47a248 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#47a248",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 24,
+    "snippet": "Undocumented color #76a8cc is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#76a8cc",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 24,
+    "snippet": "Undocumented color #3fcf8e is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#3fcf8e",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 25,
+    "snippet": "Undocumented color #83c6ba is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#83c6ba",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 26,
+    "snippet": "Undocumented color #8aa9ff is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#8aa9ff",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 26,
+    "snippet": "Undocumented color #f55036 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#f55036",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 28,
+    "snippet": "Undocumented color #ffd21e is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#ffd21e",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 29,
+    "snippet": "Undocumented color #7abf51 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#7abf51",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 29,
+    "snippet": "Undocumented color #e49555 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#e49555",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 30,
+    "snippet": "Undocumented color #bdb3f1 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#bdb3f1",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 30,
+    "snippet": "Undocumented color #4dabcf is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#4dabcf",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 31,
+    "snippet": "Undocumented color #ff4b4b is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#ff4b4b",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 31,
+    "snippet": "Undocumented color #43b02a is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#43b02a",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 32,
+    "snippet": "Undocumented color #ffd343 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#ffd343",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 32,
+    "snippet": "Undocumented color #f5853c is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#f5853c",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 33,
+    "snippet": "Undocumented color #f05032 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#f05032",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 34,
+    "snippet": "Undocumented color #2496ed is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#2496ed",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 34,
+    "snippet": "Undocumented color #ff6c37 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#ff6c37",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 35,
+    "snippet": "Undocumented color #23a9f2 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#23a9f2",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 35,
+    "snippet": "Undocumented color #f68c75 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#f68c75",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 36,
+    "snippet": "Undocumented color #fcc624 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#fcc624",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 37,
+    "snippet": "Undocumented color #7bb8da is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#7bb8da",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 37,
+    "snippet": "Undocumented color #70ba53 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#70ba53",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 38,
+    "snippet": "Undocumented color #00a8a8 is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#00a8a8",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\TechnologyMark.tsx",
+    "line": 38,
+    "snippet": "Undocumented color #9b9dfb is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#9b9dfb",
+    "importedBy": [
+      "ProjectGrid.tsx",
+      "TechStack.tsx"
+    ]
+  },
+  {
+    "antipattern": "overused-font",
+    "name": "Overused font",
+    "description": "Inter, Roboto, Fraunces, Geist, Plus Jakarta Sans, and Space Grotesk are used on so many sites they no longer feel distinctive. Each new wave of AI-generated UIs converges on the same handful of faces. Choose a face that gives your interface personality.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 342,
+    "snippet": "font-family: \"Geist"
+  },
+  {
+    "antipattern": "overused-font",
+    "name": "Overused font",
+    "description": "Inter, Roboto, Fraunces, Geist, Plus Jakarta Sans, and Space Grotesk are used on so many sites they no longer feel distinctive. Each new wave of AI-generated UIs converges on the same handful of faces. Choose a face that gives your interface personality.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 370,
+    "snippet": "font-family: \"Geist"
+  },
+  {
+    "antipattern": "overused-font",
+    "name": "Overused font",
+    "description": "Inter, Roboto, Fraunces, Geist, Plus Jakarta Sans, and Space Grotesk are used on so many sites they no longer feel distinctive. Each new wave of AI-generated UIs converges on the same handful of faces. Choose a face that gives your interface personality.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 397,
+    "snippet": "font-family: \"Geist"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 45,
+    "snippet": "font-size: 32px !important is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "32px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 101,
+    "snippet": "font-size: 20px !important is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "20px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 112,
+    "snippet": "font-size: 24px !important is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "24px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 118,
+    "snippet": "font-size: 18px !important is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "18px"
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 174,
+    "snippet": "Undocumented color #93b1ff is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#93b1ff"
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 214,
+    "snippet": "Undocumented color #93b1ff is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#93b1ff"
+  },
+  {
+    "antipattern": "design-system-color",
+    "name": "Color outside DESIGN.md",
+    "description": "A literal color is outside the DESIGN.md palette and sidecar tonal ramps. This may be legitimate, but it should be an intentional design-system addition rather than drift.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 247,
+    "snippet": "Undocumented color #b6c9ff is outside DESIGN.md colors",
+    "advisory": true,
+    "ignoreValue": "#b6c9ff"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 331,
+    "snippet": "font-size: 22px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "22px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 339,
+    "snippet": "font-size: 28px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "28px"
+  },
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 342,
+    "snippet": "font-family: Geist is not declared in DESIGN.md typography",
+    "ignoreValue": "Geist"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 359,
+    "snippet": "font-size: 22px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "22px"
+  },
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 370,
+    "snippet": "font-family: Geist is not declared in DESIGN.md typography",
+    "ignoreValue": "Geist"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 372,
+    "snippet": "font-size: 28px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "28px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 394,
+    "snippet": "font-size: 36px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "36px"
+  },
+  {
+    "antipattern": "design-system-font",
+    "name": "Font outside DESIGN.md",
+    "description": "A font is used that is not declared in DESIGN.md typography. Use the documented type system or update DESIGN.md if this is an intentional brand addition.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 397,
+    "snippet": "font-family: Geist is not declared in DESIGN.md typography",
+    "ignoreValue": "Geist"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 432,
+    "snippet": "font-size: 18px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "18px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 436,
+    "snippet": "font-size: 18px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "18px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 445,
+    "snippet": "font-size: 35px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "35px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 464,
+    "snippet": "font-size: 40px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "40px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 473,
+    "snippet": "font-size: 45px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "45px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 478,
+    "snippet": "font-size: 55px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "55px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 534,
+    "snippet": "font-size: 35px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "35px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 538,
+    "snippet": "font-size: 60px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "60px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 543,
+    "snippet": "font-size: 35px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "35px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 547,
+    "snippet": "font-size: 65px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "65px"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "C:\\Users\\msi\\OneDrive\\Desktop\\Portfolio\\src\\components\\styles\\Landing.css",
+    "line": 552,
+    "snippet": "font-size: 75px is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "75px"
+  }
+]
