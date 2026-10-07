@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "public/draco/**",
     "public/models/encrypt.cjs",
+    ".impeccable/runtime/**",
   ]),
 ]);
 
