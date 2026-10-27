@@ -1,0 +1,22 @@
+# Keep local configuration, tools, caches and audit captures off the deployment.
+.git/
+.vercel/
+.env*
+node_modules/
+.next/
+out/
+build/
+coverage/
+.agents/
+.codex/
+.aws/
+.impeccable/
+docs/
+*.log
+*.tsbuildinfo
+visual-fix-home.png
+AGENTS.md
+CLAUDE.md
+PRODUCT.md
+DESIGN.md
+skills-lock.json
