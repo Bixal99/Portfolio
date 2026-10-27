@@ -249,8 +249,6 @@ export function ContactForm() {
   return (
     <form
       ref={formRef}
-      data-animate
-      data-footer-reveal
       onSubmit={(event) => {
         event.preventDefault();
         event.currentTarget.reset();

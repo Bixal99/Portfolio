@@ -13,6 +13,8 @@ export function ScrollAnimator() {
     if (prefersReducedMotion) {
       return;
     }
+    const main = document.querySelector("main");
+    if (!main) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -58,17 +60,16 @@ export function ScrollAnimator() {
 
           gsap.fromTo(
             pixels,
-            { autoAlpha: 0, x: -12 },
+            { x: -12 },
             {
-              autoAlpha: 1,
               x: 0,
               stagger: 0.02,
               duration: 0.45,
               ease: "power2.out",
               scrollTrigger: {
                 trigger: title,
-                start: "top 88%",
-                toggleActions: "play none none reverse",
+                start: "clamp(top 88%)",
+                once: true,
               },
             },
           );
@@ -141,7 +142,7 @@ export function ScrollAnimator() {
           },
         );
       });
-    });
+    }, main);
 
     return () => context.revert();
   }, []);

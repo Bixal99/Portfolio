@@ -120,42 +120,8 @@ export function Footer() {
 
     gsap.registerPlugin(ScrollTrigger);
 
+    // Essential footer content must remain visible at every scroll position.
     const context = gsap.context(() => {
-      gsap.fromTo(
-        "[data-footer-reveal]",
-        { autoAlpha: 0, y: 70, filter: "blur(16px)" },
-        {
-          autoAlpha: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: 1.05,
-          ease: "power4.out",
-          stagger: 0.08,
-          scrollTrigger: {
-            trigger: footer,
-            start: "top 74%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
-
-      gsap.fromTo(
-        "[data-footer-micro]",
-        { autoAlpha: 0, y: 26 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.72,
-          ease: "power3.out",
-          stagger: 0.045,
-          scrollTrigger: {
-            trigger: footer,
-            start: "top 68%",
-            toggleActions: "play none none reverse",
-          },
-        },
-      );
-
       gsap.to("[data-footer-parallax='grid']", {
         yPercent: 9,
         ease: "none",
@@ -205,7 +171,7 @@ export function Footer() {
         className="absolute inset-0 opacity-70 [background:linear-gradient(115deg,transparent_0%,transparent_24%,rgba(var(--accent-rgb),0.07)_24.2%,transparent_24.8%,transparent_56%,rgba(var(--foreground-rgb),0.055)_56.2%,transparent_56.8%)]"
       />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
-        <div data-footer-reveal className="mx-auto w-full">
+        <div className="mx-auto w-full">
           <FlipWordsHero />
           <div className="mt-10 w-full">
             <CreativeCodeWindow cardOnly />
@@ -213,11 +179,9 @@ export function Footer() {
         </div>
 
         <div
-          data-animate
           className="mt-14 grid gap-8 lg:grid-cols-[0.86fr_1.14fr]"
         >
           <div
-            data-footer-reveal
             className="relative flex h-full flex-col overflow-hidden bg-[var(--surface)] p-6 shadow-[var(--shadow-border),0_30px_90px_rgba(16,23,47,0.12),inset_0_1px_0_rgba(255,255,255,0.065)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent sm:p-8 lg:p-10"
           >
             <div
@@ -225,24 +189,23 @@ export function Footer() {
               className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--accent-rgb),0.065),transparent_34%,rgba(255,255,255,0.035)_68%,transparent)] opacity-80"
             />
             <div className="relative flex h-full flex-col">
-              <div data-footer-micro className="mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-[var(--accent)]">
+              <div className="mb-6 flex items-center gap-4 text-xs font-semibold uppercase leading-6 tracking-[0.28em] text-[var(--accent)]">
                 <span
                   className="h-px w-10 shrink-0 bg-[var(--accent)] shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
                   aria-hidden="true"
                 />
                 Contact
               </div>
-              <h2 data-footer-micro className="text-[clamp(1.75rem,7vw,3rem)] font-semibold leading-tight tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">
+              <h2 className="text-[clamp(1.75rem,7vw,3rem)] font-semibold leading-tight tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">
                 Let us turn an idea into a working system.
               </h2>
-              <p data-footer-micro className="mt-5 max-w-xl text-pretty text-base leading-8 text-[var(--muted)]">
+              <p className="mt-5 max-w-xl text-pretty text-base leading-8 text-[var(--muted)]">
                 Send a project note, internship opportunity, or collaboration
                 idea. I usually respond with the next practical step.
               </p>
 
               <div className="mt-8 grid gap-4 text-sm text-[var(--muted)]">
                 <motion.a
-                  data-footer-micro
                   href={`mailto:${profile.email}`}
                   whileHover={{ x: 6 }}
                   transition={{ type: "spring", stiffness: 420, damping: 28 }}
@@ -254,7 +217,6 @@ export function Footer() {
                 {profile.phones.map((phone, index) => (
                   <motion.a
                     key={phone}
-                    data-footer-micro
                     href={`tel:${phone.replace(/\s+/g, "")}`}
                     whileHover={{ x: 6 }}
                     transition={{ type: "spring", stiffness: 420, damping: 28 }}
@@ -273,7 +235,6 @@ export function Footer() {
                   </motion.a>
                 ))}
                 <motion.span
-                  data-footer-micro
                   whileHover={{ x: 6, color: "var(--foreground)" }}
                   transition={{ type: "spring", stiffness: 420, damping: 28 }}
                   className="inline-flex items-center gap-3"
@@ -286,7 +247,7 @@ export function Footer() {
                 </motion.span>
               </div>
 
-              <div data-footer-micro className="mt-auto flex flex-wrap items-center gap-5 pt-8">
+              <div className="mt-auto flex flex-wrap items-center gap-5 pt-8">
                 {socialLinks.map((link) => (
                   <div key={link.label} className="group relative">
                     <a
@@ -318,12 +279,9 @@ export function Footer() {
         </div>
 
         <div
-          data-stagger
-          data-footer-reveal
           className="relative mt-10 border-t border-[var(--edge)] pt-6 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.12)]"
         >
           <nav
-            data-stagger-item
             className="flex flex-wrap items-center gap-x-4 gap-y-2"
             aria-label="Footer navigation"
           >
@@ -354,7 +312,6 @@ export function Footer() {
             </a>
 
             <motion.p
-              data-stagger-item
               whileHover={{ color: "rgba(37, 76, 219,0.9)" }}
               transition={{ duration: 0.28, ease: "easeOut" }}
               className="shrink-0 text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]"
