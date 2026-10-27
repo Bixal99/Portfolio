@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Poppins } from "next/font/google";
 import { CustomCursor } from "@/components/CustomCursor";
 import { InteractionFeedback } from "@/components/InteractionFeedback";
+import { PageProgress } from "@/components/PageProgress";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col">
         <CustomCursor />
         <InteractionFeedback />
+        <PageProgress />
         {children}
       </body>
     </html>
