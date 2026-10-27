@@ -1,0 +1,9 @@
+{
+  "duplicates": [
+    [
+      "public/covers/posters/prompts.json",
+      "public/covers/prompts.json"
+    ]
+  ],
+  "policy": "No untracked user assets deleted. Keep real posters, recordings, certificates, resume, portrait, journey media, provenance and decoder compatibility assets. Duplicate prompts are intentional provenance mirrors."
+}

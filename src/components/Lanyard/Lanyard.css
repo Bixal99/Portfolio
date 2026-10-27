@@ -10,7 +10,7 @@
   transform: scale(1);
   transform-origin: center;
   touch-action: none;
-  background: #0c0c0e;
+  background: var(--surface);
   cursor: grab;
 }
 

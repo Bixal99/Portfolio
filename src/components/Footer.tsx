@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
 import { navItems, profile, socialLinks } from "@/data/portfolio";
-import { navigateWithLegalCurtain } from "@/lib/legal-transition";
 import { ContactForm } from "./ContactForm";
 import { CreativeCodeWindow } from "./CreativeCodeWindow";
 import FlipWordsHero from "./flip-words-demo";
@@ -111,7 +109,6 @@ function SocialIcon({ label, className = "size-7" }: { label: string; className?
 
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -191,7 +188,7 @@ export function Footer() {
     <footer
       ref={footerRef}
       id="contact"
-      className="relative mt-10 overflow-hidden border-t border-white/10 bg-black pt-16 pb-16 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.18),0_-36px_120px_rgba(0,0,0,0.78)] sm:mt-16 sm:pt-32 sm:pb-28 lg:mt-20 lg:pt-36 lg:pb-28"
+      className="relative mt-10 overflow-hidden border-t border-[var(--edge)] bg-[var(--background)] pt-16 pb-16 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.18),0_-36px_120px_rgba(16,23,47,0.12)] sm:mt-16 sm:pt-32 sm:pb-28 lg:mt-20 lg:pt-36 lg:pb-28"
     >
       <div
         aria-hidden="true"
@@ -200,12 +197,12 @@ export function Footer() {
       <div
         data-footer-parallax="grid"
         aria-hidden="true"
-        className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(255,255,255,0.075)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.075)_1px,transparent_1px)] [background-size:76px_76px]"
+        className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(var(--foreground-rgb),0.075)_1px,transparent_1px),linear-gradient(90deg,rgba(var(--foreground-rgb),0.075)_1px,transparent_1px)] [background-size:76px_76px]"
       />
       <div
         data-footer-parallax="lines"
         aria-hidden="true"
-        className="absolute inset-0 opacity-70 [background:linear-gradient(115deg,transparent_0%,transparent_24%,rgba(var(--accent-rgb),0.07)_24.2%,transparent_24.8%,transparent_56%,rgba(255,255,255,0.055)_56.2%,transparent_56.8%)]"
+        className="absolute inset-0 opacity-70 [background:linear-gradient(115deg,transparent_0%,transparent_24%,rgba(var(--accent-rgb),0.07)_24.2%,transparent_24.8%,transparent_56%,rgba(var(--foreground-rgb),0.055)_56.2%,transparent_56.8%)]"
       />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div data-footer-reveal className="mx-auto w-full">
@@ -221,7 +218,7 @@ export function Footer() {
         >
           <div
             data-footer-reveal
-            className="relative flex h-full flex-col overflow-hidden bg-white/[0.025] p-6 shadow-[var(--shadow-border),0_30px_90px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.065)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent sm:p-8 lg:p-10"
+            className="relative flex h-full flex-col overflow-hidden bg-[var(--surface)] p-6 shadow-[var(--shadow-border),0_30px_90px_rgba(16,23,47,0.12),inset_0_1px_0_rgba(255,255,255,0.065)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent sm:p-8 lg:p-10"
           >
             <div
               aria-hidden="true"
@@ -235,15 +232,15 @@ export function Footer() {
                 />
                 Contact
               </div>
-              <h2 data-footer-micro className="text-[clamp(1.75rem,7vw,3rem)] font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl">
+              <h2 data-footer-micro className="text-[clamp(1.75rem,7vw,3rem)] font-semibold leading-tight tracking-[-0.04em] text-[var(--foreground)] sm:text-5xl">
                 Let us turn an idea into a working system.
               </h2>
-              <p data-footer-micro className="mt-5 max-w-xl text-pretty text-base leading-8 text-white/58">
+              <p data-footer-micro className="mt-5 max-w-xl text-pretty text-base leading-8 text-[var(--muted)]">
                 Send a project note, internship opportunity, or collaboration
                 idea. I usually respond with the next practical step.
               </p>
 
-              <div className="mt-8 grid gap-4 text-sm text-white/62">
+              <div className="mt-8 grid gap-4 text-sm text-[var(--muted)]">
                 <motion.a
                   data-footer-micro
                   href={`mailto:${profile.email}`}
@@ -252,7 +249,7 @@ export function Footer() {
                   className="inline-flex min-w-0 items-center gap-3 transition-colors duration-150 hover:text-[var(--accent)]"
                 >
                   <Mail className="size-4 shrink-0" aria-hidden="true" />
-                  <span className="truncate">{profile.email}</span>
+                  <span className="min-w-0 break-all">{profile.email}</span>
                 </motion.a>
                 {profile.phones.map((phone, index) => (
                   <motion.a
@@ -266,7 +263,7 @@ export function Footer() {
                     <span className="relative inline-flex shrink-0">
                       <Phone className="size-4" aria-hidden="true" />
                       <span
-                        className="absolute -right-1.5 -top-1.5 flex size-3 items-center justify-center rounded-full bg-[var(--accent)] text-[0.55rem] font-bold leading-none text-black"
+                        className="absolute -right-1.5 -top-1.5 flex size-3 items-center justify-center rounded-full bg-[var(--accent)] text-[0.55rem] font-bold leading-none text-[var(--on-accent)]"
                         aria-hidden="true"
                       >
                         {index + 1}
@@ -277,7 +274,7 @@ export function Footer() {
                 ))}
                 <motion.span
                   data-footer-micro
-                  whileHover={{ x: 6, color: "rgba(255,255,255,0.86)" }}
+                  whileHover={{ x: 6, color: "var(--foreground)" }}
                   transition={{ type: "spring", stiffness: 420, damping: 28 }}
                   className="inline-flex items-center gap-3"
                 >
@@ -298,17 +295,17 @@ export function Footer() {
                       rel="noreferrer"
                       aria-label={link.label}
                       onMouseLeave={(e) => e.currentTarget.blur()}
-                      className="inline-flex text-white/70 transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-white/70 focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)]"
+                      className="inline-flex size-11 items-center justify-center text-[var(--muted)] transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-[var(--muted)] focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)]"
                     >
                       <SocialIcon label={link.label} />
                     </a>
                     <span
-                      className="pointer-events-none absolute -top-12 left-1/2 z-20 origin-bottom -translate-x-1/2 scale-0 whitespace-nowrap rounded-lg border border-white/15 bg-black px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-white shadow-[0_10px_30px_rgba(0,0,0,0.55),0_0_0_1px_rgba(var(--accent-rgb),0.2)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-100"
+                      className="pointer-events-none absolute -top-12 left-1/2 z-20 origin-bottom -translate-x-1/2 scale-0 whitespace-nowrap rounded-lg border border-[var(--edge)] bg-[var(--background)] px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-[var(--foreground)] shadow-[0_10px_30px_rgba(16,23,47,0.12),0_0_0_1px_rgba(var(--accent-rgb),0.2)] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-100"
                     >
                       {link.label}
                       <span
                         aria-hidden="true"
-                        className="absolute left-1/2 top-full size-2 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-white/15 bg-black"
+                        className="absolute left-1/2 top-full size-2 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-[var(--edge)] bg-[var(--background)]"
                       />
                     </span>
                   </div>
@@ -323,7 +320,7 @@ export function Footer() {
         <div
           data-stagger
           data-footer-reveal
-          className="relative mt-10 border-t border-white/10 pt-6 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.12)]"
+          className="relative mt-10 border-t border-[var(--edge)] pt-6 shadow-[inset_0_1px_0_rgba(var(--accent-rgb),0.12)]"
         >
           <nav
             data-stagger-item
@@ -337,7 +334,7 @@ export function Footer() {
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
                 transition={{ type: "spring", stiffness: 430, damping: 30 }}
-                className="group inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/42 transition-colors duration-150 hover:text-[var(--accent)]"
+                className="group inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)] transition-colors duration-150 hover:text-[var(--accent)]"
               >
                 {item.label}
                 <ArrowUpRight
@@ -348,58 +345,19 @@ export function Footer() {
             ))}
           </nav>
 
-          <div className="mt-5 flex flex-col gap-4 border-t border-white/8 pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8 sm:pr-28">
-            <nav
-              className="flex flex-wrap items-center"
-              aria-label="Legal"
+          <div className="mt-5 flex flex-col gap-4 border-t border-[var(--edge)] pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-8 sm:pr-28">
+            <a
+              href="#contact"
+              className="inline-flex min-h-11 items-center text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)] transition-colors duration-150 hover:text-[var(--accent)]"
             >
-              {[
-                { label: "Privacy Policy", href: "/privacy" },
-                { label: "Terms of Use", href: "/terms" },
-                { label: "Contact", href: "/#contact" },
-              ].map((item, index) => (
-                <span key={item.href} className="inline-flex items-center">
-                  {index > 0 ? (
-                    <span
-                      aria-hidden="true"
-                      className="mx-3 h-3 w-px shrink-0 bg-white/15 sm:mx-3.5"
-                    />
-                  ) : null}
-                  <a
-                    href={item.href}
-                    onClick={(e) => {
-                      if (item.href === "/#contact") {
-                        e.preventDefault();
-                        const contact = document.getElementById("contact");
-                        if (contact) {
-                          contact.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start",
-                          });
-                          return;
-                        }
-                        navigateWithLegalCurtain(
-                          router.push.bind(router),
-                          "/#contact",
-                        );
-                        return;
-                      }
-                      e.preventDefault();
-                      navigateWithLegalCurtain(router.push.bind(router), item.href);
-                    }}
-                    className="inline-flex h-8 items-center whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.14em] text-white/40 transition-colors duration-150 hover:text-[var(--accent)] active:scale-[0.96]"
-                  >
-                    {item.label}
-                  </a>
-                </span>
-              ))}
-            </nav>
+              Contact
+            </a>
 
             <motion.p
               data-stagger-item
-              whileHover={{ color: "rgba(93,211,182,0.9)" }}
+              whileHover={{ color: "rgba(37, 76, 219,0.9)" }}
               transition={{ duration: 0.28, ease: "easeOut" }}
-              className="shrink-0 text-[11px] uppercase tracking-[0.16em] text-white/34"
+              className="shrink-0 text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]"
             >
               2026 Mohammad Bilal
             </motion.p>

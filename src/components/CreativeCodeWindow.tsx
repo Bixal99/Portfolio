@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { FileCode2 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useReducedMotionPreference, useVisibleActivity } from "./useVisibleActivity";
 
 const files = [
   {
@@ -22,7 +23,7 @@ const files = [
   },
   {
     name: "coffee.py",
-    accent: "text-[#c084fc]",
+    accent: "text-[#c4a5ff]",
     label: "Coffee",
     lines: [
       "cups = 2",
@@ -36,7 +37,7 @@ const files = [
   },
   {
     name: "focus.py",
-    accent: "text-[#8ab4ff]",
+    accent: "text-[#8ca5ff]",
     label: "Focus",
     lines: [
       "notifications = False",
@@ -50,7 +51,7 @@ const files = [
   },
   {
     name: "weekend.py",
-    accent: "text-[#fb923c]",
+    accent: "text-[#f6ba78]",
     label: "Fun",
     lines: [
       "bugs = 0",
@@ -64,7 +65,7 @@ const files = [
   },
   {
     name: "deploy.py",
-    accent: "text-[#34d399]",
+    accent: "text-[#73d9b2]",
     label: "Deploy",
     lines: [
       "build_passed = True",
@@ -78,7 +79,7 @@ const files = [
   },
   {
     name: "idea.py",
-    accent: "text-[#facc15]",
+    accent: "text-[#e7ce80]",
     label: "Idea",
     lines: [
       "idea = \"tiny app\"",
@@ -92,7 +93,7 @@ const files = [
   },
   {
     name: "client.py",
-    accent: "text-[#38bdf8]",
+    accent: "text-[#77c9ed]",
     label: "Client",
     lines: [
       "message_sent = True",
@@ -106,7 +107,7 @@ const files = [
   },
   {
     name: "solve_error.py",
-    accent: "text-[#f472b6]",
+    accent: "text-[#f59abf]",
     label: "Debug",
     lines: [
       "error_fixed = True",
@@ -133,7 +134,7 @@ function highlight(line: string) {
   return parts.map((part, index) => {
     if (/^(class|def|return|and|not)$/.test(part)) {
       return (
-        <span key={index} className="text-[#635bff]">
+        <span key={index} className="text-[#b0aaff]">
           {part}
         </span>
       );
@@ -149,7 +150,7 @@ function highlight(line: string) {
 
     if (part === "print") {
       return (
-        <span key={index} className="text-[#8ab4ff]">
+        <span key={index} className="text-[#8ca5ff]">
           {part}
         </span>
       );
@@ -157,7 +158,7 @@ function highlight(line: string) {
 
     if (/^(True|False)$/.test(part)) {
       return (
-        <span key={index} className="text-[#c084fc]">
+        <span key={index} className="text-[#c4a5ff]">
           {part}
         </span>
       );
@@ -165,7 +166,7 @@ function highlight(line: string) {
 
     if (part === "self") {
       return (
-        <span key={index} className="text-[#7c3aed]">
+        <span key={index} className="text-[#c4a5ff]">
           {part}
         </span>
       );
@@ -173,7 +174,7 @@ function highlight(line: string) {
 
     if (/^f?".*"$/.test(part)) {
       return (
-        <span key={index} className="text-[#00d69d]">
+        <span key={index} className="text-[#73d9b2]">
           {part}
         </span>
       );
@@ -189,6 +190,10 @@ type CreativeCodeWindowProps = {
 
 export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps) {
   const sectionRef = useRef<HTMLElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef(0);
+  const active = useVisibleActivity(cardRef);
+  const reduced = useReducedMotionPreference();
   const [activeFile, setActiveFile] = useState(0);
   const [typedChars, setTypedChars] = useState(0);
   const currentFile = files[activeFile] ?? files[0];
@@ -235,25 +240,23 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
   }, []);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
-      window.requestAnimationFrame(() => setTypedChars(fullText.length));
-      const timeoutId = window.setTimeout(() => {
-        setActiveFile((index) => (index + 1) % files.length);
-      }, LOOP_DELAY_MS);
-      return () => window.clearTimeout(timeoutId);
-    }
+    progressRef.current = 0;
+    const frame = window.requestAnimationFrame(() => setTypedChars(0));
+    return () => window.cancelAnimationFrame(frame);
+  }, [fullText]);
 
-    let nextChar = 0;
+  useEffect(() => {
+    if (!active || reduced) return;
+
+    let nextChar = progressRef.current;
     let timeoutId: number | undefined;
     let cancelled = false;
-
-    const resetFrame = window.requestAnimationFrame(() => setTypedChars(0));
 
     const typeNextChar = () => {
       if (cancelled) return;
 
       nextChar += 1;
+      progressRef.current = Math.min(nextChar, fullText.length);
       setTypedChars(Math.min(nextChar, fullText.length));
 
       if (nextChar >= fullText.length) {
@@ -271,23 +274,23 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
 
     return () => {
       cancelled = true;
-      window.cancelAnimationFrame(resetFrame);
       if (timeoutId) {
         window.clearTimeout(timeoutId);
       }
     };
-  }, [fullText]);
+  }, [fullText, active, reduced]);
 
-  const typedText = fullText.slice(0, typedChars);
+  const typedText = reduced ? fullText : fullText.slice(0, typedChars);
   const renderedLines = typedText.split("\n");
   const lastLineIndex = renderedLines.length - 1;
   const codeCard = (
     <div
+      ref={cardRef}
       data-code-card
-      className="w-full overflow-hidden rounded-3xl bg-white/[0.045] shadow-[var(--shadow-border),0_40px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+      className="w-full overflow-hidden rounded-3xl bg-[var(--surface)] shadow-[var(--shadow-border),0_40px_120px_rgba(16,23,47,0.12)] backdrop-blur-xl"
       style={codeFontStyle}
     >
-      <div className="flex flex-col gap-3 border-b border-white/10 bg-white/[0.035] px-3 py-3 sm:gap-4 sm:px-4 sm:py-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-3 border-b border-[var(--edge)] bg-[var(--surface)] px-3 py-3 sm:gap-4 sm:px-4 sm:py-4 sm:flex-row sm:items-center">
         <div className="flex shrink-0 gap-2">
           <span className="size-3 rounded-full bg-[#ff5f57]" />
           <span className="size-3 rounded-full bg-[#ffbd2e]" />
@@ -314,9 +317,9 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
                   setTypedChars(0);
                   setActiveFile(index);
                 }}
-                className={`inline-flex min-w-0 w-full items-center justify-center gap-1 rounded-lg px-1.5 py-1.5 text-[9px] font-bold transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] sm:gap-1.5 sm:px-2 sm:py-2 sm:text-[10px] lg:text-[11px] ${selected
-                    ? "bg-white/12 text-white shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_32px_rgba(var(--accent-rgb),0.18)]"
-                    : "bg-transparent text-white/42 shadow-[0_0_0_1px_transparent] hover:bg-white/[0.055] hover:shadow-[var(--shadow-border)]"
+                className={`inline-flex min-h-11 min-w-0 w-full items-center justify-center gap-1 rounded-lg px-1.5 py-1.5 text-[9px] font-bold transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] sm:gap-1.5 sm:px-2 sm:py-2 sm:text-[10px] lg:text-[11px] ${selected
+                    ? "bg-[var(--surface)] text-[var(--foreground)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_32px_rgba(var(--accent-rgb),0.18)]"
+                    : "bg-transparent text-[var(--muted)] shadow-[0_0_0_1px_transparent] hover:bg-[var(--surface)] hover:shadow-[var(--shadow-border)]"
                   } ${file.accent}`}
               >
                 <FileCode2 className="size-3 shrink-0 sm:size-3.5" aria-hidden="true" />
@@ -332,12 +335,12 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
         role="tabpanel"
         className="grid grid-cols-[48px_1fr] px-0 py-6 text-xs leading-7 sm:grid-cols-[56px_1fr] sm:text-sm"
       >
-        <div className="select-none border-r border-white/10 text-right text-white/24">
+        <div className="select-none border-r border-[var(--edge)] text-right text-[var(--muted)]">
           {Array.from({ length: currentFile.lines.length }).map((_, index) => (
             <div key={index} className="pr-3 sm:pr-4">{index + 1}</div>
           ))}
         </div>
-        <pre className="min-h-[224px] overflow-hidden px-4 text-white/82 sm:px-5">
+        <pre className="min-h-[224px] min-w-0 overflow-x-auto px-4 text-[var(--foreground)] sm:px-5" tabIndex={0} aria-label="Code example">
           {renderedLines.map((line, index) => (
             <div key={`${currentFile.name}-${index}-${line}`}>
               {highlight(line || " ")}
@@ -348,9 +351,9 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
           ))}
         </pre>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/38">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--edge)] px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[var(--muted)]">
         <span>{currentFile.label} Mode</span>
-        <span>{generatedPercent}% generated</span>
+        <span>{reduced ? 100 : generatedPercent}% generated</span>
       </div>
     </div>
   );

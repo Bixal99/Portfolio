@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { Orbit as OrbitIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface SolarSystemItem {
@@ -47,22 +46,24 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
     ref,
   ) => {
     const [hoveredId, setHoveredId] = useState<string | null>(null);
+    const orbitPaused = isPaused;
 
     const dustItems = [
-      { delay: "-4s", radius: "220px", color: "#5dd3b6" },
-      { delay: "-11s", radius: "320px", color: "#ffffff" },
-      { delay: "-19s", radius: "400px", color: "#5dd3b6" },
-      { delay: "-28s", radius: "480px", color: "#94a3b8" },
-      { delay: "-7s", radius: "260px", color: "#5dd3b6" },
-      { delay: "-15s", radius: "440px", color: "#eab308" },
-      { delay: "-23s", radius: "520px", color: "#5dd3b6" },
+      { delay: "-4s", radius: "calc(var(--radius-outer) * .43)", color: "var(--accent)" },
+      { delay: "-11s", radius: "calc(var(--radius-outer) * .63)", color: "#ffffff" },
+      { delay: "-19s", radius: "var(--radius-mid)", color: "var(--accent)" },
+      { delay: "-28s", radius: "calc(var(--radius-outer) * .94)", color: "var(--muted)" },
+      { delay: "-7s", radius: "var(--radius-inner)", color: "var(--accent)" },
+      { delay: "-15s", radius: "calc(var(--radius-outer) * .86)", color: "var(--accent-hover)" },
+      { delay: "-23s", radius: "var(--radius-outer)", color: "var(--accent)" },
     ];
 
     return (
       <div
         ref={ref}
+        data-orbit-paused={orbitPaused}
         className={cn(
-          "solar-system-root relative mx-auto flex h-[400px] w-full max-w-full select-none items-start justify-center overflow-hidden perspective-[1200px] pt-2 sm:h-[560px] sm:pt-4 md:h-[680px] md:max-w-[1200px] lg:h-[760px]",
+          "solar-system-root relative mx-auto w-full max-w-[1200px] select-none",
           className,
         )}
         {...props}
@@ -71,37 +72,16 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
           dangerouslySetInnerHTML={{
             __html: `
           .solar-system-root {
-            --radius-inner: 260px;
-            --radius-mid: 400px;
-            --radius-outer: 510px;
-            --radius-far: 580px;
-          }
-
-          @media (max-width: 768px) {
-            .solar-system-root {
-              --radius-inner: 160px;
-              --radius-mid: 245px;
-              --radius-outer: 310px;
-              --radius-far: 355px;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .solar-system-root {
-              --radius-inner: 110px;
-              --radius-mid: 165px;
-              --radius-outer: 210px;
-              --radius-far: 240px;
-            }
-          }
-
-          @media (max-width: 380px) {
-            .solar-system-root {
-              --radius-inner: 95px;
-              --radius-mid: 140px;
-              --radius-outer: 180px;
-              --radius-far: 205px;
-            }
+            font-family: var(--font-poppins), Poppins, sans-serif;
+            container-type: inline-size;
+            aspect-ratio: 1.5;
+            min-height: 360px;
+            max-height: 760px;
+            overflow: visible;
+            perspective: 1600px;
+            --radius-outer: min(510px, 40cqw);
+            --radius-mid: calc(var(--radius-outer) * .78);
+            --radius-inner: calc(var(--radius-outer) * .51);
           }
 
           @keyframes custom-orbitMove {
@@ -122,20 +102,6 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             }
           }
 
-          @keyframes custom-sun-pulse {
-            0% { transform: scale(0.9); opacity: 0.7; }
-            100% { transform: scale(1.1); opacity: 1; }
-          }
-
-          @keyframes custom-spin-clockwise {
-            0% { transform: rotateX(58deg) rotateY(-8deg) rotateZ(0deg); }
-            100% { transform: rotateX(58deg) rotateY(-8deg) rotateZ(360deg); }
-          }
-          @keyframes custom-spin-counter {
-            0% { transform: rotateX(58deg) rotateY(-8deg) rotateZ(0deg); }
-            100% { transform: rotateX(58deg) rotateY(-8deg) rotateZ(-360deg); }
-          }
-
           .animate-custom-orbit {
             animation: custom-orbitMove var(--orbit-duration) linear infinite;
             animation-play-state: var(--orbit-play-state);
@@ -144,14 +110,33 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             animation: custom-billboardCancel var(--orbit-duration) linear infinite;
             animation-play-state: var(--orbit-play-state);
           }
-          .animate-custom-sun-pulse {
-            animation: custom-sun-pulse 4s ease-in-out infinite alternate;
+          .skill-core {
+            position: absolute;
+            z-index: 20;
+            display: grid;
+            place-items: center;
+            width: 78px;
+            height: 78px;
+            border: 1px solid var(--edge);
+            border-radius: 16px;
+            background: var(--background);
+            color: var(--foreground);
+            pointer-events: none;
           }
-          .animate-custom-spin-cw {
-            animation: custom-spin-clockwise 20s linear infinite;
+          .skill-core-corners {
+            position: absolute;
+            inset: -6px;
+            width: calc(100% + 12px);
+            height: calc(100% + 12px);
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 1.1;
+            stroke-linecap: round;
+            opacity: .7;
           }
-          .animate-custom-spin-ccw {
-            animation: custom-spin-counter 30s linear infinite;
+          .skill-core-image { max-width: 70%; max-height: 70%; object-fit: contain; }
+          @media (max-width: 767px) {
+            .skill-core { width: 58px; height: 58px; border-radius: 12px; }
           }
 
           .orbit-logo-card {
@@ -163,12 +148,11 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             width: 3.1rem;
             height: 3.1rem;
             padding: 0;
-            background: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: var(--surface);
+
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 9999px;
-            color: #ffffff;
+            color: var(--foreground);
             user-select: none;
             cursor: pointer;
             pointer-events: auto;
@@ -177,12 +161,8 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
           }
 
-          /* Larger invisible hit area around the whole circle */
           .orbit-logo-card::before {
-            content: '';
-            position: absolute;
-            inset: -12px;
-            border-radius: 9999px;
+            content: none;
           }
 
           @media (min-width: 768px) {
@@ -204,8 +184,8 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             padding: 0.35rem 0.7rem;
             border-radius: 0.4rem;
             border: 1px solid rgba(255, 255, 255, 0.14);
-            background: rgba(0, 0, 0, 0.92);
-            color: #fff;
+            background: var(--surface-soft);
+            color: var(--foreground);
             font-family: var(--font-poppins), Poppins, ui-sans-serif, system-ui, sans-serif;
             font-size: 0.7rem;
             font-weight: 600;
@@ -221,68 +201,77 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
           .orbit-tooltip.is-visible {
             opacity: 1;
           }
+
+          .solar-system-root[data-orbit-paused="true"] * {
+            animation-play-state: paused !important;
+          }
+          .orbit-logo-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 5px;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .solar-system-root * { animation: none !important; transition: none !important; }
+            .solar-system-root .animate-custom-orbit {
+              transform: translate(-50%, -50%) rotateZ(var(--orbit-angle, 0deg)) translateX(var(--orbit-radius)) !important;
+            }
+            .solar-system-root .animate-custom-billboard {
+              transform: translate(-50%, -50%) rotateZ(calc(-1 * var(--orbit-angle, 0deg))) rotateY(8deg) rotateX(-58deg) !important;
+            }
+            .solar-system-root .solar-dust { display: none; }
+          }
         `,
           }}
         />
 
         <div
-          className="absolute left-1/2 top-[42%] flex h-[min(100vw,420px)] w-[min(100vw,420px)] items-center justify-center sm:h-[780px] sm:w-[780px] md:top-[46%] md:h-[1200px] md:w-[1200px]"
+          className="absolute left-1/2 top-[46%] flex h-full w-full items-center justify-center"
           style={{
             transform:
-              "translate(-50%, -50%) rotateX(58deg) rotateY(-8deg) translateY(-2%)",
+              "translate(-50%, -50%) rotateX(58deg) rotateY(-8deg)",
             transformStyle: "preserve-3d",
           }}
         >
           <div
-            className="pointer-events-none absolute z-20 flex h-[110px] w-[110px] items-center justify-center md:h-[150px] md:w-[150px]"
+            className="skill-core"
+            role="img"
+            aria-label={centerLogoAlt}
             style={{
               transform: "rotateY(8deg) rotateX(-58deg)",
-              transformStyle: "preserve-3d",
             }}
           >
-            <div className="animate-custom-sun-pulse absolute z-10 h-[100px] w-[100px] rounded-full bg-[rgba(var(--accent-rgb),0.22)] blur-md filter md:h-[140px] md:w-[140px]" />
-
             {centerLogo ? (
               typeof centerLogo === "string" ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  className="relative z-20 h-16 w-16 rounded-full border-2 border-[var(--accent)]/40 bg-black p-2 shadow-[0_0_30px_rgba(var(--accent-rgb),0.3)] outline outline-1 -outline-offset-1 outline-white/10 md:h-24 md:w-24 md:p-3"
+                  className="skill-core-image"
                   src={centerLogo}
                   alt={centerLogoAlt}
                   width={96}
                   height={96}
                 />
               ) : (
-                <div className="relative z-20 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--accent)]/40 bg-black p-2 shadow-[0_0_30px_rgba(var(--accent-rgb),0.3)] md:h-24 md:w-24">
-                  {centerLogo}
-                </div>
+                centerLogo
               )
             ) : (
-              <div className="relative z-20 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[var(--accent)]/40 bg-black p-2 shadow-[0_0_30px_rgba(var(--accent-rgb),0.3)] md:h-24 md:w-24">
-                <OrbitIcon
-                  className="h-9 w-9 animate-spin text-[var(--accent)]"
-                  style={{ animationDuration: "10s" }}
-                />
-              </div>
+              <span>MB</span>
             )}
 
-            <div className="animate-custom-spin-cw pointer-events-none absolute h-[125px] w-[125px] rounded-full border border-dashed border-[var(--accent)]/55 shadow-[0_0_12px_rgba(var(--accent-rgb),0.45),0_0_28px_rgba(var(--accent-rgb),0.2)] md:h-[160px] md:w-[160px]" />
-            <div className="animate-custom-spin-ccw pointer-events-none absolute h-[165px] w-[165px] rounded-full border border-dashed border-[var(--accent)]/35 shadow-[0_0_10px_rgba(var(--accent-rgb),0.3),0_0_24px_rgba(var(--accent-rgb),0.15)] md:h-[210px] md:w-[210px]" />
+            <svg className="skill-core-corners" viewBox="0 0 90 90" aria-hidden="true"><path d="M5 21V13a8 8 0 0 1 8-8h8M69 5h8a8 8 0 0 1 8 8v8M85 69v8a8 8 0 0 1-8 8h-8M21 85h-8a8 8 0 0 1-8-8v-8" /></svg>
           </div>
 
           {dustItems.map((dust, idx) => (
             <div
               key={idx}
-              className="animate-custom-orbit pointer-events-none absolute left-1/2 top-1/2 h-1 w-1 rounded-full opacity-70"
+              className="solar-dust animate-custom-orbit pointer-events-none absolute left-1/2 top-1/2 h-1 w-1 rounded-full opacity-70"
               style={{
                 background: dust.color,
                 boxShadow: `0 0 8px ${dust.color}, 0 0 16px ${dust.color}`,
                 animationDelay: dust.delay,
-                animationPlayState: isPaused ? "paused" : "running",
+                animationPlayState: orbitPaused ? "paused" : "running",
                 animationDuration: `${24 / speedMultiplier}s`,
                 ["--orbit-radius" as string]: dust.radius,
                 ["--orbit-duration" as string]: `${24 / speedMultiplier}s`,
-                ["--orbit-play-state" as string]: isPaused
+                ["--orbit-play-state" as string]: orbitPaused
                   ? "paused"
                   : "running",
               }}
@@ -309,8 +298,9 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                 const delayValue =
                   -(orbit.speed / arr.length) * idx - orbit.speed * phase;
                 const durationValue = orbit.speed / speedMultiplier;
+                const staticAngle = -360 * (idx / arr.length + phase);
                 const isHovered = hoveredId === item.id;
-                const playState = isPaused ? "paused" : "running";
+                const playState = orbitPaused ? "paused" : "running";
 
                 return (
                   <div
@@ -324,6 +314,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                       ["--orbit-duration" as string]: `${durationValue}s`,
                       ["--orbit-play-state" as string]: playState,
                       ["--hover-color" as string]: item.color,
+                      ["--orbit-angle" as string]: `${staticAngle}deg`,
                       zIndex: isHovered ? 40 : 10,
                       transformStyle: "preserve-3d",
                     }}
@@ -340,10 +331,12 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                       }}
                     />
 
-                    <div
+                    <button
+                      type="button"
+                      onFocus={() => setHoveredId(item.id)}
+                      onBlur={() => setHoveredId(null)}
                       onPointerEnter={() => setHoveredId(item.id)}
                       onPointerLeave={() => setHoveredId(null)}
-                      onPointerDown={() => setHoveredId(item.id)}
                       className="orbit-logo-card animate-custom-billboard"
                       aria-label={item.label}
                       style={{
@@ -359,7 +352,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                         ["--orbit-play-state" as string]: playState,
                       }}
                     >
-                      <div
+                      <span
                         className="pointer-events-none transition-transform duration-75"
                         style={{
                           transform: isHovered ? "scale(1.12)" : "scale(1)",
@@ -367,8 +360,8 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                         }}
                       >
                         {item.svg}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         className={`orbit-tooltip${isHovered ? " is-visible" : ""}`}
                         style={{
                           borderColor: isHovered
@@ -380,8 +373,8 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                         }}
                       >
                         {item.label}
-                      </div>
-                    </div>
+                      </span>
+                    </button>
                   </div>
                 );
               })}

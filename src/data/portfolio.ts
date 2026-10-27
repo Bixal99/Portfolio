@@ -42,6 +42,7 @@ export type TechGroup = {
 export type Project = {
   title: string;
   category: string;
+  sourcePrivate?: boolean;
   description: string;
   technologies: string[];
   highlights?: string[];
@@ -77,12 +78,7 @@ export const heroStats: HeroStat[] = [
 
 export const resume = {
   label: "Download CV",
-  href: "/Mohammad_Bilal_resume_Modern_Prof.pdf",
-  files: [
-    "/Mohammad_Bilal_resume_Modern_Prof.pdf",
-    "/Mohammad_Bilal_resume_ATS.pdf",
-    "/Mohammad_Bilal_resume_Cont_clean.pdf",
-  ],
+  href: "/resume/Mohammad-Bilal-CV.pdf",
 };
 
 export const navItems: NavItem[] = [
@@ -90,7 +86,7 @@ export const navItems: NavItem[] = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#stack" },
-  { label: "Journey", href: "#journey" },
+  { label: "Achievements", href: "#certificates" },
 ];
 
 export const socialLinks: SocialLink[] = [
@@ -143,16 +139,6 @@ export const journeyItems: JourneyItem[] = [
     icon: GraduationCap,
     image: "/journey/fast-nuces.png",
     imageAlt: "FAST NUCES University campus",
-  },
-  {
-    year: "Jun 2025",
-    title: "Startup Journey",
-    organization: "AI Builder",
-    description:
-      "Stepped into a fast-moving startup environment, building AI solutions while learning product thinking, speed, and real-world execution.",
-    icon: BriefcaseBusiness,
-    image: "/journey/startup-tech-destination.jpg",
-    imageAlt: "Tech Destination Pakistan startup event",
   },
   {
     year: "Jun 2026",
@@ -359,11 +345,11 @@ export const projects: Project[] = [
     title: "AI Book Assistant",
     category: "Generative AI",
     description:
-      "AI reading companion for exploring, summarizing, and navigating books.",
-    technologies: ["Next.js", "TypeScript", "React", "Vercel"],
+      "Upload a PDF and turn reading into a conversation, with AI-powered book exploration and voice interaction.",
+    technologies: ["Next.js", "TypeScript", "Vapi AI", "Tailwind CSS"],
     highlights: [
-      "Conversational book exploration and summaries",
-      "Deployed on Vercel as a live demo",
+      "Upload PDFs and explore their contents conversationally",
+      "Voice-enabled interaction with Vapi AI",
     ],
     links: {
       demo: "https://ai-book-assistant-blush.vercel.app",
@@ -435,50 +421,45 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    title: "School Management System",
-    category: "Full-Stack",
+    title: "Interview Help",
+    category: "Learning Platform",
     description:
-      "Student, teacher, and course workflows in one school operations app.",
-    technologies: ["React", "JavaScript", "HTML", "CSS"],
+      "A practical study platform connecting technical lessons, hands-on projects, and interview preparation in one learning journey.",
+    technologies: ["Next.js", "TypeScript", "React", "Tailwind CSS"],
     highlights: [
-      "Home, student, teacher, and course navigation",
-      "CRUD-style academic management flows",
+      "11 course roadmaps across software, AI, data, and infrastructure",
+      "In-browser coding playground and interview drills",
+      "Learning progress saved locally in the browser",
     ],
     links: {
-      demo: "https://schoolmanagement.vercel.app",
-      source: "https://schoolmanagement.vercel.app",
+      demo: "https://interview-help-eight.vercel.app/",
+      source: "https://github.com/Bixal99/Interview-Help",
     },
+    featured: true,
+  },
+  {
+    title: "Falcon Trading",
+    category: "Business Software",
+    description:
+      "A wholesale trading desk for inventory, cash and bank balances, customer and supplier ledgers, and profit-and-loss reports with Excel and CSV exports.",
+    technologies: ["Next.js", "TypeScript", "React", "Supabase", "PostgreSQL"],
+    highlights: [
+      "Inventory, purchases, sales, and customer/supplier balances",
+      "Day book, cash and bank reconciliation, and monthly reporting",
+      "Profit-and-loss reporting with Excel and CSV exports",
+    ],
+    links: {
+      demo: "https://falcon-trading.onrender.com",
+      source: "https://github.com/Bixal99/FALCON",
+    },
+    sourcePrivate: true,
   },
 ];
-
-/** True when a demo URL can be previewed inside an iframe. */
-export function canEmbedDemo(url: string): boolean {
-  try {
-    const host = new URL(url).hostname.toLowerCase();
-    // Streamlit Cloud sends embeds through an auth wall that breaks iframes.
-    if (host.endsWith("streamlit.app") || host === "share.streamlit.io") {
-      return false;
-    }
-    if (host === "github.com" || host.endsWith(".github.com")) {
-      return false;
-    }
-    return /^https?:$/i.test(new URL(url).protocol);
-  } catch {
-    return false;
-  }
-}
-
-/** Live embeddable demo URLs — used to warm iframe previews. */
-export function getLiveDemoUrls(list: Project[] = projects): string[] {
-  return list
-    .map((project) => project.links.demo)
-    .filter((url) => canEmbedDemo(url));
-}
 
 export const sectionMeta = {
   journey: {
     kicker: "MY JOURNEY",
-    title: "From school foundations to university, startups, and graduation.",
+    title: "From school foundations to university and graduation.",
     icon: BookOpen,
   },
   stack: {
@@ -488,7 +469,7 @@ export const sectionMeta = {
   },
   projects: {
     kicker: "MY PROJECTS",
-    title: "Nine builds. Click one to inspect on the right.",
+    title: "A selection of AI, full-stack, and automation projects.",
     icon: BriefcaseBusiness,
   },
 };

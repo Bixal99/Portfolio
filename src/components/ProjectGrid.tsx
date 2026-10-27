@@ -1,139 +1,149 @@
 ﻿"use client";
 
-import { useMemo, useState } from "react";
-import { projects, sectionMeta, type Project } from "@/data/portfolio";
-import { AnimatedSection } from "./AnimatedSection";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { ArrowUpRight, BookOpen, ChartColumn, Eye, GraduationCap } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { featuredProjects, projectCatalog } from "@/data/projectCatalog";
+import { sectionMeta } from "@/data/portfolio";
 import { SectionHeading } from "./SectionHeading";
-import LineSidebar from "./LineSidebar";
-import MagicBento, { type MagicBentoCard } from "./MagicBento";
+import { ProjectPreview } from "./ProjectPreview";
+import { ProjectLinks } from "./ProjectLinks";
+import { ProjectTechnologies } from "./ProjectTechnologies";
+import styles from "./ProjectGrid.module.css";
 
-const idleCards: MagicBentoCard[] = [
-  {
-    label: "Overview",
-    title: "Project story",
-    description: "Category, summary, and details load beside the demo screen.",
-  },
-  {
-    label: "Demo",
-    title: "Live preview",
-    description: "The project demo screen fills this panel when you select one.",
-    variant: "demo",
-  },
-  {
-    label: "Stack",
-    title: "What is a stack?",
-    description:
-      "The set of languages, frameworks, and tools used to build a project — frontend, backend, and everything in between.",
-  },
-  {
-    label: "Source",
-    title: "Code & repo",
-    description: "Jump to the repository from the source tile.",
-  },
-];
-
-function projectToBentoCards(project: Project): MagicBentoCard[] {
-  const sourceIsGithub = /github\.com/i.test(project.links.source);
-
-  // Same grid as idle: Overview → Demo → Stack → Source
-  return [
-    {
-      label: project.category,
-      title: project.title,
-      description: project.description,
-    },
-    {
-      label: "Demo",
-      title: project.title,
-      description: project.description,
-      variant: "demo",
-      demoUrl: project.links.demo,
-      href: project.links.demo,
-    },
-    {
-      label: "Stack",
-      title: "Built with",
-      description: project.technologies.join(" · "),
-      variant: "stack",
-      technologies: project.technologies,
-    },
-    {
-      label: "Source",
-      title: sourceIsGithub ? "Repository" : "Project link",
-      description: sourceIsGithub
-        ? "Open the GitHub repository for this project."
-        : "Open the live project for this build.",
-      href: project.links.source,
-    },
-  ];
-}
+const projectPresentation = {
+  "ai-book": { lines: ["AI Book", "Assistant"], Icon: BookOpen },
+  "eye-blink": { lines: ["Eye Blink", "Morse Detector"], Icon: Eye },
+  churn: { lines: ["Churn", "Prediction System"], Icon: ChartColumn },
+  "interview-help": { lines: ["Interview", "Help"], Icon: GraduationCap },
+};
 
 export function ProjectGrid() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const active =
-    activeIndex != null ? (projects[activeIndex] ?? null) : null;
+  const rootRef = useRef<HTMLElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  const cards = useMemo(
-    () => (active ? projectToBentoCards(active) : idleCards),
-    [active],
-  );
+  useEffect(() => {
+    const root = rootRef.current;
+    const timeline = timelineRef.current;
+    const track = trackRef.current;
+    if (!root || !timeline || !track) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const rows = Array.from(timeline.querySelectorAll<HTMLElement>("[data-project-row]"));
+    const nodes = rows.map((row) => row.querySelector<HTMLElement>("[data-project-node]"));
+    const fill = track.querySelector<HTMLElement>("[data-project-progress]");
+    const tip = track.querySelector<HTMLElement>("[data-project-tip]");
+    let railStart = 0;
+    let railEnd = 0;
+    let railHeight = 0;
+    let stops: number[] = [];
+
+    const measure = () => {
+      const centers = rows.map((row) => row.offsetTop + row.offsetHeight / 2);
+      railStart = rows[0]?.offsetTop ?? 0;
+      const outro = root.querySelector<HTMLElement>("[data-project-outro]");
+      railEnd = outro ? outro.offsetTop - timeline.offsetTop : timeline.offsetHeight;
+      railHeight = Math.max(1, railEnd - railStart);
+      stops = centers.map((center) => (center - railStart) / railHeight);
+      track.style.top = railStart + "px";
+      track.style.height = railHeight + "px";
+    };
+    measure();
+    ScrollTrigger.addEventListener("refreshInit", measure);
+    const media = gsap.matchMedia();
+    media.add({ desktop: "(min-width: 900px)", mobile: "(max-width: 899px)", reduced: "(prefers-reduced-motion: reduce)" }, (context) => {
+      measure();
+      if (context.conditions?.reduced) return;
+      const desktop = context.conditions?.desktop;
+      const focusCleanups: (() => void)[] = [];
+      rows.forEach((row, index) => {
+        const direction = index % 2 === 0 ? -1 : 1;
+        const visual = row.querySelector("[data-project-visual]");
+        const copy = row.querySelectorAll("[data-project-copy] > *");
+        const reveal = gsap.timeline({
+          scrollTrigger: { trigger: row, start: "top 83%", end: "bottom 15%", toggleActions: "play reverse play reverse" },
+          defaults: { duration: .85, ease: "power3.out" },
+        });
+        reveal.fromTo(visual,
+          { opacity: 0, y: desktop ? 64 : 36, x: desktop ? direction * 28 : 0, rotationY: desktop ? direction * 7 : 0, rotationX: desktop ? 6 : 0, scale: .96, transformPerspective: 1200 },
+          { opacity: 1, y: 0, x: 0, rotationY: 0, rotationX: 0, scale: 1 }, 0,
+        ).fromTo(copy, { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: .065, duration: .65 }, .12);
+        const showOnFocus = () => reveal.progress(1).pause();
+        row.addEventListener("focusin", showOnFocus);
+        focusCleanups.push(() => row.removeEventListener("focusin", showOnFocus));
+      });
+      gsap.set(fill, { scaleY: 0, transformOrigin: "top" });
+      gsap.set(tip, { y: 0 });
+      const progress = gsap.timeline({
+        scrollTrigger: {
+          trigger: timeline,
+          start: () => "top+=" + railStart + " 70%",
+          end: () => "top+=" + railEnd + " 70%",
+          scrub: .35,
+          invalidateOnRefresh: true,
+        },
+        onUpdate: function(this: gsap.core.Timeline) {
+          const amount = this.progress();
+          const opacity = amount > 0 ? "1" : "0";
+          if (tip && tip.style.opacity !== opacity) tip.style.opacity = opacity;
+          nodes.forEach((node, index) => {
+            const active = String(amount > 0 && amount + .001 >= stops[index]);
+            if (node && node.dataset.active !== active) node.dataset.active = active;
+          });
+        },
+      });
+      progress.to(fill, { scaleY: 1, duration: 1, ease: "none" }, 0)
+        .to(tip, { y: () => railHeight, duration: 1, ease: "none" }, 0);
+      gsap.fromTo(root.querySelectorAll("[data-project-outro-line]"), { x: desktop ? 190 : 65, skewX: -9, filter: "blur(12px)", opacity: .25 }, {
+        x: 0, skewX: 0, filter: "blur(0px)", opacity: 1, stagger: .12, ease: "power3.out", duration: 1.2,
+        scrollTrigger: { trigger: root.querySelector("[data-project-outro]"), start: "top 95%", end: "center 65%", scrub: .7 },
+      });
+      return () => {
+        focusCleanups.forEach((cleanup) => cleanup());
+        rows.forEach((row) => row.querySelector("[data-project-node]")?.removeAttribute("data-active"));
+      };
+    }, root);
+    const resizeObserver = new ResizeObserver(() => ScrollTrigger.refresh());
+    resizeObserver.observe(root);
+    return () => {
+      resizeObserver.disconnect();
+      ScrollTrigger.removeEventListener("refreshInit", measure);
+      media.revert();
+    };
+  }, []);
 
   return (
-    <AnimatedSection
-      id="projects"
-      className="!overflow-x-visible !pt-8 sm:!pt-10 lg:!pt-12"
-    >
+    <section id="projects" ref={rootRef} className={styles.section} aria-label="Selected projects">
       <SectionHeading {...sectionMeta.projects} />
-
-      <div
-        data-animate
-        className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10 xl:gap-12"
-      >
-        <div className="w-full shrink-0 lg:sticky lg:top-28 lg:w-[22rem]">
-          <LineSidebar
-            items={projects.map((project) => project.title)}
-            accentColor="#5dd3b6"
-            textColor="#c4c4c4"
-            markerColor="#6c6c6c"
-            showIndex
-            showMarker
-            proximityRadius={100}
-            maxShift={30}
-            falloff="smooth"
-            markerLength={60}
-            markerGap={0}
-            tickScale={0.5}
-            scaleTick
-            itemGap={18}
-            fontSize={1.05}
-            smoothing={100}
-            defaultActive={null}
-            activeIndex={activeIndex}
-            persistActiveOnClick
-            onItemClick={(index) =>
-              setActiveIndex((current) => (current === index ? null : index))
-            }
-            className="max-w-full"
-          />
+      <div className={styles.timeline} ref={timelineRef}>
+        <div ref={trackRef} className={styles.track} aria-hidden="true">
+          <div className={styles.rail} />
+          <div className={"timeline-meteor " + styles.fill} data-project-progress />
+          <div className={"timeline-meteor-tip " + styles.tip} data-project-tip />
         </div>
-
-        <div className="min-w-0 w-full flex-1">
-          <MagicBento
-            cards={cards}
-            layout="idle"
-            textAutoHide={false}
-            enableSpotlight
-            enableBorderGlow
-            enableTilt={false}
-            enableMagnetism={false}
-            clickEffect
-            spotlightRadius={400}
-            particleCount={12}
-            glowColor="93, 211, 182"
-            disableAnimations={false}
-          />
-        </div>
+        {featuredProjects.map((project, index) => {
+          const presentation = projectPresentation[project.slug as keyof typeof projectPresentation];
+          const Icon = presentation.Icon;
+          return (
+          <article key={project.slug} className={[styles.row, index % 2 ? styles.reversed : ""].join(" ")} data-project-row aria-labelledby={"project-" + project.slug}>
+            <span className={styles.node} data-project-node aria-hidden="true"><span /></span>
+            <div className={styles.visual} data-project-visual><ProjectPreview project={project} /></div>
+            <div className={styles.copy} data-project-copy>
+              <p className={styles.eyebrow}><span className={styles.categoryIcon}><Icon size={15} aria-hidden="true" /></span><span>{project.category}</span></p>
+              <h3 id={"project-" + project.slug} aria-label={project.title}><span>{presentation.lines[0]}</span>{" "}<span>{presentation.lines[1]}</span></h3>
+              <p className={styles.description}>{project.description}</p>
+              <div className={styles.stack}><p className={styles.stackLabel}>Built with</p><ProjectTechnologies technologies={project.technologies} /></div>
+              <ProjectLinks project={project} />
+            </div>
+          </article>
+        );})}
       </div>
-    </AnimatedSection>
+      <div className={styles.outro} data-project-outro>
+        <div className={styles.outroCopy}><h3 className={styles.outroTitle}><span data-project-outro-line>Still curious?</span><span data-project-outro-line>Keep exploring.</span></h3><p className={styles.outroDescription}>More builds, experiments, and ideas brought to life.</p></div>
+        <Link className={styles.archiveLink} href="/projects"><ArrowUpRight size={36} aria-hidden="true" /><span className={styles.archiveLabel}>Explore all work<span>{String(projectCatalog.length).padStart(2, "0")} projects</span></span></Link>
+      </div>
+    </section>
   );
 }

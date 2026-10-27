@@ -1,0 +1,66 @@
+{
+  "base": "http://127.0.0.1:3001",
+  "routes": {
+    "/": {
+      "status": 200,
+      "anchors": 38,
+      "h1": 1
+    },
+    "/projects": {
+      "status": 200,
+      "anchors": 31,
+      "h1": 1
+    }
+  },
+  "assets": 68,
+  "imageOptimizer": [
+    {
+      "src": "/_next/image?url=%2Fcovers%2Fposters%2Fai-book.webp&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "src": "/_next/image?url=%2Fcovers%2Fposters%2Feye-blink.webp&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "src": "/_next/image?url=%2Fcovers%2Fposters%2Fai-book.webp&w=3840&q=75",
+      "status": 200
+    },
+    {
+      "src": "/_next/image?url=%2Fcovers%2Fposters%2Feye-blink.webp&w=3840&q=75",
+      "status": 200
+    }
+  ],
+  "checks": [
+    "/: baseline links, images and heading text match",
+    "/projects: baseline links, images and heading text match",
+    "both production routes, all seven home sections, four featured projects, ten archive projects, two tab panels, form fields and autocomplete, mobile navigation semantics, local anchors, all public assets, PDF signatures, image optimization and 404 response"
+  ],
+  "externalLinks": [
+    "https://ai-book-assistant-blush.vercel.app",
+    "https://churn-prediction-k3yjzaxx2mgel668arspbc.streamlit.app",
+    "https://eye-blink-morse-detector.vercel.app",
+    "https://github.com/Bixal99",
+    "https://github.com/Bixal99/AIBookAssistant",
+    "https://github.com/Bixal99/Churn-Prediction",
+    "https://github.com/Bixal99/EyeBlinkMorseDetector",
+    "https://github.com/Bixal99/Interview-Help",
+    "https://interview-help-eight.vercel.app/",
+    "https://www.facebook.com/mohammed.bilal.312425",
+    "https://www.instagram.com/__.bilxl99.__/",
+    "https://www.linkedin.com/in/mohammad-bilal-64489827b/",
+    "https://x.com/Bilxl99",
+    "https://falcon-trading.onrender.com",
+    "https://ghoomora.vercel.app",
+    "https://github.com/Bixal99/Ghoomora",
+    "https://github.com/Bixal99/HMS",
+    "https://github.com/Bixal99/Pentagram-Image-Diffusion",
+    "https://github.com/Bixal99/RetroVerse",
+    "https://github.com/Bixal99/Scrapper",
+    "https://helpscript.vercel.app",
+    "https://hms-alpha-seven.vercel.app",
+    "https://pentagram-image-diffusion-lake.vercel.app",
+    "https://retroverse-opal.vercel.app"
+  ],
+  "limitations": "HTTP/source checks only. No browser hydration, responsive screenshots, real keyboard/touch/WebGL, accessibility-engine scores or remote service availability asserted."
+}

@@ -1,362 +1,116 @@
 "use client";
 
-import gsap from "gsap";
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { shouldEnableCustomCursor } from "./customCursor/shouldEnableCustomCursor";
+import styles from "./CustomCursor.module.css";
 
-const TRAIL_COUNT = 10;
-/** Base spring at 60fps; scaled by deltaRatio so motion stays smooth at 120Hz */
-const SPRING = 0.35;
-const HOVER_SELECTOR =
-  'a, button, [role="button"], [role="link"], .cursor-pointer, .cursor-hover, summary, label, [data-skill-icon], [data-skill-drop-icon], .magic-bento-card';
-const BENTO_SELECTOR = "[data-magic-bento]";
-const ACCENT = "rgb(93, 211, 182)";
-const ACCENT_SOFT = "rgba(93, 211, 182, 0.35)";
+const INTERACTIVE = 'a[href], button, [role="button"], [role="link"], summary, label, .cursor-pointer, .cursor-hover';
+const NATIVE = '[data-about-lanyard], [data-demo-screen], [inert], input, textarea, select, [contenteditable="true"], iframe, video, :disabled, [aria-disabled="true"]';
 
-type TrailPoint = {
-  el: HTMLDivElement;
-  x: number;
-  y: number;
-  baseSize: number;
-  setX: (v: number) => void;
-  setY: (v: number) => void;
-};
-
-function subscribeCustomCursorCapability(onStoreChange: () => void) {
-  const finePointer = window.matchMedia("(pointer: fine)");
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-  finePointer.addEventListener("change", onStoreChange);
-  reduceMotion.addEventListener("change", onStoreChange);
-
-  return () => {
-    finePointer.removeEventListener("change", onStoreChange);
-    reduceMotion.removeEventListener("change", onStoreChange);
-  };
+function subscribeCapability(update: () => void) {
+  const queries = [window.matchMedia("(pointer: fine)"), window.matchMedia("(prefers-reduced-motion: reduce)")];
+  queries.forEach((query) => query.addEventListener("change", update));
+  return () => queries.forEach((query) => query.removeEventListener("change", update));
 }
 
 export function CustomCursor() {
-  const enabled = useSyncExternalStore(
-    subscribeCustomCursorCapability,
-    shouldEnableCustomCursor,
-    () => false,
-  );
-  const coreRef = useRef<HTMLDivElement>(null);
-  const trailRef = useRef<HTMLDivElement>(null);
+  const enabled = useSyncExternalStore(subscribeCapability, shouldEnableCustomCursor, () => false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef<HTMLDivElement>(null);
+  const captionRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (!enabled) return;
-
-    document.documentElement.classList.add("has-custom-cursor");
-    return () => {
-      document.documentElement.classList.remove("has-custom-cursor");
-    };
-  }, [enabled]);
-
-  useEffect(() => {
-    if (!enabled) return;
-
-    const core = coreRef.current;
-    const trailContainer = trailRef.current;
     const root = rootRef.current;
-    if (!core || !trailContainer || !root) return;
+    const pointer = pointerRef.current;
+    if (!enabled || !root || !pointer) return;
 
-    gsap.ticker.fps(120);
-    gsap.ticker.lagSmoothing(0);
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let isHovering = false;
-    let inBento = false;
     let visible = false;
-
-    gsap.set(core, { xPercent: -50, yPercent: -50, x: mouseX, y: mouseY });
-    gsap.set(root, { autoAlpha: 0 });
-
-    const setCoreX = gsap.quickSetter(core, "x", "px");
-    const setCoreY = gsap.quickSetter(core, "y", "px");
-
-    const trail: TrailPoint[] = [];
-    for (let i = 0; i < TRAIL_COUNT; i++) {
-      const el = document.createElement("div");
-      const size = Math.max(2, 16 - i * 1.1);
-      const opacity = 1 - i * 0.05;
-      el.className =
-        "absolute top-0 left-0 rounded-full bg-white pointer-events-none will-change-transform box-border border-0 border-white";
-      gsap.set(el, {
-        width: size,
-        height: size,
-        opacity,
-        xPercent: -50,
-        yPercent: -50,
-        x: mouseX,
-        y: mouseY,
-        force3D: true,
-      });
-      trailContainer.appendChild(el);
-      trail.push({
-        el,
-        x: mouseX,
-        y: mouseY,
-        baseSize: size,
-        setX: gsap.quickSetter(el, "x", "px") as (v: number) => void,
-        setY: gsap.quickSetter(el, "y", "px") as (v: number) => void,
-      });
-    }
-
-    const paintTrailDefault = () => {
-      trail.forEach((pt, i) => {
-        gsap.to(pt.el, {
-          backgroundColor: "#ffffff",
-          borderColor: "#ffffff",
-          borderWidth: 0,
-          opacity: 1 - i * 0.05,
-          duration: 0.25,
-          overwrite: "auto",
-        });
-      });
-      gsap.to(core, {
-        backgroundColor: "#ffffff",
-        duration: 0.25,
-        overwrite: "auto",
-      });
-    };
-
-    const paintTrailBento = () => {
-      trail.forEach((pt, i) => {
-        gsap.to(pt.el, {
-          backgroundColor: ACCENT,
-          borderColor: ACCENT,
-          borderWidth: 0,
-          opacity: Math.max(0.2, 0.95 - i * 0.08),
-          duration: 0.25,
-          overwrite: "auto",
-        });
-      });
-      gsap.to(core, {
-        backgroundColor: ACCENT,
-        duration: 0.25,
-        overwrite: "auto",
-      });
-    };
-
-    const show = () => {
-      if (visible) return;
-      visible = true;
-      gsap.to(root, { autoAlpha: 1, duration: 0.15, overwrite: true });
-    };
+    let frame = 0;
+    let clientX = 0;
+    let clientY = 0;
 
     const hide = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
       visible = false;
-      gsap.to(root, { autoAlpha: 0, duration: 0.12, overwrite: true });
+      root.dataset.visible = "false";
+      root.dataset.down = "false";
+      root.dataset.caption = "false";
+      document.documentElement.classList.remove("has-custom-cursor");
     };
 
-    const setBentoMode = (next: boolean) => {
-      if (inBento === next) return;
-      inBento = next;
-      if (next) paintTrailBento();
-      else paintTrailDefault();
-    };
-
-    const onMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      const target = e.target;
-      if (
-        target instanceof Element &&
-        (target.closest("[data-about-lanyard]") ||
-          target.closest("[data-demo-screen]"))
-      ) {
+    const updateTarget = (target: EventTarget | null) => {
+      if (!(target instanceof Element) || target.closest(NATIVE)) {
         hide();
-        return;
+        return false;
       }
-      if (target instanceof Element) {
-        setBentoMode(Boolean(target.closest(BENTO_SELECTOR)));
-      }
-      show();
+      root.dataset.hover = String(Boolean(target.closest(INTERACTIVE)) && !target.closest("[data-no-cursor-change]"));
+      const caption = target.closest<HTMLElement>("[data-cursor-label]")?.dataset.cursorLabel ?? "";
+      if (captionRef.current && captionRef.current.textContent !== caption) captionRef.current.textContent = caption;
+      root.dataset.caption = String(Boolean(caption));
+      return true;
     };
 
-    const onLeave = () => hide();
-
-    const enterHover = () => {
-      if (isHovering) return;
-      isHovering = true;
-      gsap.to(core, { scale: 0, duration: 0.2, overwrite: "auto" });
-      gsap.to(trail[0].el, {
-        width: inBento ? 52 : 46,
-        height: inBento ? 52 : 46,
-        backgroundColor: "transparent",
-        borderWidth: inBento ? 2.5 : 2,
-        borderColor: inBento ? ACCENT : "#ffffff",
-        boxShadow: inBento ? `0 0 18px ${ACCENT_SOFT}` : "none",
-        borderRadius: "50%",
-        duration: 0.35,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
-    };
-
-    const leaveHover = () => {
-      if (!isHovering) return;
-      isHovering = false;
-      gsap.to(core, { scale: 1, duration: 0.25, overwrite: "auto" });
-      gsap.to(trail[0].el, {
-        width: trail[0].baseSize,
-        height: trail[0].baseSize,
-        backgroundColor: inBento ? ACCENT : "#ffffff",
-        borderWidth: 0,
-        boxShadow: "none",
-        duration: 0.3,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
-    };
-
-    const onOver = (e: MouseEvent) => {
-      const target = e.target;
-      if (!(target instanceof Element)) return;
-      if (target.closest("[data-no-cursor-change]")) return;
-      if (target.closest("[data-demo-screen]")) {
-        hide();
-        return;
-      }
-      if (target.closest(BENTO_SELECTOR)) setBentoMode(true);
-      if (target.closest(HOVER_SELECTOR)) enterHover();
-    };
-
-    const onOut = (e: MouseEvent) => {
-      const related = e.relatedTarget;
-      if (related instanceof Element) {
-        if (related.closest("[data-no-cursor-change]")) {
-          leaveHover();
-          return;
-        }
-        setBentoMode(Boolean(related.closest(BENTO_SELECTOR)));
-        if (related.closest(HOVER_SELECTOR)) return;
-      } else {
-        setBentoMode(false);
-      }
-      leaveHover();
-    };
-
-    const onDown = () => {
-      gsap.to(core, {
-        scale: isHovering ? 0 : 0.5,
-        duration: 0.08,
-        overwrite: "auto",
-      });
-      if (isHovering) {
-        gsap.to(trail[0].el, {
-          scale: 0.85,
-          duration: 0.08,
-          overwrite: "auto",
-        });
+    const paint = () => {
+      frame = 0;
+      pointer.style.transform = `translate3d(${clientX}px, ${clientY}px, 0)`;
+      root.dataset.flipX = String(clientX > window.innerWidth - 155);
+      root.dataset.flipY = String(clientY > window.innerHeight - 65);
+      if (!visible) {
+        visible = true;
+        root.dataset.visible = "true";
+        document.documentElement.classList.add("has-custom-cursor");
       }
     };
-
-    const onUp = () => {
-      gsap.to(core, {
-        scale: isHovering ? 0 : 1,
-        duration: 0.35,
-        ease: "power3.out",
-        overwrite: "auto",
-      });
-      if (isHovering) {
-        gsap.to(trail[0].el, {
-          scale: 1,
-          duration: 0.4,
-          ease: "power3.out",
-          overwrite: "auto",
-        });
-      }
-
-      const ripple = document.createElement("div");
-      ripple.className =
-        "fixed rounded-full border mix-blend-difference pointer-events-none z-[9999]";
-      document.body.appendChild(ripple);
-      gsap.set(ripple, {
-        x: mouseX,
-        y: mouseY,
-        xPercent: -50,
-        yPercent: -50,
-        width: 20,
-        height: 20,
-        borderWidth: 3,
-        borderColor: inBento ? ACCENT : "#ffffff",
-        force3D: true,
-      });
-      gsap.to(ripple, {
-        width: 120,
-        height: 120,
-        opacity: 0,
-        borderWidth: 0,
-        duration: 0.5,
-        ease: "power2.out",
-        onComplete: () => ripple.remove(),
-      });
+    const move = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse" || !updateTarget(event.target)) return;
+      clientX = event.clientX;
+      clientY = event.clientY;
+      if (!frame) frame = requestAnimationFrame(paint);
     };
-
-    const tick = () => {
-      if (document.hidden) return;
-
-      const factor = 1 - Math.pow(1 - SPRING, gsap.ticker.deltaRatio(60));
-
-      setCoreX(mouseX);
-      setCoreY(mouseY);
-
-      let leaderX = mouseX;
-      let leaderY = mouseY;
-      for (let i = 0; i < TRAIL_COUNT; i++) {
-        const pt = trail[i];
-        pt.x += (leaderX - pt.x) * factor;
-        pt.y += (leaderY - pt.y) * factor;
-        pt.setX(pt.x);
-        pt.setY(pt.y);
-        leaderX = pt.x;
-        leaderY = pt.y;
-      }
+    const over = (event: PointerEvent) => { updateTarget(event.target); };
+    const down = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") { hide(); return; }
+      if (event.button === 0) root.dataset.down = "true";
     };
+    const up = () => { root.dataset.down = "false"; };
+    const visibility = () => { if (document.hidden) hide(); };
+    const keyboard = (event: KeyboardEvent) => { if (event.key === "Tab") hide(); };
 
-    window.addEventListener("mousemove", onMove, { passive: true });
-    document.documentElement.addEventListener("mouseleave", onLeave);
-    document.addEventListener("mouseover", onOver);
-    document.addEventListener("mouseout", onOut);
-    window.addEventListener("mousedown", onDown);
-    window.addEventListener("mouseup", onUp);
-    gsap.ticker.add(tick);
-
+    window.addEventListener("pointermove", move, { passive: true });
+    document.addEventListener("pointerover", over, { passive: true });
+    window.addEventListener("pointerdown", down, { passive: true });
+    window.addEventListener("pointerup", up, { passive: true });
+    window.addEventListener("pointercancel", hide);
+    window.addEventListener("blur", hide);
+    window.addEventListener("keydown", keyboard);
+    document.documentElement.addEventListener("pointerleave", hide);
+    document.addEventListener("visibilitychange", visibility);
     return () => {
-      window.removeEventListener("mousemove", onMove);
-      document.documentElement.removeEventListener("mouseleave", onLeave);
-      document.removeEventListener("mouseover", onOver);
-      document.removeEventListener("mouseout", onOut);
-      window.removeEventListener("mousedown", onDown);
-      window.removeEventListener("mouseup", onUp);
-      gsap.ticker.remove(tick);
-      gsap.ticker.fps(60);
-      gsap.ticker.lagSmoothing(500, 33);
-      trail.forEach((pt) => pt.el.remove());
-      gsap.killTweensOf([core, root, ...trail.map((t) => t.el)]);
+      hide();
+      window.removeEventListener("pointermove", move);
+      document.removeEventListener("pointerover", over);
+      window.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", hide);
+      window.removeEventListener("blur", hide);
+      window.removeEventListener("keydown", keyboard);
+      document.documentElement.removeEventListener("pointerleave", hide);
+      document.removeEventListener("visibilitychange", visibility);
     };
   }, [enabled]);
 
   if (!enabled) return null;
-
   return (
-    <div
-      ref={rootRef}
-      aria-hidden
-      className="pointer-events-none fixed inset-0 z-[10001] mix-blend-difference [[data-page-loader]_&]:invisible"
-    >
-      <div
-        ref={coreRef}
-        className="fixed top-0 left-0 h-2 w-2 rounded-full bg-white will-change-transform"
-      />
-      <div
-        ref={trailRef}
-        className="pointer-events-none absolute inset-0 overflow-visible"
-      />
+    <div ref={rootRef} className={styles.cursor} data-visible="false" aria-hidden="true">
+      <div ref={pointerRef} className={styles.pointerPosition}>
+        <svg className={styles.pointer} width="25" height="29" viewBox="0 0 25 29" fill="none">
+          <path className={styles.body} d="M1 1L7.5 27L13 17L24 12.5L1 1Z" strokeWidth="1.1" strokeLinejoin="round" />
+          <path className={styles.fold} d="M1 1L13 17L7.5 27L1 1Z" />
+          <path className={styles.crease} d="M1 1L13 17L24 12.5" strokeWidth=".75" strokeLinejoin="round" />
+        </svg>
+        <span ref={captionRef} className={styles.caption} />
+      </div>
     </div>
   );
 }

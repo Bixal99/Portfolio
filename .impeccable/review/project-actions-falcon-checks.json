@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "cards": 10,
+  "posterCount": 10,
+  "falconPresent": true,
+  "privateRepository": true,
+  "falconLiveLink": true,
+  "overlayClassPresent": false,
+  "techLists": 10,
+  "falconPosterStatus": 200
+}

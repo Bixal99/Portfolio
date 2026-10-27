@@ -1,0 +1,25 @@
+[
+  {
+    "route": "/",
+    "status": 200,
+    "viewport": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\"/>",
+    "hasZoomBlock": false,
+    "cards": 0,
+    "mobileSkills": true,
+    "navigationControl": true,
+    "oldTypewriterOffset": false,
+    "posterCount": 4,
+    "mobileSkillCount": 42
+  },
+  {
+    "route": "/projects",
+    "status": 200,
+    "viewport": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\"/>",
+    "hasZoomBlock": false,
+    "cards": 10,
+    "mobileSkills": false,
+    "navigationControl": false,
+    "oldTypewriterOffset": false,
+    "posterCount": 10
+  }
+]

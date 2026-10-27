@@ -5,16 +5,18 @@ type SectionHeadingProps = {
   kicker: string;
   title: string;
   icon: ComponentType<LucideProps>;
+  className?: string;
 };
 
-export function SectionHeading({ kicker, title, icon: Icon }: SectionHeadingProps) {
+export function SectionHeading({ kicker, title, icon: Icon, className = "" }: SectionHeadingProps) {
   const heading = kicker.toUpperCase();
+  const accentStart = heading.lastIndexOf(" ") + 1;
 
   return (
-    <div className="relative z-10 mb-8 max-w-5xl sm:mb-12">
+    <div className={`relative z-10 mb-8 max-w-5xl sm:mb-12 ${className}`}>
       <h2
         data-pixel-title
-        className="flex min-w-0 max-w-full items-center gap-3 text-balance text-[clamp(1.55rem,7.5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:gap-5 sm:text-6xl lg:gap-6 lg:text-7xl"
+        className="flex min-w-0 max-w-full items-center gap-3 text-balance text-[clamp(1.55rem,7.5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-[var(--foreground)] sm:gap-5 sm:text-6xl lg:gap-6 lg:text-7xl"
         aria-label={heading}
         title={title}
       >
@@ -30,7 +32,7 @@ export function SectionHeading({ kicker, title, icon: Icon }: SectionHeadingProp
         </span>
         <span className="inline-flex min-w-0 max-w-full sm:whitespace-nowrap" aria-hidden="true">
           {heading.split("").map((char, index) => {
-            const isAccent = heading.startsWith("MY ") && index < 2;
+            const isAccent = index >= accentStart;
 
             return (
               <span

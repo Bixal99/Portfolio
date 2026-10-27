@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { ComponentType, SVGProps } from "react";
 import {
   SiC,
@@ -30,6 +32,8 @@ import { Orbit } from "lucide-react";
 import { sectionMeta, techSkills } from "@/data/portfolio";
 import { AnimatedSection } from "./AnimatedSection";
 import { SectionHeading } from "./SectionHeading";
+import { TechnologyMark } from "./TechnologyMark";
+import styles from "./TechStack.module.css";
 import {
   SolarSystem,
   type OrbitConfig,
@@ -121,7 +125,7 @@ const iconColors: Record<string, string> = {
 
 function toSolarItem(skill: (typeof techSkills)[number]): SolarSystemItem {
   const Icon = iconMap[skill.icon] ?? Orbit;
-  const color = iconColors[skill.icon] ?? "#5DD3B6";
+  const color = iconColors[skill.icon] ?? "#8ca5ff";
 
   return {
     id: skill.icon,
@@ -175,29 +179,64 @@ function buildOrbits(): OrbitConfig[] {
 
 export function TechStack() {
   const orbits = useMemo(() => buildOrbits(), []);
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    let visible = false;
+    const syncVisibility = () => setInView(visible && !document.hidden);
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = Boolean(entry?.isIntersecting);
+      syncVisibility();
+    }, { threshold: .05 });
+    observer.observe(scene);
+    document.addEventListener("visibilitychange", syncVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.fromTo(scene, { opacity: 0, y: 28 }, {
+        opacity: 1, y: 0, duration: .9, ease: "power3.out",
+        scrollTrigger: { trigger: scene, start: "top 85%", toggleActions: "play none none reverse" },
+      });
+    });
+    return () => media.revert();
+  }, []);
 
   return (
     <AnimatedSection
       id="stack"
       className="!pb-8 !pt-8 sm:!pb-10 sm:!pt-10 lg:!pb-12 lg:!pt-12"
     >
-      <div className="[&>div]:mb-2 sm:[&>div]:mb-3">
-        <SectionHeading {...sectionMeta.stack} />
+      <div className={styles.header}>
+        <SectionHeading {...sectionMeta.stack} className="!mb-2 sm:!mb-3" />
       </div>
 
-      <div className="relative -mt-2 overflow-x-clip pb-0">
-        <div className="relative z-0 flex justify-center">
+      <div className={styles.scene}>
+        <div className="relative z-0 flex justify-center" ref={sceneRef}>
           <SolarSystem
             orbits={orbits}
+            isPaused={!inView}
             speedMultiplier={1}
-            centerLogo={
-              <Orbit className="h-12 w-12 text-[var(--accent)] md:h-14 md:w-14" />
-            }
-            centerLogoAlt="Skills core"
-            className="mx-auto -translate-y-6 sm:-translate-y-10 md:-translate-y-14"
+            centerLogo={<span className={styles.monogram}>M<span>B</span></span>}
+            centerLogoAlt="Mohammad Bilal"
+            className="mx-auto"
           />
         </div>
       </div>
+      <ul className={styles.mobileSkills} aria-label="Skills and technologies">
+        {techSkills.map((skill) => <li key={skill.name}><TechnologyMark name={skill.name} icon={skill.icon} className={styles.mobileMark} /><span>{skill.name}</span></li>)}
+      </ul>
     </AnimatedSection>
   );
 }

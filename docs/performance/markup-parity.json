@@ -1,0 +1,24 @@
+[
+  {
+    "route": "index",
+    "removed": [
+      "poppins_dc75922d-module__nm-FiW__variable",
+      "jetbrains_mono_d5d5ff63-module__sTjMQa__variable"
+    ],
+    "added": [
+      "poppins_f91be8b-module__pOuvOq__variable",
+      "jetbrains_mono_a9e04af7-module__1sCEJa__variable"
+    ]
+  },
+  {
+    "route": "projects",
+    "removed": [
+      "poppins_dc75922d-module__nm-FiW__variable",
+      "jetbrains_mono_d5d5ff63-module__sTjMQa__variable"
+    ],
+    "added": [
+      "poppins_f91be8b-module__pOuvOq__variable",
+      "jetbrains_mono_a9e04af7-module__1sCEJa__variable"
+    ]
+  }
+]

@@ -27,8 +27,8 @@ function resetFieldVisuals(form: HTMLFormElement) {
 
     if (shell) {
       gsap.to(shell, {
-        backgroundColor: "rgba(0,0,0,0.5)",
-        boxShadow: "0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06)",
+        backgroundColor: "var(--surface-soft)",
+        boxShadow: "0 0 0 1px var(--edge), inset 0 1px 0 rgba(255,255,255,0.06)",
         scale: 1,
         duration: 0.28,
         ease: "power2.out",
@@ -37,7 +37,7 @@ function resetFieldVisuals(form: HTMLFormElement) {
 
     if (label) {
       gsap.to(label, {
-        color: "rgba(255,255,255,0.58)",
+        color: "var(--muted)",
         x: 0,
         letterSpacing: "0.22em",
         duration: 0.28,
@@ -56,16 +56,16 @@ function resetFieldVisuals(form: HTMLFormElement) {
 }
 
 function FormField({ label, name, type = "text", placeholder, multiline = false, rows = 10 }: FieldProps) {
-  const controlClass = "relative z-10 w-full bg-transparent text-base text-white outline-none transition-[caret-color] placeholder:text-white/25 focus:placeholder:text-white/38";
+  const controlClass = "relative z-10 w-full bg-transparent text-base text-[var(--foreground)] outline-none transition-[caret-color] placeholder:text-[var(--muted)] focus:placeholder:text-[var(--muted)]";
 
   return (
     <label
       data-field-shell
-      className="group relative grid gap-3 overflow-hidden rounded-xl bg-black/50 px-4 py-3 shadow-[var(--shadow-border),inset_0_1px_0_rgba(255,255,255,0.06)] transition-[box-shadow,background-color] duration-150"
+      className="group relative grid gap-3 overflow-hidden rounded-xl bg-[var(--background)] px-4 py-3 shadow-[var(--shadow-border),inset_0_1px_0_rgba(255,255,255,0.06)] transition-[box-shadow,background-color] duration-150"
     >
       <span
         data-field-label
-        className="relative z-10 text-[11px] font-bold uppercase leading-none tracking-[0.22em] text-white/58"
+        className="relative z-10 text-[11px] font-bold uppercase leading-none tracking-[0.22em] text-[var(--muted)]"
       >
         {label}
       </span>
@@ -85,6 +85,7 @@ function FormField({ label, name, type = "text", placeholder, multiline = false,
           data-field-control
           name={name}
           type={type}
+          autoComplete={name === "name" ? "name" : name === "email" ? "email" : undefined}
           required
           placeholder={placeholder}
           className={`${controlClass} min-h-9`}
@@ -151,7 +152,7 @@ export function ContactForm() {
       const activate = () => {
         if (shell) {
           gsap.to(shell, {
-            backgroundColor: "rgba(255,255,255,0.045)",
+            backgroundColor: "var(--surface)",
             boxShadow: "0 0 0 1px rgba(var(--accent-rgb),0.18), 0 18px 46px rgba(var(--accent-rgb),0.11), inset 0 1px 0 rgba(255,255,255,0.1)",
             scale: 1.01,
             duration: 0.32,
@@ -181,8 +182,8 @@ export function ContactForm() {
 
         if (shell) {
           gsap.to(shell, {
-            backgroundColor: "rgba(0,0,0,0.5)",
-            boxShadow: "0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06)",
+            backgroundColor: "var(--surface-soft)",
+            boxShadow: "0 0 0 1px var(--edge), inset 0 1px 0 rgba(255,255,255,0.06)",
             scale: 1,
             duration: 0.3,
             ease: "power2.out",
@@ -191,7 +192,7 @@ export function ContactForm() {
 
         if (label) {
           gsap.to(label, {
-            color: "rgba(255,255,255,0.58)",
+            color: "var(--muted)",
             x: 0,
             letterSpacing: "0.22em",
             duration: 0.3,
@@ -256,7 +257,7 @@ export function ContactForm() {
         resetFieldVisuals(event.currentTarget);
         setSent(true);
       }}
-      className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-white/[0.035] p-5 shadow-[var(--shadow-border),0_30px_90px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[var(--accent)] before:to-transparent sm:p-7 lg:p-8"
+      className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-[var(--surface)] p-5 shadow-[var(--shadow-border),0_30px_90px_rgba(16,23,47,0.12),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-[var(--accent)] before:to-transparent sm:p-7 lg:p-8"
     >
       <div
         aria-hidden="true"
@@ -288,7 +289,7 @@ export function ContactForm() {
           whileHover={{ y: -3 }}
           whileTap={{ y: 0, scale: 0.96 }}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-          className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-[var(--accent)] py-4 pl-4 pr-5 text-sm font-bold uppercase tracking-[0.18em] text-black shadow-[0_18px_52px_rgba(var(--accent-rgb),0.22)] transition-colors duration-150 hover:bg-white sm:w-auto"
+          className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-xl bg-[var(--accent)] py-4 pl-4 pr-5 text-sm font-bold uppercase tracking-[0.18em] text-[var(--on-accent)] shadow-[0_18px_52px_rgba(var(--accent-rgb),0.22)] transition-colors duration-150 hover:bg-[var(--accent-hover)] sm:w-auto"
         >
           <span
             aria-hidden="true"

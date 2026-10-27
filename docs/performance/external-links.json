@@ -1,0 +1,104 @@
+{
+  "measuredAt": "2026-10-27T21:29:51.864Z",
+  "method": "Unauthenticated GET, follow redirects, cancel body after headers, eight-second timeout, four concurrent requests. Bot blocks, auth and timeouts do not prove a broken URL.",
+  "results": [
+    {
+      "url": "https://ai-book-assistant-blush.vercel.app",
+      "status": 200
+    },
+    {
+      "url": "https://churn-prediction-k3yjzaxx2mgel668arspbc.streamlit.app",
+      "status": "Not verified",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://eye-blink-morse-detector.vercel.app",
+      "status": 200
+    },
+    {
+      "url": "https://falcon-trading.onrender.com",
+      "status": "Not verified",
+      "reason": "TimeoutError"
+    },
+    {
+      "url": "https://ghoomora.vercel.app",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/AIBookAssistant",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/Churn-Prediction",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/EyeBlinkMorseDetector",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/Ghoomora",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/HMS",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/Interview-Help",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/Pentagram-Image-Diffusion",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/RetroVerse",
+      "status": 200
+    },
+    {
+      "url": "https://github.com/Bixal99/Scrapper",
+      "status": 200
+    },
+    {
+      "url": "https://helpscript.vercel.app",
+      "status": 200
+    },
+    {
+      "url": "https://hms-alpha-seven.vercel.app",
+      "status": 200
+    },
+    {
+      "url": "https://interview-help-eight.vercel.app/",
+      "status": 200
+    },
+    {
+      "url": "https://pentagram-image-diffusion-lake.vercel.app",
+      "status": 200
+    },
+    {
+      "url": "https://retroverse-opal.vercel.app",
+      "status": 200
+    },
+    {
+      "url": "https://www.facebook.com/mohammed.bilal.312425",
+      "status": 200
+    },
+    {
+      "url": "https://www.instagram.com/__.bilxl99.__/",
+      "status": 200
+    },
+    {
+      "url": "https://www.linkedin.com/in/mohammad-bilal-64489827b/",
+      "status": 999
+    },
+    {
+      "url": "https://x.com/Bilxl99",
+      "status": 200
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "pair": "foreground/background",
+    "ratio": 17.4
+  },
+  {
+    "pair": "muted/background",
+    "ratio": 9.43
+  },
+  {
+    "pair": "muted/surface",
+    "ratio": 8.57
+  },
+  {
+    "pair": "accent/background",
+    "ratio": 8.38
+  },
+  {
+    "pair": "on-accent/accent",
+    "ratio": 8.1
+  }
+]

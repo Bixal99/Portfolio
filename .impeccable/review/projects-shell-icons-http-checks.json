@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "backFirst": true,
+  "headerSocialLinks": 2,
+  "footerSocialLinks": 2,
+  "footerContact": true,
+  "cvDownload": true,
+  "cards": 10,
+  "technologyNamedImages": 43
+}

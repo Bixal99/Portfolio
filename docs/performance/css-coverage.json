@@ -1,0 +1,57 @@
+{
+  "method": "Static selector coverage for production markup, compared with the captured baseline. Existing icon/hook marker classes and unsupported blur-0 tokens are unchanged. This is not computed-style or visual verification.",
+  "result": [
+    {
+      "route": "index",
+      "newlyMissing": [],
+      "existingUnstyledMarkers": [
+        "lucide",
+        "lucide-volume2",
+        "lucide-volume-2",
+        "lucide-volume-x",
+        "lucide-menu",
+        "blur-0",
+        "lucide-x",
+        "interactive-grid-cells",
+        "lucide-arrow-right",
+        "lucide-download",
+        "lucide-brain-circuit",
+        "lucide-briefcase-business",
+        "lucide-play",
+        "lucide-arrow-up-right",
+        "lucide-book-open",
+        "lucide-braces",
+        "lucide-eye",
+        "lucide-chart-column",
+        "lucide-graduation-cap",
+        "lucide-square-terminal",
+        "lucide-database",
+        "lucide-award",
+        "lucide-check",
+        "lucide-arrow-down-to-line",
+        "lucide-file-code-corner",
+        "lucide-mail",
+        "lucide-phone",
+        "lucide-map-pin",
+        "lucide-send",
+        "group-hover:blur-0"
+      ]
+    },
+    {
+      "route": "projects",
+      "newlyMissing": [],
+      "existingUnstyledMarkers": [
+        "lucide",
+        "lucide-volume2",
+        "lucide-volume-2",
+        "lucide-volume-x",
+        "lucide-arrow-left",
+        "lucide-play",
+        "lucide-arrow-up-right",
+        "lucide-braces",
+        "lucide-lock-keyhole",
+        "lucide-arrow-down-to-line"
+      ]
+    }
+  ]
+}

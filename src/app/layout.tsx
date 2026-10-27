@@ -1,18 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Poppins } from "next/font/google";
 import { CustomCursor } from "@/components/CustomCursor";
+import { InteractionFeedback } from "@/components/InteractionFeedback";
 import "./globals.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  // No above-the-fold element uses this optional monospace family.
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -20,6 +23,8 @@ export const metadata: Metadata = {
   description:
     "Mohammad Bilal portfolio: AI engineering, computer vision, machine learning, full-stack development, and software systems projects.",
 };
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover", themeColor: "#080b12" };
 
 export default function RootLayout({
   children,
@@ -33,6 +38,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <CustomCursor />
+        <InteractionFeedback />
         {children}
       </body>
     </html>

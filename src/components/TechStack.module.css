@@ -1,0 +1,8 @@
+.header { position: relative; z-index: 1; font-family: var(--font-poppins), Poppins, sans-serif; }
+.scene { position: relative; margin-block: 12px 28px; }
+.mobileSkills { display: none; }
+.mobileMark { display: block; flex-shrink: 0; width: 26px; height: 26px; color: var(--brand-color); }
+.monogram { display: inline-flex; color: var(--foreground); font-family: var(--font-poppins), Poppins, sans-serif; font-size: 26px; font-weight: 600; letter-spacing: -.035em; line-height: 1; }
+.monogram > span { color: var(--accent); }
+@media (max-width: 767px) { .monogram { font-size: 20px; } }
+@media (max-width: 639px) { .scene { display: none; } .mobileSkills { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px 10px; list-style: none; margin: 32px 0 8px; padding: 0; } .mobileSkills li { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0; color: var(--muted); font-size: 11px; line-height: 1.5; text-align: center; overflow-wrap: anywhere; } }

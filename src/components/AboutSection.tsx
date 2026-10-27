@@ -9,11 +9,11 @@ export function AboutSection() {
       id="about"
       className="relative grid scroll-mt-24 items-center pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-14"
     >
-      <div className="grid gap-12 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-center md:gap-8 lg:gap-10">
+      <div className="grid gap-8 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-center xl:gap-10">
         <div data-about-panel className="relative z-20 min-w-0 max-w-3xl">
           <h2
             data-pixel-title
-            className="flex min-w-0 max-w-full items-center gap-3 text-balance text-[clamp(1.55rem,7.5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-white sm:gap-5 sm:text-6xl lg:gap-6 lg:text-7xl"
+            className="flex min-w-0 max-w-full items-center gap-3 text-balance text-[clamp(1.55rem,7.5vw,4.5rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-[var(--foreground)] sm:gap-5 sm:text-6xl lg:gap-6 lg:text-7xl"
           >
             <span
               className="flex shrink-0 items-center gap-2.5 sm:gap-5"
@@ -50,7 +50,7 @@ export function AboutSection() {
             </span>
           </h2>
 
-          <ul className="mt-7 max-w-xl list-none space-y-4 pl-0 text-pretty text-base leading-7 text-white/62 sm:text-xl sm:leading-9">
+          <ul className="mt-7 max-w-xl list-none space-y-4 pl-0 text-pretty text-base leading-7 text-[var(--muted)] sm:text-xl sm:leading-9">
             <li data-about-bullet className="flex items-start gap-3">
               <span className="mt-[0.72em] size-2 shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_14px_rgba(var(--accent-rgb),0.65)]" aria-hidden="true" />
               <span>
@@ -79,7 +79,7 @@ export function AboutSection() {
           </ul>
         </div>
 
-        <div className="relative z-10 min-h-[420px] w-full">
+        <div className="relative z-10 min-w-0 w-full">
           <AboutLanyard />
         </div>
       </div>

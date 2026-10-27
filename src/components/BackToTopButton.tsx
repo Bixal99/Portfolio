@@ -14,11 +14,17 @@ export function BackToTopButton() {
 
   useEffect(() => {
     let frameId = 0;
+    let previousVisible = false;
 
     const updateVisibility = () => {
-      window.cancelAnimationFrame(frameId);
+      if (frameId) return;
       frameId = window.requestAnimationFrame(() => {
-        setVisible(isNearPageEnd() && window.scrollY > window.innerHeight * 0.8);
+        frameId = 0;
+        const nextVisible = isNearPageEnd() && window.scrollY > window.innerHeight * 0.8;
+        if (nextVisible !== previousVisible) {
+          previousVisible = nextVisible;
+          setVisible(nextVisible);
+        }
       });
     };
 
@@ -52,10 +58,10 @@ export function BackToTopButton() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12, transition: { duration: 0.15, ease: "easeIn" } }}
-          whileHover={{ width: 148, boxShadow: "0 0 0 4px rgba(93,211,182,0.16), 0 0 42px rgba(93,211,182,0.28)" }}
+          whileHover={{ width: 148, boxShadow: "0 0 0 4px rgba(37, 76, 219,0.16), 0 0 42px rgba(37, 76, 219,0.28)" }}
           whileTap={{ scale: 0.96 }}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-          className="group fixed bottom-6 right-5 z-50 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-black/90 text-white shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.35),0_0_0_4px_rgba(var(--accent-rgb),0.12),0_18px_55px_rgba(0,0,0,0.55)] transition-colors duration-150 hover:bg-[var(--accent)] hover:text-black sm:bottom-8 sm:right-8"
+          className="group fixed bottom-6 right-5 z-50 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-[var(--surface)] text-[var(--foreground)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.35),0_0_0_4px_rgba(var(--accent-rgb),0.12),0_18px_55px_rgba(16,23,47,0.12)] transition-colors duration-150 hover:bg-[var(--accent)] hover:text-[var(--on-accent)] sm:bottom-8 sm:right-8"
         >
           <span
             aria-hidden="true"

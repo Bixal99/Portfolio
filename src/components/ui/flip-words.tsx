@@ -7,10 +7,12 @@ export const FlipWords = ({
   words,
   duration = 3000,
   className,
+  active = true,
 }: {
   words: string[];
   duration?: number;
   className?: string;
+  active?: boolean;
 }) => {
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -22,14 +24,14 @@ export const FlipWords = ({
   }, [currentWord, words]);
 
   useEffect(() => {
-    if (isAnimating) return;
+    if (isAnimating || !active) return;
 
     const timeout = window.setTimeout(() => {
       startAnimation();
     }, duration);
 
     return () => window.clearTimeout(timeout);
-  }, [isAnimating, duration, startAnimation]);
+  }, [isAnimating, duration, startAnimation, active]);
 
   return (
     <AnimatePresence

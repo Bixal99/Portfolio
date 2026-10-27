@@ -18,23 +18,31 @@ const Lanyard = dynamic(() => import("@/components/Lanyard/Lanyard"), {
 export function AboutLanyard() {
   const rootRef = useRef<HTMLDivElement>(null);
   const [inSection, setInSection] = useState(false);
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
 
-    const section = el.closest("#about") ?? el;
+    let visible = false;
+    const updateActive = () => setActive(visible && !document.hidden);
     const observer = new IntersectionObserver(
       ([entry]) => {
+        visible = Boolean(entry?.isIntersecting);
+        updateActive();
         if (entry?.isIntersecting) {
           setInSection(true);
         }
       },
-      { rootMargin: "10% 0px", threshold: 0.12 },
+      { threshold: 0.01 },
     );
 
-    observer.observe(section);
-    return () => observer.disconnect();
+    observer.observe(el);
+    document.addEventListener("visibilitychange", updateActive);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", updateActive);
+    };
   }, []);
 
   return (
@@ -45,7 +53,7 @@ export function AboutLanyard() {
       aria-label="Interactive ID card"
       aria-hidden={!inSection}
     >
-      <div className="relative cursor-grab overflow-hidden rounded-2xl bg-[#0c0c0e] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_28px_rgba(var(--accent-rgb),0.22),0_0_64px_rgba(var(--accent-rgb),0.12),0_28px_80px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.08)] ring-1 ring-[rgba(var(--accent-rgb),0.35)] transition-[box-shadow] duration-300 hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.65),0_0_36px_rgba(var(--accent-rgb),0.32),0_0_80px_rgba(var(--accent-rgb),0.18),0_32px_90px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.1)] active:cursor-grabbing">
+      <div className="relative cursor-grab overflow-hidden rounded-2xl bg-[var(--surface)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_28px_rgba(var(--accent-rgb),0.22),0_0_64px_rgba(var(--accent-rgb),0.12),0_28px_80px_rgba(16,23,47,0.12),inset_0_1px_0_rgba(255,255,255,0.08)] ring-1 ring-[rgba(var(--accent-rgb),0.35)] transition-[box-shadow] duration-300 hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.65),0_0_36px_rgba(var(--accent-rgb),0.32),0_0_80px_rgba(var(--accent-rgb),0.18),0_32px_90px_rgba(16,23,47,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] active:cursor-grabbing">
         <div
           className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-80"
           aria-hidden="true"
@@ -54,9 +62,10 @@ export function AboutLanyard() {
           className="pointer-events-none absolute inset-0 z-10 rounded-2xl shadow-[inset_0_0_40px_rgba(var(--accent-rgb),0.08),inset_0_0_0_1px_rgba(var(--accent-rgb),0.18)]"
           aria-hidden="true"
         />
-        <div className="relative h-[min(55vh,420px)] w-full md:h-[min(72vh,620px)]">
+        <div className="relative h-[clamp(280px,55svh,420px)] w-full xl:h-[min(72vh,620px)]">
           {inSection ? (
             <Lanyard
+              active={active}
               position={[0, 0, 13]}
               gravity={[0, -40, 0]}
               fov={18}

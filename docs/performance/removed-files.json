@@ -1,0 +1,92 @@
+[
+  {
+    "file": "src/components/PageLoader.tsx",
+    "reason": "Unrendered legacy loader; only consumer of the obsolete legal-transition helper.",
+    "bytes": 9534,
+    "sha256": "010f648b3fe2e1bced6d7c25e51f40316d348ecce5aca38ed7db2b4a0fc508c0"
+  },
+  {
+    "file": "src/components/ProfileVisual.tsx",
+    "reason": "Unused previous portrait component; live AboutLanyard retains the real portrait.",
+    "bytes": 942,
+    "sha256": "9fcbd56636680bbf988f692cecacf296eecaa0440a39b622f3ba200ff10899d5"
+  },
+  {
+    "file": "src/components/ResumeButton.tsx",
+    "reason": "Unused former floating CV button; current ResumeDownloadButton and project-page CV link remain.",
+    "bytes": 1005,
+    "sha256": "82350237ec458b0f692d765098e9643edfd2f60a5b4c4e1459f170788ec1153c"
+  },
+  {
+    "file": "src/components/ScrollExperience.tsx",
+    "reason": "Unused previous scroll setup; ScrollAnimator and section-specific animation effects remain.",
+    "bytes": 3976,
+    "sha256": "c7e76c624cd6287f593b732ad870a50dc6b7f3e3dad7e565acc5efa4829c4f89"
+  },
+  {
+    "file": "src/components/SideNav.tsx",
+    "reason": "Unused former side navigation; current Navbar owns desktop/mobile navigation.",
+    "bytes": 4072,
+    "sha256": "90154cefee6c29fcde2c7f676a66b33345004d5d1f7e3e3c04b77137ac5043a1"
+  },
+  {
+    "file": "src/components/StaggeredMenu.tsx",
+    "reason": "Unused superseded menu; neither route imports it.",
+    "bytes": 22172,
+    "sha256": "2f240f264a3bccd3dbfe4cca7d4ccf5916864ec73cbfb4e07c4e0276aef66e8b"
+  },
+  {
+    "file": "src/components/StaggeredMenu.css",
+    "reason": "Only imported by the unused StaggeredMenu.",
+    "bytes": 13872,
+    "sha256": "c48ed539e249ce0f207c7a6ebd9ac8fc30922cde33cffb73032a19d63d50224f"
+  },
+  {
+    "file": "src/components/styles/Landing.css",
+    "reason": "Unimported legacy stylesheet; not used by globals or either route.",
+    "bytes": 10636,
+    "sha256": "4e9dff3aa6c32a8ec960bef65dad4133b6a6e394d060edd8d4e5ac28b6c3b10f"
+  },
+  {
+    "file": "src/lib/legal-transition.ts",
+    "reason": "Only imported by unrendered PageLoader; no remaining legal route or live consumer.",
+    "bytes": 3579,
+    "sha256": "51326d407f1027164e1aa68feba7789ab04c91ecddc53454e71ebf59179739bb"
+  },
+  {
+    "file": "public/file.svg",
+    "reason": "Unreferenced Next starter icon; no CSS, metadata, dynamic path, or deployment reference.",
+    "bytes": 391,
+    "sha256": "2b67812c325c199a02536cdbeea0c593a72f707d323b72ee3e08dbab06753bd4"
+  },
+  {
+    "file": "public/globe.svg",
+    "reason": "Unreferenced Next starter icon; no CSS, metadata, dynamic path, or deployment reference.",
+    "bytes": 1035,
+    "sha256": "b614b9bf183925957661ac851498fe1d8029fd43a62fbfed86f9e2624a57e7cf"
+  },
+  {
+    "file": "public/next.svg",
+    "reason": "Unreferenced Next starter logo; no runtime or deployment consumer.",
+    "bytes": 1375,
+    "sha256": "55995dfad6ecb4945a1e856ddca03c5e16aa5bf13fd21b4df6a74ae79357bcfc"
+  },
+  {
+    "file": "public/vercel.svg",
+    "reason": "Unreferenced Next starter logo; Vercel deployment does not depend on this logo.",
+    "bytes": 128,
+    "sha256": "f081337b2fee635b455b63275406a3e7f39d6a014e25ad90dab5a67e62a12ac4"
+  },
+  {
+    "file": "public/window.svg",
+    "reason": "Unreferenced Next starter icon; no runtime or deployment consumer.",
+    "bytes": 385,
+    "sha256": "644768c4aaeb4767bce293344eeb0c125fb804a94d801440424072202d85e3a1"
+  },
+  {
+    "file": "public/profile-visual.svg",
+    "reason": "Unused geometric placeholder; live portrait uses Me.jpeg.",
+    "bytes": 1118,
+    "sha256": "4c846cc1b6095554c42b9114cf25636df333cfb442c3e86c816061d58f6b226c"
+  }
+]

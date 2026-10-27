@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 "use client";
 
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
@@ -74,6 +73,7 @@ export type LanyardProps = {
   gravity?: [number, number, number];
   fov?: number;
   transparent?: boolean;
+  active?: boolean;
   frontImage?: string | null;
   backImage?: string | null;
   imageFit?: ImageFit;
@@ -119,6 +119,7 @@ export default function Lanyard({
   gravity = [0, -40, 0],
   fov = 20,
   transparent = true,
+  active = true,
   frontImage = null,
   backImage = null,
   imageFit = "cover",
@@ -141,14 +142,15 @@ export default function Lanyard({
     <div className="lanyard-wrapper">
       <Canvas
         camera={{ position, fov }}
-        dpr={[1, isMobile ? 1.5 : 2]}
+        dpr={[1, isMobile ? 1 : 1.5]}
+        frameloop={active ? "always" : "never"}
         gl={{ alpha: transparent }}
         onCreated={({ gl }) =>
-          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
+          gl.setClearColor(new THREE.Color(0x080b12), transparent ? 0 : 1)
         }
       >
         <Suspense fallback={null}>
-          <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+          <Physics paused={!active} gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
             <Band
               isMobile={isMobile}
               frontImage={frontImage}
@@ -220,6 +222,11 @@ function Band({
   const ang = useMemo(() => new THREE.Vector3(), []);
   const rot = useMemo(() => new THREE.Vector3(), []);
   const dir = useMemo(() => new THREE.Vector3(), []);
+  const current = useMemo(() => new THREE.Vector3(), []);
+  const curvePoints = useMemo(
+    () => Array.from({ length: isMobile ? 17 : 33 }, () => new THREE.Vector3()),
+    [isMobile],
+  );
 
   const segmentProps: RigidBodyProps = {
     type: "dynamic",
@@ -236,7 +243,11 @@ function Band({
   const scaleRatio = cardScale / BASE_CARD_SCALE;
 
   // Always map the strap texture (black band + logos) — matches React Bits
-  const texture = useTexture(lanyardImage || LANYARD_PNG);
+  const texture = useTexture(lanyardImage || LANYARD_PNG, (loaded) => {
+    const strap = loaded as THREE.Texture;
+    strap.wrapS = strap.wrapT = THREE.RepeatWrapping;
+    strap.needsUpdate = true;
+  });
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
   const backTex = useTexture(backImage || BLANK_PIXEL);
 
@@ -294,6 +305,12 @@ function Band({
     return composite;
   }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map]);
 
+  useEffect(() => () => {
+    // Cached useGLTF/useTexture resources belong to their loaders; only the
+    // locally composed canvas texture belongs to this mounted card.
+    if (cardMap !== materials.base.map) cardMap.dispose();
+  }, [cardMap, materials.base.map]);
+
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -301,7 +318,7 @@ function Band({
         new THREE.Vector3(),
         new THREE.Vector3(),
         new THREE.Vector3(),
-      ]),
+      ], false, "chordal"),
   );
   const [dragged, drag] = useState<DragOffset>(false);
   const [hovered, hover] = useState(false);
@@ -355,7 +372,7 @@ function Band({
         if (!body.lerped) {
           body.lerped = new THREE.Vector3(translation.x, translation.y, translation.z);
         }
-        const current = new THREE.Vector3(translation.x, translation.y, translation.z);
+        current.set(translation.x, translation.y, translation.z);
         const clampedDistance = Math.max(
           0.1,
           Math.min(1, body.lerped.distanceTo(current)),
@@ -405,7 +422,8 @@ function Band({
       }
       if (curveLength < 1e-4) return;
 
-      const points = curve.getPoints(isMobile ? 16 : 32);
+      const points = curvePoints;
+      for (let i = 0; i < points.length; i++) curve.getPoint(i / (points.length - 1), points[i]);
       if (
         points.length < 2 ||
         points.some((point) => !isFiniteVec3(point))
@@ -428,8 +446,6 @@ function Band({
     }
   });
 
-  curve.curveType = "chordal";
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
   return (
     <>

@@ -1,0 +1,78 @@
+{
+  "archiveStatus": 200,
+  "cardCount": 9,
+  "schoolRemoved": true,
+  "posterCount": 9,
+  "assets": [
+    {
+      "slug": "ai-book",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "eye-blink",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "churn",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "interview-help",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "hms",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "retroverse",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "scrapper",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "ghoomora",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    },
+    {
+      "slug": "pentagram",
+      "status": 200,
+      "type": "image/webp",
+      "width": 1200,
+      "height": 750
+    }
+  ],
+  "optimizedPoster": {
+    "status": 200,
+    "type": "image/jpeg",
+    "bytes": 45785
+  },
+  "heroCellPresent": true,
+  "homePosterCount": 4
+}

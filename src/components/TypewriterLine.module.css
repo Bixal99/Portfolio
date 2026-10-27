@@ -1,0 +1,6 @@
+.line { display: grid; width: 34ch; max-width: 100%; min-width: 0; margin: 0; color: var(--accent); font-size: clamp(14px,2.2vw,25px); font-weight: 600; line-height: 1.65; letter-spacing: .08em; text-transform: uppercase; }
+.sizer, .text { grid-area: 1 / 1; min-width: 0; max-width: 100%; text-align: center; overflow-wrap: anywhere; text-wrap: balance; }
+.sizer { visibility: hidden; }
+.cursor { display: inline-block; width: 2px; height: .95em; margin-inline: .08em; vertical-align: -.08em; }
+@media (max-width: 639px) { .line { font-size: clamp(13px,3.6vw,19px); min-height: 2.4em; align-items: start; } }
+@media (min-width: 1024px) { .line { flex: 0 1 34ch; width: 34ch; max-width: calc(100% - 270px); } .sizer, .text { text-align: left; white-space: nowrap; overflow-wrap: normal; text-wrap: nowrap; } }

@@ -11,7 +11,7 @@
   overflow: hidden;
   border: 2px solid var(--accent);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--surface);
   padding: 5px 22px 5px 5px;
   color: var(--foreground);
   cursor: pointer;
@@ -28,7 +28,7 @@
 
 .button:hover {
   transform: translateY(-4px);
-  border-color: #ffffff;
+  border-color: var(--accent-hover);
   background: rgba(var(--accent-rgb), 0.12);
   box-shadow: 0 22px 70px rgba(var(--accent-rgb), 0.32);
 }
@@ -107,7 +107,7 @@
   overflow: hidden;
   border-radius: 999px;
   background-color: var(--accent);
-  color: #000000;
+  color: var(--on-accent);
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   transition:
     width 0.35s ease,
@@ -149,7 +149,7 @@
   width: 13px;
   aspect-ratio: 1;
   border-radius: 3px;
-  background-color: #000000;
+  background-color: var(--on-accent);
   opacity: 0;
   visibility: hidden;
 }
@@ -242,8 +242,8 @@
 }
 
 .done {
-  border-color: #23ae23;
-  background: rgba(35, 174, 35, 0.1);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .open {
@@ -356,3 +356,5 @@
     min-width: 52px;
   }
 }
+
+@media (orientation: landscape) and (max-height: 540px) { .button, .done, .open { min-width: 0; max-width: 100%; } .title { font-size: 11px; letter-spacing: .1em; } }

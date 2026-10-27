@@ -31,7 +31,9 @@ export function Timeline({ data, className }: TimelineProps) {
     if (!element) return;
 
     const updateHeight = () => {
-      const next = Math.max(element.scrollHeight, element.offsetHeight);
+      // Measure the layout box, never animated absolute children. Including the
+      // meteor in scrollHeight lets its own tip extend the rail on each measure.
+      const next = element.offsetHeight;
       if (next > 0) setHeight(next);
     };
 
@@ -40,16 +42,8 @@ export function Timeline({ data, className }: TimelineProps) {
     const observer = new ResizeObserver(updateHeight);
     observer.observe(element);
 
-    const onLoad = () => updateHeight();
-    window.addEventListener("load", onLoad);
-    const timers = [80, 300, 800, 1600].map((ms) =>
-      window.setTimeout(updateHeight, ms),
-    );
-
     return () => {
       observer.disconnect();
-      window.removeEventListener("load", onLoad);
-      timers.forEach(clearTimeout);
     };
   }, [data.length]);
 
@@ -66,8 +60,8 @@ export function Timeline({ data, className }: TimelineProps) {
       cards.forEach((_, index) => {
         allVisible[index] = true;
       });
-      setVisibleCards(allVisible);
-      return;
+      const frame = requestAnimationFrame(() => setVisibleCards(allVisible));
+      return () => cancelAnimationFrame(frame);
     }
 
     const observer = new IntersectionObserver(
@@ -100,7 +94,8 @@ export function Timeline({ data, className }: TimelineProps) {
   });
 
   // Transform-only motion (scaleY + translateY) — avoids layout thrash from animating height
-  const tipY = useTransform(scrollYProgress, [0, 1], [0, height]);
+  const railHeight = Math.max(0, height - 40);
+  const tipY = useTransform(scrollYProgress, [0, 1], [0, railHeight]);
 
   useEffect(() => {
     if (height <= 0) return;
@@ -113,12 +108,16 @@ export function Timeline({ data, className }: TimelineProps) {
       return item.offsetTop + paddingTop + (node ? node.offsetHeight / 2 : 20);
     });
 
+    let previous = -1;
     const unsub = tipY.on("change", (latest) => {
       let lit = -1;
       for (let i = 0; i < centers.length; i += 1) {
         if (latest >= centers[i]) lit = i;
       }
-      setActiveIndex((prev) => (prev === lit ? prev : lit));
+      if (lit !== previous) {
+        previous = lit;
+        setActiveIndex(lit);
+      }
     });
 
     return unsub;
@@ -127,16 +126,16 @@ export function Timeline({ data, className }: TimelineProps) {
   return (
     <div
       ref={containerRef}
-      className={cn("w-full bg-transparent font-sans md:px-10", className)}
+      className={cn("w-full bg-transparent font-sans lg:px-10", className)}
     >
-      <div ref={ref} className="relative mx-auto max-w-7xl overflow-visible pb-20 md:pb-28">
+      <div ref={ref} className="relative mx-auto max-w-7xl overflow-clip pb-20 lg:pb-28">
         {/* Rail centered on left-8 = center of left-3 + h-10 node */}
         <div
           aria-hidden="true"
-          style={{ height: height > 0 ? `${height}px` : "100%" }}
+          style={{ height: railHeight > 0 ? `${railHeight}px` : "calc(100% - 40px)" }}
           className="pointer-events-none absolute left-8 top-0 z-20 w-1 -translate-x-1/2"
         >
-          <div className="absolute inset-0 w-1 rounded-full bg-white/45 shadow-[0_0_12px_rgba(255,255,255,0.12)]" />
+          <div className="absolute inset-0 w-1 rounded-full bg-[var(--edge)] shadow-[0_0_12px_rgba(255,255,255,0.12)]" />
           <motion.div
             style={{ scaleY: scrollYProgress }}
             className="timeline-meteor absolute inset-x-0 top-0 h-full w-1 origin-top rounded-full will-change-transform"
@@ -157,50 +156,34 @@ export function Timeline({ data, className }: TimelineProps) {
               ref={(el) => {
                 itemRefs.current[index] = el;
               }}
-              className="relative z-30 flex justify-start pt-10 md:gap-10 md:pt-28"
+              className="relative z-30 flex justify-start pt-10 lg:gap-10 lg:pt-28"
             >
-              <div className="sticky top-40 z-40 flex max-w-xs flex-col items-center self-start md:w-full md:flex-row lg:max-w-sm">
+              <div className="pointer-events-none relative z-40 flex max-w-xs flex-col items-center self-start lg:w-full lg:flex-row lg:max-w-sm">
                 <div
                   ref={(el) => {
                     nodeRefs.current[index] = el;
                   }}
-                  className="absolute left-3 z-40 flex size-10 items-center justify-center rounded-full bg-black"
+                  className="absolute left-3 z-40 flex size-10 items-center justify-center rounded-full bg-[var(--background)]"
                 >
                   <div
                     className={cn(
                       "size-3 rounded-full border-2 transition-[transform,border-color,background-color,box-shadow] duration-500",
                       isLit
                         ? "scale-125 border-[var(--accent)] bg-[var(--accent)] shadow-[0_0_16px_rgba(var(--accent-rgb),1),0_0_32px_rgba(var(--accent-rgb),0.65),0_0_48px_rgba(var(--accent-rgb),0.35)]"
-                        : "scale-100 border-white/45 bg-white/25 shadow-none",
+                        : "scale-100 border-[var(--edge)] bg-[var(--edge)] shadow-none",
                     )}
                   />
                 </div>
                 <h3
-                  className={cn(
-                    "hidden text-xl font-bold tabular-nums transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:block md:pl-20 md:text-5xl",
-                    isVisible
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-8 opacity-0",
-                    isLit && isVisible
-                      ? "text-white drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
-                      : "text-white",
-                  )}
+                  className="hidden text-xl font-bold tabular-nums text-[var(--foreground)] lg:block lg:pl-16 lg:text-[clamp(2rem,3.2vw,3rem)]"
                 >
                   {item.title}
                 </h3>
               </div>
 
-              <div className="relative w-full min-w-0 pl-14 pr-2 sm:pl-20 sm:pr-4 md:pl-4">
+              <div className="relative w-full min-w-0 pl-14 pr-2 sm:pl-20 sm:pr-4 lg:pl-4">
                 <h3
-                  className={cn(
-                    "mb-4 block text-left text-xl font-bold tabular-nums transition-[opacity,transform,color,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] sm:text-2xl md:hidden",
-                    isVisible
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-8 opacity-0",
-                    isLit && isVisible
-                      ? "text-white drop-shadow-[0_0_18px_rgba(var(--accent-rgb),0.55)]"
-                      : "text-white",
-                  )}
+                  className="mb-4 block text-left text-xl font-bold tabular-nums text-[var(--foreground)] sm:text-2xl lg:hidden"
                 >
                   {item.title}
                 </h3>

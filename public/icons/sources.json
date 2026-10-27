@@ -1,0 +1,9 @@
+﻿{
+  "library": { "source": "https://simpleicons.org", "implementation": "react-icons/si", "license": "CC0-1.0", "note": "Trademarks remain property of their owners." },
+  "openai.svg": { "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/14.15.0/icons/openai.svg", "license": "CC0-1.0" },
+  "groq.svg": { "source": "https://unpkg.com/@lobehub/icons-static-svg@latest/icons/groq.svg", "license": "MIT" },
+  "pymupdf.svg": { "source": "https://raw.githubusercontent.com/pymupdf/PyMuPDF/main/docs/_static/sidebar-logo-dark.svg", "note": "Official project wordmark." },
+  "xgboost.png": { "source": "https://xgboost.ai/images/logo/xgboost-logo.png", "note": "Official project logo with transparent background." },
+  "vscode": { "source": "https://github.com/microsoft/vscode-codicons", "implementation": "react-icons/vsc", "license": "CC-BY-4.0" },
+  "concepts": { "implementation": "lucide-react", "note": "SQL and Computer Vision use semantic icons. Beautiful Soup uses its Python ecosystem mark because no dedicated brand asset was supplied." }
+}

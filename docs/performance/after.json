@@ -1,0 +1,157 @@
+{
+  "measuredAt": "2026-10-27T21:36:03.344Z",
+  "node": "v22.15.0",
+  "platform": "win32",
+  "framework": "16.2.9",
+  "buildSeconds": 11.1555692,
+  "method": "Same local warm-cache next build; emitted files measured raw and independently gzip-compressed. These are not observed network transfer sizes.",
+  "trackedIndexFiles": 105,
+  "trackedFilesPresent": 73,
+  "productionDependencies": 14,
+  "developmentDependencies": 9,
+  "lockPackages": 500,
+  "javascript": {
+    "files": 19,
+    "rawBytes": 4434972,
+    "gzipBytes": 1483599
+  },
+  "css": {
+    "files": 3,
+    "rawBytes": 136141,
+    "gzipBytes": 22838
+  },
+  "fonts": {
+    "files": 21,
+    "rawBytes": 329420,
+    "gzipBytes": 329932
+  },
+  "publicAssets": {
+    "files": 69,
+    "bytes": 14189570
+  },
+  "publicImages": {
+    "files": 33,
+    "bytes": 4783329
+  },
+  "largestPublicAssets": [
+    {
+      "file": "public/lanyard/card.glb",
+      "bytes": 2457784
+    },
+    {
+      "file": "public/demos/eye-blink.mp4",
+      "bytes": 2354714
+    },
+    {
+      "file": "public/demos/scrapper.mp4",
+      "bytes": 841606
+    },
+    {
+      "file": "public/draco/draco_decoder.js",
+      "bytes": 720182
+    },
+    {
+      "file": "public/demos/eye-blink.png",
+      "bytes": 571185
+    },
+    {
+      "file": "public/certificates/deloitte-critical-thinking.pdf",
+      "bytes": 553631
+    },
+    {
+      "file": "public/certificates/deloitte-effective-leadership.pdf",
+      "bytes": 522038
+    },
+    {
+      "file": "public/journey/pak-shamaa-school.png",
+      "bytes": 483588
+    },
+    {
+      "file": "public/demos/ai-book.mp4",
+      "bytes": 474342
+    },
+    {
+      "file": "public/demos/scrapper.png",
+      "bytes": 395167
+    },
+    {
+      "file": "public/demos/hms.png",
+      "bytes": 385276
+    },
+    {
+      "file": "public/draco/draco_decoder.wasm",
+      "bytes": 285948
+    },
+    {
+      "file": "public/demos/ghoomora.png",
+      "bytes": 269349
+    },
+    {
+      "file": "public/demos/ghoomora.mp4",
+      "bytes": 241931
+    },
+    {
+      "file": "public/journey/fast-nuces.png",
+      "bytes": 214527
+    }
+  ],
+  "routes": {
+    "/": {
+      "htmlBytes": 275015,
+      "htmlGzipBytes": 57116,
+      "referencedScripts": {
+        "files": 11,
+        "rawBytes": 1097913,
+        "gzipBytes": 349830
+      },
+      "scriptPaths": [
+        "/_next/static/chunks/2kqrbujyxigm8.js",
+        "/_next/static/chunks/3peubv2924kx4.js",
+        "/_next/static/chunks/07u_h6i539_wj.js",
+        "/_next/static/chunks/turbopack-3j-p6nw7xlwck.js",
+        "/_next/static/chunks/25e0waax304mu.js",
+        "/_next/static/chunks/14mrh2-p_w84d.js",
+        "/_next/static/chunks/2zcrx3hgotifa.js",
+        "/_next/static/chunks/03x333jr3a6vs.js",
+        "/_next/static/chunks/2-6gq9eyv4-z4.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/_next/static/chunks/0sz_d-nbl_t2_.js"
+      ],
+      "fontPreloads": [
+        "<link rel=\"preload\" href=\"/_next/static/media/47fe1b7cd6e6ed85-s.p.3bh2vc0w-r-ll.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/829ba4228c966254-s.p.2mm3nq9i83l-m.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/8e6fa89aa22d24ec-s.p.2o7m9ogm38dql.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/a218039a3287bcfd-s.p.43zbiuwnnoiok.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/e2334d715941921e-s.p.3o_v2fun1jzxk.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>"
+      ]
+    },
+    "/projects": {
+      "htmlBytes": 288338,
+      "htmlGzipBytes": 46232,
+      "referencedScripts": {
+        "files": 9,
+        "rawBytes": 665006,
+        "gzipBytes": 199530
+      },
+      "scriptPaths": [
+        "/_next/static/chunks/2kqrbujyxigm8.js",
+        "/_next/static/chunks/3peubv2924kx4.js",
+        "/_next/static/chunks/07u_h6i539_wj.js",
+        "/_next/static/chunks/turbopack-3j-p6nw7xlwck.js",
+        "/_next/static/chunks/25e0waax304mu.js",
+        "/_next/static/chunks/14mrh2-p_w84d.js",
+        "/_next/static/chunks/30hng2yxavd4u.js",
+        "/_next/static/chunks/0cz1d0mv5g_q7.js",
+        "/_next/static/chunks/0sz_d-nbl_t2_.js"
+      ],
+      "fontPreloads": [
+        "<link rel=\"preload\" href=\"/_next/static/media/47fe1b7cd6e6ed85-s.p.3bh2vc0w-r-ll.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/829ba4228c966254-s.p.2mm3nq9i83l-m.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/8e6fa89aa22d24ec-s.p.2o7m9ogm38dql.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/a218039a3287bcfd-s.p.43zbiuwnnoiok.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>",
+        "<link rel=\"preload\" href=\"/_next/static/media/e2334d715941921e-s.p.3o_v2fun1jzxk.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/>"
+      ]
+    }
+  },
+  "browserMetrics": "Not measured: no connected browser. Initial network JS, Lighthouse, LCP, INP, CLS, FCP and TBT are unavailable."
+}

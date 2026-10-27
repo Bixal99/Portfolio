@@ -1,0 +1,13 @@
+# Certificate gallery rotation and bare technology marks — October 27, 2026
+
+Mode: Experience. Latest user explicitly rejects circular/square surrounds on technology icons, and rejects the boxed certificate selector styling and PDF actions while keeping certificate information representation. User requests automatic changes after15–20seconds and Impeccable frontend work. Chosen interval20seconds.
+
+Technology marks: retain genuine colorful logos, remove all surrounding plates/rings/backgrounds and pseudo-element geometry. Soft brand-color drop shadow and short upward/scale response act on the logo itself. Existing tooltip names remain; keyboard focus and touch-visible names preserve access. Shared home/archive use stays consistent. Reduced motion removes movement.
+
+Certificate UI: retain issuer/title/type/date/topics, complete real preview, and original PDF view/download. Replace thumbnail cards, selected circles and tinted metadata boxes with open typographic selectors and a fine selected underline. Factual detail remains beside the document. Remove paper mat and image hover lift; authentic document is the visual anchor. Actions are two equal48px controls below paper: light Open certificate and quiet outlined Download PDF with simple icon travel. No nested icon circles or pill within a pill. Mobile reads facts then document and stacks actions at very narrow widths.
+
+Rotation: new hook schedules exactly20000ms only when gallery is visible, document active, no mouse hover/focus, and neither paused nor reduced-motion. Leaving/re-entering starts a full interval. Keyboard focus permanently pauses via the gallery focus handler; explicit Resume can re-enable after focus leaves. Pause/Resume is clearly labelled with aria-pressed. Automatic changes never move focus, scroll tabs or emit click sounds. Selected panel has aria-live=off. Manual click/keyboard selection stays available and resets timing; existing Left/Right/Home/End roving tab behavior preserved.
+
+Motion thesis: the genuine document exchanges softly as a curated gallery; selection state and access actions remain calm and immediate. Existing .3s reveal retained under no-preference only. No new raster, font, dependency, audio behavior or global visual-world replacement.
+
+Verification: existing selection/PDF/failure/keyboard/HTTP tests pass, new timer-effect mock test covers20second interval, offscreen/hover/focus/hidden/manual/reduced suppression and cleanup. Production build and targetedlint recorded by final review. BrowsergetState reports no apps/browsers, so rendered visual validation is unavailable and no visual approval is claimed. Existing root light-theme documentation drift is preserved.

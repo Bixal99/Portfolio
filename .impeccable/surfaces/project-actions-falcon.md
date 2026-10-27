@@ -1,0 +1,15 @@
+# Project actions, technologies and Falcon Trading — October 27, 2026
+
+Mode: Experience. Scoped refinement of existing project components in the dark/Poppins portfolio. Latest request: move the demo action below the illustration, add beautiful project technology icon hovers, refine the card actions, and add Falcon Trading to /projects using its repository.
+
+Preview: artwork is unobstructed and display-only. Watch/Pause/Resume and Close are explicit controls below the media; platform projects have an Explore action in that same position. Existing video controls, offscreen/hidden pause, and failure recovery remain. Mouse-following poster material affects only the image frame, not the below-image controls. Keep 16:10 image fit and reduced-motion behavior.
+
+Technologies: shared semantic list on home featured projects and archive. Each named real brand mark sits in a small tinted well within an outlined badge. Mouse hover gives brand tint, a short icon rise/rotation and brighter text. No fake buttons, selected categories, extra tab stops or inaccessible label-only tooltips. Reduced motion retains color feedback without movement.
+
+Actions: primary Live project pill uses the established accent with a dark arrow well; Source code is a consistent secondary outlined pill. Remove the archive's long separator rule and retain clear grouping. Private repositories have an accurate non-link status.
+
+Falcon evidence: read local checkout ../Buisness/.git/config (origin https://github.com/Bixal99/FALCON.git), README.md, docs/APP_SPEC.md, docs/RENDER_DEPLOYMENT.md and web/package.json. GitHub CLI repository metadata independently confirmed visibility PRIVATE. The app is a wholesale bookkeeping/stock/customer/supplier desk with cash and bank balances, day books, profit-and-loss reporting and CSV/Excel exports; do not claim cross-border export logistics or securities trading. Listed stack: Next.js, TypeScript, React, Supabase, PostgreSQL. Documented public origin: https://falcon-trading.onrender.com. A 15-second HEAD request timed out, so live availability is not established. Public GitHub web access returned 404; do not expose a broken public source action. No operational data, accounts, financial figures, credentials or private document content is included in the portfolio.
+
+Falcon is appended to the catalog and media arrays, keeping their positional mapping aligned; the featured home selection remains unchanged. New illustrated Falcon Trading cover follows the existing flat editorial poster language, with no fictitious UI or financial numbers. Exact built-in image_gen prompt and source are retained in public/covers/posters/prompts.json and the adjacent WebP sidecar; project artwork is illustrative.
+
+Quality bar: visible controls below all posters; ten archive cards; accurate private-source and sign-in labels; all real project/demo URLs preserved; no change to Journey, certificates, hero or nav behavior in this task. Preserve global design docs and report pre-existing drift only.

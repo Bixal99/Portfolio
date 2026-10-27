@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navItems, profile, socialLinks } from "@/data/portfolio";
+import styles from "./Navbar.module.css";
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -50,67 +51,69 @@ export function Navbar() {
   const [compact, setCompact] = useState(false);
 
   useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
+  useEffect(() => {
+    const sections = navItems.map((item) => ({
+      id: item.href.slice(1),
+      element: document.querySelector(item.href),
+    }));
+    let frame = 0;
+    let previousId = "home";
+    let previouslyCompact = false;
     const updateActiveSection = () => {
-      setCompact(window.scrollY > 48);
-
-      const viewportLine = window.innerHeight * 0.45;
-      let closestId = navItems[0]?.href.slice(1) ?? "home";
-      let closestDistance = Number.POSITIVE_INFINITY;
-
-      navItems.forEach((item) => {
-        const section = document.querySelector(item.href);
-        if (!section) return;
-
-        const rect = section.getBoundingClientRect();
-        const sectionCenter = rect.top + rect.height * 0.42;
-        const distance = Math.abs(sectionCenter - viewportLine);
-        const crossesViewport = rect.top <= viewportLine && rect.bottom >= viewportLine;
-
-        if (crossesViewport) {
-          closestId = item.href.slice(1);
-          closestDistance = -1;
-          return;
-        }
-
-        if (closestDistance >= 0 && distance < closestDistance) {
-          closestDistance = distance;
-          closestId = item.href.slice(1);
-        }
-      });
-
-      setActiveId(closestId);
+      const nextCompact = window.scrollY > 48;
+      if (nextCompact !== previouslyCompact) {
+        previouslyCompact = nextCompact;
+        setCompact(nextCompact);
+      }
+      const activationLine = Math.min(window.innerHeight * .35, 240);
+      let currentId = navItems[0]?.href.slice(1) ?? "home";
+      for (const section of sections) {
+        if (section.element && section.element.getBoundingClientRect().top <= activationLine) currentId = section.id;
+      }
+      if (currentId !== previousId) {
+        previousId = currentId;
+        setActiveId(currentId);
+      }
+    };
+    const scheduleUpdate = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; updateActiveSection(); });
     };
 
     updateActiveSection();
-    window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
     return () => {
-      window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("resize", updateActiveSection);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
     };
   }, []);
 
-  const activeIndex = useMemo(() => {
-    const index = navItems.findIndex((item) => item.href.slice(1) === activeId);
-    return index >= 0 ? index : 0;
-  }, [activeId]);
+  const highlightedIndex = Math.max(0, navItems.findIndex((item) => item.href.slice(1) === activeId));
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${compact ? "border-b border-white/10 bg-black/70 backdrop-blur-xl" : "bg-transparent"}`}>
-      <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-5 sm:h-20 sm:gap-4 sm:px-8 lg:px-12">
-        <a href="#home" className="min-w-0 max-w-[46%] truncate text-xs font-bold uppercase tracking-[0.16em] text-white sm:max-w-[220px] sm:text-sm sm:tracking-[0.32em] lg:max-w-none lg:-translate-x-4">
+    <header className={`${styles.header} fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ${compact ? "border-b border-[var(--edge)] bg-[var(--background)] backdrop-blur-xl" : "bg-transparent"}`}>
+      <div className={styles.row}>
+        <a href="#home" className={styles.brand}>
           {profile.name}
         </a>
 
         <nav
-          className="theme-nav-shell absolute left-[54%] hidden w-[760px] -translate-x-1/2 items-center overflow-hidden rounded-full bg-white/[0.025] p-1 shadow-[var(--shadow-border)] backdrop-blur-xl lg:grid"
+          className={`theme-nav-shell ${styles.shell}`}
           style={{ gridTemplateColumns: `repeat(${navItems.length}, minmax(0, 1fr))` }}
           aria-label="Main navigation"
         >
           <span
             aria-hidden="true"
-            className="theme-nav-indicator absolute left-1 top-1 h-[calc(100%-0.5rem)] rounded-full bg-[var(--accent)] shadow-[0_0_28px_rgba(var(--accent-rgb),0.2)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-            style={{ width: `calc((100% - 0.5rem) / ${navItems.length})`, transform: `translateX(${activeIndex * 100}%)` }}
+            className={`theme-nav-indicator ${styles.indicator}`}
+            style={{ width: `calc((100% - 12px) / ${navItems.length})`, transform: `translateX(${highlightedIndex * 100}%)` }}
           />
           {navItems.map((item) => {
             const active = activeId === item.href.slice(1);
@@ -118,8 +121,9 @@ export function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className={`relative z-10 rounded-full px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-300 ${active ? "text-black" : "text-white/48 hover:text-white"
-                  }`}
+                aria-current={active ? "location" : undefined}
+                data-highlighted={active}
+                className={styles.link}
               >
                 {item.label}
               </a>
@@ -127,23 +131,24 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="ml-auto flex shrink-0 items-center gap-2.5 sm:gap-4 lg:ml-0 lg:gap-5 lg:translate-x-2">
-          <div className="flex items-center gap-2.5 sm:gap-4">
+        <div className={styles.actions}>
+          <div className={styles.socials}>
             {navbarSocial.map((link) => (
               <a
                 key={link.label}
+                aria-label={link.label}
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
                 onMouseLeave={(e) => e.currentTarget.blur()}
-                className="group inline-flex flex-col items-center gap-0.5 text-white/70 transition-[color,filter] duration-200 ease-out hover:text-[var(--accent)] hover:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] focus:text-white/70 focus:drop-shadow-none focus-visible:text-[var(--accent)] focus-visible:drop-shadow-[0_0_12px_rgba(var(--accent-rgb),0.7)] sm:gap-1"
+                className={`group ${styles.socialLink}`}
               >
                 {link.label === "GitHub" ? (
                   <GitHubIcon className="size-5 sm:size-6" />
                 ) : (
                   <LinkedInIcon className="size-5 sm:size-6" />
                 )}
-                <span className="hidden text-[9px] font-semibold uppercase tracking-[0.14em] text-white/45 transition-colors duration-200 group-hover:text-[var(--accent)] sm:inline">
+                <span className="hidden text-[9px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)] transition-colors duration-200 group-hover:text-[var(--accent)] sm:inline">
                   {link.label}
                 </span>
               </a>
@@ -155,8 +160,9 @@ export function Navbar() {
             suppressHydrationWarning
             aria-label="Toggle navigation"
             aria-expanded={open}
+            aria-controls="mobile-navigation"
             onClick={() => setOpen((value) => !value)}
-            className="relative grid size-11 place-items-center text-white shadow-[var(--shadow-border)] transition-transform duration-150 ease-out active:scale-[0.96] lg:hidden"
+            className={`relative grid size-11 place-items-center text-[var(--foreground)] shadow-[var(--shadow-border)] transition-transform duration-150 ease-out active:scale-[0.96] ${styles.menuToggle}`}
           >
             <span className="relative size-5">
               <Menu
@@ -175,7 +181,7 @@ export function Navbar() {
       </div>
 
       {open ? (
-        <div className="border-t border-white/10 bg-black/95 px-5 py-5 lg:hidden">
+        <div id="mobile-navigation" className={styles.mobilePanel}>
           <nav className="grid gap-2" aria-label="Mobile navigation">
             {navItems.map((item) => {
               const active = activeId === item.href.slice(1);
@@ -183,10 +189,11 @@ export function Navbar() {
                 <a
                   key={item.href}
                   href={item.href}
+                  aria-current={active ? "location" : undefined}
                   onClick={() => setOpen(false)}
                   className={`px-4 py-3 text-sm font-semibold uppercase tracking-[0.2em] transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] ${active
-                      ? "bg-[var(--accent)] text-black shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.55)]"
-                      : "text-white/70 shadow-[var(--shadow-border)] hover:bg-white/10 hover:text-white hover:shadow-[var(--shadow-border-hover)]"
+                      ? "bg-[var(--accent)] text-[var(--on-accent)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.55)]"
+                      : "text-[var(--muted)] shadow-[var(--shadow-border)] hover:bg-[var(--surface)] hover:text-[var(--foreground)] hover:shadow-[var(--shadow-border-hover)]"
                     }`}
                 >
                   {item.label}
