@@ -1,119 +1,135 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
-import { ArrowDownToLine, ArrowUpRight, Award, Check, FileWarning } from "lucide-react";
+import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { Award, FileWarning } from "lucide-react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { certificates } from "@/data/certificates";
-import { AnimatedSection } from "./AnimatedSection";
+import { LightSection } from "./LightSection";
 import { SectionHeading } from "./SectionHeading";
-import styles from "./Certifications.module.css";
 import { useCertificateRotation } from "./useCertificateRotation";
+import { useReducedMotionPreference } from "./useVisibleActivity";
 
-export function Certifications() {
+export const Certifications = () => {
   const [selected, setSelected] = useState(0);
-  const [failedPreview, setFailedPreview] = useState<string | null>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
-  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const [failedPreviews, setFailedPreviews] = useState<Record<string, boolean>>({});
   const galleryRef = useRef<HTMLDivElement>(null);
-  const advance = useCallback(() => setSelected((index) => (index + 1) % certificates.length), []);
-  useCertificateRotation(galleryRef, selected, advance);
+  const displacementRef = useRef<SVGFEDisplacementMapElement>(null);
+  const previousCertificate = useRef(selected);
+  const morphFilterId = useId();
+  const reducedMotion = useReducedMotionPreference();
+  const handleAdvance = useCallback(() => setSelected((index) => (index + 1) % certificates.length), []);
+  useCertificateRotation(galleryRef, selected, handleAdvance);
+
   const certificate = certificates[selected];
-  const document = `/certificates/${certificate.id}.pdf`;
+  const certificateDocument = `/certificates/${certificate.id}.pdf`;
 
   useEffect(() => {
-    const panel = panelRef.current;
-    if (!panel) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.fromTo(panel.querySelectorAll("[data-credential-reveal]"),
-        { opacity: .7, y: 8 },
-        {
-          opacity: 1, y: 0, duration: .3, stagger: .035, ease: "expo.out",
-          clearProps: "opacity,transform",
-          scrollTrigger: { trigger: panel, start: "top 88%", once: true },
-        },
-      );
-    });
-    return () => media.revert();
-  }, [selected]);
+    const displacement = displacementRef.current;
+    const changed = previousCertificate.current !== selected;
+    previousCertificate.current = selected;
+    if (!displacement || !changed || reducedMotion) return;
 
-  const navigateTabs = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    let next: number;
-    if (event.key === "ArrowRight") next = (index + 1) % certificates.length;
-    else if (event.key === "ArrowLeft") next = (index - 1 + certificates.length) % certificates.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = certificates.length - 1;
-    else return;
+    const morph = gsap.timeline()
+      .to(displacement, { attr: { scale: 12 }, duration: 0.3, ease: "power2.inOut" })
+      .to(displacement, { attr: { scale: 0 }, duration: 0.6, ease: "power3.out" });
+    return () => {
+      morph.kill();
+      displacement.setAttribute("scale", "0");
+    };
+  }, [selected, reducedMotion]);
+
+  const handleNavigateCertificates = (event: KeyboardEvent<HTMLDivElement>): void => {
+    if (event.target !== event.currentTarget) return;
+    const destinations: Record<string, number> = {
+      ArrowRight: (selected + 1) % certificates.length,
+      ArrowLeft: (selected - 1 + certificates.length) % certificates.length,
+      Home: 0,
+      End: certificates.length - 1,
+    };
+    const next = destinations[event.key];
+    if (next === undefined) return;
     event.preventDefault();
     setSelected(next);
-    tabRefs.current[next]?.focus({ preventScroll: true });
-    tabRefs.current[next]?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  };
+
+  const handlePreviewError = (id: string): void => {
+    setFailedPreviews((previous) => ({ ...previous, [id]: true }));
   };
 
   return (
-    <AnimatedSection id="certificates" className={styles.section}>
-      <SectionHeading kicker="MY CERTIFICATIONS" title="Certifications" icon={Award} className={styles.heading} />
-      <div ref={galleryRef} className={styles.gallery}>
-      <div className={styles.selector} role="tablist" aria-label="Choose a certificate">
-        {certificates.map((item, index) => (
-          <button
-            key={item.id}
-            ref={(element) => { tabRefs.current[index] = element; }}
-            type="button"
-            role="tab"
-            id={`${item.id}-tab`}
-            aria-selected={selected === index}
-            aria-controls="certificate-exhibit"
-            tabIndex={selected === index ? 0 : -1}
-            className={styles.tab}
-            onClick={() => setSelected(index)}
-            onKeyDown={(event) => navigateTabs(event, index)}
+    <LightSection id="certificates" className="py-10 sm:py-12 lg:py-14">
+      <SectionHeading kicker="MY CERTIFICATES" title="Certificates" icon={Award} compact className="!mb-7 sm:!mb-9" />
+
+      <svg aria-hidden="true" focusable="false" className="pointer-events-none absolute size-0">
+        <defs>
+          <filter id={morphFilterId} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves={1} seed={8} result="morphNoise" />
+            <feDisplacementMap ref={displacementRef} in="SourceGraphic" in2="morphNoise" scale={0} xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+
+      <div ref={galleryRef} role="region" aria-roledescription="carousel" aria-label="Certificates">
+        <p id="certificate-navigation-help" className="sr-only">Use the left and right arrow keys to browse certificates.</p>
+        <div
+          id="certificate-exhibit"
+          role="group"
+          aria-roledescription="slide"
+          aria-live="off"
+          aria-label={`${selected + 1} of ${certificates.length}: ${certificate.title}`}
+          aria-describedby="certificate-navigation-help"
+          tabIndex={0}
+          onKeyDown={handleNavigateCertificates}
+          className="mx-auto max-w-[600px] outline-none focus-visible:outline-2 focus-visible:outline-offset-6 focus-visible:outline-[var(--accent)]"
+        >
+          <a
+            data-certificate-action
+            href={certificateDocument}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${certificate.title} (PDF, opens in a new tab)`}
+            className="block outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-4"
           >
-            <span className={styles.tabIssuer}>{item.organization}</span><span className={styles.tabTitle}>{item.title}</span>
-          </button>
-        ))}
-      </div>
-
-      <div ref={panelRef} id="certificate-exhibit" role="tabpanel" aria-live="off" aria-labelledby={`${certificate.id}-tab`} className={styles.exhibit} tabIndex={0}>
-        <div className={styles.details} data-credential-reveal>
-          <p className={styles.issuer}>{certificate.organization}<span>{certificate.issuer}</span></p>
-          <h3>{certificate.title}</h3>
-          <p className={styles.meta}><span>{certificate.type}</span><time dateTime={certificate.date}>{certificate.displayDate}</time></p>
-          <div className={styles.topics}>
-            <h4>Topics covered</h4>
-            <ul>{certificate.skills.map((skill) => <li key={skill}><Check size={15} aria-hidden="true" />{skill}</li>)}</ul>
-          </div>
-        </div>
-
-        <div className={styles.documentColumn} data-credential-reveal>
-          <a className={styles.documentFrame} data-certificate-action data-cursor-label="View PDF" href={document} target="_blank" rel="noopener noreferrer" aria-label={`Open ${certificate.title} certificate (PDF, new tab)`}>
-            <div className={styles.paper}>
-              {failedPreview === certificate.id ? (
-                <span className={styles.previewFallback}><FileWarning size={28} aria-hidden="true" /><span>Preview unavailable</span><span>Open the original PDF <ArrowUpRight size={14} aria-hidden="true" /></span></span>
-              ) : (
-                <Image
-                  key={certificate.id}
-                  src={`/certificates/${certificate.id}.webp`}
-                  alt={`${certificate.organization} ${certificate.title} certificate of completion`}
-                  fill
-                  sizes="(max-width: 639px) calc(100vw - 50px), (max-width: 999px) calc(100vw - 80px), (max-width: 1279px) 53vw, 650px"
-                  className={styles.documentImage}
-                  style={{ objectFit: "contain" }}
-                  onError={() => setFailedPreview(certificate.id)}
-                />
-              )}
+            <div className="relative isolate aspect-[842/595] w-full overflow-hidden bg-white shadow-[0_8px_24px_rgba(20,33,61,0.08)]" style={{ filter: reducedMotion ? undefined : `url("#${morphFilterId}")` }}>
+              {certificates.map((item, index) => (
+                <div
+                  key={item.id}
+                  data-certificate-preview={item.id}
+                  data-active={selected === index}
+                  aria-hidden={selected !== index}
+                  className="pointer-events-none absolute inset-0 z-0 scale-[0.98] opacity-0 blur-[6px] transition-[opacity,transform,filter] duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] data-[active=true]:z-10 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:blur-none motion-reduce:transform-none motion-reduce:blur-none motion-reduce:transition-none"
+                >
+                  {failedPreviews[item.id] ? (
+                    <span className="absolute inset-0 grid place-items-center text-[var(--accent)]" aria-hidden="true"><FileWarning size={32} /></span>
+                  ) : (
+                    <Image
+                      src={`/certificates/${item.id}.webp`}
+                      alt={`${item.title} certificate`}
+                      fill
+                      sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 767px) calc(100vw - 64px), 600px"
+                      className="object-contain"
+                      onError={() => handlePreviewError(item.id)}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 grid min-h-14 text-center">
+              {certificates.map((item, index) => (
+                <h3
+                  key={item.id}
+                  data-active={selected === index}
+                  aria-hidden={selected !== index}
+                  className="col-start-1 row-start-1 scale-[0.98] text-balance text-xl font-medium leading-snug tracking-[-0.02em] text-[var(--foreground)] opacity-0 blur-[3px] transition-[opacity,transform,filter] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:blur-none motion-reduce:transform-none motion-reduce:blur-none motion-reduce:transition-none sm:text-2xl"
+                >
+                  {item.title}
+                </h3>
+              ))}
             </div>
           </a>
-          <div className={styles.actions}>
-            <a className={styles.view} data-certificate-action data-cursor-label="Open PDF" href={document} target="_blank" rel="noopener noreferrer">Open certificate<ArrowUpRight size={17} aria-hidden="true" /><span className="sr-only"> (PDF, new tab)</span></a>
-            <a className={styles.download} data-certificate-action data-cursor-label="Download" href={document} download><ArrowDownToLine size={16} aria-hidden="true" /><span>Download PDF</span></a>
-          </div>
         </div>
       </div>
-      </div>
-    </AnimatedSection>
+    </LightSection>
   );
-}
+};

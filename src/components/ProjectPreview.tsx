@@ -42,8 +42,6 @@ export function ProjectPreview({ project, variant = "feature" }: { project: Prev
     const reset = () => {
       cancelAnimationFrame(frame);
       frame = 0;
-      card.style.setProperty("--tilt-x", "0deg");
-      card.style.setProperty("--tilt-y", "0deg");
       card.style.setProperty("--light-x", "50%");
       card.style.setProperty("--light-y", "50%");
       card.removeAttribute("data-illuminated");
@@ -54,8 +52,6 @@ export function ProjectPreview({ project, variant = "feature" }: { project: Prev
       if (!rect.width || !rect.height) return;
       const x = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
       const y = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
-      card.style.setProperty("--tilt-x", `${(0.5 - y) * 4}deg`);
-      card.style.setProperty("--tilt-y", `${(x - 0.5) * 5}deg`);
       card.style.setProperty("--light-x", `${x * 100}%`);
       card.style.setProperty("--light-y", `${y * 100}%`);
       card.setAttribute("data-illuminated", "true");

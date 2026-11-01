@@ -46,18 +46,28 @@ const aliases: Record<string, string> = {
   "beautiful soup": "beautifulsoup",
 };
 
+const originalMarks: Record<string, string> = {
+  python: "python", typescript: "typescript", javascript: "javascript",
+  react: "react", html: "html5", css: "css3", node: "nodejs",
+  mongodb: "mongodb", postgresql: "postgresql", docker: "docker",
+  git: "git", figma: "figma", vscode: "vscode", c: "c", cplusplus: "cplusplus",
+};
+
 export function getTechnologyColor(name: string) {
   const key = aliases[name.toLowerCase()] ?? name.toLowerCase();
   return marks[key]?.color ?? "var(--accent)";
 }
 
-export function TechnologyMark({ name, icon, className = "" }: { name: string; icon?: string; className?: string }) {
+export function TechnologyMark({ name, icon, className = "", variant }: { name: string; icon?: string; className?: string; variant?: "original" }) {
   const key = icon ?? aliases[name.toLowerCase()] ?? name.toLowerCase();
   const mark = marks[key];
   const Icon = mark?.Icon ?? Braces;
+  const original = variant === "original" ? originalMarks[key] : undefined;
   return (
     <span className={className} data-mark={key} data-wordmark={key === "xgboost" || key === "pymupdf" ? "true" : undefined} style={{ "--brand-color": mark?.color ?? "var(--accent)" } as CSSProperties} aria-hidden="true">
-      {mark?.asset ? (
+      {original ? (
+        <Image src={`/icons/skills/${original}.svg`} alt="" width={64} height={64} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+      ) : mark?.asset ? (
         key === "xgboost" || key === "pymupdf" ? (
           <Image src={mark.asset} alt="" width={128} height={96} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
         ) : <span style={{ display: "block", width: "100%", height: "100%", backgroundColor: "currentColor", mask: `url(${mark.asset}) center / contain no-repeat` }} />

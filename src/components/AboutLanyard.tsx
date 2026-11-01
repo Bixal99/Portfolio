@@ -49,11 +49,11 @@ export function AboutLanyard() {
     <div
       ref={rootRef}
       data-about-lanyard
-      className="relative mx-auto w-full max-w-xl cursor-grab md:mx-0 md:ml-auto md:max-w-none"
+      className="relative mx-auto w-full max-w-xl cursor-grab [--surface:#141e31] [--edge:#31415c] [--accent:#8ca5ff] [--accent-rgb:140,165,255] [&_.lanyard-wrapper]:bg-transparent md:mx-0 md:ml-auto md:max-w-none"
       aria-label="Interactive ID card"
       aria-hidden={!inSection}
     >
-      <div className="relative cursor-grab overflow-hidden rounded-2xl bg-[var(--surface)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_28px_rgba(var(--accent-rgb),0.22),0_0_64px_rgba(var(--accent-rgb),0.12),0_28px_80px_rgba(16,23,47,0.12),inset_0_1px_0_rgba(255,255,255,0.08)] ring-1 ring-[rgba(var(--accent-rgb),0.35)] transition-[box-shadow] duration-300 hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.65),0_0_36px_rgba(var(--accent-rgb),0.32),0_0_80px_rgba(var(--accent-rgb),0.18),0_32px_90px_rgba(16,23,47,0.12),inset_0_1px_0_rgba(255,255,255,0.1)] active:cursor-grabbing">
+      <div className="relative cursor-grab overflow-hidden rounded-2xl bg-[radial-gradient(ellipse_at_50%_20%,#253958_0%,#141e31_58%,#101724_100%)] shadow-[0_20px_55px_rgba(20,33,61,0.18)] ring-1 ring-[var(--edge)] transition-shadow duration-300 hover:shadow-[0_24px_60px_rgba(20,33,61,0.23)] motion-reduce:transition-none active:cursor-grabbing">
         <div
           className="pointer-events-none absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-80"
           aria-hidden="true"

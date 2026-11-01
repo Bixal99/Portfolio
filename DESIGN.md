@@ -47,9 +47,9 @@ typography:
     fontWeight: 500
   skill-label:
     fontFamily: "var(--font-poppins), Poppins, Arial, Helvetica, sans-serif"
-    fontSize: "10px"
-    fontWeight: 400
-    lineHeight: 1.45
+    fontSize: "11px"
+    fontWeight: 500
+    lineHeight: 1.4
 rounded:
   thumbnail: "6px"
   control: "8px"
@@ -83,9 +83,12 @@ components:
     rounded: "{rounded.thumbnail}"
     height: "53px"
   skill-control:
-    textColor: "{colors.muted}"
-    rounded: "{rounded.control}"
-    padding: "8px 2px"
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.container}"
+    padding: "16px 10px"
+    width: "138px"
+    height: "138px"
   input-field:
     backgroundColor: "{colors.background}"
     textColor: "{colors.foreground}"
@@ -101,7 +104,7 @@ components:
 
 This records the portfolio after the user's October 8, 2026 colors-only directive, which supersedes the earlier black/mint palette across the codebase. Light gray provides the canvas, navy carries primary text, and vivid blue identifies important words and actions. Established Poppins typography, layout, content, animations, and interactions remain intact. The engineer's software and authentic technology marks supply visual variety.
 
-The scoped extension is compact and open: media has a restrained frame, explanation sits on the page, and tools form labeled bands. This is a description of the shipped source, not a replacement brand or a preferred workflow for future tasks.
+The scoped extension is compact: media has a restrained frame, explanation sits on the page, and Skills now uses two moving rows of technology cards. The later Skills instruction replaces its earlier open-band treatment without replacing the portfolio identity or other sections.
 
 **Key Characteristics:**
 
@@ -123,11 +126,11 @@ One vivid blue portfolio accent sits against light gray and white surfaces with 
 
 ### Neutral
 
-- **Light gray background:** page and mobile skill detail region.
+- **Light gray background:** page.
 - **Navy foreground:** primary headings and active skill labels.
 - **White surface:** project media, thumbnails, navigation, and the contact container.
 - **Soft gray surface:** settled contact fields and supporting surfaces.
-- **Gray edge:** media borders and skill-band dividers.
+- **Gray edge:** media borders and Skills card edges.
 - **Muted slate:** project descriptions, media notes, and resting skill labels.
 - **White on-accent:** text on filled blue actions and the active navigation item.
 
@@ -149,7 +152,7 @@ The large type is bold and geometric. Supporting copy is quieter and factual; ti
 - **Body:** About copy uses the body token and becomes (20px) with a (36px) line height at the small breakpoint.
 - **Project body:** uses its compact reading token, a (48ch) maximum measure, and a mobile size of (14px).
 - **Action label:** demo and source actions use the action label size; the demo action carries medium weight.
-- **Skill label:** names remain visible under each mark. Category labels use (13px), medium weight; the shared role region uses (12px) and a (1.6) line height.
+- **Skill label:** names remain visible under each mark using the skill-label token, becoming (10px) on mobile. Category labels use (10px) and appear on hover, keyboard focus, or touch selection.
 
 **The About Heading Rule.** Section headings begin with a blue line and a relevant SVG icon, followed by bold uppercase Poppins with the final word in blue. The line grows from (32px) to (64px); icons grow from (32px) to (56px), then (64px).
 
@@ -159,13 +162,13 @@ The main content uses a centered maximum width of (80rem), with horizontal gutte
 
 Projects uses an open two-column grid of (1.3fr / 1fr), vertically centered, with a gap of (clamp(24px, 4vw, 56px)). The media is (300px) tall at desktop and (290px) at widths up to (1000px). At widths up to (760px), it becomes a single column in media-first order with a (16 / 10) media aspect ratio, followed by summary and the horizontally scrollable project strip. Video content is contained, preserving application controls rather than cropping them. Projects has (32px) vertical padding; its section heading has a (32px) bottom gap.
 
-Skills uses five open bands: AI & Data, Frontend, Backend, Languages, and Tools. Desktop bands have a (120px) label column, a flexible mark row, a (16px) gap, and a minimum height of (96px). Marks wrap as needed; their allocations are normally (68px), becoming (66px) at widths of at least (1100px). On mobile up to (760px), category names sit above scrollable rows with (64px) allocations. The shared role region moves above the bands and sticks (68px) below the viewport top, below the compact navigation. The page, body, and section clipping use overflow-x: clip so the region can remain sticky.
+Skills splits all 42 entries into two rows of 21, duplicated for seamless loops. The top moves right and the bottom moves left. Cards are 138px square with 22px gaps, becoming 110px square with 16px gaps on mobile. The backdrop stays plain; only the rows fade across 18px at desktop edges and 10px on mobile. There are no scrollbars, pause button, or footer labels. See `.impeccable/surfaces/skills-marquee.md`.
 
 The spacing tokens describe recurring steps, not a requirement to replace source values such as the project strip's (10px) gap or the video caption's (10px) top padding.
 
 ## Elevation & Depth
 
-Depth uses a hybrid of gray/white surfaces, fine gray borders, blue hover rings, blur, and localized blue glow. The extension's open text and skill bands do not require a raised enclosing panel. Existing hero, navigation, and contact components retain their ambient depth and motion; the approved refresh changes their colors without changing their structure.
+Depth uses a hybrid of gray/white surfaces, fine gray borders, blue hover rings, blur, and localized blue glow. Skills cards add an offset backing, pointer-following spotlight, with upright hover states, scoped to that section. Existing hero, navigation, and contact components retain their ambient depth and motion; the approved refresh changes their colors without changing their structure.
 
 ### Shadow Vocabulary
 
@@ -178,7 +181,7 @@ Exact shadow values and motion timings live in the sidecar; they extend the fron
 
 ## Shapes
 
-The extension uses gently rounded media, small thumbnail corners, and modestly rounded rectangular actions. Circular arrow and play controls remain distinct from the rectangular demo action. Existing navigation and hero controls use full pill silhouettes; contact fields and their enclosing form use the field and container radii. Skill controls reserve an interaction area while remaining visually open, without repeated visible tile backgrounds.
+The extension uses gently rounded media, small thumbnail corners, and modestly rounded rectangular actions. Circular arrow and play controls remain distinct from the rectangular demo action. Existing navigation and hero controls use full pill silhouettes; contact fields and their enclosing form use the field and container radii. Skills uses rounded square cards with (16px) corners, becoming (14px) on mobile, and an offset backing inspired by the user's reference.
 
 ## Components
 
@@ -188,7 +191,7 @@ The demo action uses blue fill, white on-accent text, the control radius, horizo
 
 ### Navigation
 
-The fixed header is transparent at the top and becomes the light gray page color with blur and a gray bottom edge after (48px) of scrolling. Header height is (64px), increasing to (80px) at the small breakpoint. Desktop navigation appears from (1024px) as a white pill with a blue active indicator and white active text. Smaller widths use a (44px) menu control and a light gray expanded link list.
+The original navbar composition is restored: brand at left, an independent centered rounded navigation pill, and labeled social icons at right. Equal side columns keep the pill centered; the outer row has no enclosing panel, border, or rounded frame. The pill, brand, social labels, and mobile menu adapt to the actual light content surface at navbar height. A soft fading background protects readability without a solid full-width wall.
 
 ### Inputs / Fields
 
@@ -206,11 +209,13 @@ The named poster strip is the only project picker and reaches all nine entries. 
 
 Media captions distinguish recorded demonstrations, prediction, gameplay, public site tours, and interface tours. They disclose unavailable sign-in, database, SDXL, or retention dependencies where applicable. Source provenance stays in `public/demos/sources.json`; a tour is never promoted to evidence of an unavailable workflow.
 
-### Technology marks and Skills bands
+### Technology marks and Skills marquee
 
-Forty-two skills remain in five static bands. Marks are (29px) square by default; XGBoost reserves (64px / 34px), and PyMuPDF reserves (50px / 38px) so their original artwork fits. Those two assets are images, not monochrome masks. XGBoost's image sits on the navy foreground color so its authentic white lettering remains readable against the light page; its PNG colors are preserved. Their resting grayscale and opacity are removed during hover, focus, or selection. Other brand silhouettes use their source icon or mask and reveal their associated brand color on interaction; monochrome marks such as Next.js, OpenAI, and GitHub use navy. Computer Vision and SQL use semantic SVGs because they are concepts.
+All 42 skills retain genuine brand marks. The marquee opts into 15 locally stored Devicon v2.16.0 original SVG logos, retaining their original colors. Other shared TechnologyMark consumers retain their existing rendering. Marquee marks are 54px square (42px on mobile), with wordmark widths of 76px (62px mobile). Asset provenance and MIT license are stored in public/icons/skills.
 
-Hover, focus, and tap select one full name and role in a shared live region. On desktop this region remains beneath the bands; only mobile moves it above the bands and makes it sticky. The selected state persists until another tool is selected. Emphasis lifts a mark (4px) and scales it to (1.1), without moving names or surrounding content. Reduced motion removes transformations and transitions while preserving selection and role information. No orbit or automatic category switching is introduced.
+The top row loops right over 76s and the bottom loops left over 83s; mobile durations are 58s and 64s. Hover lifts cards, scales marks, reveals categories, and applies a pointer-following spotlight without tilt. Hover, clicks, and focus never interrupt or reset the track animation. Cards are informational list content, without button semantics or selection state. Hidden clone lists are excluded from accessibility.
+
+Only offscreen and hidden-document states suspend activity. Reduced motion removes animation and interactive transforms and wraps all original skills into a static grid, with no scroller. The user explicitly removed the motion control, hover pause, click selection, scrollbar, grid backdrop, and bottom copy in the latest correction.
 
 ## Do's and Don'ts
 
@@ -219,13 +224,51 @@ Hover, focus, and tap select one full name and role in a shared live region. On 
 - **Do** preserve the user-approved light gray, navy, and blue palette with existing Poppins typography and the About Me section-heading grammar.
 - **Do** limit the color refresh to color assignments while retaining existing layout, content, animations, and interactions.
 - **Do** retain genuine application footage, honest media labels, original technology artwork, and equivalent hover, focus, and tap information.
-- **Do** keep compact Projects and static Skills behavior scoped to these sections, with every project and skill reachable.
+- **Do** keep compact Projects and the two-row Skills marquee scoped to these sections, with every project and skill reachable.
 - **Do** keep visible focus and reduced-motion selection feedback when extending the interaction patterns.
 
 ### Don't:
 
 - **Don't** replace authentic software footage with abstract stand-in illustrations in Projects.
-- **Don't** add a second full project collection or return Skills to orbiting content, automatic cycling, or a large repeated tile grid.
+- **Don't** add a second full project collection or return Skills to orbiting content. Keep its user-authorized continuous rows and keep all original skill names accessible.
 - **Don't** recolor original multicolor technology artwork as a blue substitute or imply unavailable backend output.
 
 Not canonized: the pre-existing hero greeting eyebrow was not promoted into house rules. The existing navigation's social-link text is hidden on small screens while its SVGs are aria-hidden, leaving those links without accessible names; this source finding was not repaired within the colors-only boundary. Historical black/mint palette statements are superseded by the user's color directive. The plan's 340px media cap and approximate section-height target are directional; the implemented media values above are the source of truth.
+
+
+### White About and credential folio
+
+The November 1 refinement scopes the white palette to About and Certifications through LightSection. A full-width white background preserves the existing content gutters and does not alter the surrounding dark page. Local tokens: white #ffffff, navy #14213d, muted slate #52627a, blue #245cdb, soft blue #eef4ff, cool border #dce4ef. Keep Poppins for headings/body and use the existing JetBrains Mono only for PDF metadata and slide position.
+
+About retains its original grid, spacing, four bullets, photo, and 3D lanyard settings. Its frame uses a cool light surface with a subtle shadow. Certifications reverses the previous emphasis: genuine certificate artwork appears first in a pale-blue folio with straight stacked-paper edges, while the issuer, title, completion date, topics, and PDF actions occupy the adjacent column. Mobile stacks the document above its details. There is no hover tilt, visible selector strip, pause button, verification claim, or fabricated credential. Five-second visibility-aware rotation and keyboard navigation remain.
+
+All new styling uses Tailwind utilities. Light-theme body, muted, accent, and chip-label pairings were checked for at least 4.5:1 contrast. Source, served-HTML, slideshow, and build checks do not substitute for rendered visual review; the browser host remained unavailable.
+
+
+### Softer section transitions and matching project connectors
+
+The latest November 1 correction supersedes the pure-white section treatment: About and Certifications use cool slate-blue #dbe2f0, surface #e6ecf6, navy #14213d, muted #40526c, and deeper blue #1f50c6 for readable accent labels. Full-bleed 80px/112px/144px gradient bands connect the dark canvas to the tinted content surface and back. Text remains on the solid light surface. This follows the cool blue-gray transition direction of the user-supplied Huly reference, whose styles were inspected at https://huly.io/. Certificate artwork retains its original white paper.
+
+Projects open and close with the same code-bracket terminal and outward-drawing branches; the rejected sparkle is removed. The rail measures its start from the introductory connector and its end from the outro connector, with both markers aligned to the measured desktop/mobile rail position. Reduced motion renders both connectors completed.
+
+
+### Latest restoration: navbar, Journey, archive circle, and portrait
+
+Preserve the original navbar design; future navigation changes should address alignment and surface-aware colors only. The archive link is once again a 180px circle (164px mobile) with an upward arrow, readable label/count, and a bottom-up color fill on hover, never rotation. The outro lead-in is 26?36px, main line 40?64px, and supporting copy 16?17px.
+
+Journey removes the subtitle and university joining entry, retaining Matric, FSC, and June 2026 Graduation. Cards use 14?16px labels, 15?17px body copy, a restrained semibold title, and 48?56px icon tiles. Matching graduation-cap junctions open and close the measured rail; branches draw outward and the ring follows scroll progress. Reduced motion shows completed junctions and visible cards. The About portrait retains its original image, dimensions, and physics but uses a dark blue radial backdrop within the surrounding lighter section.
+
+
+Latest navbar screenshot refinement: restore the original wide pill proportions (630px by 58px on large desktops), bold uppercase 14px name with generous tracking, 24px outlined GitHub/LinkedIn icons, and labeled social links. The outer alignment row returns to its original 1600px maximum width and has no surrounding frame; symmetric columns still center the navigation. The header is transparent at the top, with a soft readability fade only after scrolling. Existing light-surface detection adapts pill, text, border, active state, and mobile-menu colors.
+
+
+Latest certificate replacement: remove the MY CERTIFICATIONS heading, credential-count badge, sidebar details, and stacked-paper folio. Use a Credentials heading and a full-width midnight-blue display with the genuine document centered at up to 700px. Issuer/slide position sit above the document; title, type, date, and PDF open/download actions sit in a horizontal footer, stacked responsively. Topics appear below the display. Five-second rotation and keyboard/reduced-motion behavior remain. Navbar maximum row width is reduced from 1600px to 1440px to bring the name and social links inward while keeping the original centered pill dimensions.
+
+
+Latest certificate simplification supersedes the centered dark display: retain the standard line/icon/accent-word heading as MY CERTIFICATES, with the new optional compact SectionHeading variant used only here. Cap the document at 600px, keep title/issuer/date and PDF actions beneath, and remove all promotional copy, topics, visible counters, dark framing, and decorative borders. Keep five-second rotation, keyboard navigation, reduced motion and preview failure recovery. Other section headings retain their existing sizes.
+
+
+Latest certificate interaction: keep only each certificate image and its name. Remove organization/issuer/date metadata and all visible open/download buttons. A single link wraps the preview and name, opens the corresponding PDF with target=_blank and noopener noreferrer, and has no download attribute. Four persistent preview/name layers crossfade over 700ms at each five-second advance, preserving layout and avoiding image-remount flashes; reduced motion removes transitions. Inactive layers are aria-hidden and only one link is focusable.
+
+
+Certificate transition refinement: use a 900ms soft morph with gentle displacement (0?12?0), blur, opacity, and 0.98?1 scale. Names blur/fade in sync. The SVG noise field is static and only its displacement strength animates during changes; reduced motion and first render skip the warp, and cleanup restores zero displacement. Five-second rotation, name-only presentation, and single new-tab PDF link remain.

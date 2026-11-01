@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowUpRight, BookOpen, ChartColumn, Eye, GraduationCap } from "lucide-react";
+import { ArrowUpRight, BookOpen, ChartColumn, Code2, Eye, GraduationCap } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { featuredProjects, projectCatalog } from "@/data/projectCatalog";
@@ -20,6 +20,17 @@ const projectPresentation = {
   "interview-help": { lines: ["Interview", "Help"], Icon: GraduationCap },
 };
 
+const ProjectConnector = () => (
+  <div className={styles.lineEnding} aria-hidden="true" data-project-connector>
+    <span className={`${styles.branch} ${styles.branchLeft}`} />
+    <span className={`${styles.branch} ${styles.branchRight}`} />
+    <span className={styles.junction}>
+      <Code2 size={22} strokeWidth={1.6} />
+      <span className={styles.arrivalRing} />
+    </span>
+  </div>
+);
+
 export function ProjectGrid() {
   const rootRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -35,6 +46,8 @@ export function ProjectGrid() {
     const nodes = rows.map((row) => row.querySelector<HTMLElement>("[data-project-node]"));
     const fill = track.querySelector<HTMLElement>("[data-project-progress]");
     const tip = track.querySelector<HTMLElement>("[data-project-tip]");
+    const outro = root.querySelector<HTMLElement>("[data-project-outro]");
+    const intro = root.querySelector<HTMLElement>("[data-project-intro]");
     let railStart = 0;
     let railEnd = 0;
     let railHeight = 0;
@@ -42,20 +55,28 @@ export function ProjectGrid() {
 
     const measure = () => {
       const centers = rows.map((row) => row.offsetTop + row.offsetHeight / 2);
-      railStart = rows[0]?.offsetTop ?? 0;
-      const outro = root.querySelector<HTMLElement>("[data-project-outro]");
+      railStart = intro ? intro.offsetTop - timeline.offsetTop : rows[0]?.offsetTop ?? 0;
       railEnd = outro ? outro.offsetTop - timeline.offsetTop : timeline.offsetHeight;
       railHeight = Math.max(1, railEnd - railStart);
       stops = centers.map((center) => (center - railStart) / railHeight);
       track.style.top = railStart + "px";
       track.style.height = railHeight + "px";
+      outro?.style.setProperty("--project-end-x", `${track.offsetLeft}px`);
+      intro?.style.setProperty("--project-end-x", `${track.offsetLeft}px`);
     };
     measure();
     ScrollTrigger.addEventListener("refreshInit", measure);
     const media = gsap.matchMedia();
     media.add({ desktop: "(min-width: 900px)", mobile: "(max-width: 899px)", reduced: "(prefers-reduced-motion: reduce)" }, (context) => {
       measure();
-      if (context.conditions?.reduced) return;
+      if (context.conditions?.reduced) {
+        outro?.setAttribute("data-arrived", "true");
+        intro?.setAttribute("data-arrived", "true");
+        return () => {
+          outro?.removeAttribute("data-arrived");
+          intro?.removeAttribute("data-arrived");
+        };
+      }
       const desktop = context.conditions?.desktop;
       const focusCleanups: (() => void)[] = [];
       rows.forEach((row, index) => {
@@ -86,8 +107,12 @@ export function ProjectGrid() {
         },
         onUpdate: function(this: gsap.core.Timeline) {
           const amount = this.progress();
-          const opacity = amount > 0 ? "1" : "0";
+          const opacity = amount > .005 && amount < .995 ? "1" : "0";
           if (tip && tip.style.opacity !== opacity) tip.style.opacity = opacity;
+          const arrived = String(amount >= .985);
+          if (outro && outro.dataset.arrived !== arrived) outro.dataset.arrived = arrived;
+          const started = String(amount > 0);
+          if (intro && intro.dataset.arrived !== started) intro.dataset.arrived = started;
           nodes.forEach((node, index) => {
             const active = String(amount > 0 && amount + .001 >= stops[index]);
             if (node && node.dataset.active !== active) node.dataset.active = active;
@@ -96,13 +121,15 @@ export function ProjectGrid() {
       });
       progress.to(fill, { scaleY: 1, duration: 1, ease: "none" }, 0)
         .to(tip, { y: () => railHeight, duration: 1, ease: "none" }, 0);
-      gsap.fromTo(root.querySelectorAll("[data-project-outro-line]"), { x: desktop ? 190 : 65, skewX: -9, filter: "blur(12px)", opacity: .25 }, {
-        x: 0, skewX: 0, filter: "blur(0px)", opacity: 1, stagger: .12, ease: "power3.out", duration: 1.2,
-        scrollTrigger: { trigger: root.querySelector("[data-project-outro]"), start: "top 95%", end: "center 65%", scrub: .7 },
+      gsap.fromTo(root.querySelectorAll("[data-project-outro-line]"), { y: 16, opacity: .7 }, {
+        y: 0, opacity: 1, stagger: .08, ease: "power3.out", duration: .7,
+        scrollTrigger: { trigger: root.querySelector("[data-project-outro]"), start: "top 90%", once: true },
       });
       return () => {
         focusCleanups.forEach((cleanup) => cleanup());
         rows.forEach((row) => row.querySelector("[data-project-node]")?.removeAttribute("data-active"));
+        outro?.removeAttribute("data-arrived");
+        intro?.removeAttribute("data-arrived");
       };
     }, root);
     const resizeObserver = new ResizeObserver(() => ScrollTrigger.refresh());
@@ -117,6 +144,7 @@ export function ProjectGrid() {
   return (
     <section id="projects" ref={rootRef} className={styles.section} aria-label="Selected projects">
       <SectionHeading {...sectionMeta.projects} />
+      <div className={styles.intro} data-project-intro><ProjectConnector /></div>
       <div className={styles.timeline} ref={timelineRef}>
         <div ref={trackRef} className={styles.track} aria-hidden="true">
           <div className={styles.rail} />
@@ -141,8 +169,9 @@ export function ProjectGrid() {
         );})}
       </div>
       <div className={styles.outro} data-project-outro>
+        <ProjectConnector />
         <div className={styles.outroCopy}><h3 className={styles.outroTitle}><span data-project-outro-line>Still curious?</span><span data-project-outro-line>Keep exploring.</span></h3><p className={styles.outroDescription}>More builds, experiments, and ideas brought to life.</p></div>
-        <Link className={styles.archiveLink} href="/projects"><ArrowUpRight size={36} aria-hidden="true" /><span className={styles.archiveLabel}>Explore all work<span>{String(projectCatalog.length).padStart(2, "0")} projects</span></span></Link>
+        <Link className={styles.archiveLink} href="/projects"><span className={styles.archiveArrow}><ArrowUpRight size={32} aria-hidden="true" /></span><span className={styles.archiveLabel}>Explore all work<span>{projectCatalog.length} projects</span></span></Link>
       </div>
     </section>
   );

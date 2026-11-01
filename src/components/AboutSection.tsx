@@ -1,13 +1,14 @@
 import { BrainCircuit } from "lucide-react";
 import { AboutLanyard } from "./AboutLanyard";
+import { LightSection } from "./LightSection";
 
 const aboutTitle = "ABOUT ME";
 
 export function AboutSection() {
   return (
-    <section
+    <LightSection
       id="about"
-      className="relative grid scroll-mt-24 items-center pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-14"
+      className="grid items-center pt-8 pb-10 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-14"
     >
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-center xl:gap-10">
         <div data-about-panel className="relative z-20 min-w-0 max-w-3xl">
@@ -83,6 +84,6 @@ export function AboutSection() {
           <AboutLanyard />
         </div>
       </div>
-    </section>
+    </LightSection>
   );
 }

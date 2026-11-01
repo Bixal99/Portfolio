@@ -4,11 +4,11 @@ An existing personal portfolio built with Next.js 16.2, React 19.2, TypeScript, 
 
 ## Application
 
-- `/`: hero and typewriter, About with draggable 3D ID card, four featured projects, desktop skill orbits/mobile skill list, journey, certificate gallery, and contact footer.
+- `/`: hero and typewriter, About with draggable 3D ID card, four featured projects, two continuous skill rows on desktop and mobile, journey, certificate gallery, and contact footer.
 - `/projects`: ten project cards, illustrated covers, recorded demos where available, live/source links, CV download and portfolio navigation.
 - Shared: custom pointer on supported devices, click feedback and persistent sound preference.
 
-The certificate gallery advances every 20 seconds while visible, supports manual and keyboard selection, and respects reduced motion. Recorded demos load only after activation. The 3D card loads when its section is reached and pauses while offscreen or hidden.
+The certificate gallery advances every 5 seconds while visible, supports keyboard navigation without a selector strip, and respects reduced motion. Recorded demos load only after activation. The 3D card loads when its section is reached and pauses while offscreen or hidden.
 
 ## Development
 

@@ -2,7 +2,7 @@
 
 import { useEffect, type RefObject } from "react";
 
-export const CERTIFICATE_INTERVAL = 20_000;
+export const CERTIFICATE_INTERVAL = 5_000;
 
 export function useCertificateRotation(containerRef: RefObject<HTMLDivElement | null>, selected: number, advance: () => void) {
   useEffect(() => {

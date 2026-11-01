@@ -1,7 +1,7 @@
 .preview { min-width: 0; }
 .archivePreview { display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: 0; }
-.mediaCard { --tilt-x: 0deg; --tilt-y: 0deg; --light-x: 50%; --light-y: 50%; position: relative; display: flex; flex-direction: column; height: auto; overflow: hidden; border-radius: 14px; background: var(--surface); transform: perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)); transition: transform 420ms cubic-bezier(.16,1,.3,1), box-shadow 350ms ease; }
-.mediaCard[data-illuminated="true"] { box-shadow: 0 18px 44px rgb(0 0 0 / 28%); transition: transform 130ms ease-out, box-shadow 350ms ease; }
+.mediaCard { --light-x: 50%; --light-y: 50%; position: relative; display: flex; flex-direction: column; height: auto; overflow: hidden; border-radius: 14px; background: var(--surface); transition: box-shadow 350ms ease; }
+.mediaCard[data-illuminated="true"] { box-shadow: 0 18px 44px rgb(0 0 0 / 28%); }
 .featureMedia { position: relative; }
 .media { position: relative; flex: 0 0 auto; aspect-ratio: 16 / 10; min-height: 0; overflow: hidden; background: var(--surface); }
 .media::after { content: ""; position: absolute; z-index: 1; inset: 0; pointer-events: none; background: radial-gradient(ellipse at var(--light-x) var(--light-y), rgb(255 255 255 / 24%), transparent 62%); mix-blend-mode: soft-light; opacity: 0; transition: opacity 250ms ease; }
@@ -43,7 +43,7 @@
 .demoButton:focus-visible, .closeDemo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .privateSource { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; color: var(--muted); font-size: 11px; }
 .sourceLink > svg { transition: transform 300ms cubic-bezier(.16,1,.3,1); }
-.sourceLink:hover > svg { transform: translateY(-1px) rotate(-8deg); }
+.sourceLink:hover > svg { transform: translateY(-1px); }
 @media (hover: hover) and (pointer: fine) { .mediaCard[data-illuminated="true"] .poster { transform: scale(1.035); } }
 @media (prefers-reduced-motion: reduce) { .demoButton, .sourceLink > svg { transition: none; transform: none !important; } }
 @media (max-width: 760px) { .demoActions { align-items: flex-start; } .demoLabel { align-self: center; font-size: 11px; } .mediaNote { font-size: 11px; line-height: 1.7; } .links { gap: 10px; } .links a { min-height: 46px; } }

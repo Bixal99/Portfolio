@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { FileCode2 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotionPreference, useVisibleActivity } from "./useVisibleActivity";
@@ -194,6 +195,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
   const progressRef = useRef(0);
   const active = useVisibleActivity(cardRef);
   const reduced = useReducedMotionPreference();
+  const tabHighlightId = useId();
   const [activeFile, setActiveFile] = useState(0);
   const [typedChars, setTypedChars] = useState(0);
   const currentFile = files[activeFile] ?? files[0];
@@ -308,6 +310,7 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
               <button
                 key={file.name}
                 type="button"
+                id={`${tabHighlightId}-${index}`}
                 data-code-tab={index}
                 suppressHydrationWarning
                 role="tab"
@@ -317,11 +320,20 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
                   setTypedChars(0);
                   setActiveFile(index);
                 }}
-                className={`inline-flex min-h-11 min-w-0 w-full items-center justify-center gap-1 rounded-lg px-1.5 py-1.5 text-[9px] font-bold transition-[background-color,box-shadow,color,transform] duration-150 active:scale-[0.96] sm:gap-1.5 sm:px-2 sm:py-2 sm:text-[10px] lg:text-[11px] ${selected
-                    ? "bg-[var(--surface)] text-[var(--foreground)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_32px_rgba(var(--accent-rgb),0.18)]"
-                    : "bg-transparent text-[var(--muted)] shadow-[0_0_0_1px_transparent] hover:bg-[var(--surface)] hover:shadow-[var(--shadow-border)]"
+                className={`relative isolate inline-flex min-h-11 min-w-0 w-full items-center justify-center gap-1 rounded-lg px-1.5 py-1.5 text-[9px] font-bold transition-[background-color,color,transform] duration-300 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] motion-reduce:transition-none sm:gap-1.5 sm:px-2 sm:py-2 sm:text-[10px] lg:text-[11px] ${selected
+                    ? "text-[var(--foreground)]"
+                    : "bg-transparent text-[var(--muted)] hover:bg-[var(--surface-soft)]"
                   } ${file.accent}`}
               >
+                {selected && (
+                  <motion.span
+                    aria-hidden="true"
+                    layoutId={reduced ? undefined : tabHighlightId}
+                    initial={false}
+                    transition={reduced ? { duration: 0 } : { type: "spring", duration: 0.4, bounce: 0 }}
+                    className="pointer-events-none absolute inset-0 -z-10 rounded-lg bg-[var(--surface)] shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.45),0_0_24px_rgba(var(--accent-rgb),0.12)]"
+                  />
+                )}
                 <FileCode2 className="size-3 shrink-0 sm:size-3.5" aria-hidden="true" />
                 <span className="truncate">{file.name}</span>
               </button>
@@ -330,9 +342,18 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
         </div>
       </div>
 
+      <AnimatePresence initial={false} mode="wait">
+      <motion.div
+        key={currentFile.name}
+        initial={reduced ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={reduced ? { opacity: 1 } : { opacity: 0, y: -4 }}
+        transition={{ duration: reduced ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+      >
       <div
         id="code-window-panel"
         role="tabpanel"
+        aria-labelledby={`${tabHighlightId}-${activeFile}`}
         className="grid grid-cols-[48px_1fr] px-0 py-6 text-xs leading-7 sm:grid-cols-[56px_1fr] sm:text-sm"
       >
         <div className="select-none border-r border-[var(--edge)] text-right text-[var(--muted)]">
@@ -355,6 +376,8 @@ export function CreativeCodeWindow({ cardOnly = false }: CreativeCodeWindowProps
         <span>{currentFile.label} Mode</span>
         <span>{reduced ? 100 : generatedPercent}% generated</span>
       </div>
+      </motion.div>
+      </AnimatePresence>
     </div>
   );
 

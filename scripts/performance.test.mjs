@@ -115,17 +115,21 @@ test('reused rope samples exactly match the previous curve geometry on phone and
 
 test('navigation keeps scroll-only selection, avoids repeated updates and preserves the mobile menu', () => {
   const values = [], effects = [], handlers = new Map(), frames = new Map();
-  let stateIndex = 0, updates = 0, frameId = 0;
+  let stateIndex = 0, updates = 0, frameId = 0, lightSurfaceTop = 10000;
   const navItems = ['home', 'about', 'projects', 'stack', 'certificates'].map(id => ({ label: id, href: '#' + id }));
   const window = { scrollY: 0, innerHeight: 900, addEventListener: (n, f) => handlers.set(n, f), removeEventListener: n => handlers.delete(n) };
-  const document = { querySelector: href => ({ getBoundingClientRect: () => ({ top: navItems.findIndex(item => item.href === href) * 1000 - window.scrollY }) }) };
+  const document = {
+    querySelector: href => ({ getBoundingClientRect: () => ({ top: navItems.findIndex(item => item.href === href) * 1000 - window.scrollY }) }),
+    querySelectorAll: () => [{ getBoundingClientRect: () => ({ top: lightSurfaceTop, bottom: lightSurfaceTop + 600 }) }],
+  };
   const { Navbar } = load('src/components/Navbar.tsx', {
     react: {
       useState: initial => { const index = stateIndex++; if (!(index in values)) values[index] = initial; return [values[index], next => { values[index] = typeof next === 'function' ? next(values[index]) : next; updates++; }]; },
       useEffect: fn => effects.push(fn),
     }, 'react/jsx-runtime': { jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }) },
     '@/data/portfolio': { navItems, profile: { name: 'Mohammad Bilal' }, socialLinks: [] },
-    'lucide-react': {}, './Navbar.module.css': { default: new Proxy({}, { get: (_, property) => property }) },
+    'lucide-react': {}, 'react-icons/si': {}, 'react-icons/fa6': {},
+    '@/lib/utils': { cn: (...values) => values.filter(Boolean).join(' ') },
   }, { window, document, requestAnimationFrame: fn => { frames.set(++frameId, fn); return frameId; }, cancelAnimationFrame: id => frames.delete(id) });
   const all = (node, predicate) => Array.isArray(node) ? node.flatMap(child => all(child, predicate)) : node?.props ? [...(predicate(node) ? [node] : []), ...all(node.props.children, predicate)] : [];
   const render = () => { stateIndex = 0; effects.length = 0; return Navbar(); };
@@ -136,6 +140,11 @@ test('navigation keeps scroll-only selection, avoids repeated updates and preser
   window.scrollY = 2100; handlers.get('scroll')(); [...frames.values()][0](); frames.clear();
   assert.equal(values[1], 'projects'); assert.equal(values[2], true); const count = updates;
   handlers.get('scroll')(); [...frames.values()][0](); frames.clear(); assert.equal(updates, count);
+  lightSurfaceTop = 0; handlers.get('scroll')(); [...frames.values()][0](); frames.clear();
+  assert.equal(values[3], true, 'navigation adapts to a light section underneath it');
+  tree = render(); assert.equal(tree.props['data-nav-theme'], 'light');
+  lightSurfaceTop = -1000; handlers.get('scroll')(); [...frames.values()][0](); frames.clear();
+  assert.equal(values[3], false, 'navigation returns to its dark palette after the light section');
   tree = render(); const nav = all(tree, node => node.props['aria-label'] === 'Main navigation')[0];
   const links = all(nav, node => node.type === 'a');
   assert.equal(links.length, 5); assert.ok(links.every(link => !link.props.onPointerEnter));

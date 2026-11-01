@@ -1,0 +1,22 @@
+{
+  "source": "https://github.com/devicons/devicon",
+  "version": "v2.16.0",
+  "license": "MIT",
+  "icons": [
+    "python",
+    "typescript",
+    "javascript",
+    "react",
+    "html5",
+    "css3",
+    "nodejs",
+    "mongodb",
+    "postgresql",
+    "docker",
+    "git",
+    "figma",
+    "vscode",
+    "c",
+    "cplusplus"
+  ]
+}

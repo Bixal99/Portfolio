@@ -1,6 +1,7 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "motion/react";
+import { useScroll, useTransform, useReducedMotion, motion, type MotionValue } from "motion/react";
+import { GraduationCap } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +15,27 @@ type TimelineProps = {
   className?: string;
 };
 
+function TimelineJunction({ progress, end, top, reduced }: { progress: MotionValue<number>; end?: boolean; top: number; reduced: boolean }) {
+  const reveal = useTransform(progress, end ? [0.95, 1] : [0, 0.05], [0, 1]);
+  const pulseOpacity = useTransform(progress, end ? [0.95, 0.975, 1] : [0, 0.025, 0.05], [0, 0.65, 0]);
+  const pulseScale = useTransform(progress, end ? [0.95, 1] : [0, 0.05], [0.6, 2.3]);
+
+  return (
+    <div aria-hidden="true" data-journey-connector={end ? "end" : "start"} data-depth="2" className="pointer-events-none absolute inset-x-0 z-40 h-10 -translate-y-1/2" style={end && top === 0 ? { bottom: 0 } : { top }}>
+      <div className="absolute top-1/2 left-0 h-px w-3 bg-[var(--edge)]">
+        <motion.span className="absolute inset-0 origin-right bg-[var(--accent)]" style={{ scaleX: reduced ? 1 : reveal }} />
+      </div>
+      <div className="absolute top-1/2 right-0 left-[52px] h-px bg-[linear-gradient(90deg,var(--edge),transparent)]">
+        <motion.span className="absolute inset-0 origin-left bg-[linear-gradient(90deg,var(--accent),transparent)]" style={{ scaleX: reduced ? 1 : reveal }} />
+      </div>
+      <span className="absolute top-1/2 left-8 grid size-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[var(--edge)] bg-[var(--background)] text-[var(--accent)]">
+        <GraduationCap size={21} strokeWidth={1.6} />
+        {!reduced && <motion.span className="absolute inset-1 rounded-full border border-[var(--accent)]" style={{ opacity: pulseOpacity, scale: pulseScale }} />}
+      </span>
+    </div>
+  );
+}
+
 export function Timeline({ data, className }: TimelineProps) {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,6 +47,7 @@ export function Timeline({ data, className }: TimelineProps) {
   const [visibleCards, setVisibleCards] = useState<Record<number, boolean>>(
     {},
   );
+  const reducedMotion = Boolean(useReducedMotion());
 
   useEffect(() => {
     const element = ref.current;
@@ -51,11 +74,7 @@ export function Timeline({ data, className }: TimelineProps) {
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
     if (!cards.length) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (prefersReducedMotion) {
+    if (reducedMotion) {
       const allVisible: Record<number, boolean> = {};
       cards.forEach((_, index) => {
         allVisible[index] = true;
@@ -86,7 +105,7 @@ export function Timeline({ data, className }: TimelineProps) {
 
     cards.forEach((card) => observer.observe(card));
     return () => observer.disconnect();
-  }, [data.length]);
+  }, [data.length, reducedMotion]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -96,6 +115,7 @@ export function Timeline({ data, className }: TimelineProps) {
   // Transform-only motion (scaleY + translateY) — avoids layout thrash from animating height
   const railHeight = Math.max(0, height - 40);
   const tipY = useTransform(scrollYProgress, [0, 1], [0, railHeight]);
+  const tipOpacity = useTransform(scrollYProgress, [0, 0.015, 0.985, 1], [0, 1, 1, 0]);
 
   useEffect(() => {
     if (height <= 0) return;
@@ -109,7 +129,7 @@ export function Timeline({ data, className }: TimelineProps) {
     });
 
     let previous = -1;
-    const unsub = tipY.on("change", (latest) => {
+    const updateActive = (latest: number) => {
       let lit = -1;
       for (let i = 0; i < centers.length; i += 1) {
         if (latest >= centers[i]) lit = i;
@@ -118,9 +138,11 @@ export function Timeline({ data, className }: TimelineProps) {
         previous = lit;
         setActiveIndex(lit);
       }
-    });
+    };
+    const frame = requestAnimationFrame(() => updateActive(tipY.get()));
+    const unsub = tipY.on("change", updateActive);
 
-    return unsub;
+    return () => { cancelAnimationFrame(frame); unsub(); };
   }, [height, tipY, data.length]);
 
   return (
@@ -128,7 +150,9 @@ export function Timeline({ data, className }: TimelineProps) {
       ref={containerRef}
       className={cn("w-full bg-transparent font-sans lg:px-10", className)}
     >
-      <div ref={ref} className="relative mx-auto max-w-7xl overflow-clip pb-20 lg:pb-28">
+      <div ref={ref} className="relative mx-auto max-w-7xl pb-24 lg:pb-28">
+        <TimelineJunction progress={scrollYProgress} top={0} reduced={reducedMotion} />
+        <TimelineJunction progress={scrollYProgress} end top={railHeight} reduced={reducedMotion} />
         {/* Rail centered on left-8 = center of left-3 + h-10 node */}
         <div
           aria-hidden="true"
@@ -137,18 +161,18 @@ export function Timeline({ data, className }: TimelineProps) {
         >
           <div className="absolute inset-0 w-1 rounded-full bg-[var(--edge)] shadow-[0_0_12px_rgba(255,255,255,0.12)]" />
           <motion.div
-            style={{ scaleY: scrollYProgress }}
+            style={{ scaleY: reducedMotion ? 1 : scrollYProgress }}
             className="timeline-meteor absolute inset-x-0 top-0 h-full w-1 origin-top rounded-full will-change-transform"
           />
-          <motion.div
-            style={{ y: tipY }}
+          {!reducedMotion && <motion.div
+            style={{ y: tipY, opacity: tipOpacity }}
             className="timeline-meteor-tip absolute left-1/2 top-0 will-change-transform"
-          />
+          />}
         </div>
 
         {data.map((item, index) => {
-          const isLit = index <= activeIndex;
-          const isVisible = !!visibleCards[index];
+          const isLit = reducedMotion || index <= activeIndex;
+          const isVisible = reducedMotion || !!visibleCards[index];
 
           return (
             <div
@@ -156,7 +180,7 @@ export function Timeline({ data, className }: TimelineProps) {
               ref={(el) => {
                 itemRefs.current[index] = el;
               }}
-              className="relative z-30 flex justify-start pt-10 lg:gap-10 lg:pt-28"
+              className="relative z-30 flex justify-start pt-16 lg:gap-10 lg:pt-24"
             >
               <div className="pointer-events-none relative z-40 flex max-w-xs flex-col items-center self-start lg:w-full lg:flex-row lg:max-w-sm">
                 <div
@@ -175,7 +199,7 @@ export function Timeline({ data, className }: TimelineProps) {
                   />
                 </div>
                 <h3
-                  className="hidden text-xl font-bold tabular-nums text-[var(--foreground)] lg:block lg:pl-16 lg:text-[clamp(2rem,3.2vw,3rem)]"
+                  className="hidden font-medium leading-[1.15] tracking-[-0.025em] tabular-nums text-[var(--foreground)] lg:block lg:pl-16 lg:text-[clamp(1.7rem,2.8vw,2.7rem)]"
                 >
                   {item.title}
                 </h3>
@@ -183,7 +207,7 @@ export function Timeline({ data, className }: TimelineProps) {
 
               <div className="relative w-full min-w-0 pl-14 pr-2 sm:pl-20 sm:pr-4 lg:pl-4">
                 <h3
-                  className="mb-4 block text-left text-xl font-bold tabular-nums text-[var(--foreground)] sm:text-2xl lg:hidden"
+                  className="mb-5 block text-left text-xl font-medium tracking-[-0.02em] tabular-nums text-[var(--foreground)] sm:text-2xl lg:hidden"
                 >
                   {item.title}
                 </h3>
@@ -193,7 +217,7 @@ export function Timeline({ data, className }: TimelineProps) {
                   }}
                   data-timeline-card={index}
                   className={cn(
-                    "transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    "transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transform-none motion-reduce:transition-none",
                     isVisible
                       ? "translate-y-0 opacity-100"
                       : "translate-y-12 opacity-0",

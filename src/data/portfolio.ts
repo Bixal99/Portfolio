@@ -131,16 +131,6 @@ export const journeyItems: JourneyItem[] = [
     imageAlt: "Pak Shamaa School college campus",
   },
   {
-    year: "Aug 2022",
-    title: "Joined FAST NUCES University",
-    organization: "Computer Science",
-    description:
-      "Started the computer science path that shaped my foundation in software engineering, AI, data, and problem solving.",
-    icon: GraduationCap,
-    image: "/journey/fast-nuces.png",
-    imageAlt: "FAST NUCES University campus",
-  },
-  {
     year: "Jun 2026",
     title: "Graduation",
     organization: "BS Computer Science",
@@ -459,8 +449,8 @@ export const projects: Project[] = [
 export const sectionMeta = {
   journey: {
     kicker: "MY JOURNEY",
-    title: "From school foundations to university and graduation.",
-    icon: BookOpen,
+    title: "Education and graduation",
+    icon: GraduationCap,
   },
   stack: {
     kicker: "MY SKILLS",
